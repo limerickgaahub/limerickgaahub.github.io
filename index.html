@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Limerick GAA Hub — Senior Championship Groups 1 & 2 (2025)</title>
+  <title>Limerick GAA Hub — Senior Championship (Groups 1 & 2) • 2025</title>
   <style>
     :root { --bg:#0b0c10; --card:#ffffff; --muted:#6b7280; --accent:#16a34a; }
     * { box-sizing: border-box; }
     body { margin: 24px; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#f7f7f7; color:#111; }
     h1 { margin: 0 0 4px 0; font-weight: 800; letter-spacing: 0.2px; }
+    h2 { margin: 0 0 8px 0; }
     .sub { color:#444; margin-bottom: 16px; }
     .tabs { display:flex; flex-wrap:wrap; gap:8px; margin: 16px 0 12px; }
     .tab { padding:8px 12px; border-radius: 999px; background:#ececec; cursor:pointer; user-select:none; font-weight:600; }
@@ -26,39 +27,56 @@
     .muted { color:#6b7280; }
     .grid { display:grid; grid-template-columns: 1fr; gap: 16px; }
     @media (min-width: 1100px) { .grid { grid-template-columns: 1fr 1fr; } }
-    .footer { margin-top: 20px; color:#6b7280; font-size:12px; }
     .note { font-size:12px; color:#6b7280; }
+    .pill { display:inline-block; padding:2px 8px; border-radius:999px; background:#eef2ff; color:#1e3a8a; font-size:12px; }
+    .headband { display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:8px; }
+    .sm-muted { color:#6b7280; font-size: 12px; }
+    .section-tabs { display:flex; gap:6px; margin-bottom:10px; }
+    .section-tabs .seg { padding:6px 10px; border-radius:8px; background:#efefef; cursor:pointer; }
+    .section-tabs .seg.active { background:#111; color:#fff; }
+    .help { font-size:12px; color:#6b7280; }
   </style>
 </head>
 <body>
   <h1>Limerick GAA Hub</h1>
-  <div class="sub">Senior Hurling Championship — Group 1 & Group 2 (2025) • Fixtures & Results</div>
+  <div class="sub">Senior Hurling Championship — Groups 1 & 2 (2025)</div>
 
   <div class="tabs">
-    <div class="tab active" data-target="g1-results">Senior Group 1 — Results</div>
-    <div class="tab" data-target="g1-fixtures">Senior Group 1 — Fixtures</div>
-    <div class="tab" data-target="g2-results">Senior Group 2 — Results</div>
-    <div class="tab" data-target="g2-fixtures">Senior Group 2 — Fixtures</div>
+    <div class="tab active" data-target="g1">Senior Group 1</div>
+    <div class="tab" data-target="g2">Senior Group 2</div>
   </div>
 
   <div class="controls card">
     <input id="q" placeholder="Search team / venue / referee…" />
-    <select id="phase"><option value="">All phases</option></select>
-    <select id="group"><option value="">All groups</option></select>
     <input id="from" type="date" />
     <input id="to" type="date" />
+    <select id="status">
+      <option value="">All (fixtures & results)</option>
+      <option value="Result">Results only</option>
+      <option value="Fixture">Fixtures only</option>
+    </select>
     <span class="note">Click any header to sort ↑↓</span>
   </div>
 
   <div class="grid">
-    <div class="panel active card" id="g1-results">
-      <h3>Senior Group 1 — Results</h3>
-      <table data-kind="results" data-group="Senior Group 1">
+    <!-- GROUP 1 -->
+    <div class="panel active card" id="g1">
+      <div class="headband">
+        <h2>Senior Group 1</h2>
+        <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
+        <span class="pill">Phase: Group Stage</span>
+        <span class="pill">Group: Senior Group 1</span>
+      </div>
+
+      <div class="section-tabs" data-for="g1">
+        <div class="seg active" data-view="matches">Matches</div>
+        <div class="seg" data-view="table">Standings</div>
+        <span class="help sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto-calculated from current results</span>
+      </div>
+
+      <table data-kind="combined" data-group="Senior Group 1">
         <thead>
           <tr>
-            <th data-k="competition">Competition</th>
-            <th data-k="phase">Phase</th>
-            <th data-k="group">Group</th>
             <th data-k="round">Round</th>
             <th data-k="date">Date</th>
             <th data-k="time">Time</th>
@@ -68,41 +86,50 @@
             <th data-k="away_score" class="right">A</th>
             <th data-k="venue">Venue</th>
             <th data-k="referee">Referee</th>
+            <th data-k="status">Status</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
+
+      <div id="g1-standings" class="card" style="margin-top:12px; display:none;">
+        <table>
+          <thead>
+            <tr>
+              <th data-k="team">Team</th>
+              <th data-k="p" class="right">P</th>
+              <th data-k="w" class="right">W</th>
+              <th data-k="d" class="right">D</th>
+              <th data-k="l" class="right">L</th>
+              <th data-k="pf" class="right">PF</th>
+              <th data-k="pa" class="right">PA</th>
+              <th data-k="diff" class="right">Diff</th>
+              <th data-k="pts" class="right">Pts</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="panel card" id="g1-fixtures">
-      <h3>Senior Group 1 — Fixtures</h3>
-      <table data-kind="fixtures" data-group="Senior Group 1">
-        <thead>
-          <tr>
-            <th data-k="competition">Competition</th>
-            <th data-k="phase">Phase</th>
-            <th data-k="group">Group</th>
-            <th data-k="round">Round</th>
-            <th data-k="date">Date</th>
-            <th data-k="time">Time</th>
-            <th data-k="home_team">Home</th>
-            <th data-k="away_team">Away</th>
-            <th data-k="venue">Venue</th>
-            <th data-k="referee">Referee</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+    <!-- GROUP 2 -->
+    <div class="panel card" id="g2">
+      <div class="headband">
+        <h2>Senior Group 2</h2>
+        <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
+        <span class="pill">Phase: Group Stage</span>
+        <span class="pill">Group: Senior Group 2</span>
+      </div>
 
-    <div class="panel card" id="g2-results">
-      <h3>Senior Group 2 — Results</h3>
-      <table data-kind="results" data-group="Senior Group 2">
+      <div class="section-tabs" data-for="g2">
+        <div class="seg active" data-view="matches">Matches</div>
+        <div class="seg" data-view="table">Standings</div>
+        <span class="help sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto-calculated from current results</span>
+      </div>
+
+      <table data-kind="combined" data-group="Senior Group 2">
         <thead>
           <tr>
-            <th data-k="competition">Competition</th>
-            <th data-k="phase">Phase</th>
-            <th data-k="group">Group</th>
             <th data-k="round">Round</th>
             <th data-k="date">Date</th>
             <th data-k="time">Time</th>
@@ -112,122 +139,77 @@
             <th data-k="away_score" class="right">A</th>
             <th data-k="venue">Venue</th>
             <th data-k="referee">Referee</th>
+            <th data-k="status">Status</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
-    </div>
 
-    <div class="panel card" id="g2-fixtures">
-      <h3>Senior Group 2 — Fixtures</h3>
-      <table data-kind="fixtures" data-group="Senior Group 2">
-        <thead>
-          <tr>
-            <th data-k="competition">Competition</th>
-            <th data-k="phase">Phase</th>
-            <th data-k="group">Group</th>
-            <th data-k="round">Round</th>
-            <th data-k="date">Date</th>
-            <th data-k="time">Time</th>
-            <th data-k="home_team">Home</th>
-            <th data-k="away_team">Away</th>
-            <th data-k="venue">Venue</th>
-            <th data-k="referee">Referee</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div id="g2-standings" class="card" style="margin-top:12px; display:none;">
+        <table>
+          <thead>
+            <tr>
+              <th data-k="team">Team</th>
+              <th data-k="p" class="right">P</th>
+              <th data-k="w" class="right">W</th>
+              <th data-k="d" class="right">D</th>
+              <th data-k="l" class="right">L</th>
+              <th data-k="pf" class="right">PF</th>
+              <th data-k="pa" class="right">PA</th>
+              <th data-k="diff" class="right">Diff</th>
+              <th data-k="pts" class="right">Pts</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <div class="footer">Edit the DATA block inside this file to update fixtures & results. Source: limerickgaa.ie</div>
-
   <script>
-    // ====== EMBEDDED DATA (edit these rows as needed) ======
+    // ====== DATA (Senior Championship — Groups 1 & 2, 2025) ======
     const DATA = [
-      // ----- Senior Group 1 — RESULTS -----
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 1",
-       date:"2025-07-31", time:"19:00", home_team:"Kilmallock", home_goals:0, home_points:23, away_team:"Patrickswell", away_goals:0, away_points:18,
-       venue:"Newcastle West", referee:"", status:"Result"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 1",
-       date:"2025-08-02", time:"15:00", home_team:"Ballybrown", home_goals:5, home_points:18, away_team:"Ahane", away_goals:1, away_points:23,
-       venue:"Claughaun GAA, Childers Rd", referee:"Johnny Murphy", status:"Result"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 1",
-       date:"2025-08-02", time:"19:00", home_team:"Doon", home_goals:1, home_points:19, away_team:"Na Piarsaigh", away_goals:2, away_points:16,
-       venue:"Kilmallock", referee:"John O Halloran", status:"Result"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 2",
-       date:"2025-08-07", time:"19:00", home_team:"Doon", home_goals:3, home_points:23, away_team:"Patrickswell", away_goals:0, away_points:14,
-       venue:"Kilmallock", referee:"Michael Sexton", status:"Result"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 2",
-       date:"2025-08-08", time:"19:00", home_team:"Ahane", home_goals:0, home_points:18, away_team:"Kilmallock", away_goals:1, away_points:15,
-       venue:"Doon", referee:"Timmy Mc Grath", status:"Result"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 2",
-       date:"2025-08-08", time:"19:00", home_team:"Na Piarsaigh", home_goals:0, home_points:21, away_team:"Ballybrown", away_goals:1, away_points:10,
-       venue:"Claughaun GAA, Childers Rd", referee:"Eamonn Stapleton", status:"Result"},
+      // Group 1 — Results
+      {group:"Senior Group 1", round:"Round 1", date:"2025-07-31", time:"19:00", home_team:"Kilmallock", home_goals:0, home_points:23, away_team:"Patrickswell", away_goals:0, away_points:18, venue:"Newcastle West", referee:"", status:"Result"},
+      {group:"Senior Group 1", round:"Round 1", date:"2025-08-02", time:"15:00", home_team:"Ballybrown", home_goals:5, home_points:18, away_team:"Ahane", away_goals:1, away_points:23, venue:"Claughaun GAA, Childers Rd", referee:"Johnny Murphy", status:"Result"},
+      {group:"Senior Group 1", round:"Round 1", date:"2025-08-02", time:"19:00", home_team:"Doon", home_goals:1, home_points:19, away_team:"Na Piarsaigh", away_goals:2, away_points:16, venue:"Kilmallock", referee:"John O Halloran", status:"Result"},
+      {group:"Senior Group 1", round:"Round 2", date:"2025-08-07", time:"19:00", home_team:"Doon", home_goals:3, home_points:23, away_team:"Patrickswell", away_goals:0, away_points:14, venue:"Kilmallock", referee:"Michael Sexton", status:"Result"},
+      {group:"Senior Group 1", round:"Round 2", date:"2025-08-08", time:"19:00", home_team:"Ahane", home_goals:0, home_points:18, away_team:"Kilmallock", away_goals:1, away_points:15, venue:"Doon", referee:"Timmy Mc Grath", status:"Result"},
+      {group:"Senior Group 1", round:"Round 2", date:"2025-08-08", time:"19:00", home_team:"Na Piarsaigh", home_goals:0, home_points:21, away_team:"Ballybrown", away_goals:1, away_points:10, venue:"Claughaun GAA, Childers Rd", referee:"Eamonn Stapleton", status:"Result"},
 
-      // ----- Senior Group 2 — RESULTS -----
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 1",
-       date:"2025-07-31", time:"19:00", home_team:"Monaleen", home_goals:1, home_points:20, away_team:"Adare", away_goals:0, away_points:18,
-       venue:"Fedamore", referee:"Timmy Mc Grath", status:"Result"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 1",
-       date:"2025-08-01", time:"19:00", home_team:"Mungret St Pauls", home_goals:1, home_points:17, away_team:"Newcastle West", away_goals:2, away_points:14,
-       venue:"Mick Neville Park", referee:"Liam Berkery", status:"Result"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 1",
-       date:"2025-08-02", time:"19:00", home_team:"Kildimo Pallaskenry", home_goals:3, home_points:16, away_team:"Dromin Athlacca", away_goals:0, away_points:18,
-       venue:"Ballyagran", referee:"Timmy Mc Grath", status:"Result"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 2",
-       date:"2025-08-06", time:"19:00", home_team:"Adare", home_goals:1, home_points:21, away_team:"Mungret St Pauls", away_goals:2, away_points:18,
-       venue:"Ballybrown", referee:"Kieran Guina", status:"Result"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 2",
-       date:"2025-08-08", time:"19:00", home_team:"Monaleen", home_goals:1, home_points:21, away_team:"Dromin Athlacca", away_goals:1, away_points:16,
-       venue:"Fedamore", referee:"Liam Berkery", status:"Result"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 2",
-       date:"2025-08-08", time:"19:00", home_team:"Kildimo Pallaskenry", home_goals:2, home_points:16, away_team:"Newcastle West", away_goals:2, away_points:16,
-       venue:"Sean Finn Park, Rathkeale", referee:"Johnny Murphy", status:"Result"},
+      // Group 1 — Fixtures
+      {group:"Senior Group 1", round:"Round 3", date:"2025-08-21", time:"18:30", home_team:"Doon", away_team:"Kilmallock", venue:"Knocklong", referee:"", status:"Fixture"},
+      {group:"Senior Group 1", round:"Round 3", date:"2025-08-23", time:"18:30", home_team:"Patrickswell", away_team:"Ballybrown", venue:"Mick Neville Park", referee:"", status:"Fixture"},
+      {group:"Senior Group 1", round:"Round 3", date:"2025-08-24", time:"14:00", home_team:"Na Piarsaigh", away_team:"Ahane", venue:"Claughaun GAA, Childers Rd", referee:"", status:"Fixture"},
+      {group:"Senior Group 1", round:"Round 4", date:"2025-08-29", time:"18:15", home_team:"Ballybrown", away_team:"Doon", venue:"Kilmallock", referee:"", status:"Fixture"},
+      {group:"Senior Group 1", round:"Round 4", date:"2025-08-29", time:"18:30", home_team:"Ahane", away_team:"Patrickswell", venue:"Claughaun GAA, Childers Rd", referee:"", status:"Fixture"},
+      {group:"Senior Group 1", round:"Round 4", date:"2025-08-30", time:"18:00", home_team:"Kilmallock", away_team:"Na Piarsaigh", venue:"Mick Neville Park", referee:"", status:"Fixture"},
+      {group:"Senior Group 1", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Patrickswell", away_team:"Na Piarsaigh", venue:"", referee:"", status:"Fixture"},
+      {group:"Senior Group 1", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Doon", away_team:"Ahane", venue:"", referee:"", status:"Fixture"},
+      {group:"Senior Group 1", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Kilmallock", away_team:"Ballybrown", venue:"", referee:"", status:"Fixture"},
 
-      // ----- Senior Group 1 — FIXTURES -----
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 3",
-       date:"2025-08-21", time:"18:30", home_team:"Doon", away_team:"Kilmallock", venue:"Knocklong", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 3",
-       date:"2025-08-23", time:"18:30", home_team:"Patrickswell", away_team:"Ballybrown", venue:"Mick Neville Park", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 3",
-       date:"2025-08-24", time:"14:00", home_team:"Na Piarsaigh", away_team:"Ahane", venue:"Claughaun GAA, Childers Rd", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 4",
-       date:"2025-08-29", time:"18:15", home_team:"Ballybrown", away_team:"Doon", venue:"Kilmallock", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 4",
-       date:"2025-08-29", time:"18:30", home_team:"Ahane", away_team:"Patrickswell", venue:"Claughaun GAA, Childers Rd", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 4",
-       date:"2025-08-30", time:"18:00", home_team:"Kilmallock", away_team:"Na Piarsaigh", venue:"Mick Neville Park", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 5",
-       date:"2025-09-11", time:"12:00", home_team:"Patrickswell", away_team:"Na Piarsaigh", venue:"", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 5",
-       date:"2025-09-11", time:"12:00", home_team:"Doon", away_team:"Ahane", venue:"", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 1", round:"Round 5",
-       date:"2025-09-11", time:"12:00", home_team:"Kilmallock", away_team:"Ballybrown", venue:"", referee:"", status:"Fixture"},
+      // Group 2 — Results
+      {group:"Senior Group 2", round:"Round 1", date:"2025-07-31", time:"19:00", home_team:"Monaleen", home_goals:1, home_points:20, away_team:"Adare", away_goals:0, away_points:18, venue:"Fedamore", referee:"Timmy Mc Grath", status:"Result"},
+      {group:"Senior Group 2", round:"Round 1", date:"2025-08-01", time:"19:00", home_team:"Mungret St Pauls", home_goals:1, home_points:17, away_team:"Newcastle West", away_goals:2, away_points:14, venue:"Mick Neville Park", referee:"Liam Berkery", status:"Result"},
+      {group:"Senior Group 2", round:"Round 1", date:"2025-08-02", time:"19:00", home_team:"Kildimo Pallaskenry", home_goals:3, home_points:16, away_team:"Dromin Athlacca", away_goals:0, away_points:18, venue:"Ballyagran", referee:"Timmy Mc Grath", status:"Result"},
+      {group:"Senior Group 2", round:"Round 2", date:"2025-08-06", time:"19:00", home_team:"Adare", home_goals:1, home_points:21, away_team:"Mungret St Pauls", away_goals:2, away_points:18, venue:"Ballybrown", referee:"Kieran Guina", status:"Result"},
+      {group:"Senior Group 2", round:"Round 2", date:"2025-08-08", time:"19:00", home_team:"Monaleen", home_goals:1, home_points:21, away_team:"Dromin Athlacca", away_goals:1, away_points:16, venue:"Fedamore", referee:"Liam Berkery", status:"Result"},
+      {group:"Senior Group 2", round:"Round 2", date:"2025-08-08", time:"19:00", home_team:"Kildimo Pallaskenry", home_goals:2, home_points:16, away_team:"Newcastle West", away_goals:2, away_points:16, venue:"Sean Finn Park, Rathkeale", referee:"Johnny Murphy", status:"Result"},
 
-      // ----- Senior Group 2 — FIXTURES -----
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 3",
-       date:"2025-08-22", time:"18:30", home_team:"Mungret St Pauls", away_team:"Monaleen", venue:"Claughaun GAA, Childers Rd", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 3",
-       date:"2025-08-22", time:"18:30", home_team:"Adare", away_team:"Kildimo Pallaskenry", venue:"Sean Finn Park, Rathkeale", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 3",
-       date:"2025-08-23", time:"15:00", home_team:"Newcastle West", away_team:"Dromin Athlacca", venue:"Croagh", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 4",
-       date:"2025-08-29", time:"18:30", home_team:"Kildimo Pallaskenry", away_team:"Mungret St Pauls", venue:"Ballybrown", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 4",
-       date:"2025-08-29", time:"18:30", home_team:"Monaleen", away_team:"Newcastle West", venue:"Sean Finn Park, Rathkeale", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 4",
-       date:"2025-08-30", time:"15:00", home_team:"Dromin Athlacca", away_team:"Adare", venue:"Ballingarry", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 5",
-       date:"2025-09-11", time:"12:00", home_team:"Adare", away_team:"Newcastle West", venue:"", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 5",
-       date:"2025-09-11", time:"12:00", home_team:"Mungret St Pauls", away_team:"Dromin Athlacca", venue:"", referee:"", status:"Fixture"},
-      {competition:"White BOX County Senior Hurling Championship", phase:"Group Stage", group:"Senior Group 2", round:"Round 5",
-       date:"2025-09-11", time:"12:00", home_team:"Monaleen", away_team:"Kildimo Pallaskenry", venue:"", referee:"", status:"Fixture"},
+      // Group 2 — Fixtures
+      {group:"Senior Group 2", round:"Round 3", date:"2025-08-22", time:"18:30", home_team:"Mungret St Pauls", away_team:"Monaleen", venue:"Claughaun GAA, Childers Rd", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"Round 3", date:"2025-08-22", time:"18:30", home_team:"Adare", away_team:"Kildimo Pallaskenry", venue:"Sean Finn Park, Rathkeale", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"Round 3", date:"2025-08-23", time:"15:00", home_team:"Newcastle West", away_team:"Dromin Athlacca", venue:"Croagh", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"Round 4", date:"2025-08-29", time:"18:30", home_team:"Kildimo Pallaskenry", away_team:"Mungret St Pauls", venue:"Ballybrown", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"Round 4", date:"2025-08-29", time:"18:30", home_team:"Monaleen", away_team:"Newcastle West", venue:"Sean Finn Park, Rathkeale", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"Round 4", date:"2025-08-30", time:"15:00", home_team:"Dromin Athlacca", away_team:"Adare", venue:"Ballingarry", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Adare", away_team:"Newcastle West", venue:"", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Mungret St Pauls", away_team:"Dromin Athlacca", venue:"", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Monaleen", away_team:"Kildimo Pallaskenry", venue:"", referee:"", status:"Fixture"},
     ];
     // ====== END DATA ======
 
-    // Tabs
+    // Tabs (Group 1 vs Group 2)
     document.querySelectorAll('.tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -238,13 +220,26 @@
       });
     });
 
+    // Section tabs (Matches vs Table)
+    document.querySelectorAll('.section-tabs').forEach(row => {
+      row.querySelectorAll('.seg').forEach(seg => {
+        seg.addEventListener('click', () => {
+          row.querySelectorAll('.seg').forEach(s => s.classList.remove('active'));
+          seg.classList.add('active');
+          const forId = row.getAttribute('data-for');
+          const showTable = seg.getAttribute('data-view') === 'table';
+          document.getElementById(forId + '-standings').style.display = showTable ? '' : 'none';
+          document.querySelector('#' + forId + ' table').style.display = showTable ? 'none' : '';
+          if (showTable) renderStandings(forId);
+        });
+      });
+    });
+
     const qEl = document.getElementById('q');
-    const phaseEl = document.getElementById('phase');
-    const groupEl = document.getElementById('group');
     const fromEl = document.getElementById('from');
     const toEl = document.getElementById('to');
+    const statusEl = document.getElementById('status');
 
-    function uniq(arr){ return Array.from(new Set(arr.filter(Boolean))).sort(); }
     function norms(d){
       return {
         ...d,
@@ -255,14 +250,7 @@
     function score(g,p){ if(g==null || p==null) return ""; return `${g}-${p}`; }
     const NDATA = DATA.map(norms);
 
-    function populateFilters(){
-      const phases = uniq(NDATA.map(r=>r.phase));
-      const groups = uniq(NDATA.map(r=>r.group));
-      phaseEl.innerHTML = '<option value="">All phases</option>' + phases.map(x=>`<option>${x}</option>`).join('');
-      groupEl.innerHTML = '<option value="">All groups</option>' + groups.map(x=>`<option>${x}</option>`).join('');
-    }
-    populateFilters();
-
+    // Sorting
     const sortState = new Map();
     function attachSorting(table){
       table.querySelectorAll('th[data-k]').forEach(th => {
@@ -276,7 +264,7 @@
         });
       });
     }
-    document.querySelectorAll('table').forEach(attachSorting);
+    document.querySelectorAll('table[data-kind]').forEach(attachSorting);
 
     function inDateRange(iso, from, to){
       if(!iso) return true;
@@ -293,19 +281,15 @@
     }
 
     function renderTable(table){
-      const kind = table.getAttribute('data-kind'); // results or fixtures
-      const grp = table.getAttribute('data-group'); // Senior Group 1 / Senior Group 2
+      const grp = table.getAttribute('data-group');
       const tbody = table.querySelector('tbody');
       const state = sortState.get(table) || {k:"date", dir:1};
 
       const rows = NDATA.filter(r => {
         if (grp && r.group !== grp) return false;
-        if (kind === "results" && r.status !== "Result") return false;
-        if (kind === "fixtures" && r.status !== "Fixture") return false;
-        const blob = `${r.competition} ${r.phase} ${r.group} ${r.round} ${r.date} ${r.time} ${r.home_team} ${r.away_team} ${r.venue} ${r.referee}`.toLowerCase();
+        if (statusEl.value && r.status !== statusEl.value) return false;
+        const blob = `${r.round} ${r.date} ${r.time} ${r.home_team} ${r.away_team} ${r.venue} ${r.referee} ${r.status}`.toLowerCase();
         if (qEl.value && !blob.includes(qEl.value.toLowerCase())) return false;
-        if (phaseEl.value && r.phase !== phaseEl.value) return false;
-        if (groupEl.value && r.group !== groupEl.value) return false;
         if (!inDateRange(r.date, fromEl.value, toEl.value)) return false;
         return true;
       }).sort((a,b)=>{
@@ -316,43 +300,89 @@
       });
 
       tbody.innerHTML = rows.map(r => {
-        if (kind === "results"){
-          return `<tr>
-            <td>${esc(r.competition)}</td>
-            <td>${esc(r.phase)}</td>
-            <td>${esc(r.group)}</td>
-            <td>${esc(r.round)}</td>
-            <td>${esc(r.date)}</td>
-            <td>${esc(r.time || "")}</td>
-            <td>${esc(r.home_team)}</td>
-            <td class="right">${esc(r.home_score)}</td>
-            <td>${esc(r.away_team)}</td>
-            <td class="right">${esc(r.away_score)}</td>
-            <td>${esc(r.venue || "")}</td>
-            <td>${esc(r.referee || "")}</td>
-          </tr>`;
-        } else {
-          return `<tr>
-            <td>${esc(r.competition)}</td>
-            <td>${esc(r.phase)}</td>
-            <td>${esc(r.group)}</td>
-            <td>${esc(r.round)}</td>
-            <td>${esc(r.date)}</td>
-            <td>${esc(r.time || "")}</td>
-            <td>${esc(r.home_team)}</td>
-            <td>${esc(r.away_team)}</td>
-            <td>${esc(r.venue || "")}</td>
-            <td>${esc(r.referee || "")}</td>
-          </tr>`;
-        }
+        return `<tr>
+          <td>${esc(r.round || "")}</td>
+          <td>${esc(r.date || "")}</td>
+          <td>${esc(r.time || "")}</td>
+          <td>${esc(r.home_team || "")}</td>
+          <td class="right">${esc(r.home_score || "")}</td>
+          <td>${esc(r.away_team || "")}</td>
+          <td class="right">${esc(r.away_score || "")}</td>
+          <td>${esc(r.venue || "")}</td>
+          <td>${esc(r.referee || "")}</td>
+          <td>${esc(r.status || "")}</td>
+        </tr>`;
       }).join('');
     }
 
     function renderAll(){
-      document.querySelectorAll('table').forEach(renderTable);
+      document.querySelectorAll('table[data-kind]').forEach(renderTable);
     }
-    [qEl, phaseEl, groupEl, fromEl, toEl].forEach(el => el.addEventListener('input', renderAll));
+    [qEl, fromEl, toEl, statusEl].forEach(el => el.addEventListener('input', renderAll));
     renderAll();
+
+    // ===== Standings (Win=2, Draw=1, Loss=0) =====
+    function parseTotalPoints(g, p){
+      if (g==null || p==null) return null;
+      return (Number(g)||0)*3 + (Number(p)||0);
+    }
+    function calcStandings(forId){
+      const grp = (forId === 'g1') ? 'Senior Group 1' : 'Senior Group 2';
+      const res = NDATA.filter(r => r.group === grp && r.status === 'Result');
+      const teams = new Map();
+      function teamRow(name){
+        if(!teams.has(name)){
+          teams.set(name, { team:name, p:0, w:0, d:0, l:0, pf:0, pa:0, diff:0, pts:0 });
+        }
+        return teams.get(name);
+      }
+      for (const m of res){
+        const hs = parseTotalPoints(m.home_goals, m.home_points);
+        const as = parseTotalPoints(m.away_goals, m.away_points);
+        if (hs==null || as==null) continue; // skip incomplete scoring rows
+
+        const H = teamRow(m.home_team);
+        const A = teamRow(m.away_team);
+
+        H.p += 1; A.p += 1;
+        H.pf += hs; H.pa += as;
+        A.pf += as; A.pa += hs;
+
+        if (hs > as){ H.w += 1; H.pts += 2; A.l += 1; }
+        else if (hs < as){ A.w += 1; A.pts += 2; H.l += 1; }
+        else { H.d += 1; A.d += 1; H.pts += 1; A.pts += 1; }
+      }
+      for (const row of teams.values()){
+        row.diff = row.pf - row.pa;
+      }
+      // Sort: Points desc, Diff desc, PF desc, team name
+      const table = Array.from(teams.values()).sort((a,b)=>{
+        if (b.pts !== a.pts) return b.pts - a.pts;
+        if (b.diff !== a.diff) return b.diff - a.diff;
+        if (b.pf !== a.pf) return b.pf - a.pf;
+        return a.team.localeCompare(b.team);
+      });
+      return table;
+    }
+
+    function renderStandings(forId){
+      const tableId = forId === 'g1' ? 'g1-standings' : 'g2-standings';
+      const container = document.querySelector('#' + tableId + ' tbody');
+      const rows = calcStandings(forId);
+      container.innerHTML = rows.map(r => `
+        <tr>
+          <td>${esc(r.team)}</td>
+          <td class="right">${r.p}</td>
+          <td class="right">${r.w}</td>
+          <td class="right">${r.d}</td>
+          <td class="right">${r.l}</td>
+          <td class="right">${r.pf}</td>
+          <td class="right">${r.pa}</td>
+          <td class="right">${r.diff}</td>
+          <td class="right"><strong>${r.pts}</strong></td>
+        </tr>
+      `).join('');
+    }
 
     function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
   </script>
