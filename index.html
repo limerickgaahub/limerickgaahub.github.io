@@ -100,23 +100,25 @@
     /* Standings narrow numeric cols */
     [data-standings] th.right, [data-standings] td.right { width: 44px; }
 
+    .mobile-only { display:none; }
+
     /* Mobile-specific column widths & match layout */
     @media (max-width: 880px) {
       body { margin: 14px; }
       .controls { gap:8px; }
       .controls > * { width: 100%; }
       .table-wrap { border-radius:12px; }
-      thead th, tbody td { padding:10px 8px; font-size:13px; }
+      thead th, tbody td { padding:9px 7px; font-size:12px; }  /* reduced font size */
 
-      th.rcol, td.rcol { width: 2.6ch; text-align:center; }
-      th.dcol, td.dcol { width: 9ch; }
-      th.tcol, td.tcol { width: 4.4ch; text-align:center; }
+      th.rcol, td.rcol { width: 2.2ch; text-align:center; }
+      th.dcol, td.dcol { width: 9ch; text-align:center; }        /* centered Date */
+      th.tcol, td.tcol { width: 4.4ch; text-align:center; }      /* centered Time */
       th.vcol, td.vcol { width: 16ch; }
-      th.stcol, td.stcol { width: auto; }
 
-      td.match {
-        padding-top: 8px; padding-bottom: 8px;
-      }
+      /* Mobile status column: 1-letter code (R/F) */
+      th.stcol, td.stcol { width: 1.8ch; text-align:center; }
+
+      td.match { padding-top: 8px; padding-bottom: 8px; }
       .match-block {
         display: grid;
         grid-template-rows: auto auto auto;
@@ -128,9 +130,16 @@
         text-align:center;
         font-weight: 700;
         font-variant-numeric: tabular-nums;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        letter-spacing: 0.2px;
       }
       .venue-ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:block; }
+
+      .mobile-only { display:block; font-size:11px; color:var(--muted); margin:6px 0 0 6px; }
     }
+
+    /* Center Date/Time on desktop too */
+    th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
   </style>
 </head>
 <body>
@@ -176,6 +185,7 @@
           <thead></thead>
           <tbody></tbody>
         </table>
+        <div class="mobile-only">R = Result, F = Fixture</div>
       </div>
 
       <div id="g1-standings" style="margin-top:12px; display:none;">
@@ -220,6 +230,7 @@
           <thead></thead>
           <tbody></tbody>
         </table>
+        <div class="mobile-only">R = Result, F = Fixture</div>
       </div>
 
       <div id="g2-standings" style="margin-top:12px; display:none;">
@@ -287,7 +298,7 @@
       {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Monaleen", away_team:"Kildimo Pallaskenry", venue:"", referee:"", status:"Fixture"},
     ];
 
-    // ===== Helpers: formatting for mobile =====
+    // ===== Helpers =====
     const pad2 = n => String(n).padStart(2,'0');
     const day3 = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
     function fmtDateShort(iso){
@@ -312,7 +323,7 @@
     function score(g,p){ if(g==null || p==null) return ''; return `${g}-${p}`; }
     function totalPoints(g,p){ if(g==null || p==null) return null; return (Number(g)||0)*3 + (Number(p)||0); }
 
-    // Normalised data with score strings
+    // Normalised data
     const NDATA = DATA.map(d => ({...d, home_score: score(d.home_goals,d.home_points), away_score: score(d.away_goals,d.away_points)}));
 
     // Build team dropdown
@@ -320,7 +331,7 @@
     const teams = Array.from(new Set(NDATA.flatMap(r => [r.home_team, r.away_team]).filter(Boolean))).sort();
     teamSel.innerHTML = '<option value="">All teams</option>' + teams.map(t=>`<option>${t}</option>`).join('');
 
-    // Tabs (Group 1 vs Group 2)
+    // Tabs
     document.querySelectorAll('.tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -331,7 +342,7 @@
       });
     });
 
-    // Section tabs (Matches vs Table)
+    // Section tabs
     document.querySelectorAll('.section-tabs').forEach(row => {
       row.querySelectorAll('.seg').forEach(seg => {
         seg.addEventListener('click', () => {
@@ -340,7 +351,6 @@
           const forId = row.getAttribute('data-for');
           const showTable = seg.getAttribute('data-view') === 'table';
           document.getElementById(forId + '-standings').style.display = showTable ? '' : 'none';
-          // hide/show the matches table-wrap inside the panel
           document.querySelector('#' + forId + ' .matches-wrap').style.display = showTable ? 'none' : '';
           if (showTable) renderStandings(forId);
         });
@@ -372,14 +382,14 @@
       const thead = table.querySelector('thead');
       if (isMobile){
         const head = isTiny
-          ? `<tr><th data-k="round" class="rcol">R</th><th data-k="dt" class="dcol">Date/Time</th><th data-k="match">Match</th><th data-k="venue" class="vcol">Venue</th><th data-k="status" class="stcol">Status</th></tr>`
-          : `<tr><th data-k="round" class="rcol">R</th><th data-k="date" class="dcol">Date</th><th data-k="time" class="tcol">Time</th><th data-k="match">Match</th><th data-k="venue" class="vcol">Venue</th><th data-k="status" class="stcol">Status</th></tr>`;
+          ? `<tr><th data-k="round" class="rcol">R</th><th data-k="dt" class="dcol">Date/Time</th><th data-k="match">Match</th><th data-k="venue" class="vcol">Venue</th><th data-k="status" class="stcol">S</th></tr>`
+          : `<tr><th data-k="round" class="rcol">R</th><th data-k="date" class="dcol">Date</th><th data-k="time" class="tcol">Time</th><th data-k="match">Match</th><th data-k="venue" class="vcol">Venue</th><th data-k="status" class="stcol">S</th></tr>`;
         thead.innerHTML = head;
       } else {
         thead.innerHTML = `<tr>
           <th data-k="round">Round</th>
-          <th data-k="date">Date</th>
-          <th data-k="time">Time</th>
+          <th data-k="date" class="dcol">Date</th>
+          <th data-k="time" class="tcol">Time</th>
           <th data-k="home_team">Home</th>
           <th data-k="home_score" class="right">H</th>
           <th data-k="away_team">Away</th>
@@ -439,6 +449,7 @@
           const tShort = fmtTimeShort(r.time || '');
           const venue = esc(r.venue || '');
           const scoreMid = (r.home_score && r.away_score) ? esc(r.home_score+' — '+r.away_score) : '—';
+          const stShort = st.startsWith('R') ? 'R' : 'F';
 
           if (isTiny){
             const dt = `${dShort} ${tShort}`.trim();
@@ -453,7 +464,7 @@
                 </div>
               </td>
               <td class="vcol"><span class="venue-ellipsis" title="${venue}">${venue}</span></td>
-              <td class="stcol"><span class="status-badge status-${st}">${esc(st)}</span></td>
+              <td class="stcol">${stShort}</td>
             </tr>`;
           } else {
             return `<tr>
@@ -468,14 +479,14 @@
                 </div>
               </td>
               <td class="vcol"><span class="venue-ellipsis" title="${venue}">${venue}</span></td>
-              <td class="stcol"><span class="status-badge status-${st}">${esc(st)}</span></td>
+              <td class="stcol">${stShort}</td>
             </tr>`;
           }
         } else {
           return `<tr>
             <td>${esc(r.round || "")}</td>
-            <td>${esc(r.date || "")}</td>
-            <td>${esc(r.time || "")}</td>
+            <td class="dcol">${esc(r.date || "")}</td>
+            <td class="tcol">${esc(r.time || "")}</td>
             <td>${esc(r.home_team || "")}</td>
             <td class="right">${esc(r.home_score || "")}</td>
             <td>${esc(r.away_team || "")}</td>
@@ -501,6 +512,7 @@
     renderAll();
 
     // ===== Standings (Win=2, Draw=1, Loss=0) =====
+    function totalPoints(g,p){ if(g==null || p==null) return null; return (Number(g)||0)*3 + (Number(p)||0); }
     function calcStandings(groupName){
       const res = NDATA.filter(r => r.group === groupName && r.status === 'Result');
       const teams = new Map();
