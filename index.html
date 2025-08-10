@@ -6,7 +6,6 @@
   <title>Limerick GAA Hub — White BOX County Senior Hurling Championship (Groups 1 & 2) • 2025</title>
   <style>
     :root {
-      --bg:#0b0c10;
       --card:#ffffff;
       --muted:#6b7280;
       --accent:#00a651; /* Limerick green */
@@ -14,13 +13,14 @@
       --line:#e9ecef;
       --text:#111;
       --text-soft:#334155;
+      --bg:#f6f7f8;
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
       margin: 20px;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background:#f6f7f8;
+      background: var(--bg);
       color:var(--text);
       -webkit-font-smoothing: antialiased;
     }
@@ -62,15 +62,15 @@
     .subpill { background:#eef2ff; color:#1e3a8a; border-color:#dbe6ff; }
 
     /* Section tabs (Matches / Standings) */
-    .section-tabs { display:flex; gap:6px; margin:0 0 12px 0; }
+    .section-tabs { display:flex; gap:6px; margin:0 0 12px 0; flex-wrap: wrap; }
     .section-tabs .seg {
       padding:8px 12px; border-radius:10px; background:#efefef; cursor:pointer; font-weight:700;
     }
     .section-tabs .seg.active { background:var(--accent); color:#fff; }
 
     /* Tables */
-    .table-wrap { overflow:auto; border-radius:14px; border:1px solid var(--line); background:#fff; }
-    table { width:100%; border-collapse:separate; border-spacing:0; min-width: 760px; }
+    .table-wrap { overflow-x: hidden; overflow-y: auto; border-radius:14px; border:1px solid var(--line); background:#fff; }
+    table { width:100%; border-collapse:separate; border-spacing:0; table-layout: fixed; }
     thead th {
       position: sticky; top: 0; z-index: 1; background:#f8fafb;
       border-bottom: 1px solid var(--line);
@@ -87,6 +87,7 @@
     .status-badge {
       font-size: 12px; padding:3px 8px; border-radius:999px; display:inline-block;
       border:1px solid var(--line);
+      white-space: nowrap;
     }
     .status-Fixture { background:#fff; color:#0f172a; }
     .status-Result { background: #eaf6ef; color:#065f46; border-color:#cdebd8; }
@@ -96,19 +97,39 @@
 
     .sm-muted { color:#6b7280; font-size: 12px; }
 
-    /* Standings narrow numeric cols on all screens */
-    [data-standings] th.right, [data-standings] td.right {
-      width: 48px;
-    }
+    /* Standings narrow numeric cols */
+    [data-standings] th.right, [data-standings] td.right { width: 44px; }
 
-    /* Mobile */
+    /* Mobile-specific column widths & match layout */
     @media (max-width: 880px) {
       body { margin: 14px; }
       .controls { gap:8px; }
       .controls > * { width: 100%; }
       .table-wrap { border-radius:12px; }
-      thead th, tbody td { padding:12px; font-size:14px; }
-      table { min-width: 0; } /* allow our custom mobile rendering to fit */
+      thead th, tbody td { padding:10px 8px; font-size:13px; }
+
+      th.rcol, td.rcol { width: 2.6ch; text-align:center; }
+      th.dcol, td.dcol { width: 9ch; }
+      th.tcol, td.tcol { width: 4.4ch; text-align:center; }
+      th.vcol, td.vcol { width: 16ch; }
+      th.stcol, td.stcol { width: auto; }
+
+      td.match {
+        padding-top: 8px; padding-bottom: 8px;
+      }
+      .match-block {
+        display: grid;
+        grid-template-rows: auto auto auto;
+        row-gap: 2px;
+        white-space: normal;
+      }
+      .match-team { display:block; }
+      .match-score {
+        text-align:center;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+      }
+      .venue-ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:block; }
     }
   </style>
 </head>
@@ -351,8 +372,8 @@
       const thead = table.querySelector('thead');
       if (isMobile){
         const head = isTiny
-          ? `<tr><th data-k="round" class="right">R</th><th data-k="dt">Date/Time</th><th data-k="match">Match</th><th data-k="venue">Venue</th><th data-k="status">Status</th></tr>`
-          : `<tr><th data-k="round" class="right">R</th><th data-k="date">Date</th><th data-k="time" class="right">Time</th><th data-k="match">Match</th><th data-k="venue">Venue</th><th data-k="status">Status</th></tr>`;
+          ? `<tr><th data-k="round" class="rcol">R</th><th data-k="dt" class="dcol">Date/Time</th><th data-k="match">Match</th><th data-k="venue" class="vcol">Venue</th><th data-k="status" class="stcol">Status</th></tr>`
+          : `<tr><th data-k="round" class="rcol">R</th><th data-k="date" class="dcol">Date</th><th data-k="time" class="tcol">Time</th><th data-k="match">Match</th><th data-k="venue" class="vcol">Venue</th><th data-k="status" class="stcol">Status</th></tr>`;
         thead.innerHTML = head;
       } else {
         thead.innerHTML = `<tr>
@@ -416,25 +437,38 @@
           const rShort = roundShort(r.round);
           const dShort = fmtDateShort(r.date);
           const tShort = fmtTimeShort(r.time || '');
-          const dt = isTiny ? `${dShort} ${tShort}` : '';
           const venue = esc(r.venue || '');
-          const matchStr = `${esc(r.home_team||'')} ${(r.home_score&&r.away_score) ? esc(r.home_score+' — '+r.away_score) : '—'} ${esc(r.away_team||'')}`;
+          const scoreMid = (r.home_score && r.away_score) ? esc(r.home_score+' — '+r.away_score) : '—';
+
           if (isTiny){
+            const dt = `${dShort} ${tShort}`.trim();
             return `<tr>
-              <td class="right">${rShort}</td>
-              <td>${dt}</td>
-              <td>${matchStr}</td>
-              <td>${venue}</td>
-              <td><span class="status-badge status-${st}">${esc(st)}</span></td>
+              <td class="rcol">${rShort}</td>
+              <td class="dcol">${dt}</td>
+              <td class="match">
+                <div class="match-block">
+                  <span class="match-team">${esc(r.home_team||'')}</span>
+                  <span class="match-score">${scoreMid}</span>
+                  <span class="match-team">${esc(r.away_team||'')}</span>
+                </div>
+              </td>
+              <td class="vcol"><span class="venue-ellipsis" title="${venue}">${venue}</span></td>
+              <td class="stcol"><span class="status-badge status-${st}">${esc(st)}</span></td>
             </tr>`;
           } else {
             return `<tr>
-              <td class="right">${rShort}</td>
-              <td>${dShort}</td>
-              <td class="right">${tShort}</td>
-              <td>${matchStr}</td>
-              <td>${venue}</td>
-              <td><span class="status-badge status-${st}">${esc(st)}</span></td>
+              <td class="rcol">${rShort}</td>
+              <td class="dcol">${dShort}</td>
+              <td class="tcol">${tShort}</td>
+              <td class="match">
+                <div class="match-block">
+                  <span class="match-team">${esc(r.home_team||'')}</span>
+                  <span class="match-score">${scoreMid}</span>
+                  <span class="match-team">${esc(r.away_team||'')}</span>
+                </div>
+              </td>
+              <td class="vcol"><span class="venue-ellipsis" title="${venue}">${venue}</span></td>
+              <td class="stcol"><span class="status-badge status-${st}">${esc(st)}</span></td>
             </tr>`;
           }
         } else {
