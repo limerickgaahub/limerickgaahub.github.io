@@ -1,27 +1,173 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limerick GAA Hub</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Limerick GAA Hub</title>
+<meta name="color-scheme" content="light only">
+<style>
+:root { --card:#ffffff; --muted:#6b7280; --accent:#00a651; --accent-weak:#e7f7ee; --line:#e9ecef; --text:#111; --bg:#f6f7f8; }
+* { box-sizing:border-box; }
+body { margin:20px; font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
+h1 { margin:0 0 6px 0; font-weight:800; }
+.sub { color:#444; margin-bottom:16px; font-size:14px; }
+.sm-muted { color:#6b7280; font-size:12px; }
+
+.navtabs { display:flex; gap:8px; margin:16px 0 10px; flex-wrap:wrap; align-items:center; }
+.navtab { padding:10px 14px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; }
+.navtab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+button.btn { padding:9px 12px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; }
+button.btn:hover { background:#f1f5f9; }
+
+#lgh-warning { display:none; padding:10px 12px; background:#fff3cd; color:#664d03; border:1px solid #ffe69c; border-radius:10px; margin:12px 0; }
+#lgh-error { display:none; padding:10px 12px; background:#fee2e2; color:#991b1b; border:1px solid #fecaca; border-radius:10px; margin:12px 0; white-space:pre-wrap; }
+
+.card { background:#fff; border-radius:18px; box-shadow:0 8px 24px rgba(0,0,0,.05); padding:14px; }
+
+/* Hurling menus */
+.h-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:8px 0 12px; }
+.menu-wrap { position:relative; display:inline-block; }
+.trigger { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:#eaf6ef; border:1px solid #cdebd8; font-weight:800; cursor:pointer; user-select:none; }
+.trigger::after { content:"▾"; font-size:12px; }
+.menu { position:absolute; z-index:40; margin-top:8px; min-width:280px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); padding:6px; display:none; }
+.menu.open { display:block; }
+.item { padding:10px 12px; border-radius:10px; cursor:pointer; font-weight:700; }
+.item:hover { background:#f1f9f4; } .item.active { background:var(--accent); color:#fff; }
+
+/* Section tabs */
+.section-tabs { display:flex; gap:10px; margin:4px 0 14px; flex-wrap:wrap; position:relative; z-index:1; }
+.section-tabs .seg { padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
+.section-tabs .seg.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+/* Tables */
+.table-wrap { overflow:auto; border-radius:14px; border:1px solid var(--line); background:#fff; }
+table { width:100%; border-collapse:separate; border-spacing:0; table-layout:fixed; }
+thead th { position:sticky; top:0; background:#f8fafb; border-bottom:1px solid var(--line); font-size:14px; font-weight:800; color:#1f2937; text-align:left; padding:14px; }
+tbody td { padding:14px; border-bottom:1px solid var(--line); font-size:15px; }
+td.right, th.right { text-align:right; }
+tbody tr:nth-child(even) td { background:#fcfcfd; }
+tbody tr:hover td { background:#f1f9f4; }
+
+/* Match presentation */
+td.match { text-align:center; }
+.match-block { display:grid; grid-template-rows:auto auto auto; row-gap:3px; justify-items:center; }
+.match-team { display:block; text-align:center; }
+.match-score { font-weight:800; }
+.match-meta { font-size:11px; color:#6b7280; margin-top:2px; }
+
+.status-badge { font-size:12px; padding:3px 8px; border-radius:999px; display:inline-block; border:1px solid var(--line); }
+.status-Fixture { background:#fff; }
+.status-Result { background:#eaf6ef; color:#065f46; border-color:#cdebd8; }
+
+.comp-badge { display:inline-flex; align-items:center; gap:6px; }
+.comp-code { font-weight:800; font-size:12px; padding:3px 8px; border-radius:999px; border:1px solid #dbece3; background:#eefaf4; color:#065f46; }
+.group-code { font-size:12px; color:#374151; }
+
+.controls { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
+.controls > * { padding:10px 12px; border:1px solid var(--line); background:#fff; border-radius:12px; font-size:15px; min-height:42px; }
+
+.mobile-only { display:none; }
+@media (max-width:880px){
+  thead th, tbody td { padding:9px 7px; font-size:12px; }
+  th.rcol, td.rcol { width:2.2ch; text-align:center; }
+  th.dcol, td.dcol { width:9ch; text-align:center; }
+  th.tcol, td.tcol { width:4.4ch; text-align:center; }
+  th.vcol, td.vcol { width:16ch; }
+  th.stcol, td.stcol { width:1.8ch; text-align:center; }
+  td.match { padding:8px 7px; }
+  .mobile-only { display:block; font-size:11px; color:#6b7280; margin:6px 0 0 6px; }
+}
+th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
+</style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li>Hurling
-                <ul>
-                    <li>Senior Group 1</li>
-                    <li>Senior Group 2</li>
-                    <li>By Team</li>
-                    <li>By Date</li>
-                </ul>
-            </li>
-            <li>Football (Coming Soon)</li>
-            <li>About (Coming Soon)</li>
-        </ul>
-    </nav>
-    <div id="content">Content loads here...</div>
-    <script src="js/app_v7_2.js"></script>
+  <h1>Limerick GAA Hub</h1>
+  <div class="sub">Hurling — live fixtures & results (JSON-driven). Football & About: Coming soon.</div>
+
+  <div class="navtabs">
+    <div class="navtab active" data-nav="hurling">Hurling</div>
+    <div class="navtab" data-nav="football">Football</div>
+    <div class="navtab" data-nav="about">About</div>
+    <button id="refresh" class="btn" title="Fetch latest data">Refresh</button>
+    <span class="sm-muted" id="last-updated"></span>
+  </div>
+
+  <div id="lgh-warning">Some features didn’t load. Ensure <code>js/app_v7_3.js</code> exists.</div>
+  <div id="lgh-error"></div>
+
+  <!-- Hurling panel -->
+  <div id="panel-hurling" class="card">
+    <div class="h-row">
+      <div class="menu-wrap">
+        <div class="trigger" id="comp-trigger">Competition: <span id="comp-current">—</span></div>
+        <div class="menu" id="comp-menu"></div>
+      </div>
+      <div class="menu-wrap">
+        <div class="trigger" id="group-trigger">Group: <span id="group-current">—</span></div>
+        <div class="menu" id="group-menu"></div>
+      </div>
+      <div class="menu-wrap">
+        <div class="trigger" id="more-trigger">More ▾</div>
+        <div class="menu" id="more-menu">
+          <div class="item" data-target="by-team">By Team</div>
+          <div class="item" data-target="by-date">By Date</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel card" id="group-panel" style="margin-top:10px;">
+      <div class="headband">
+        <h2 id="panel-title" style="margin:0 0 10px 0;">—</h2>
+      </div>
+
+      <div class="controls card">
+        <select id="status">
+          <option value="">All (fixtures & results)</option>
+          <option value="Result">Results only</option>
+          <option value="Fixture">Fixtures only</option>
+        </select>
+      </div>
+
+      <div class="section-tabs">
+        <div class="seg active" data-view="matches">Matches</div>
+        <div class="seg" data-view="table">Table</div>
+      </div>
+
+      <div class="table-wrap matches-wrap">
+        <table id="g-table"><thead></thead><tbody></tbody></table>
+        <div class="mobile-only">R = Result, F = Fixture</div>
+      </div>
+
+      <div id="g-standings" style="margin-top:12px; display:none;">
+        <div class="table-wrap">
+          <table id="g-standings-table">
+            <thead>
+              <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>
+            </thead><tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- BY TEAM -->
+    <div class="panel card" id="by-team" style="display:none; margin-top:10px;">
+      <div class="headband"><h2>By Team</h2><span class="pill"></span></div>
+      <div class="controls card"><select id="team"><option value="">Select team…</option></select></div>
+      <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table><div class="mobile-only">R = Result, F = Fixture</div></div>
+    </div>
+
+    <!-- BY DATE -->
+    <div class="panel card" id="by-date" style="display:none; margin-top:10px;">
+      <div class="headband"><h2>By Date</h2><span class="pill"></span></div>
+      <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table><div class="mobile-only">R = Result, F = Fixture</div></div>
+    </div>
+  </div>
+
+  <!-- Football & About -->
+  <div id="panel-football" class="card" style="display:none;"><h2>Football</h2><div class="sm-muted">Coming soon.</div></div>
+  <div id="panel-about" class="card" style="display:none;"><h2>About</h2><div class="sm-muted">Coming soon.</div></div>
+
+  <script src="js/app_v7_3.js"></script>
+  <script>window.addEventListener('load', ()=>{ if(window.LGH_V7_3_READY!==true) document.getElementById('lgh-warning').style.display='block'; });</script>
 </body>
 </html>
