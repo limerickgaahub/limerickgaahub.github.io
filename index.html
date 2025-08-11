@@ -38,6 +38,10 @@
     }
     .navtab.active { background:var(--accent); color:#fff; border-color: var(--accent); }
 
+    /* Top-level panels */
+    .navpanel { display:none; }
+    .navpanel.active { display:block; }
+
     /* Existing tabs (kept) */
     .tabs { display:flex; flex-wrap:nowrap; gap:8px; margin: 16px 0 12px; overflow:auto; padding-bottom: 2px; }
     .tab {
@@ -101,6 +105,7 @@
     .status-Fixture { background:#fff; color:#0f172a; }
     .status-Result { background: #eaf6ef; color:#065f46; border-color:#cdebd8; }
 
+    /* inner panels (Group 1/2) */
     .panel { display:none; }
     .panel.active { display:block; }
 
@@ -155,7 +160,7 @@
   <h1>Limerick GAA Hub</h1>
   <div class="sub"><strong>White BOX County Senior Hurling Championship</strong> — Groups 1 & 2 (2025)</div>
 
-  <!-- New top-level navigation (does not interfere with existing .tab logic) -->
+  <!-- New top-level navigation (new classes to avoid conflicts) -->
   <div class="navtabs" id="navtabs">
     <div class="navtab active" data-nav="nav-hurling">Hurling</div>
     <div class="navtab" data-nav="nav-football">Football</div>
@@ -164,7 +169,7 @@
   </div>
 
   <!-- Panels for top-level nav -->
-  <div id="nav-hurling" class="panel active">
+  <div id="nav-hurling" class="navpanel active">
     <!-- === BEGIN: ORIGINAL PAGE CONTENT (kept verbatim) === -->
     <div class="tabs">
       <div class="tab active" data-target="g1">Senior Group 1</div>
@@ -197,7 +202,7 @@
         <div class="section-tabs" data-for="g1">
           <div class="seg active" data-view="matches">Matches</div>
           <div class="seg" data-view="table">Standings</div>
-          <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto‑calculated from current results</span>
+          <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto-calculated from current results</span>
         </div>
 
         <div class="table-wrap matches-wrap">
@@ -242,7 +247,7 @@
         <div class="section-tabs" data-for="g2">
           <div class="seg active" data-view="matches">Matches</div>
           <div class="seg" data-view="table">Standings</div>
-          <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto‑calculated from current results</span>
+          <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto-calculated from current results</span>
         </div>
 
         <div class="table-wrap matches-wrap">
@@ -279,7 +284,7 @@
   </div>
 
   <!-- FOOTBALL (placeholder until football data is added) -->
-  <div id="nav-football" class="panel">
+  <div id="nav-football" class="navpanel">
     <div class="card">
       <h2>Football</h2>
       <div class="sm-muted">Coming soon — hook in your Football grades and fixtures here.</div>
@@ -287,7 +292,7 @@
   </div>
 
   <!-- BY TEAM -->
-  <div id="nav-team" class="panel">
+  <div id="nav-team" class="navpanel">
     <div class="controls card">
       <select id="team2"><option value="">Select team…</option></select>
       <span class="sm-muted">Uses the same dataset; independent of the filters above.</span>
@@ -302,7 +307,7 @@
   </div>
 
   <!-- BY DATE -->
-  <div id="nav-date" class="panel">
+  <div id="nav-date" class="navpanel">
     <div class="controls card">
       <select id="date-sport">
         <option value="Hurling">Hurling</option>
@@ -319,7 +324,7 @@
     </div>
   </div>
 
-  <!-- ===== ORIGINAL SCRIPT (kept verbatim except wrapped late) ===== -->
+  <!-- ===== ORIGINAL SCRIPT (slightly scoped to avoid nav conflicts) ===== -->
   <script>
     // ====== DATA (Senior Championship — Groups 1 & 2, 2025) ======
     const DATA = [
@@ -358,8 +363,8 @@
       {group:"Senior Group 2", round:"Round 4", date:"2025-08-29", time:"18:30", home_team:"Monaleen", away_team:"Newcastle West", venue:"Sean Finn Park, Rathkeale", referee:"", status:"Fixture"},
       {group:"Senior Group 2", round:"Round 4", date:"2025-08-30", time:"15:00", home_team:"Dromin Athlacca", away_team:"Adare", venue:"Ballingarry", referee:"", status:"Fixture"},
       {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Adare", away_team:"Newcastle West", venue:"", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"2025-09-11", date:"2025-09-11", time:"12:00", home_team:"Mungret St Pauls", away_team:"Dromin Athlacca", venue:"", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"2025-09-11", date:"2025-09-11", time:"12:00", home_team:"Monaleen", away_team:"Kildimo Pallaskenry", venue:"", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Mungret St Pauls", away_team:"Dromin Athlacca", venue:"", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Monaleen", away_team:"Kildimo Pallaskenry", venue:"", referee:"", status:"Fixture"},
     ];
 
     // ===== Helpers =====
@@ -383,7 +388,7 @@
       const m = r.match(/(\d+)/);
       return m ? `R${m[1]}` : r;
     }
-    function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({'&':'&','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+    function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
     function score(g,p){ if(g==null || p==null) return ''; return `${g}-${p}`; }
     function totalPoints(g,p){ if(g==null || p==null) return null; return (Number(g)||0)*3 + (Number(p)||0); }
 
@@ -395,27 +400,31 @@
     const teams = Array.from(new Set(NDATA.flatMap(r => [r.home_team, r.away_team]).filter(Boolean))).sort();
     teamSel.innerHTML = '<option value="">All teams</option>' + teams.map(t=>`<option>${t}</option>`).join('');
 
-    // Tabs
-    document.querySelectorAll('.tab').forEach(tab => {
+    // ===== Scoped Tabs (ONLY inside #nav-hurling) =====
+    const hurlingScope = document.getElementById('nav-hurling');
+    hurlingScope.querySelectorAll('.tab').forEach(tab => {
       tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        hurlingScope.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        hurlingScope.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
         tab.classList.add('active');
-        document.getElementById(tab.dataset.target).classList.add('active');
+        const tgt = hurlingScope.querySelector('#' + tab.dataset.target);
+        if(tgt){ tgt.classList.add('active'); }
         renderAll();
       });
     });
 
     // Section tabs
-    document.querySelectorAll('.section-tabs').forEach(row => {
+    hurlingScope.querySelectorAll('.section-tabs').forEach(row => {
       row.querySelectorAll('.seg').forEach(seg => {
         seg.addEventListener('click', () => {
           row.querySelectorAll('.seg').forEach(s => s.classList.remove('active'));
           seg.classList.add('active');
           const forId = row.getAttribute('data-for');
           const showTable = seg.getAttribute('data-view') === 'table';
-          document.getElementById(forId + '-standings').style.display = showTable ? '' : 'none';
-          document.querySelector('#' + forId + ' .matches-wrap').style.display = showTable ? 'none' : '';
+          const standingsEl = document.getElementById(forId + '-standings');
+          const matchesWrap = document.querySelector('#' + forId + ' .matches-wrap');
+          if(standingsEl) standingsEl.style.display = showTable ? '' : 'none';
+          if(matchesWrap) matchesWrap.style.display = showTable ? 'none' : '';
           if (showTable) renderStandings(forId);
         });
       });
@@ -564,7 +573,7 @@
     }
 
     function renderAll(){
-      document.querySelectorAll('table[data-kind]').forEach(renderTable);
+      document.querySelectorAll('#nav-hurling table[data-kind]').forEach(renderTable);
     }
 
     [document.getElementById('q'),
@@ -576,7 +585,6 @@
     renderAll();
 
     // ===== Standings (Win=2, Draw=1, Loss=0) =====
-    function totalPoints(g,p){ if(g==null || p==null) return null; return (Number(g)||0)*3 + (Number(p)||0); }
     function calcStandings(groupName){
       const res = NDATA.filter(r => r.group === groupName && r.status === 'Result');
       const teams = new Map();

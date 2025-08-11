@@ -1,4 +1,4 @@
-// Top-level nav router (.navtab) — no conflict with existing .tab logic
+// Top-level nav router (.navtab) — targets .navpanel (no clash with .panel)
 (function(){
   const tabs = document.querySelectorAll('.navtab');
   const panels = {
@@ -8,9 +8,9 @@
     'nav-date': document.getElementById('nav-date'),
   };
   function show(id){
-    Object.values(panels).forEach(p => p && (p.classList.remove('active'), p.style.display='none'));
+    Object.values(panels).forEach(p => p && p.classList.remove('active'));
     const el = panels[id];
-    if(el){ el.classList.add('active'); el.style.display='block'; }
+    if(el){ el.classList.add('active'); }
     tabs.forEach(t => t.classList.remove('active'));
     const btn = document.querySelector(`.navtab[data-nav="${id}"]`);
     if(btn) btn.classList.add('active');
