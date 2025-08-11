@@ -1,5 +1,5 @@
 {
-  "updated": "2025-08-11T20:31:19Z",
+  "updated": "2025-08-11T20:44:37Z",
   "season": 2025,
   "matches": [
     {
@@ -868,6 +868,22 @@
       "away_goals": null,
       "away_points": null,
       "source": "https://limerickgaa.ie/limerick-gaa-sunday-club-championship-fixtures-13/"
+    },
+    {
+      "competition": "",
+      "group": "Group 2",
+      "round": "Round 2",
+      "date": "",
+      "time": "38:43",
+      "home": "Askeaton/Ballysteen/Kilcornan",
+      "away": "St",
+      "venue": "",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "source": "https://limerickgaa.ie/limerick-gaa-tuesday-club-championship-fixture-7/"
     }
   ]
 }
