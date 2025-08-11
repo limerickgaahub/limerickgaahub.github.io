@@ -37,7 +37,7 @@ h1 { margin:0 0 6px 0; font-weight:800; } h2 { margin:0 0 12px 0; font-size:20px
 .subpill { background:#eef2ff; color:#1e3a8a; border-color:#dbe6ff; }
 
 /* Section tabs (Matches/Standings) */
-.section-tabs { display:flex; gap:10px; margin:4px 0 14px; flex-wrap:wrap; }
+.section-tabs { display:flex; gap:10px; margin:4px 0 14px; flex-wrap:wrap; position:relative; z-index:1; }
 .section-tabs .seg { padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
 .section-tabs .seg:hover { background:#e9f5ee; }
 .section-tabs .seg.active { background:var(--accent); color:#fff; border-color:var(--accent); }
@@ -258,7 +258,7 @@ th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
         const btn = menu.querySelector(`.h-item[data-target="${id}"]`); if(btn) btn.classList.add('active');
         current.textContent = label || btn?.textContent || '';
         close();
-        if(id==='g1'||id==='g2'){ renderAll(); }
+        if(id==='g1'||id==='g2'){ try { renderAll(); } catch(e) { console.warn('renderAll failed', e); } }
       }
       trigger.addEventListener('click', (e)=>{ e.stopPropagation(); menu.classList.contains('open') ? close() : open(); });
       menu.addEventListener('click', (e)=>{ const item=e.target.closest('.h-item'); if(!item) return; show(item.getAttribute('data-target'), item.textContent.trim()); });
@@ -307,11 +307,10 @@ th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
           : `<tr><th data-k="round" class="rcol">R</th><th data-k="date" class="dcol">Date</th><th data-k="time" class="tcol">Time</th><th data-k="match">Match</th><th data-k="venue" class="vcol">Venue</th><th data-k="status" class="stcol">S</th></tr>`;
         thead.innerHTML = head;
       } else {
+        /* Desktop header now matches our body columns (uses a single "Match" column) */
         thead.innerHTML = `<tr>
           <th data-k="round">Round</th><th data-k="date" class="dcol">Date</th><th data-k="time" class="tcol">Time</th>
-          <th data-k="home_team">Home</th><th data-k="home_score" class="right">H</th>
-          <th data-k="away_team">Away</th><th data-k="away_score" class="right">A</th>
-          <th data-k="venue">Venue</th><th data-k="referee">Referee</th><th data-k="status">Status</th>
+          <th data-k="match">Match</th><th data-k="venue">Venue</th><th data-k="referee">Referee</th><th data-k="status">Status</th>
         </tr>`;
       }
       attachSorting(table);
@@ -365,7 +364,7 @@ th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
       }).join('');
     }
     function renderAll(){ document.querySelectorAll('#nav-hurling table[data-kind]').forEach(renderTable); }
-    renderAll();
+    try { renderAll(); } catch(e){ console.warn('Initial render failed', e); }
 
     function totalPoints2(g,p){ if(g==null || p==null) return null; return (Number(g)||0)*3 + (Number(p)||0); }
     function calcStandings(groupName){
