@@ -1,0 +1,2 @@
+# Optional: if you prefer explicit URLs instead of patterns.yaml crawling,
+# put one URL per line here and call the v1 script with --urls.
