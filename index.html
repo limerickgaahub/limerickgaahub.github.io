@@ -5,131 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Limerick GAA Hub — White BOX County Senior Hurling Championship (Groups 1 & 2) • 2025</title>
   <style>
-    :root {
-      --card:#ffffff;
-      --muted:#6b7280;
-      --accent:#00a651;
-      --accent-weak:#e7f7ee;
-      --line:#e9ecef;
-      --text:#111;
-      --text-soft:#334155;
-      --bg:#f6f7f8;
-    }
+    :root { --card:#ffffff; --muted:#6b7280; --accent:#00a651; --accent-weak:#e7f7ee; --line:#e9ecef; --text:#111; --text-soft:#334155; --bg:#f6f7f8; }
     * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 20px;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: var(--bg);
-      color:var(--text);
-      -webkit-font-smoothing: antialiased;
-    }
-    h1 { margin: 0 0 6px 0; font-weight: 800; letter-spacing: 0.2px; }
-    h2 { margin: 0 0 12px 0; font-size: 20px; }
-    .sub { color:#444; margin-bottom: 16px; }
-    .sm-muted { color:#6b7280; font-size: 12px; }
-
-    /* Top-level nav */
+    body { margin: 20px; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background: var(--bg); color:var(--text); -webkit-font-smoothing: antialiased; }
+    h1 { margin: 0 0 6px 0; font-weight: 800; } h2 { margin: 0 0 12px 0; font-size: 20px; }
+    .sub { color:#444; margin-bottom: 16px; } .sm-muted { color:#6b7280; font-size: 12px; }
     .navtabs { display:flex; gap:8px; margin:16px 0 8px; flex-wrap: wrap; }
-    .navtab {
-      padding:10px 14px; border-radius: 999px; background:#ececec;
-      cursor:pointer; user-select:none; font-weight:700; white-space:nowrap;
-      border:1px solid transparent;
-    }
+    .navtab { padding:10px 14px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; }
     .navtab.active { background:var(--accent); color:#fff; border-color: var(--accent); }
-    .navpanel { display:none; }
-    .navpanel.active { display:block; }
-
-    /* Hurling sub-tabs */
-    .h-tabs { display:flex; gap:8px; margin:12px 0 10px; flex-wrap: wrap; }
-    .htab {
-      padding:8px 12px; border-radius: 999px; background:#efefef;
-      cursor:pointer; user-select:none; font-weight:700;
-    }
-    .htab.active { background:var(--accent); color:#fff; }
-    .hpanel { display:none; }
-    .hpanel.active { display:block; }
-
-    /* Existing UI styles (kept) */
-    .tabs { display:flex; flex-wrap:nowrap; gap:8px; margin: 16px 0 12px; overflow:auto; padding-bottom: 2px; }
-    .tab {
-      padding:10px 14px; border-radius: 999px; background:#ececec;
-      cursor:pointer; user-select:none; font-weight:700; white-space:nowrap;
-      border:1px solid transparent;
-    }
+    .navpanel { display:none; } .navpanel.active { display:block; }
+    .tabs { display:flex; gap:8px; margin:16px 0 12px; overflow:auto; padding-bottom:2px; }
+    .tab { padding:10px 14px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; white-space:nowrap; }
     .tab.active { background:var(--accent); color:#fff; border-color: var(--accent); }
-
-    .controls { display:flex; flex-wrap:wrap; gap:10px; margin: 12px 0; }
-    .controls > * {
-      padding: 10px 12px; border: 1px solid var(--line); background:#fff; border-radius:12px;
-      font-size: 15px; min-height: 42px;
-    }
-    .controls input[type="date"] { padding:8px 10px; }
-    .controls select { background:#fff; }
-
-    .card {
-      background:#fff; border-radius:18px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-      padding: 14px;
-    }
-
+    .controls { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
+    .controls > * { padding:10px 12px; border:1px solid var(--line); background:#fff; border-radius:12px; font-size:15px; min-height:42px; }
+    .card { background:#fff; border-radius:18px; box-shadow:0 8px 24px rgba(0,0,0,.05); padding:14px; }
     .headband { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
-    .pill {
-      display:inline-block; padding:6px 10px; border-radius:999px;
-      background:var(--accent-weak); color:#065f46; font-size:13px; border:1px solid #c9ead8;
-    }
+    .pill { display:inline-block; padding:6px 10px; border-radius:999px; background:var(--accent-weak); color:#065f46; font-size:13px; border:1px solid #c9ead8; }
     .subpill { background:#eef2ff; color:#1e3a8a; border-color:#dbe6ff; }
-
-    .table-wrap { overflow-x: hidden; overflow-y: auto; border-radius:14px; border:1px solid var(--line); background:#fff; }
+    .table-wrap { overflow-y:auto; border-radius:14px; border:1px solid var(--line); background:#fff; }
     table { width:100%; border-collapse:separate; border-spacing:0; table-layout: fixed; }
-    thead th {
-      position: sticky; top: 0; z-index: 1; background:#f8fafb;
-      border-bottom: 1px solid var(--line);
-      font-size: 14px; font-weight:800; color: var(--text-soft);
-      text-align:left; padding:14px 14px;
-    }
-    tbody td {
-      padding:14px 14px; border-bottom:1px solid var(--line); font-size:15px; line-height:1.35;
-    }
+    thead th { position:sticky; top:0; background:#f8fafb; border-bottom:1px solid var(--line); font-size:14px; font-weight:800; color:var(--text-soft); text-align:left; padding:14px; }
+    tbody td { padding:14px; border-bottom:1px solid var(--line); font-size:15px; }
     td.right, th.right { text-align:right; }
-    tbody tr:nth-child(even) td { background:#fcfcfd; }
-    tbody tr:hover td { background:#f1f9f4; }
-
-    .status-badge { font-size: 12px; padding:3px 8px; border-radius:999px; display:inline-block; border:1px solid var(--line); white-space: nowrap; }
-    .status-Fixture { background:#fff; color:#0f172a; }
-    .status-Result { background: #eaf6ef; color:#065f46; border-color:#cdebd8; }
-
-    .panel { display:none; }
-    .panel.active { display:block; }
-
+    tbody tr:nth-child(even) td { background:#fcfcfd; } tbody tr:hover td { background:#f1f9f4; }
+    .status-badge { font-size:12px; padding:3px 8px; border-radius:999px; display:inline-block; border:1px solid var(--line); }
+    .status-Fixture { background:#fff; } .status-Result { background:#eaf6ef; color:#065f46; border-color:#cdebd8; }
+    .panel { display:none; } .panel.active { display:block; }
     .mobile-only { display:none; }
-    @media (max-width: 880px) {
-      body { margin: 14px; }
-      .controls { gap:8px; }
-      .controls > * { width: 100%; }
-      .table-wrap { border-radius:12px; }
-      thead th, tbody td { padding:9px 7px; font-size:12px; }
-
-      th.rcol, td.rcol { width: 2.2ch; text-align:center; }
-      th.dcol, td.dcol { width: 9ch; text-align:center; }
-      th.tcol, td.tcol { width: 4.4ch; text-align:center; }
-      th.vcol, td.vcol { width: 16ch; }
-      th.stcol, td.stcol { width: 1.8ch; text-align:center; }
-
-      td.match { padding-top: 8px; padding-bottom: 8px; }
-      .match-block { display: grid; grid-template-rows: auto auto auto; row-gap: 2px; white-space: normal; }
-      .match-team { display:block; }
-      .match-score {
-        text-align:center; font-weight:700; font-variant-numeric: tabular-nums;
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        letter-spacing: 0.2px;
-      }
-      .venue-ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:block; }
-      .mobile-only { display:block; font-size:11px; color:var(--muted); margin:6px 0 0 6px; }
+    @media (max-width:880px){
+      body { margin:14px; } .controls > * { width:100%; } thead th, tbody td { padding:9px 7px; font-size:12px; }
+      th.rcol, td.rcol { width:2.2ch; text-align:center; } th.dcol, td.dcol { width:9ch; text-align:center; } th.tcol, td.tcol { width:4.4ch; text-align:center; } th.vcol, td.vcol { width:16ch; } th.stcol, td.stcol { width:1.8ch; text-align:center; }
+      td.match { padding:8px 7px; } .match-block { display:grid; grid-template-rows:auto auto auto; row-gap:2px; white-space:normal; } .match-team { display:block; }
+      .match-score { text-align:center; font-weight:700; font-variant-numeric:tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Courier New", monospace; }
+      .venue-ellipsis { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; } .mobile-only { display:block; font-size:11px; color:#6b7280; margin:6px 0 0 6px; }
     }
     th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
-
-    /* Loader guard banner */
     #lgh-warning { display:none; padding:10px 12px; background:#fff3cd; color:#664d03; border:1px solid #ffe69c; border-radius:10px; margin:12px 0; }
   </style>
 </head>
@@ -137,7 +48,6 @@
   <h1>Limerick GAA Hub</h1>
   <div class="sub"><strong>White BOX County Senior Hurling Championship</strong> — Groups 1 & 2 (2025)</div>
 
-  <!-- Top-level nav -->
   <div class="navtabs" id="navtabs">
     <div class="navtab active" data-nav="nav-hurling">Hurling</div>
     <div class="navtab" data-nav="nav-football">Football</div>
@@ -146,179 +56,143 @@
 
   <div id="lgh-warning">Some features didn’t load (scripts missing). Ensure <code>js/lgh_router.js</code> and <code>js/lgh_extra.js</code> exist.</div>
 
-  <!-- HURLING PANEL -->
   <div id="nav-hurling" class="navpanel active">
-    <!-- Hurling sub-nav -->
-    <div class="h-tabs" id="h-tabs">
-      <div class="htab active" data-hpanel="h-grades">Grades</div>
-      <div class="htab" data-hpanel="h-team">By Team</div>
-      <div class="htab" data-hpanel="h-date">By Date</div>
+    <div class="tabs" id="hurling-tabs">
+      <div class="tab active" data-target="g1">Senior Group 1</div>
+      <div class="tab" data-target="g2">Senior Group 2</div>
+      <div class="tab" data-target="h-team-panel">By Team</div>
+      <div class="tab" data-target="h-date-panel">By Date</div>
     </div>
 
-    <!-- Hurling: Grades (original content) -->
-    <div id="h-grades" class="hpanel active">
-      <div class="tabs">
-        <div class="tab active" data-target="g1">Senior Group 1</div>
-        <div class="tab" data-target="g2">Senior Group 2</div>
-      </div>
-
-      <div class="controls card">
-        <input id="q" placeholder="Search team / venue / referee…" />
-        <select id="team"><option value="">All teams</option></select>
-        <input id="from" type="date" />
-        <input id="to" type="date" />
-        <select id="status">
-          <option value="">All (fixtures & results)</option>
-          <option value="Result">Results only</option>
-          <option value="Fixture">Fixtures only</option>
-        </select>
-        <span class="sm-muted">Click any header to sort ↑↓</span>
-      </div>
-
-      <div class="grid">
-        <!-- GROUP 1 -->
-        <div class="panel active card" id="g1">
-          <div class="headband">
-            <h2>Senior Group 1</h2>
-            <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
-            <span class="pill subpill">Phase: Group Stage</span>
-            <span class="pill subpill">Group: Senior Group 1</span>
-          </div>
-
-          <div class="section-tabs" data-for="g1">
-            <div class="seg active" data-view="matches">Matches</div>
-            <div class="seg" data-view="table">Standings</div>
-            <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto-calculated from current results</span>
-          </div>
-
-          <div class="table-wrap matches-wrap">
-            <table data-kind="combined" data-group="Senior Group 1">
-              <thead></thead>
-              <tbody></tbody>
-            </table>
-            <div class="mobile-only">R = Result, F = Fixture</div>
-          </div>
-
-          <div id="g1-standings" style="margin-top:12px; display:none;">
-            <div class="table-wrap">
-              <table data-standings="g1">
-                <thead>
-                  <tr>
-                    <th>Team</th>
-                    <th class="right">P</th>
-                    <th class="right">W</th>
-                    <th class="right">D</th>
-                    <th class="right">L</th>
-                    <th class="right">PF</th>
-                    <th class="right">PA</th>
-                    <th class="right">Diff</th>
-                    <th class="right">Pts</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
+    <div class="grid">
+      <div class="panel active card" id="g1">
+        <div class="headband">
+          <h2>Senior Group 1</h2>
+          <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
+          <span class="pill subpill">Phase: Group Stage</span>
+          <span class="pill subpill">Group: Senior Group 1</span>
         </div>
 
-        <!-- GROUP 2 -->
-        <div class="panel card" id="g2">
-          <div class="headband">
-            <h2>Senior Group 2</h2>
-            <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
-            <span class="pill subpill">Phase: Group Stage</span>
-            <span class="pill subpill">Group: Senior Group 2</span>
-          </div>
+        <div class="controls card">
+          <input id="q" placeholder="Search team / venue / referee…" />
+          <select id="team"><option value="">All teams</option></select>
+          <input id="from" type="date" />
+          <input id="to" type="date" />
+          <select id="status">
+            <option value="">All (fixtures & results)</option>
+            <option value="Result">Results only</option>
+            <option value="Fixture">Fixtures only</option>
+          </select>
+          <span class="sm-muted">Click any header to sort ↑↓</span>
+        </div>
 
-          <div class="section-tabs" data-for="g2">
-            <div class="seg active" data-view="matches">Matches</div>
-            <div class="seg" data-view="table">Standings</div>
-            <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto-calculated from current results</span>
-          </div>
+        <div class="section-tabs" data-for="g1">
+          <div class="seg active" data-view="matches">Matches</div>
+          <div class="seg" data-view="table">Standings</div>
+          <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto-calculated from current results</span>
+        </div>
 
-          <div class="table-wrap matches-wrap">
-            <table data-kind="combined" data-group="Senior Group 2">
-              <thead></thead>
-              <tbody></tbody>
+        <div class="table-wrap matches-wrap">
+          <table data-kind="combined" data-group="Senior Group 1">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+          <div class="mobile-only">R = Result, F = Fixture</div>
+        </div>
+
+        <div id="g1-standings" style="margin-top:12px; display:none;">
+          <div class="table-wrap">
+            <table data-standings="g1">
+              <thead>
+                <tr>
+                  <th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th>
+                  <th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th>
+                </tr>
+              </thead><tbody></tbody>
             </table>
-            <div class="mobile-only">R = Result, F = Fixture</div>
-          </div>
-
-          <div id="g2-standings" style="margin-top:12px; display:none;">
-            <div class="table-wrap">
-              <table data-standings="g2">
-                <thead>
-                  <tr>
-                    <th>Team</th>
-                    <th class="right">P</th>
-                    <th class="right">W</th>
-                    <th class="right">D</th>
-                    <th class="right">L</th>
-                    <th class="right">PF</th>
-                    <th class="right">PA</th>
-                    <th class="right">Diff</th>
-                    <th class="right">Pts</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Hurling: By Team -->
-    <div id="h-team" class="hpanel">
-      <div class="controls card">
-        <select id="team2"><option value="">Select team…</option></select>
-        <span class="sm-muted">Uses the same dataset; independent of the filters above.</span>
-      </div>
-      <div class="table-wrap">
-        <table id="team-table">
-          <thead></thead>
-          <tbody></tbody>
-        </table>
-        <div class="mobile-only">R = Result, F = Fixture</div>
-      </div>
-    </div>
+      <div class="panel card" id="g2">
+        <div class="headband">
+          <h2>Senior Group 2</h2>
+          <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
+          <span class="pill subpill">Phase: Group Stage</span>
+          <span class="pill subpill">Group: Senior Group 2</span>
+        </div>
 
-    <!-- Hurling: By Date -->
-    <div id="h-date" class="hpanel">
-      <div class="controls card">
-        <select id="date-sport">
-          <option value="Hurling">Hurling</option>
-          <option value="Football">Football</option>
-        </select>
-        <span class="sm-muted">All fixtures listed by date. We can expand this view later.</span>
+        <div class="section-tabs" data-for="g2">
+          <div class="seg active" data-view="matches">Matches</div>
+          <div class="seg" data-view="table">Standings</div>
+          <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto-calculated from current results</span>
+        </div>
+
+        <div class="table-wrap matches-wrap">
+          <table data-kind="combined" data-group="Senior Group 2">
+            <thead></thead><tbody></tbody>
+          </table>
+          <div class="mobile-only">R = Result, F = Fixture</div>
+        </div>
+
+        <div id="g2-standings" style="margin-top:12px; display:none;">
+          <div class="table-wrap">
+            <table data-standings="g2">
+              <thead>
+                <tr>
+                  <th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th>
+                  <th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th>
+                </tr>
+              </thead><tbody></tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <div class="table-wrap">
-        <table id="date-table">
-          <thead></thead>
-          <tbody></tbody>
-        </table>
-        <div class="mobile-only">R = Result, F = Fixture</div>
+
+      <div class="panel card" id="h-team-panel">
+        <div class="headband">
+          <h2>By Team</h2>
+          <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
+          <span class="pill subpill">Phase: Group Stage</span>
+        </div>
+        <div class="controls card">
+          <select id="team2"><option value="">Select team…</option></select>
+          <span class="sm-muted">Uses the same dataset; independent of the filters above.</span>
+        </div>
+        <div class="table-wrap">
+          <table id="team-table"><thead></thead><tbody></tbody></table>
+          <div class="mobile-only">R = Result, F = Fixture</div>
+        </div>
+      </div>
+
+      <div class="panel card" id="h-date-panel">
+        <div class="headband">
+          <h2>By Date</h2>
+          <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
+          <span class="pill subpill">Phase: Group Stage</span>
+        </div>
+        <div class="controls card">
+          <select id="date-sport">
+            <option value="Hurling">Hurling</option>
+            <option value="Football">Football</option>
+          </select>
+          <span class="sm-muted">All fixtures listed by date. We can expand this view later.</span>
+        </div>
+        <div class="table-wrap">
+          <table id="date-table"><thead></thead><tbody></tbody></table>
+          <div class="mobile-only">R = Result, F = Fixture</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- FOOTBALL PANEL (coming soon) -->
   <div id="nav-football" class="navpanel">
-    <div class="card">
-      <h2>Football</h2>
-      <div class="sm-muted">Coming soon — we’ll mirror the Hurling layout with grades, By Team, and By Date.</div>
-    </div>
+    <div class="card"><h2>Football</h2><div class="sm-muted">Coming soon.</div></div>
   </div>
-
-  <!-- ABOUT PANEL (coming soon) -->
   <div id="nav-about" class="navpanel">
-    <div class="card">
-      <h2>About</h2>
-      <div class="sm-muted">Coming soon — a short description of the project and credits.</div>
-    </div>
+    <div class="card"><h2>About</h2><div class="sm-muted">Coming soon.</div></div>
   </div>
 
-  <!-- ===== ORIGINAL SCRIPT (scoped to Hurling "Grades") ===== -->
   <script>
     const DATA = [
       {group:"Senior Group 1", round:"Round 1", date:"2025-07-31", time:"19:00", home_team:"Kilmallock", home_goals:0, home_points:23, away_team:"Patrickswell", away_goals:0, away_points:18, venue:"Newcastle West", referee:"", status:"Result"},
@@ -346,7 +220,7 @@
       {group:"Senior Group 2", round:"Round 3", date:"2025-08-22", time:"18:30", home_team:"Adare", away_team:"Kildimo Pallaskenry", venue:"Sean Finn Park, Rathkeale", referee:"", status:"Fixture"},
       {group:"Senior Group 2", round:"Round 3", date:"2025-08-23", time:"15:00", home_team:"Newcastle West", away_team:"Dromin Athlacca", venue:"Croagh", referee:"", status:"Fixture"},
       {group:"Senior Group 2", round:"Round 4", date:"2025-08-29", time:"18:30", home_team:"Kildimo Pallaskenry", away_team:"Mungret St Pauls", venue:"Ballybrown", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 4", date:"2025-08-29", time:"18:30", home_team:"Monaleen", away_team:"Newcastle West", venue:"Sean Finn Park, Rathkeale", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"2025-08-29", date:"2025-08-29", time:"18:30", home_team:"Monaleen", away_team:"Newcastle West", venue:"Sean Finn Park, Rathkeale", referee:"", status:"Fixture"},
       {group:"Senior Group 2", round:"Round 4", date:"2025-08-30", time:"15:00", home_team:"Dromin Athlacca", away_team:"Adare", venue:"Ballingarry", referee:"", status:"Fixture"},
       {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Adare", away_team:"Newcastle West", venue:"", referee:"", status:"Fixture"},
       {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Mungret St Pauls", away_team:"Dromin Athlacca", venue:"", referee:"", status:"Fixture"},
@@ -368,20 +242,20 @@
     const teams = Array.from(new Set(NDATA.flatMap(r => [r.home_team, r.away_team]).filter(Boolean))).sort();
     teamSel.innerHTML = '<option value="">All teams</option>' + teams.map(t=>`<option>${t}</option>`).join('');
 
-    // Scope to Hurling Grades
-    const hGrades = document.getElementById('h-grades');
-    hGrades.querySelectorAll('.tab').forEach(tab => {
+    const hScope = document.getElementById('nav-hurling');
+    const hTabs = document.getElementById('hurling-tabs');
+    hTabs.querySelectorAll('.tab').forEach(tab => {
       tab.addEventListener('click', () => {
-        hGrades.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        hGrades.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        hTabs.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        hScope.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
         tab.classList.add('active');
-        const tgt = hGrades.querySelector('#' + tab.dataset.target);
+        const tgt = hScope.querySelector('#' + tab.dataset.target);
         if(tgt){ tgt.classList.add('active'); }
         renderAll();
       });
     });
 
-    hGrades.querySelectorAll('.section-tabs').forEach(row => {
+    hScope.querySelectorAll('.section-tabs').forEach(row => {
       row.querySelectorAll('.seg').forEach(seg => {
         seg.addEventListener('click', () => {
           row.querySelectorAll('.seg').forEach(s => s.classList.remove('active'));
@@ -401,8 +275,8 @@
     const fromEl = document.getElementById('from');
     const toEl = document.getElementById('to');
     const statusEl = document.getElementById('status');
-
     const sortState = new Map();
+
     function attachSorting(table){
       table.querySelectorAll('th[data-k]').forEach(th => {
         th.addEventListener('click', () => {
@@ -425,16 +299,10 @@
         thead.innerHTML = head;
       } else {
         thead.innerHTML = `<tr>
-          <th data-k="round">Round</th>
-          <th data-k="date" class="dcol">Date</th>
-          <th data-k="time" class="tcol">Time</th>
-          <th data-k="home_team">Home</th>
-          <th data-k="home_score" class="right">H</th>
-          <th data-k="away_team">Away</th>
-          <th data-k="away_score" class="right">A</th>
-          <th data-k="venue">Venue</th>
-          <th data-k="referee">Referee</th>
-          <th data-k="status">Status</th>
+          <th data-k="round">Round</th><th data-k="date" class="dcol">Date</th><th data-k="time" class="tcol">Time</th>
+          <th data-k="home_team">Home</th><th data-k="home_score" class="right">H</th>
+          <th data-k="away_team">Away</th><th data-k="away_score" class="right">A</th>
+          <th data-k="venue">Venue</th><th data-k="referee">Referee</th><th data-k="status">Status</th>
         </tr>`;
       }
       attachSorting(table);
@@ -443,20 +311,14 @@
     function inDateRange(iso, from, to){
       if(!iso) return true;
       const t = new Date(iso).getTime();
-      if(from){
-        const f = new Date(from).getTime();
-        if(t < f) return false;
-      }
-      if(to){
-        const tt = new Date(to).getTime();
-        if(t > tt) return false;
-      }
+      if(from && t < new Date(from).getTime()) return false;
+      if(to && t > new Date(to).getTime()) return false;
       return true;
     }
 
     function renderTable(table){
-      const isMobile = window.matchMedia('(max-width: 880px)').matches;
-      const isTiny = window.matchMedia('(max-width: 400px)').matches;
+      const isMobile = matchMedia('(max-width:880px)').matches;
+      const isTiny = matchMedia('(max-width:400px)').matches;
       buildHeader(table, isMobile, isTiny);
 
       const grp = table.getAttribute('data-group');
@@ -472,12 +334,7 @@
         if (qEl.value && !blob.includes(qEl.value.toLowerCase())) return false;
         if (!inDateRange(r.date, fromEl.value, toEl.value)) return false;
         return true;
-      }).sort((a,b)=>{
-        const K = state.k;
-        const av = (a[K] ?? "").toString();
-        const bv = (b[K] ?? "").toString();
-        return av.localeCompare(bv, undefined, { numeric:true }) * state.dir;
-      });
+      }).sort((a,b)=> (String(a[state.k]??'')).localeCompare(String(b[state.k]??''), undefined, {numeric:true}) * state.dir);
 
       tbody.innerHTML = rows.map(r => {
         const st = r.status || "";
@@ -488,116 +345,66 @@
           const venue = esc(r.venue || '');
           const scoreMid = (r.home_score && r.away_score) ? esc(r.home_score+' — '+r.away_score) : '—';
           const stShort = st.startsWith('R') ? 'R' : 'F';
-
           if (isTiny){
             const dt = `${dShort} ${tShort}`.trim();
             return `<tr>
-              <td class="rcol">${rShort}</td>
-              <td class="dcol">${dt}</td>
-              <td class="match">
-                <div class="match-block">
-                  <span class="match-team">${esc(r.home_team||'')}</span>
-                  <span class="match-score">${scoreMid}</span>
-                  <span class="match-team">${esc(r.away_team||'')}</span>
-                </div>
-              </td>
+              <td class="rcol">${rShort}</td><td class="dcol">${dt}</td>
+              <td class="match"><div class="match-block"><span class="match-team">${esc(r.home_team||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away_team||'')}</span></div></td>
               <td class="vcol"><span class="venue-ellipsis" title="${venue}">${venue}</span></td>
               <td class="stcol">${stShort}</td>
             </tr>`;
           } else {
             return `<tr>
-              <td class="rcol">${rShort}</td>
-              <td class="dcol">${dShort}</td>
-              <td class="tcol">${tShort}</td>
-              <td class="match">
-                <div class="match-block">
-                  <span class="match-team">${esc(r.home_team||'')}</span>
-                  <span class="match-score">${scoreMid}</span>
-                  <span class="match-team">${esc(r.away_team||'')}</span>
-                </div>
-              </td>
-              <td class="vcol"><span class="venue-ellipsis" title="${venue}">${venue}</span></td>
-              <td class="stcol">${stShort}</td>
+              <td class="rcol">${rShort}</td><td class="dcol">${dShort}</td><td class="tcol">${tShort}</td>
+              <td class="match"><div class="match-block"><span class="match-team">${esc(r.home_team||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away_team||'')}</span></div></td>
+              <td class="vcol"><span class="venue-ellipsis" title="${venue}">${venue}</span></td><td class="stcol">${stShort}</td>
             </tr>`;
           }
         } else {
           return `<tr>
-            <td>${esc(r.round || "")}</td>
-            <td class="dcol">${esc(r.date || "")}</td>
-            <td class="tcol">${esc(r.time || "")}</td>
-            <td>${esc(r.home_team || "")}</td>
-            <td class="right">${esc(r.home_score || "")}</td>
-            <td>${esc(r.away_team || "")}</td>
-            <td class="right">${esc(r.away_score || "")}</td>
-            <td>${esc(r.venue || "")}</td>
-            <td>${esc(r.referee || "")}</td>
+            <td>${esc(r.round || "")}</td><td class="dcol">${esc(r.date || "")}</td><td class="tcol">${esc(r.time || "")}</td>
+            <td>${esc(r.home_team || "")}</td><td class="right">${esc(r.home_score || "")}</td>
+            <td>${esc(r.away_team || "")}</td><td class="right">${esc(r.away_score || "")}</td>
+            <td>${esc(r.venue || "")}</td><td>${esc(r.referee || "")}</td>
             <td><span class="status-badge status-${st}">${esc(st)}</span></td>
           </tr>`;
         }
       }).join('');
     }
 
-    function renderAll(){ document.querySelectorAll('#h-grades table[data-kind]').forEach(renderTable); }
+    function renderAll(){ document.querySelectorAll('#nav-hurling table[data-kind]').forEach(renderTable); }
 
-    [document.getElementById('q'), document.getElementById('from'), document.getElementById('to'),
-     document.getElementById('status'), teamSel].forEach(el => el.addEventListener('input', renderAll));
-
+    [document.getElementById('q'), document.getElementById('from'), document.getElementById('to'), document.getElementById('status'), teamSel].forEach(el => el.addEventListener('input', renderAll));
     renderAll();
 
     function calcStandings(groupName){
       const res = NDATA.filter(r => r.group === groupName && r.status === 'Result');
       const teams = new Map();
-      function row(name){
-        if(!teams.has(name)){
-          teams.set(name, { team:name, p:0, w:0, d:0, l:0, pf:0, pa:0, diff:0, pts:0 });
-        }
-        return teams.get(name);
-      }
+      function row(name){ if(!teams.has(name)) teams.set(name,{team:name,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0}); return teams.get(name); }
       for (const m of res){
-        const hs = totalPoints(m.home_goals, m.home_points);
-        const as = totalPoints(m.away_goals, m.away_points);
+        const hs = totalPoints(m.home_goals, m.home_points), as = totalPoints(m.away_goals, m.away_points);
         if (hs==null || as==null) continue;
-        const H = row(m.home_team), A = row(m.away_team);
-        H.p += 1; A.p += 1;
-        H.pf += hs; H.pa += as; A.pf += as; A.pa += hs;
-        if (hs > as){ H.w += 1; H.pts += 2; A.l += 1; }
-        else if (hs < as){ A.w += 1; A.pts += 2; H.l += 1; }
-        else { H.d += 1; A.d += 1; H.pts += 1; A.pts += 1; }
+        const H=row(m.home_team), A=row(m.away_team);
+        H.p++; A.p++; H.pf+=hs; H.pa+=as; A.pf+=as; A.pa+=hs;
+        if (hs>as){ H.w++; H.pts+=2; A.l++; } else if (hs<as){ A.w++; A.pts+=2; H.l++; } else { H.d++; A.d++; H.pts++; A.pts++; }
       }
-      for (const row of teams.values()) row.diff = row.pf - row.pa;
+      for (const r of teams.values()) r.diff = r.pf - r.pa;
       return Array.from(teams.values()).sort((a,b)=> b.pts-a.pts || b.diff-a.diff || b.pf-a.pf || a.team.localeCompare(b.team));
     }
-
     function renderStandings(forId){
       const groupName = (forId === 'g1') ? 'Senior Group 1' : 'Senior Group 2';
-      const table = document.querySelector(`table[data-standings="${forId}"] tbody`);
+      const tbody = document.querySelector(`table[data-standings="${forId}"] tbody`);
       const rows = calcStandings(groupName);
-      table.innerHTML = rows.map(r => `
-        <tr>
-          <td>${esc(r.team)}</td>
-          <td class="right">${r.p}</td>
-          <td class="right">${r.w}</td>
-          <td class="right">${r.d}</td>
-          <td class="right">${r.l}</td>
-          <td class="right">${r.pf}</td>
-          <td class="right">${r.pa}</td>
-          <td class="right">${r.diff}</td>
-          <td class="right"><strong>${r.pts}</strong></td>
-        </tr>
-      `).join('');
+      tbody.innerHTML = rows.map(r => `<tr>
+        <td>${esc(r.team)}</td><td class="right">${r.p}</td><td class="right">${r.w}</td><td class="right">${r.d}</td>
+        <td class="right">${r.l}</td><td class="right">${r.pf}</td><td class="right">${r.pa}</td>
+        <td class="right">${r.diff}</td><td class="right"><strong>${r.pts}</strong></td>
+      </tr>`).join('');
     }
   </script>
 
-  <!-- External JS (relative paths) -->
   <script src="js/lgh_router.js"></script>
   <script src="js/lgh_extra.js"></script>
-
-  <!-- Loader guard -->
-  <script>
-    window.addEventListener('load', () => {
-      const ok = (window.LGH_ROUTER_READY === true) && (window.LGH_EXTRA_READY === true);
-      if(!ok){ document.getElementById('lgh-warning').style.display = 'block'; }
-    });
-  </script>
+  <script>window.addEventListener('load', ()=>{ const ok=(window.LGH_ROUTER_READY===true)&&(window.LGH_EXTRA_READY===true); if(!ok) document.getElementById('lgh-warning').style.display='block'; });</script>
 </body>
 </html>
