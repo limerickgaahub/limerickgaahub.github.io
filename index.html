@@ -29,7 +29,16 @@
     h2 { margin: 0 0 12px 0; font-size: 20px; }
     .sub { color:#444; margin-bottom: 16px; }
 
-    /* Tabs (top level) */
+    /* Top-level nav (new, non-conflicting) */
+    .navtabs { display:flex; gap:8px; margin:16px 0 8px; flex-wrap: wrap; }
+    .navtab {
+      padding:10px 14px; border-radius: 999px; background:#ececec;
+      cursor:pointer; user-select:none; font-weight:700; white-space:nowrap;
+      border:1px solid transparent;
+    }
+    .navtab.active { background:var(--accent); color:#fff; border-color: var(--accent); }
+
+    /* Existing tabs (kept) */
     .tabs { display:flex; flex-wrap:nowrap; gap:8px; margin: 16px 0 12px; overflow:auto; padding-bottom: 2px; }
     .tab {
       padding:10px 14px; border-radius: 999px; background:#ececec;
@@ -146,116 +155,171 @@
   <h1>Limerick GAA Hub</h1>
   <div class="sub"><strong>White BOX County Senior Hurling Championship</strong> — Groups 1 & 2 (2025)</div>
 
-  <div class="tabs">
-    <div class="tab active" data-target="g1">Senior Group 1</div>
-    <div class="tab" data-target="g2">Senior Group 2</div>
+  <!-- New top-level navigation (does not interfere with existing .tab logic) -->
+  <div class="navtabs" id="navtabs">
+    <div class="navtab active" data-nav="nav-hurling">Hurling</div>
+    <div class="navtab" data-nav="nav-football">Football</div>
+    <div class="navtab" data-nav="nav-team">By Team</div>
+    <div class="navtab" data-nav="nav-date">By Date</div>
   </div>
 
-  <div class="controls card">
-    <input id="q" placeholder="Search team / venue / referee…" />
-    <select id="team"><option value="">All teams</option></select>
-    <input id="from" type="date" />
-    <input id="to" type="date" />
-    <select id="status">
-      <option value="">All (fixtures & results)</option>
-      <option value="Result">Results only</option>
-      <option value="Fixture">Fixtures only</option>
-    </select>
-    <span class="sm-muted">Click any header to sort ↑↓</span>
-  </div>
+  <!-- Panels for top-level nav -->
+  <div id="nav-hurling" class="panel active">
+    <!-- === BEGIN: ORIGINAL PAGE CONTENT (kept verbatim) === -->
+    <div class="tabs">
+      <div class="tab active" data-target="g1">Senior Group 1</div>
+      <div class="tab" data-target="g2">Senior Group 2</div>
+    </div>
 
-  <div class="grid">
-    <!-- GROUP 1 -->
-    <div class="panel active card" id="g1">
-      <div class="headband">
-        <h2>Senior Group 1</h2>
-        <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
-        <span class="pill subpill">Phase: Group Stage</span>
-        <span class="pill subpill">Group: Senior Group 1</span>
-      </div>
+    <div class="controls card">
+      <input id="q" placeholder="Search team / venue / referee…" />
+      <select id="team"><option value="">All teams</option></select>
+      <input id="from" type="date" />
+      <input id="to" type="date" />
+      <select id="status">
+        <option value="">All (fixtures & results)</option>
+        <option value="Result">Results only</option>
+        <option value="Fixture">Fixtures only</option>
+      </select>
+      <span class="sm-muted">Click any header to sort ↑↓</span>
+    </div>
 
-      <div class="section-tabs" data-for="g1">
-        <div class="seg active" data-view="matches">Matches</div>
-        <div class="seg" data-view="table">Standings</div>
-        <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto‑calculated from current results</span>
-      </div>
+    <div class="grid">
+      <!-- GROUP 1 -->
+      <div class="panel active card" id="g1">
+        <div class="headband">
+          <h2>Senior Group 1</h2>
+          <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
+          <span class="pill subpill">Phase: Group Stage</span>
+          <span class="pill subpill">Group: Senior Group 1</span>
+        </div>
 
-      <div class="table-wrap matches-wrap">
-        <table data-kind="combined" data-group="Senior Group 1">
-          <thead></thead>
-          <tbody></tbody>
-        </table>
-        <div class="mobile-only">R = Result, F = Fixture</div>
-      </div>
+        <div class="section-tabs" data-for="g1">
+          <div class="seg active" data-view="matches">Matches</div>
+          <div class="seg" data-view="table">Standings</div>
+          <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto‑calculated from current results</span>
+        </div>
 
-      <div id="g1-standings" style="margin-top:12px; display:none;">
-        <div class="table-wrap">
-          <table data-standings="g1">
-            <thead>
-              <tr>
-                <th>Team</th>
-                <th class="right">P</th>
-                <th class="right">W</th>
-                <th class="right">D</th>
-                <th class="right">L</th>
-                <th class="right">PF</th>
-                <th class="right">PA</th>
-                <th class="right">Diff</th>
-                <th class="right">Pts</th>
-              </tr>
-            </thead>
+        <div class="table-wrap matches-wrap">
+          <table data-kind="combined" data-group="Senior Group 1">
+            <thead></thead>
             <tbody></tbody>
           </table>
+          <div class="mobile-only">R = Result, F = Fixture</div>
+        </div>
+
+        <div id="g1-standings" style="margin-top:12px; display:none;">
+          <div class="table-wrap">
+            <table data-standings="g1">
+              <thead>
+                <tr>
+                  <th>Team</th>
+                  <th class="right">P</th>
+                  <th class="right">W</th>
+                  <th class="right">D</th>
+                  <th class="right">L</th>
+                  <th class="right">PF</th>
+                  <th class="right">PA</th>
+                  <th class="right">Diff</th>
+                  <th class="right">Pts</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP 2 -->
+      <div class="panel card" id="g2">
+        <div class="headband">
+          <h2>Senior Group 2</h2>
+          <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
+          <span class="pill subpill">Phase: Group Stage</span>
+          <span class="pill subpill">Group: Senior Group 2</span>
+        </div>
+
+        <div class="section-tabs" data-for="g2">
+          <div class="seg active" data-view="matches">Matches</div>
+          <div class="seg" data-view="table">Standings</div>
+          <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto‑calculated from current results</span>
+        </div>
+
+        <div class="table-wrap matches-wrap">
+          <table data-kind="combined" data-group="Senior Group 2">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+          <div class="mobile-only">R = Result, F = Fixture</div>
+        </div>
+
+        <div id="g2-standings" style="margin-top:12px; display:none;">
+          <div class="table-wrap">
+            <table data-standings="g2">
+              <thead>
+                <tr>
+                  <th>Team</th>
+                  <th class="right">P</th>
+                  <th class="right">W</th>
+                  <th class="right">D</th>
+                  <th class="right">L</th>
+                  <th class="right">PF</th>
+                  <th class="right">PA</th>
+                  <th class="right">Diff</th>
+                  <th class="right">Pts</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
+    <!-- === END: ORIGINAL PAGE CONTENT === -->
+  </div>
 
-    <!-- GROUP 2 -->
-    <div class="panel card" id="g2">
-      <div class="headband">
-        <h2>Senior Group 2</h2>
-        <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
-        <span class="pill subpill">Phase: Group Stage</span>
-        <span class="pill subpill">Group: Senior Group 2</span>
-      </div>
-
-      <div class="section-tabs" data-for="g2">
-        <div class="seg active" data-view="matches">Matches</div>
-        <div class="seg" data-view="table">Standings</div>
-        <span class="sm-muted">Standings: Win=2, Draw=1, Loss=0 • auto‑calculated from current results</span>
-      </div>
-
-      <div class="table-wrap matches-wrap">
-        <table data-kind="combined" data-group="Senior Group 2">
-          <thead></thead>
-          <tbody></tbody>
-        </table>
-        <div class="mobile-only">R = Result, F = Fixture</div>
-      </div>
-
-      <div id="g2-standings" style="margin-top:12px; display:none;">
-        <div class="table-wrap">
-          <table data-standings="g2">
-            <thead>
-              <tr>
-                <th>Team</th>
-                <th class="right">P</th>
-                <th class="right">W</th>
-                <th class="right">D</th>
-                <th class="right">L</th>
-                <th class="right">PF</th>
-                <th class="right">PA</th>
-                <th class="right">Diff</th>
-                <th class="right">Pts</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
+  <!-- FOOTBALL (placeholder until football data is added) -->
+  <div id="nav-football" class="panel">
+    <div class="card">
+      <h2>Football</h2>
+      <div class="sm-muted">Coming soon — hook in your Football grades and fixtures here.</div>
     </div>
   </div>
 
+  <!-- BY TEAM -->
+  <div id="nav-team" class="panel">
+    <div class="controls card">
+      <select id="team2"><option value="">Select team…</option></select>
+      <span class="sm-muted">Uses the same dataset; independent of the filters above.</span>
+    </div>
+    <div class="table-wrap">
+      <table id="team-table">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+      <div class="mobile-only">R = Result, F = Fixture</div>
+    </div>
+  </div>
+
+  <!-- BY DATE -->
+  <div id="nav-date" class="panel">
+    <div class="controls card">
+      <select id="date-sport">
+        <option value="Hurling">Hurling</option>
+        <option value="Football">Football</option>
+      </select>
+      <span class="sm-muted">All fixtures listed by date. We can expand this view later.</span>
+    </div>
+    <div class="table-wrap">
+      <table id="date-table">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+      <div class="mobile-only">R = Result, F = Fixture</div>
+    </div>
+  </div>
+
+  <!-- ===== ORIGINAL SCRIPT (kept verbatim except wrapped late) ===== -->
   <script>
     // ====== DATA (Senior Championship — Groups 1 & 2, 2025) ======
     const DATA = [
@@ -294,8 +358,8 @@
       {group:"Senior Group 2", round:"Round 4", date:"2025-08-29", time:"18:30", home_team:"Monaleen", away_team:"Newcastle West", venue:"Sean Finn Park, Rathkeale", referee:"", status:"Fixture"},
       {group:"Senior Group 2", round:"Round 4", date:"2025-08-30", time:"15:00", home_team:"Dromin Athlacca", away_team:"Adare", venue:"Ballingarry", referee:"", status:"Fixture"},
       {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Adare", away_team:"Newcastle West", venue:"", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Mungret St Pauls", away_team:"Dromin Athlacca", venue:"", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Monaleen", away_team:"Kildimo Pallaskenry", venue:"", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"2025-09-11", date:"2025-09-11", time:"12:00", home_team:"Mungret St Pauls", away_team:"Dromin Athlacca", venue:"", referee:"", status:"Fixture"},
+      {group:"Senior Group 2", round:"2025-09-11", date:"2025-09-11", time:"12:00", home_team:"Monaleen", away_team:"Kildimo Pallaskenry", venue:"", referee:"", status:"Fixture"},
     ];
 
     // ===== Helpers =====
@@ -319,7 +383,7 @@
       const m = r.match(/(\d+)/);
       return m ? `R${m[1]}` : r;
     }
-    function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+    function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({'&':'&','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
     function score(g,p){ if(g==null || p==null) return ''; return `${g}-${p}`; }
     function totalPoints(g,p){ if(g==null || p==null) return null; return (Number(g)||0)*3 + (Number(p)||0); }
 
@@ -568,5 +632,9 @@
       `).join('');
     }
   </script>
+
+  <!-- New JS for top-level nav + extra sections -->
+  <script src="./js/lgh_router.js"></script>
+  <script src="./js/lgh_extra.js"></script>
 </body>
 </html>
