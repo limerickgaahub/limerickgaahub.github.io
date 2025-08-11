@@ -1,4 +1,4 @@
-name: Update Limerick GAA Fixtures (targeted)
+name: Update Limerick GAA Fixtures (targeted v1.1)
 
 on:
   schedule:
@@ -29,9 +29,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 lxml
 
-      - name: Scrape (targeted pages only)
+      - name: Scrape (targeted v1.1)
         run: |
-          python scripts/scrape_fixtures_targeted.py --urls scripts/urls_hurling_2025.txt
+          python scripts/scrape_fixtures_targeted_v1_1.py --urls scripts/urls_hurling_2025.txt
 
       - name: Commit & push (with rebase + retry)
         run: |
@@ -39,7 +39,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/hurling_2025.json
-          git commit -m "Auto-update fixtures (targeted)" || echo "No changes to commit"
+          git commit -m "Auto-update fixtures (targeted v1.1)" || echo "No changes to commit"
           for i in 1 2 3; do
             git pull --rebase origin main || true
             if git push origin HEAD:main; then
