@@ -3,402 +3,145 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Limerick GAA Hub — White BOX County Senior Hurling Championship (Groups 1 & 2) • 2025</title>
+<title>Limerick GAA Hub — Hurling 2025 (JSON)</title>
+<link rel="preload" href="js/app_v7_1.js" as="script">
 <style>
 :root { --card:#ffffff; --muted:#6b7280; --accent:#00a651; --accent-weak:#e7f7ee; --line:#e9ecef; --text:#111; --text-soft:#334155; --bg:#f6f7f8; }
 * { box-sizing:border-box; }
 body { margin:20px; font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
 h1 { margin:0 0 6px 0; font-weight:800; } h2 { margin:0 0 12px 0; font-size:20px; }
 .sub { color:#444; margin-bottom:16px; } .sm-muted { color:#6b7280; font-size:12px; }
-
-/* Top-level nav */
+button.btn { padding:8px 12px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; }
+button.btn:hover { background:#f1f5f9; }
 .navtabs { display:flex; gap:8px; margin:16px 0 8px; flex-wrap:wrap; }
 .navtab { padding:10px 14px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; }
 .navtab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 .navpanel { display:none; } .navpanel.active { display:block; }
-
-/* Hurling dropdown */
-.h-dropdown { position:relative; display:inline-block; margin:8px 0 12px; }
-.h-trigger { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:#eaf6ef; border:1px solid #cdebd8; font-weight:800; cursor:pointer; user-select:none; }
-.h-trigger:after { content:"▾"; font-size:12px; }
-.h-menu { position:absolute; z-index:20; margin-top:8px; min-width:240px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); padding:6px; display:none; }
-.h-menu.open { display:block; }
-.h-item { padding:10px 12px; border-radius:10px; cursor:pointer; font-weight:700; }
-.h-item:hover { background:#f1f9f4; } .h-item.active { background:var(--accent); color:#fff; }
-
-/* Cards & controls */
-.card { background:#fff; border-radius:18px; box-shadow:0 8px 24px rgba(0,0,0,.05); padding:14px; }
-.controls { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
-.controls > * { padding:10px 12px; border:1px solid var(--line); background:#fff; border-radius:12px; font-size:15px; min-height:42px; }
-
-/* Headband */
-.headband { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
-.pill { display:inline-block; padding:6px 10px; border-radius:999px; background:var(--accent-weak); color:#065f46; font-size:13px; border:1px solid #c9ead8; }
-.subpill { background:#eef2ff; color:#1e3a8a; border-color:#dbe6ff; }
-
-/* Section tabs (Matches/Standings) */
+/* menus */
+.h-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:8px 0 12px; }
+.h-trigger, .g-trigger { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:#eaf6ef; border:1px solid #cdebd8; font-weight:800; cursor:pointer; user-select:none; }
+.h-trigger::after, .g-trigger::after { content:"▾"; font-size:12px; }
+.menu { position:absolute; z-index:20; margin-top:8px; min-width:280px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); padding:6px; display:none; }
+.menu.open { display:block; } .menu-wrap { position:relative; display:inline-block; }
+.item { padding:10px 12px; border-radius:10px; cursor:pointer; font-weight:700; }
+.item:hover { background:#f1f9f4; } .item.active { background:var(--accent); color:#fff; }
+/* pills */
 .section-tabs { display:flex; gap:10px; margin:4px 0 14px; flex-wrap:wrap; position:relative; z-index:1; }
 .section-tabs .seg { padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
-.section-tabs .seg:hover { background:#e9f5ee; }
 .section-tabs .seg.active { background:var(--accent); color:#fff; border-color:var(--accent); }
-
-/* Table */
+.pill { display:inline-block; padding:6px 10px; border-radius:999px; background:#e7f7ee; color:#065f46; font-size:13px; border:1px solid #c9ead8; }
+.card { background:#fff; border-radius:18px; box-shadow:0 8px 24px rgba(0,0,0,.05); padding:14px; }
+/* tables */
 .table-wrap { overflow-y:auto; border-radius:14px; border:1px solid var(--line); background:#fff; }
 table { width:100%; border-collapse:separate; border-spacing:0; table-layout:fixed; }
-thead th { position:sticky; top:0; background:#f8fafb; border-bottom:1px solid var(--line); font-size:14px; font-weight:800; color:var(--text-soft); text-align:left; padding:14px; }
+thead th { position:sticky; top:0; background:#f8fafb; border-bottom:1px solid var(--line); font-size:14px; font-weight:800; color:#1f2937; text-align:left; padding:14px; }
 tbody td { padding:14px; border-bottom:1px solid var(--line); font-size:15px; }
 td.right, th.right { text-align:right; }
 tbody tr:nth-child(even) td { background:#fcfcfd; } tbody tr:hover td { background:#f1f9f4; }
-
-/* Match column centered */
 td.match { text-align:center; }
-.match-block { display:grid; grid-template-rows:auto auto auto; row-gap:3px; white-space:normal; justify-items:center; }
-.match-team { display:block; text-align:center; }
-.match-score { font-weight:700; } /* inherit site font */
-
-/* Status badges */
+.match-block { display:grid; grid-template-rows:auto auto auto; row-gap:3px; justify-items:center; }
+.match-score { font-weight:700; }
+.match-meta { font-size:11px; color:#6b7280; margin-top:2px; }
+.comp-badge { display:inline-flex; align-items:center; gap:6px; }
+.comp-code { font-weight:800; font-size:12px; padding:3px 8px; border-radius:999px; border:1px solid #dbece3; background:#eefaf4; color:#065f46; }
+.group-code { font-size:12px; color:#374151; }
 .status-badge { font-size:12px; padding:3px 8px; border-radius:999px; display:inline-block; border:1px solid var(--line); }
 .status-Fixture { background:#fff; } .status-Result { background:#eaf6ef; color:#065f46; border-color:#cdebd8; }
-
-.panel { display:none; } .panel.active { display:block; }
-
+.controls { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
+.controls > * { padding:10px 12px; border:1px solid var(--line); background:#fff; border-radius:12px; font-size:15px; min-height:42px; }
 .mobile-only { display:none; }
 @media (max-width:880px){
-  body { margin:14px; } .controls > * { width:100%; } thead th, tbody td { padding:9px 7px; font-size:12px; }
+  thead th, tbody td { padding:9px 7px; font-size:12px; }
   th.rcol, td.rcol { width:2.2ch; text-align:center; } th.dcol, td.dcol { width:9ch; text-align:center; } th.tcol, td.tcol { width:4.4ch; text-align:center; } th.vcol, td.vcol { width:16ch; } th.stcol, td.stcol { width:1.8ch; text-align:center; }
   td.match { padding:8px 7px; }
-  .venue-ellipsis { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; }
   .mobile-only { display:block; font-size:11px; color:#6b7280; margin:6px 0 0 6px; }
 }
-th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
-
 #lgh-warning { display:none; padding:10px 12px; background:#fff3cd; color:#664d03; border:1px solid #ffe69c; border-radius:10px; margin:12px 0; }
 </style>
 </head>
 <body>
   <h1>Limerick GAA Hub</h1>
-  <div class="sub"><strong>White BOX County Senior Hurling Championship</strong> — Groups 1 & 2 (2025)</div>
+  <div class="sub"><strong>Hurling 2025</strong> — JSON-driven (full matrix ready)</div>
 
-  <div class="navtabs" id="navtabs">
-    <div class="navtab active" data-nav="nav-hurling">Hurling</div>
-    <div class="navtab" data-nav="nav-football">Football</div>
-    <div class="navtab" data-nav="nav-about">About</div>
+  <div class="navtabs">
+    <div class="navtab active">Hurling</div>
+    <div class="navtab">Football</div>
+    <div class="navtab">About</div>
+    <button id="refresh" class="btn" title="Fetch latest data">Refresh</button>
+    <span class="sm-muted" id="last-updated"></span>
   </div>
 
-  <div id="lgh-warning">Some features didn’t load (scripts missing). Ensure <code>js/lgh_router.js</code> and <code>js/lgh_extra.js</code> exist.</div>
+  <div id="lgh-warning">Some features didn’t load. Ensure <code>js/app_v7_1.js</code> exists.</div>
 
-  <div id="nav-hurling" class="navpanel active">
-    <div class="h-dropdown" id="h-dropdown">
-      <div class="h-trigger" id="h-trigger">Hurling • <span id="h-current">Senior Group 1</span></div>
-      <div class="h-menu" id="h-menu" role="menu" aria-label="Hurling menu">
-        <div class="h-item active" data-target="g1" role="menuitem">Senior Group 1</div>
-        <div class="h-item" data-target="g2" role="menuitem">Senior Group 2</div>
-        <div class="h-item" data-target="h-team-panel" role="menuitem">By Team</div>
-        <div class="h-item" data-target="h-date-panel" role="menuitem">By Date</div>
+  <div class="card" style="margin-bottom:10px;">
+    <div class="h-row">
+      <div class="menu-wrap">
+        <div class="h-trigger" id="comp-trigger">Competition: <span id="comp-current">—</span></div>
+        <div class="menu" id="comp-menu"></div>
       </div>
-    </div>
-
-    <div class="grid">
-      <div class="panel active card" id="g1">
-        <div class="headband">
-          <h2>Senior Group 1</h2>
-          <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
-          <span class="pill subpill">Phase: Group Stage</span>
-          <span class="pill subpill">Group: Senior Group 1</span>
-        </div>
-
-        <div class="controls card">
-          <select id="status">
-            <option value="">All (fixtures & results)</option>
-            <option value="Result">Results only</option>
-            <option value="Fixture">Fixtures only</option>
-          </select>
-        </div>
-
-        <div class="section-tabs" data-for="g1">
-          <div class="seg active" data-view="matches">Matches</div>
-          <div class="seg" data-view="table">Standings</div>
-        </div>
-
-        <div class="table-wrap matches-wrap">
-          <table data-kind="combined" data-group="Senior Group 1">
-            <thead></thead><tbody></tbody>
-          </table>
-          <div class="mobile-only">R = Result, F = Fixture</div>
-        </div>
-
-        <div id="g1-standings" style="margin-top:12px; display:none;">
-          <div class="table-wrap">
-            <table data-standings="g1">
-              <thead>
-                <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>
-              </thead><tbody></tbody>
-            </table>
-          </div>
-        </div>
+      <div class="menu-wrap">
+        <div class="g-trigger" id="group-trigger">Group: <span id="group-current">—</span></div>
+        <div class="menu" id="group-menu"></div>
       </div>
-
-      <div class="panel card" id="g2">
-        <div class="headband">
-          <h2>Senior Group 2</h2>
-          <span class="pill">Competition: White BOX County Senior Hurling Championship</span>
-          <span class="pill subpill">Phase: Group Stage</span>
-          <span class="pill subpill">Group: Senior Group 2</span>
+      <div class="menu-wrap">
+        <div class="g-trigger" id="more-trigger">More ▾</div>
+        <div class="menu" id="more-menu">
+          <div class="item" data-target="by-team">By Team</div>
+          <div class="item" data-target="by-date">By Date</div>
         </div>
-
-        <div class="controls card">
-          <select id="status2">
-            <option value="">All (fixtures & results)</option>
-            <option value="Result">Results only</option>
-            <option value="Fixture">Fixtures only</option>
-          </select>
-        </div>
-
-        <div class="section-tabs" data-for="g2">
-          <div class="seg active" data-view="matches">Matches</div>
-          <div class="seg" data-view="table">Standings</div>
-        </div>
-
-        <div class="table-wrap matches-wrap">
-          <table data-kind="combined" data-group="Senior Group 2">
-            <thead></thead><tbody></tbody>
-          </table>
-          <div class="mobile-only">R = Result, F = Fixture</div>
-        </div>
-
-        <div id="g2-standings" style="margin-top:12px; display:none;">
-          <div class="table-wrap">
-            <table data-standings="g2">
-              <thead>
-                <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>
-              </thead><tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel card" id="h-team-panel">
-        <div class="headband"><h2>By Team</h2><span class="pill">Competition: White BOX County Senior Hurling Championship</span><span class="pill subpill">Phase: Group Stage</span></div>
-        <div class="controls card"><select id="team2"><option value="">Select team…</option></select></div>
-        <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table><div class="mobile-only">R = Result, F = Fixture</div></div>
-      </div>
-
-      <div class="panel card" id="h-date-panel">
-        <div class="headband"><h2>By Date</h2><span class="pill">Competition: White BOX County Senior Hurling Championship</span><span class="pill subpill">Phase: Group Stage</span></div>
-        <div class="controls card"><select id="date-sport"><option value="Hurling">Hurling</option><option value="Football">Football</option></select></div>
-        <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table><div class="mobile-only">R = Result, F = Fixture</div></div>
       </div>
     </div>
   </div>
 
-  <div id="nav-football" class="navpanel"><div class="card"><h2>Football</h2><div class="sm-muted">Coming soon.</div></div></div>
-  <div id="nav-about" class="navpanel"><div class="card"><h2>About</h2><div class="sm-muted">Coming soon.</div></div></div>
+  <div class="grid">
+    <div class="panel active card" id="group-panel">
+      <div class="headband">
+        <h2 id="panel-title">—</h2>
+        <span class="pill">Matches & Table</span>
+      </div>
 
-  <script>
-    const DATA = [
-      {group:"Senior Group 1", round:"Round 1", date:"2025-07-31", time:"19:00", home_team:"Kilmallock", home_goals:0, home_points:23, away_team:"Patrickswell", away_goals:0, away_points:18, venue:"Newcastle West", referee:"", status:"Result"},
-      {group:"Senior Group 1", round:"Round 1", date:"2025-08-02", time:"15:00", home_team:"Ballybrown", home_goals:5, home_points:18, away_team:"Ahane", away_goals:1, away_points:23, venue:"Claughaun GAA, Childers Rd", referee:"Johnny Murphy", status:"Result"},
-      {group:"Senior Group 1", round:"Round 1", date:"2025-08-02", time:"19:00", home_team:"Doon", home_goals:1, home_points:19, away_team:"Na Piarsaigh", away_goals:2, away_points:16, venue:"Kilmallock", referee:"John O Halloran", status:"Result"},
-      {group:"Senior Group 1", round:"Round 2", date:"2025-08-07", time:"19:00", home_team:"Doon", home_goals:3, home_points:23, away_team:"Patrickswell", away_goals:0, away_points:14, venue:"Kilmallock", referee:"Michael Sexton", status:"Result"},
-      {group:"Senior Group 1", round:"Round 2", date:"2025-08-08", time:"19:00", home_team:"Ahane", home_goals:0, home_points:18, away_team:"Kilmallock", away_goals:1, away_points:15, venue:"Doon", referee:"Timmy Mc Grath", status:"Result"},
-      {group:"Senior Group 1", round:"Round 2", date:"2025-08-08", time:"19:00", home_team:"Na Piarsaigh", home_goals:0, home_points:21, away_team:"Ballybrown", away_goals:1, away_points:10, venue:"Claughaun GAA, Childers Rd", referee:"Eamonn Stapleton", status:"Result"},
-      {group:"Senior Group 1", round:"Round 3", date:"2025-08-21", time:"18:30", home_team:"Doon", away_team:"Kilmallock", venue:"Knocklong", referee:"", status:"Fixture"},
-      {group:"Senior Group 1", round:"Round 3", date:"2025-08-23", time:"18:30", home_team:"Patrickswell", away_team:"Ballybrown", venue:"Mick Neville Park", referee:"", status:"Fixture"},
-      {group:"Senior Group 1", round:"Round 3", date:"2025-08-24", time:"14:00", home_team:"Na Piarsaigh", away_team:"Ahane", venue:"Claughaun GAA, Childers Rd", referee:"", status:"Fixture"},
-      {group:"Senior Group 1", round:"Round 4", date:"2025-08-29", time:"18:15", home_team:"Ballybrown", away_team:"Doon", venue:"Kilmallock", referee:"", status:"Fixture"},
-      {group:"Senior Group 1", round:"Round 4", date:"2025-08-29", time:"18:30", home_team:"Ahane", away_team:"Patrickswell", venue:"Claughaun GAA, Childers Rd", referee:"", status:"Fixture"},
-      {group:"Senior Group 1", round:"Round 4", date:"2025-08-30", time:"18:00", home_team:"Kilmallock", away_team:"Na Piarsaigh", venue:"Mick Neville Park", referee:"", status:"Fixture"},
-      {group:"Senior Group 1", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Patrickswell", away_team:"Na Piarsaigh", venue:"", referee:"", status:"Fixture"},
-      {group:"Senior Group 1", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Doon", away_team:"Ahane", venue:"", referee:"", status:"Fixture"},
-      {group:"Senior Group 1", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Kilmallock", away_team:"Ballybrown", venue:"", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 1", date:"2025-07-31", time:"19:00", home_team:"Monaleen", home_goals:1, home_points:20, away_team:"Adare", away_goals:0, away_points:18, venue:"Fedamore", referee:"Timmy Mc Grath", status:"Result"},
-      {group:"Senior Group 2", round:"Round 1", date:"2025-08-01", time:"19:00", home_team:"Mungret St Pauls", home_goals:1, home_points:17, away_team:"Newcastle West", away_goals:2, away_points:14, venue:"Mick Neville Park", referee:"Liam Berkery", status:"Result"},
-      {group:"Senior Group 2", round:"Round 1", date:"2025-08-02", time:"19:00", home_team:"Kildimo Pallaskenry", home_goals:3, home_points:16, away_team:"Dromin Athlacca", away_goals:0, away_points:18, venue:"Ballyagran", referee:"Timmy Mc Grath", status:"Result"},
-      {group:"Senior Group 2", round:"Round 2", date:"2025-08-06", time:"19:00", home_team:"Adare", home_goals:1, home_points:21, away_team:"Mungret St Pauls", away_goals:2, away_points:18, venue:"Ballybrown", referee:"Kieran Guina", status:"Result"},
-      {group:"Senior Group 2", round:"Round 2", date:"2025-08-08", time:"19:00", home_team:"Monaleen", home_goals:1, home_points:21, away_team:"Dromin Athlacca", away_goals:1, away_points:16, venue:"Fedamore", referee:"Liam Berkery", status:"Result"},
-      {group:"Senior Group 2", round:"Round 2", date:"2025-08-08", time:"19:00", home_team:"Kildimo Pallaskenry", home_goals:2, home_points:16, away_team:"Newcastle West", away_goals:2, away_points:16, venue:"Sean Finn Park, Rathkeale", referee:"Johnny Murphy", status:"Result"},
-      {group:"Senior Group 2", round:"Round 3", date:"2025-08-22", time:"18:30", home_team:"Mungret St Pauls", away_team:"Monaleen", venue:"Claughaun GAA, Childers Rd", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 3", date:"2025-08-22", time:"18:30", home_team:"Adare", away_team:"Kildimo Pallaskenry", venue:"Sean Finn Park, Rathkeale", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 3", date:"2025-08-23", time:"15:00", home_team:"Newcastle West", away_team:"Dromin Athlacca", venue:"Croagh", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 4", date:"2025-08-29", time:"18:30", home_team:"Kildimo Pallaskenry", away_team:"Mungret St Pauls", venue:"Ballybrown", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 4", date:"2025-08-29", time:"18:30", home_team:"Monaleen", away_team:"Newcastle West", venue:"Sean Finn Park, Rathkeale", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 4", date:"2025-08-30", time:"15:00", home_team:"Dromin Athlacca", away_team:"Adare", venue:"Ballingarry", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Adare", away_team:"Newcastle West", venue:"", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Mungret St Pauls", away_team:"Dromin Athlacca", venue:"", referee:"", status:"Fixture"},
-      {group:"Senior Group 2", round:"Round 5", date:"2025-09-11", time:"12:00", home_team:"Monaleen", away_team:"Kildimo Pallaskenry", venue:"", referee:"", status:"Fixture"},
-    ];
+      <div class="controls card">
+        <select id="status">
+          <option value="">All (fixtures & results)</option>
+          <option value="Result">Results only</option>
+          <option value="Fixture">Fixtures only</option>
+        </select>
+      </div>
 
-    const pad2 = n => String(n).padStart(2,'0');
-    const day3 = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    function fmtDateShort(iso){ if(!iso) return ''; const d = new Date(iso + 'T00:00:00'); return `${day3[d.getDay()]} ${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`; }
-    function fmtTimeShort(t){ if(!t) return ''; const m = t.match(/^(\d{1,2}):(\d{2})/); return m ? `${pad2(m[1])}${m[2]}` : t; }
-    function roundShort(r){ if(!r) return ''; if(/quarter|\bQF\b/i.test(r)) return 'QF'; if(/semi|\bSF\b/i.test(r)) return 'SF'; if(/final/i.test(r) && !/semi|quarter/i.test(r)) return 'F'; const m = r.match(/(\d+)/); return m ? `R${m[1]}` : r; }
-    function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-    function score(g,p){ if(g==null || p==null) return ''; return `${g}-${p}`; }
-    function totalPoints(g,p){ if(g==null || p==null) return null; return (Number(g)||0)*3 + (Number(p)||0); }
-    const NDATA = DATA.map(d => ({...d, home_score: score(d.home_goals,d.home_points), away_score: score(d.away_goals,d.away_points)}));
+      <div class="section-tabs">
+        <div class="seg active" data-view="matches">Matches</div>
+        <div class="seg" data-view="table">Table</div>
+      </div>
 
-    // By Team dropdown
-    const teamSel2 = document.getElementById('team2');
-    const teams = Array.from(new Set(NDATA.flatMap(r => [r.home_team, r.away_team]).filter(Boolean))).sort();
-    teamSel2.innerHTML = '<option value="">Select team…</option>' + teams.map(t=>`<option>${t}</option>`).join('');
+      <div class="table-wrap matches-wrap">
+        <table id="g-table"><thead></thead><tbody></tbody></table>
+        <div class="mobile-only">R = Result, F = Fixture</div>
+      </div>
 
-    // Hurling dropdown logic
-    (function(){
-      const trigger = document.getElementById('h-trigger');
-      const menu = document.getElementById('h-menu');
-      const current = document.getElementById('h-current');
-      const scope = document.getElementById('nav-hurling');
-      function open(){ menu.classList.add('open'); trigger.setAttribute('aria-expanded','true'); }
-      function close(){ menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
-      function show(id, label){
-        scope.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        const el = scope.querySelector('#'+id); if(el) el.classList.add('active');
-        menu.querySelectorAll('.h-item').forEach(i => i.classList.remove('active'));
-        const btn = menu.querySelector(`.h-item[data-target="${id}"]`); if(btn) btn.classList.add('active');
-        current.textContent = label || btn?.textContent || '';
-        close();
-        if(id==='g1'||id==='g2'){ try { renderAll(); } catch(e) { console.warn('renderAll failed', e); } }
-      }
-      trigger.addEventListener('click', (e)=>{ e.stopPropagation(); menu.classList.contains('open') ? close() : open(); });
-      menu.addEventListener('click', (e)=>{ const item=e.target.closest('.h-item'); if(!item) return; show(item.getAttribute('data-target'), item.textContent.trim()); });
-      document.addEventListener('click', (e)=>{ if(!menu.contains(e.target) && !trigger.contains(e.target)) close(); });
-      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
-      const params = new URLSearchParams(location.hash.replace('#','')); const hash=params.get('h');
-      if(hash==='g2') show('g2','Senior Group 2'); else if(hash==='team') show('h-team-panel','By Team'); else if(hash==='date') show('h-date-panel','By Date'); else show('g1','Senior Group 1');
-    })();
+      <div id="g-standings" style="margin-top:12px; display:none;">
+        <div class="table-wrap">
+          <table id="g-standings-table">
+            <thead>
+              <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>
+            </thead><tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-    // Section tabs
-    document.querySelectorAll('#nav-hurling .section-tabs').forEach(row => {
-      row.querySelectorAll('.seg').forEach(seg => {
-        seg.addEventListener('click', () => {
-          row.querySelectorAll('.seg').forEach(s => s.classList.remove('active'));
-          seg.classList.add('active');
-          const forId = row.getAttribute('data-for');
-          const showTable = seg.getAttribute('data-view') === 'table';
-          const standingsEl = document.getElementById(forId + '-standings');
-          const matchesWrap = document.querySelector('#' + forId + ' .matches-wrap');
-          if(standingsEl) standingsEl.style.display = showTable ? '' : 'none';
-          if(matchesWrap) matchesWrap.style.display = showTable ? 'none' : '';
-          if (showTable) renderStandings(forId);
-        });
-      });
-    });
+    <div class="panel card" id="by-team" style="display:none;">
+      <div class="headband"><h2>By Team</h2><span class="pill">All competitions</span></div>
+      <div class="controls card"><select id="team"><option value="">Select team…</option></select></div>
+      <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table><div class="mobile-only">R = Result, F = Fixture</div></div>
+    </div>
 
-    // Sorting
-    const sortState = new Map();
-    function attachSorting(table){
-      table.querySelectorAll('th[data-k]').forEach(th => {
-        th.addEventListener('click', () => {
-          const k = th.dataset.k;
-          const state = sortState.get(table) || { k, dir: 1 };
-          state.dir = (state.k === k) ? -state.dir : 1;
-          state.k = k;
-          sortState.set(table, state);
-          renderTable(table);
-        });
-      });
-    }
-    function buildHeader(table, isMobile, isTiny){
-      const thead = table.querySelector('thead');
-      if (isMobile){
-        const head = isTiny
-          ? `<tr><th data-k="round" class="rcol">R</th><th data-k="dt" class="dcol">Date/Time</th><th data-k="match">Match</th><th data-k="venue" class="vcol">Venue</th><th data-k="status" class="stcol">S</th></tr>`
-          : `<tr><th data-k="round" class="rcol">R</th><th data-k="date" class="dcol">Date</th><th data-k="time" class="tcol">Time</th><th data-k="match">Match</th><th data-k="venue" class="vcol">Venue</th><th data-k="status" class="stcol">S</th></tr>`;
-        thead.innerHTML = head;
-      } else {
-        /* Desktop header now matches our body columns (uses a single "Match" column) */
-        thead.innerHTML = `<tr>
-          <th data-k="round">Round</th><th data-k="date" class="dcol">Date</th><th data-k="time" class="tcol">Time</th>
-          <th data-k="match">Match</th><th data-k="venue">Venue</th><th data-k="referee">Referee</th><th data-k="status">Status</th>
-        </tr>`;
-      }
-      attachSorting(table);
-    }
-    function renderTable(table){
-      const isMobile = matchMedia('(max-width:880px)').matches;
-      const isTiny = matchMedia('(max-width:400px)').matches;
-      buildHeader(table, isMobile, isTiny);
-      const grp = table.getAttribute('data-group');
-      const tbody = table.querySelector('tbody');
-      const state = sortState.get(table) || {k:"date", dir:1};
-      const statusFilter = (table.closest('.panel').id === 'g2') ? document.getElementById('status2').value : document.getElementById('status').value;
+    <div class="panel card" id="by-date" style="display:none;">
+      <div class="headband"><h2>By Date</h2><span class="pill">Grouped by competition</span></div>
+      <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table><div class="mobile-only">R = Result, F = Fixture</div></div>
+    </div>
+  </div>
 
-      const rows = NDATA.filter(r => {
-        if (grp && r.group !== grp) return false;
-        if (statusFilter && r.status !== statusFilter) return false;
-        return true;
-      }).sort((a,b)=> (String(a[state.k]??'')).localeCompare(String(b[state.k]??''), undefined, {numeric:true}) * state.dir);
-
-      tbody.innerHTML = rows.map(r => {
-        const st = r.status || "";
-        if (isMobile){
-          const rShort = roundShort(r.round);
-          const dShort = fmtDateShort(r.date);
-          const tShort = fmtTimeShort(r.time || '');
-          const venue = esc(r.venue || '');
-          const scoreMid = (r.home_score && r.away_score) ? esc(r.home_score+' — '+r.away_score) : '—';
-          const stShort = st.startsWith('R') ? 'R' : 'F';
-          if (isTiny){
-            const dt = `${dShort} ${tShort}`.trim();
-            return `<tr>
-              <td class="rcol" style="text-align:center">${rShort}</td><td class="dcol">${dt}</td>
-              <td class="match"><div class="match-block"><span class="match-team">${esc(r.home_team||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away_team||'')}</span></div></td>
-              <td class="vcol"><span class="venue-ellipsis" title="${venue}">${venue}</span></td><td class="stcol">${stShort}</td>
-            </tr>`;
-          } else {
-            return `<tr>
-              <td class="rcol" style="text-align:center">${rShort}</td><td class="dcol">${dShort}</td><td class="tcol">${tShort}</td>
-              <td class="match"><div class="match-block"><span class="match-team">${esc(r.home_team||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away_team||'')}</span></div></td>
-              <td class="vcol"><span class="venue-ellipsis" title="${venue}">${venue}</span></td><td class="stcol">${stShort}</td>
-            </tr>`;
-          }
-        } else {
-          return `<tr>
-            <td>${esc(r.round || "")}</td><td class="dcol">${esc(r.date || "")}</td><td class="tcol">${esc(r.time || "")}</td>
-            <td class="match"><div class="match-block"><span class="match-team">${esc(r.home_team||'')}</span><span class="match-score">${esc(r.home_score||'')}${(r.home_score&&r.away_score)?' — ':''}${esc(r.away_score||'')}</span><span class="match-team">${esc(r.away_team||'')}</span></div></td>
-            <td>${esc(r.venue || "")}</td><td>${esc(r.referee || "")}</td>
-            <td><span class="status-badge status-${st}">${esc(st)}</span></td>
-          </tr>`;
-        }
-      }).join('');
-    }
-    function renderAll(){ document.querySelectorAll('#nav-hurling table[data-kind]').forEach(renderTable); }
-    try { renderAll(); } catch(e){ console.warn('Initial render failed', e); }
-
-    function totalPoints2(g,p){ if(g==null || p==null) return null; return (Number(g)||0)*3 + (Number(p)||0); }
-    function calcStandings(groupName){
-      const res = NDATA.filter(r => r.group === groupName && r.status === 'Result');
-      const teams = new Map();
-      function row(name){ if(!teams.has(name)) teams.set(name,{team:name,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0}); return teams.get(name); }
-      for (const m of res){
-        const hs = totalPoints2(m.home_goals, m.home_points), as = totalPoints2(m.away_goals, m.away_points);
-        if (hs==null || as==null) continue;
-        const H=row(m.home_team), A=row(m.away_team);
-        H.p++; A.p++; H.pf+=hs; H.pa+=as; A.pf+=as; A.pa+=hs;
-        if (hs>as){ H.w++; H.pts+=2; A.l++; } else if (hs<as){ A.w++; A.pts+=2; H.l++; } else { H.d++; A.d++; H.pts++; A.pts++; }
-      }
-      for (const r of teams.values()) r.diff = r.pf - r.pa;
-      return Array.from(teams.values()).sort((a,b)=> b.pts-a.pts || b.diff-a.diff || b.pf-a.pf || a.team.localeCompare(b.team));
-    }
-    function renderStandings(forId){
-      const groupName = (forId === 'g1') ? 'Senior Group 1' : 'Senior Group 2';
-      const tbody = document.querySelector(`table[data-standings="${forId}"] tbody`);
-      const rows = calcStandings(groupName);
-      tbody.innerHTML = rows.map(r => `<tr>
-        <td>${esc(r.team)}</td><td class="right">${r.p}</td><td class="right">${r.w}</td><td class="right">${r.d}</td>
-        <td class="right">${r.l}</td><td class="right">${r.pf}</td><td class="right">${r.pa}</td>
-        <td class="right">${r.diff}</td><td class="right"><strong>${r.pts}</strong></td>
-      </tr>`).join('');
-    }
-
-    // Re-render on status change
-    document.getElementById('status').addEventListener('input', () => { document.querySelectorAll('#g1 table[data-kind]').forEach(renderTable); });
-    document.getElementById('status2').addEventListener('input', () => { document.querySelectorAll('#g2 table[data-kind]').forEach(renderTable); });
-  </script>
-
-  <script src="js/lgh_router.js"></script>
-  <script src="js/lgh_extra.js"></script>
-  <script>window.addEventListener('load', ()=>{ const ok=(window.LGH_ROUTER_READY===true)&&(window.LGH_EXTRA_READY===true); if(!ok) document.getElementById('lgh-warning').style.display='block'; });</script>
+  <script src="js/app_v7_1.js"></script>
+  <script>window.addEventListener('load', ()=>{ if(window.LGH_V7_1_READY!==true) document.getElementById('lgh-warning').style.display='block'; });</script>
 </body>
 </html>
