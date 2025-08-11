@@ -1,9 +1,13 @@
-name: Update Limerick GAA Fixtures (v2)
+name: Update Limerick GAA Fixtures (targeted)
 
 on:
   schedule:
-    - cron: '10 7,19 * * *'  # 07:10 & 19:10 UTC
+    - cron: '15 7,19 * * *'
   workflow_dispatch:
+
+concurrency:
+  group: update-fixtures
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -23,24 +27,23 @@ jobs:
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4 lxml pyyaml
+          pip install requests beautifulsoup4 lxml
 
-      - name: Scrape site (v2 crawler)
+      - name: Scrape (targeted pages only)
         run: |
-          python scripts/scrape_fixtures_v2.py --patterns scripts/patterns.yaml
+          python scripts/scrape_fixtures_targeted.py --urls scripts/urls_hurling_2025.txt
 
-      - name: Validate dataset
+      - name: Commit & push (with rebase + retry)
         run: |
-          python scripts/validate_dataset.py
-
-      - name: Commit changes
-        run: |
-          if [[ -n $(git status --porcelain) ]]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/hurling_2025.json
-            git commit -m "Auto-update fixtures (v2)"
-            git push
-          else
-            echo "No changes."
-          fi
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/hurling_2025.json
+          git commit -m "Auto-update fixtures (targeted)" || echo "No changes to commit"
+          for i in 1 2 3; do
+            git pull --rebase origin main || true
+            if git push origin HEAD:main; then
+              echo "Pushed on attempt $i"; break
+            fi
+            echo "Retrying push ($i)..."; sleep 5
+          done
