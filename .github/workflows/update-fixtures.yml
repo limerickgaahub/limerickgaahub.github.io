@@ -33,6 +33,25 @@ jobs:
         run: |
           python scripts/scrape_fixtures_targeted_v1_1_1.py --urls scripts/urls_hurling_2025.txt
 
+      - name: Show repo tree & Python info
+        run: |
+          pwd
+          ls -la
+          ls -la scripts || true
+          ls -la data || true
+          python --version
+
+      - name: Scraper dry-run sanity
+        run: |
+          set -e
+          python scripts/scrape_fixtures_targeted_v1_1_1.py --urls scripts/urls_hurling_2025.txt
+          echo "---- git status after write ----"
+          git status --porcelain
+          echo "---- head of JSON ----"
+          head -n 40 data/hurling_2025.json || true
+
+
+
       - name: Commit & push (with rebase + retry)
         run: |
           set -e
