@@ -1,2 +1,6 @@
-# Optional: if you prefer explicit URLs instead of patterns.yaml crawling,
-# put one URL per line here and call the v1 script with --urls.
+https://limerickgaa.ie/senior-hurling-fixtures/
+https://limerickgaa.ie/junior-hurling-fixtures/
+https://limerickgaa.ie/intermediate-hurling-fixtures/
+https://limerickgaa.ie/senior-hurling-results/
+https://limerickgaa.ie/junior-hurling-results/
+https://limerickgaa.ie/intermediate-hurling-results/
