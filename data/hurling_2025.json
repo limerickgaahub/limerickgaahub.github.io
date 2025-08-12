@@ -1,5 +1,5 @@
 {
-  "updated": "2025-08-11T21:54:11Z",
+  "updated": "2025-08-12T07:42:32Z",
   "season": 2025,
   "matches": [
     {
@@ -19684,6 +19684,86 @@
       "away_points": null,
       "competition": "Intermediate Hurling Championship",
       "source": "https://limerickgaa.ie/intermediate-hurling-results/"
+    },
+    {
+      "date": "",
+      "time": "20:19",
+      "home": "Ballybricken Bohermore",
+      "away": "BYE",
+      "venue": "",
+      "group": "Group 2",
+      "round": "Round 2",
+      "status": "Result",
+      "home_goals": 2019,
+      "home_points": 2,
+      "away_goals": 2019,
+      "away_points": 2,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
+    {
+      "date": "",
+      "time": "08:00",
+      "home": "8 - 30",
+      "away": "Claughaun 0 - 8",
+      "venue": "",
+      "group": "",
+      "round": "",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-results/"
+    },
+    {
+      "date": "",
+      "time": "01:00",
+      "home": "1 - 16",
+      "away": "Ballybrown 4 - 26",
+      "venue": "",
+      "group": "",
+      "round": "",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-results/"
+    },
+    {
+      "date": "",
+      "time": "01:00",
+      "home": "1 - 18",
+      "away": "St Kieran's 2 - 10",
+      "venue": "",
+      "group": "Group 2",
+      "round": "Round 2",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-results/"
+    },
+    {
+      "date": "",
+      "time": "01:00",
+      "home": "1 - 12",
+      "away": "Granagh Ballingarry 1 - 14",
+      "venue": "",
+      "group": "Group 1",
+      "round": "Round 2",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-results/"
     }
   ]
 }
