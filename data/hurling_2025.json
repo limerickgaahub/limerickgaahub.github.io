@@ -1,5 +1,5 @@
 {
-  "updated": "2025-08-13T19:31:31Z",
+  "updated": "2025-08-14T07:42:55Z",
   "season": 2025,
   "matches": [
     {
@@ -19892,6 +19892,86 @@
       "away_points": null,
       "competition": "Junior A Hurling Championship",
       "source": "https://limerickgaa.ie/junior-hurling-results/"
+    },
+    {
+      "date": "",
+      "time": "02:00",
+      "home": "Adare",
+      "away": "Feenagh",
+      "venue": "",
+      "group": "Group 2",
+      "round": "Round 3",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
+    {
+      "date": "",
+      "time": "24:00",
+      "home": "Adare",
+      "away": "Feenagh Kilmeedy",
+      "venue": "",
+      "group": "Group 2",
+      "round": "Round 3",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
+    {
+      "date": "",
+      "time": "01:00",
+      "home": "Newcastle West",
+      "away": "Feohanagh",
+      "venue": "",
+      "group": "Group 1",
+      "round": "Round 3",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
+    {
+      "date": "",
+      "time": "01:00",
+      "home": "Croagh Kilfinny",
+      "away": "Granagh",
+      "venue": "",
+      "group": "Group 1",
+      "round": "Round 3",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
+    {
+      "date": "",
+      "time": "26:00",
+      "home": "Croagh Kilfinny",
+      "away": "Granagh Ballingarry",
+      "venue": "",
+      "group": "Group 1",
+      "round": "Round 3",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-fixtures/"
     }
   ]
 }
