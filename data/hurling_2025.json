@@ -1,5 +1,5 @@
 {
-  "updated": "2025-08-14T19:28:36Z",
+  "updated": "2025-08-15T07:40:37Z",
   "season": 2025,
   "matches": [
     {
@@ -19972,6 +19972,22 @@
       "away_points": null,
       "competition": "Junior A Hurling Championship",
       "source": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
+    {
+      "date": "",
+      "time": "03:00",
+      "home": "3 - 13",
+      "away": "Galtee Gaels 1 - 12",
+      "venue": "",
+      "group": "",
+      "round": "Round 1",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Senior Hurling Championship",
+      "source": "https://limerickgaa.ie/senior-hurling-results/"
     }
   ]
 }
