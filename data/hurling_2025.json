@@ -1,5 +1,5 @@
 {
-  "updated": "2025-08-18T19:32:54Z",
+  "updated": "2025-08-19T07:38:34Z",
   "season": 2025,
   "matches": [
     {
@@ -20084,6 +20084,70 @@
       "away_points": null,
       "competition": "Senior Hurling Championship",
       "source": "https://limerickgaa.ie/senior-hurling-results/"
+    },
+    {
+      "date": "",
+      "time": "20:19",
+      "home": "Cappamore",
+      "away": "Ahane",
+      "venue": "",
+      "group": "Group 1",
+      "round": "Round 2",
+      "status": "Result",
+      "home_goals": 2019,
+      "home_points": 2,
+      "away_goals": 2019,
+      "away_points": 2,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
+    {
+      "date": "",
+      "time": "03:00",
+      "home": "3 - 13",
+      "away": "Caherline 2 - 19",
+      "venue": "",
+      "group": "Group 2",
+      "round": "Round 2",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-results/"
+    },
+    {
+      "date": "",
+      "time": "04:00",
+      "home": "4 - 24",
+      "away": "Mungret St Pauls 0 - 8",
+      "venue": "",
+      "group": "",
+      "round": "",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-results/"
+    },
+    {
+      "date": "",
+      "time": "00:00",
+      "home": "0 - 20",
+      "away": "Monaleen 0 - 23",
+      "venue": "",
+      "group": "",
+      "round": "",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-results/"
     }
   ]
 }
