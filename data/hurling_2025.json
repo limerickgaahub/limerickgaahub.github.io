@@ -1,5 +1,5 @@
 {
-  "updated": "2025-08-22T07:33:37Z",
+  "updated": "2025-08-22T19:28:20Z",
   "season": 2025,
   "matches": [
     {
@@ -20404,6 +20404,70 @@
       "away_points": null,
       "competition": "Intermediate Hurling Championship",
       "source": "https://limerickgaa.ie/intermediate-hurling-results/"
+    },
+    {
+      "date": "",
+      "time": "02:00",
+      "home": "Mungret/St Pauls",
+      "away": "Monaleen",
+      "venue": "",
+      "group": "Group 2",
+      "round": "Round 3",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Senior Hurling Championship",
+      "source": "https://limerickgaa.ie/senior-hurling-fixtures/"
+    },
+    {
+      "date": "",
+      "time": "02:00",
+      "home": "Mungret/St Pauls",
+      "away": "Monaleen",
+      "venue": "",
+      "group": "Group 2",
+      "round": "Round 3",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Junior A Hurling Championship",
+      "source": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
+    {
+      "date": "",
+      "time": "02:00",
+      "home": "Mungret/St Pauls",
+      "away": "Monaleen",
+      "venue": "",
+      "group": "",
+      "round": "Round 3",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Premier Intermediate Hurling Championship",
+      "source": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
+    },
+    {
+      "date": "",
+      "time": "02:00",
+      "home": "Mungret/St Pauls",
+      "away": "Monaleen",
+      "venue": "",
+      "group": "Group 2",
+      "round": "Round 3",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null,
+      "competition": "Intermediate Hurling Championship",
+      "source": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
     }
   ]
 }
