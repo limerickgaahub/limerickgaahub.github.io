@@ -45,7 +45,7 @@ button.btn:hover { background:#f1f5f9; }
 
 /* Tables */
 .table-wrap { overflow:auto; border-radius:14px; border:1px solid var(--line); background:#fff; }
-table { width:100%; border-collapse:separate; border-spacing:0; table-layout:fixed; }
+table { width:100%; border-collapse:separate; border-spacing:0; table-layout:auto; } /* widen */
 thead th { position:sticky; top:0; background:#f8fafb; border-bottom:1px solid var(--line); font-size:14px; font-weight:800; color:#1f2937; text-align:left; padding:14px; }
 tbody td { padding:14px; border-bottom:1px solid var(--line); font-size:15px; }
 td.right, th.right { text-align:right; }
@@ -73,10 +73,10 @@ td.match { text-align:center; }
 .mobile-only { display:none; }
 @media (max-width:880px){
   thead th, tbody td { padding:9px 7px; font-size:12px; }
-  th.rcol, td.rcol { width:2.2ch; text-align:center; }
+  th.rcol, td.rcol { width:2.2ch; text-align:center; white-space:nowrap; }  /* no wrap for R1/R2 */
   th.dcol, td.dcol { width:9ch; text-align:center; }
   th.tcol, td.tcol { width:4.4ch; text-align:center; }
-  th.vcol, td.vcol { width:16ch; }
+  th.vcol, td.vcol { width:14ch; } /* narrower venue to give match more space */
   th.stcol, td.stcol { width:1.8ch; text-align:center; }
   td.match { padding:8px 7px; }
   .mobile-only { display:block; font-size:11px; color:#6b7280; margin:6px 0 0 6px; }
@@ -100,14 +100,11 @@ th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
 
 <body>
   <h1>Limerick GAA Hub</h1>
-  <div class="sub">Hurling — live fixtures & results (JSON-driven). Football & About: Coming soon.</div>
 
   <div class="navtabs">
     <div class="navtab active" data-nav="hurling">Hurling</div>
     <div class="navtab" data-nav="football">Football</div>
     <div class="navtab" data-nav="about">About</div>
-    <button id="refresh" class="btn" title="Fetch latest data">Refresh</button>
-    <span class="sm-muted" id="last-updated"></span>
   </div>
 
   <div id="lgh-warning">Some features didn’t load. Ensure <code>js/app_v7_3.js</code> exists.</div>
@@ -124,12 +121,12 @@ th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
         <div class="trigger" id="group-trigger">Group: <span id="group-current">—</span></div>
         <div class="menu" id="group-menu"></div>
       </div>
-      <div class="menu-wrap">
-        <div class="trigger" id="more-trigger">More ▾</div>
-        <div class="menu" id="more-menu">
-          <div class="item" data-target="by-team">By Team</div>
-          <div class="item" data-target="by-date">By Date</div>
-        </div>
+
+      <!-- New view tabs (Competition / Team / Date) -->
+      <div class="view-tabs section-tabs" style="margin-left:auto;">
+        <div class="seg vt active" data-target="group-panel">Competition</div>
+        <div class="seg vt" data-target="by-team">Team</div>
+        <div class="seg vt" data-target="by-date">Date</div>
       </div>
     </div>
 
@@ -181,7 +178,6 @@ th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
     </div>
   </div>
 
-<!-- Football & About -->
 <!-- Football -->
 <div id="panel-football" class="card" style="display:none;">
   <h2>Football</h2>
@@ -192,17 +188,14 @@ th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
 <div id="panel-about" class="card" style="display:none;">
   <h2>About</h2>
   <p>
-    Limerick GAA Hub is designed to provide a clear and intuitive overview of fixtures and results - easily filterable by competition, team, or date. 
+    Limerick GAA Hub is designed to provide a clear and intuitive overview of fixtures and results — easily filterable by competition, team, or date. 
   </p>
-
   <p>
     Over time, the aim is to build an archive of historical results.
   </p>
-
   <p>
-    Please note: this site is not associated with Limerick GAA - it is run solely by a club member and Limerick supporter sharing resources.
+    Please note: this site is not associated with Limerick GAA — it is run solely by a club member and Limerick supporter sharing resources.
   </p>
-
   <p>
     <a href="https://www.instagram.com/limerickgaahub" target="_blank" rel="noopener noreferrer">
       <i class="fab fa-instagram"></i> @limerickgaahub
@@ -215,7 +208,6 @@ th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
     </a>
   </p>
 </div>
-
 
   <script src="js/app_v7_3_2.js"></script>
   <script>window.addEventListener('load', ()=>{ if(window.LGH_V7_3_READY!==true) document.getElementById('lgh-warning').style.display='block'; });</script>
