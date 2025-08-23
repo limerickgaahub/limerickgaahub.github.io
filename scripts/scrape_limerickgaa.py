@@ -56,13 +56,17 @@ GROUPS = {
 COMP_NAMES = {
     "SHC": "Senior Hurling Championship",
     "PIHC": "Premier Intermediate Hurling Championship",
-    "IHC": "Intermediate Hurlling Championship",
+    "IHC": "Intermediate Hurling Championship",  # fixed typo
 }
 
 # ------------- Helpers -------------
 
 # tolerate "23rd" and "23^{rd}"
 ORD_RE = re.compile(r'(\d+)(?:\^\{)?(st|nd|rd|th)(?:\})?', re.I)
+# orphan tokens like "st" / "nd" on their own line
+ORD_TOKEN_RE = re.compile(r'^\s*(?:\^\{\s*)?(st|nd|rd|th)(?:\s*\})?\s*$', re.I)
+# score-only line used on results pages (when team and score are split)
+SCORE_ONLY_RE = re.compile(r'^\s*(\d+)\s*-\s*(\d+)\s*$')
 
 def strip_ordinals(s: str) -> str:
     return ORD_RE.sub(lambda m: m.group(1), s)
@@ -224,7 +228,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
     Handles:
       - split dates: 'Saturday 23' + 'rd' + 'August, 2025'
       - split metadata: 'Venue:' + next line is the value; same for 'Referee'
-      - results: team lines that include trailing 'G - P' scores
+      - results: team lines that include trailing 'G - P' scores, OR score on next line
     """
     # --- Preprocess lines: stitch date and metadata into single lines ---
     stitched: List[str] = []
@@ -302,7 +306,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
             "status": status_default,
             "source_url": source_url
         }
-        # If we captured team-line scores (results mode), include them
+        # If we captured scores (results mode), include them
         if mode == "results":
             if c["home_goals"] is not None and c["home_points"] is not None:
                 rec["home_goals"] = c["home_goals"]; rec["home_points"] = c["home_points"]
@@ -319,20 +323,28 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
 
     # Main parse over stitched lines
     for s in stitched:
+        low = s.strip().lower()
+
+        # Skip orphan ordinal fragments outright
+        if ORD_TOKEN_RE.match(s):
+            continue
+
         # Round header
         if re.match(r'^Round\s+\d+', s, flags=re.I):
             if cur["team_a"] and cur["team_b"] and cur["date_line"]:
                 cur = flush(cur)
-            cur["round"] = s; continue
+            cur["round"] = s
+            continue
 
         # Date line (after stitching)
         if (re.match(rf'^{WEEKDAYS}\s+\d{{1,2}}(?:\^\{{\s*(?:st|nd|rd|th)\s*\}}|st|nd|rd|th)?\s+\w+.*\d{{4}}$', s, flags=re.I)
             or re.match(r'^\d{1,2}\s+\w+\s+\d{4}$', s)):
             if cur["team_a"] and cur["team_b"] and cur["date_line"]:
                 cur = flush(cur)
-            cur["date_line"] = s; continue
+            cur["date_line"] = s
+            continue
 
-        # Results: team line with trailing score
+        # Results: team line with trailing score on same line
         mres = RESULT_TEAM_RE.match(s)
         if mode == "results" and mres:
             team = mres.group("team").strip()
@@ -346,33 +358,88 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
                 cur["away_goals"], cur["away_points"] = g, p
                 continue
 
+        # Results: score-only line following a team name (e.g., "Kilmallock" then "0 - 18")
+        if mode == "results":
+            ms = SCORE_ONLY_RE.match(s)
+            if ms:
+                g = int(ms.group(1)); p = int(ms.group(2))
+                if cur["team_b"] is not None:
+                    cur["away_goals"], cur["away_points"] = g, p
+                elif cur["team_a"] is not None and cur["home_goals"] is None:
+                    cur["home_goals"], cur["home_points"] = g, p
+                continue
+            if s.upper() in {"V", "VS"}:
+                continue  # never treat divider as a team in results mode
+
         # Metadata
-        if s.lower().startswith("venue:"):
-            cur["venue"] = s.split(":", 1)[1].strip() or "TBC"; continue
-        if s.lower().startswith("referee:"):
-            cur["referee"] = s.split(":", 1)[1].strip() or "TBC"; continue
+        if low.startswith("venue:"):
+            cur["venue"] = s.split(":", 1)[1].strip() or "TBC"
+            continue
+        if low.startswith("referee:"):
+            cur["referee"] = s.split(":", 1)[1].strip() or "TBC"
+            continue
 
         # Time
         if TIME_RE.search(s):
-            cur["time_line"] = s; continue
+            cur["time_line"] = s
+            continue
 
         # Divider
         if s.upper() in ("V","VS"):
             continue
 
-        # Teams (fixtures mode or results without score on line)
+        # Teams (fixtures mode or results where scores are split & already handled)
         if not cur["team_a"]:
-            cur["team_a"] = s; continue
+            cur["team_a"] = s
+            continue
         elif not cur["team_b"]:
-            cur["team_b"] = s; continue
+            cur["team_b"] = s
+            continue
         else:
             cur = flush(cur)
-            cur["team_a"] = s; cur["team_b"] = None; continue
+            cur["team_a"] = s
+            cur["team_b"] = None
+            continue
 
     if cur["date_line"] and cur["team_a"] and cur["team_b"]:
         flush(cur)
 
     return results
+
+# ------------- De-duplication (within each grade) -------------
+
+def _mk_key(rec):
+    # consider these fields to identify the same match within a grade
+    return (
+        rec.get("round") or "",
+        rec.get("group") or "",
+        rec.get("date") or "",
+        rec.get("home") or "",
+        rec.get("away") or "",
+    )
+
+def _prefer(a, b):
+    """merge two records for the same match; prefer non-empty / more-informative fields."""
+    out = dict(a)
+    for k in ["time_local", "datetime_iso", "venue", "referee", "status",
+              "home_goals", "home_points", "away_goals", "away_points", "source_url"]:
+        av, bv = a.get(k), b.get(k)
+        if (av in (None, "", "TBC") and bv not in (None, "", "TBC")):
+            out[k] = bv
+        elif k in ("home_goals","home_points","away_goals","away_points"):
+            if av is None and bv is not None:
+                out[k] = bv
+    return out
+
+def dedupe_merge(records):
+    merged = {}
+    for r in records:
+        key = _mk_key(r)
+        if key in merged:
+            merged[key] = _prefer(merged[key], r)
+        else:
+            merged[key] = r
+    return list(merged.values())
 
 # ------------- Orchestration -------------
 
@@ -447,16 +514,16 @@ def write_combined_hurling(payloads: Dict[str, Dict]):
 
 def scrape():
     # Senior
-    shc_fix = parse_blocks_from_page(URLS["SHC_FIX"], GROUPS["SHC"], "fixtures", "SHC")
-    shc_res = parse_blocks_from_page(URLS["SHC_RES"], GROUPS["SHC"], "results",  "SHC")
+    shc_fix = dedupe_merge(parse_blocks_from_page(URLS["SHC_FIX"], GROUPS["SHC"], "fixtures", "SHC"))
+    shc_res = dedupe_merge(parse_blocks_from_page(URLS["SHC_RES"], GROUPS["SHC"], "results",  "SHC"))
 
     # Premier Intermediate (from shared PI/I pages)
-    pih_fix = parse_blocks_from_page(URLS["PI_I_FIX"], GROUPS["PIHC"], "fixtures", "PIHC")
-    pih_res = parse_blocks_from_page(URLS["PI_I_RES"], GROUPS["PIHC"], "results",  "PIHC")
+    pih_fix = dedupe_merge(parse_blocks_from_page(URLS["PI_I_FIX"], GROUPS["PIHC"], "fixtures", "PIHC"))
+    pih_res = dedupe_merge(parse_blocks_from_page(URLS["PI_I_RES"], GROUPS["PIHC"], "results",  "PIHC"))
 
     # Intermediate (from shared PI/I pages)
-    ihc_fix = parse_blocks_from_page(URLS["PI_I_FIX"], GROUPS["IHC"], "fixtures", "IHC")
-    ihc_res = parse_blocks_from_page(URLS["PI_I_RES"], GROUPS["IHC"], "results",  "IHC")
+    ihc_fix = dedupe_merge(parse_blocks_from_page(URLS["PI_I_FIX"], GROUPS["IHC"], "fixtures", "IHC"))
+    ihc_res = dedupe_merge(parse_blocks_from_page(URLS["PI_I_RES"], GROUPS["IHC"], "results",  "IHC"))
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
