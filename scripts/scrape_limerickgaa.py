@@ -192,7 +192,7 @@ def lines_from_rest_or_html(url: str, slug_hint: str) -> List[str]:
 def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_key: str) -> List[Dict]:
     """
     Get page lines via REST (preferred) or HTML fallback; detect allowed group blocks;
-    parse each block into match records.
+    parse each block into match records. Adds a PIHC-specific guard to stop on 'League' headings.
     """
     # choose slug from URL
     slug = ""
@@ -231,13 +231,21 @@ def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_
     for ln in all_lines:
         n = normalize(ln)
 
+        # --- NEW: If we're inside PIHC and hit any '... League ...' section heading, end that block.
+        # This stops league content (e.g. "Bons Secours ... Intermediate Hurling League") from being
+        # appended to the Premier Intermediate Championship bucket.
+        if current_group and comp_key == "PIHC" and re.search(r'\bleague\b', n, flags=re.I):
+            flush_bucket()
+            current_group = None
+            continue
+
         # If inside a group and we hit a different '* Championship *' line, stop that group.
         if current_group and ("championship" in n) and not any(k in n for k in norm_allowed.keys()):
             flush_bucket()
             current_group = None
             continue
 
-        # Start a new group when an allowed label appears
+        # Start a new group when an allowed label appears in the line
         matched_label = None
         for k_norm, raw in norm_allowed.items():
             if k_norm in n:
@@ -254,12 +262,15 @@ def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_
     flush_bucket()
     return out
 
+
+
 def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: str, source_url: str) -> List[Dict]:
     """
     Handles:
       - split dates: 'Saturday 23' + 'rd' + 'August, 2025'
       - split metadata: 'Venue:' + next line is the value; same for 'Referee'
       - results: team lines 'Team 1 - 20' or separate score lines
+      - (NEW) skip any '... league ...' headings so they never become team names
     """
     # --- Pre-stitch dates and metadata ---
     stitched: List[str] = []
@@ -350,6 +361,10 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
     for s in stitched:
         low = s.strip().lower()
 
+        # NEW: never let '... league ...' lines become teams/metadata
+        if "league" in low:
+            continue
+
         # ignore standalone ordinal fragments
         if ORD_TOKEN_RE.match(s):
             continue
@@ -410,7 +425,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
         if s.upper() in ("V","VS"):
             continue
 
-        # Teams (fixtures mode; or results when scores are handled separately)
+        # Teams
         if not cur["team_a"]:
             cur["team_a"] = s; continue
         elif not cur["team_b"]:
