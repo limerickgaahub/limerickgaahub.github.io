@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write   # needed so the workflow can commit JSON updates
 
+concurrency:
+  group: limerickgaahub-data-update
+  cancel-in-progress: true
+
 jobs:
   scrape:
     runs-on: ubuntu-latest
@@ -32,14 +36,17 @@ jobs:
         run: |
           python scripts/scrape_limerickgaa.py
 
-      - name: Commit data changes
+                - name: Commit data changes
         run: |
           if [[ -n "$(git status --porcelain data)" ]]; then
             git config user.name  "gha-bot"
             git config user.email "gha-bot@example.com"
+            git fetch origin main
+            git pull --rebase origin main
             git add data/*.json
             git commit -m "Auto-update fixtures/results"
             git push
           else
             echo "No changes to commit."
           fi
+
