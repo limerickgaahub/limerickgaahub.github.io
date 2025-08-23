@@ -7,11 +7,16 @@ Scrape Limerick GAA fixtures/results for:
 - Premier Intermediate Hurling Championship (PIHC)
 - Intermediate Hurling Championship (IHC)
 
-Sources:
+Sources (frontend URLs for reference):
 - SHC fixtures:  https://limerickgaa.ie/senior-hurling-fixtures/
 - SHC results:   https://limerickgaa.ie/senior-hurling-results/
 - PI+I fixtures: https://limerickgaa.ie/intermediate-hurling-fixtures/
 - PI+I results:  https://limerickgaa.ie/intermediate-hurling-results/
+
+We fetch page bodies via the WP REST API:
+- GET /wp-json/wp/v2/pages?slug=<slug>&_fields=id
+- GET /wp-json/wp/v2/pages/<id>?_fields=content.rendered
+(Falls back to HTML if REST fails)
 
 Outputs:
 - data/senior.json
@@ -27,15 +32,22 @@ from typing import List, Dict, Optional, Tuple
 import requests
 from bs4 import BeautifulSoup
 
-# ------------- Config -------------
-
+# ---------- Config ----------
+BASE = "https://limerickgaa.ie"
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; LimerickGAAHub/1.0)"}
 
 URLS = {
-    "SHC_FIX": "https://limerickgaa.ie/senior-hurling-fixtures/",
-    "SHC_RES": "https://limerickgaa.ie/senior-hurling-results/",
-    "PI_I_FIX": "https://limerickgaa.ie/intermediate-hurling-fixtures/",
-    "PI_I_RES": "https://limerickgaa.ie/intermediate-hurling-results/",
+    "SHC_FIX": f"{BASE}/senior-hurling-fixtures/",
+    "SHC_RES": f"{BASE}/senior-hurling-results/",
+    "PI_I_FIX": f"{BASE}/intermediate-hurling-fixtures/",
+    "PI_I_RES": f"{BASE}/intermediate-hurling-results/",
+}
+
+SLUGS = {
+    "SHC_FIX": "senior-hurling-fixtures",
+    "SHC_RES": "senior-hurling-results",
+    "PI_I_FIX": "intermediate-hurling-fixtures",
+    "PI_I_RES": "intermediate-hurling-results",
 }
 
 # Group labels exactly as they appear on the pages
@@ -56,26 +68,25 @@ GROUPS = {
 COMP_NAMES = {
     "SHC": "Senior Hurling Championship",
     "PIHC": "Premier Intermediate Hurling Championship",
-    "IHC": "Intermediate Hurling Championship",  # fixed typo
+    "IHC": "Intermediate Hurling Championship",
 }
 
-# ------------- Helpers -------------
-
-# tolerate "23rd" and "23^{rd}"
+# ---------- Helpers (dates/times/regex) ----------
 ORD_RE = re.compile(r'(\d+)(?:\^\{)?(st|nd|rd|th)(?:\})?', re.I)
-# orphan tokens like "st" / "nd" on their own line
 ORD_TOKEN_RE = re.compile(r'^\s*(?:\^\{\s*)?(st|nd|rd|th)(?:\s*\})?\s*$', re.I)
-# score-only line used on results pages (when team and score are split)
 SCORE_ONLY_RE = re.compile(r'^\s*(\d+)\s*-\s*(\d+)\s*$')
-
-def strip_ordinals(s: str) -> str:
-    return ORD_RE.sub(lambda m: m.group(1), s)
+RESULT_TEAM_RE = re.compile(r'^(?P<team>.+?)\s+(?P<g>\d+)\s*-\s*(?P<p>\d+)\s*$')
+TIME_RE = re.compile(r'\b(\d{1,2})(?:[:\.](\d{2}))?\s*(am|pm)?\b', re.I)
 
 DATE_PATTERNS = ["%d %B %Y", "%d %b %Y"]  # e.g., 24 August 2025 / 24 Aug 2025
 WEEKDAYS = r"(Mon|Tue|Wed|Thu|Fri|Sat|Sun|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)"
 
+SLUG_RE = re.compile(r'[^a-z0-9]+')
+
+def strip_ordinals(s: str) -> str:
+    return ORD_RE.sub(lambda m: m.group(1), s)
+
 def parse_date(date_line: str) -> Optional[datetime]:
-    # Remove weekday and commas/ordinals
     s = strip_ordinals(date_line).replace(",", " ").strip()
     s = re.sub(rf"^{WEEKDAYS}\s+", "", s, flags=re.I).strip()
     for fmt in DATE_PATTERNS:
@@ -84,8 +95,6 @@ def parse_date(date_line: str) -> Optional[datetime]:
         except ValueError:
             pass
     return None
-
-TIME_RE = re.compile(r'\b(\d{1,2})(?:[:\.](\d{2}))?\s*(am|pm)?\b', re.I)
 
 def parse_time(time_line: Optional[str], base_date: Optional[datetime]) -> Tuple[Optional[str], Optional[str]]:
     if not time_line or not base_date:
@@ -97,18 +106,12 @@ def parse_time(time_line: Optional[str], base_date: Optional[datetime]) -> Tuple
     hh = int(m.group(1))
     mm = int(m.group(2) or 0)
     ampm = (m.group(3) or "").lower()
-    if ampm == "pm" and hh < 12:
-        hh += 12
-    if ampm == "am" and hh == 12:
-        hh = 0
+    if ampm == "pm" and hh < 12: hh += 12
+    if ampm == "am" and hh == 12: hh = 0
     time_local = f"{hh:02d}:{mm:02d}"
     dt_local = base_date.replace(hour=hh, minute=mm, second=0, microsecond=0)
-    return time_local, dt_local.isoformat()  # naive ISO; frontend uses tz="Europe/Dublin"
+    return time_local, dt_local.isoformat()  # naive ISO; UI uses Europe/Dublin
 
-# Results pages: team line with trailing score "G - P"
-RESULT_TEAM_RE = re.compile(r'^(?P<team>.+?)\s+(?P<g>\d+)\s*-\s*(?P<p>\d+)\s*$')
-
-SLUG_RE = re.compile(r'[^a-z0-9]+')
 def slug3(s: str) -> str:
     return SLUG_RE.sub('-', s.lower()).strip('-')[:3].upper()
 
@@ -117,7 +120,6 @@ def group_code_from_label(label: str) -> str:
     return m.group(1) if m else "X"
 
 def tidy_group_for_output(comp: str, raw_group: str) -> str:
-    # Compress verbose headings to concise labels for UI
     if comp == "SHC":
         return re.sub(r'^White BOX County Senior Hurling Championship\s*', '', raw_group).strip()
     if comp == "PIHC":
@@ -132,13 +134,7 @@ def make_id(comp: str, date_iso: str, round_name: str, group_label: str, home: s
     r = (round_name or "").replace("Round", "R").replace(" ", "")
     return f"{(date_iso or '0000-00-00')[:4]}-{comp_short}-G{gcode}-{r}-{slug3(home)}-{slug3(away)}"
 
-# ------------- Core parsing -------------
-
-def fetch_soup(url: str) -> BeautifulSoup:
-    r = requests.get(url, headers=HEADERS, timeout=30)
-    r.raise_for_status()
-    return BeautifulSoup(r.text, "html.parser")
-
+# ---------- IO utils ----------
 def ensure_parent(path: str):
     import os
     d = os.path.dirname(path)
@@ -150,37 +146,72 @@ def normalize(s: str) -> str:
     s = re.sub(r'[^a-z0-9]+', ' ', s)
     return re.sub(r'\s+', ' ', s).strip()
 
+# ---------- WordPress REST helpers (by slug) ----------
+# Official WP REST pages endpoint: GET /wp/v2/pages (supports slug & _fields). :contentReference[oaicite:1]{index=1}
+def wp_page_id_by_slug(slug: str) -> Optional[int]:
+    url = f"{BASE}/wp-json/wp/v2/pages"
+    r = requests.get(url, params={"slug": slug, "_fields": "id"}, headers=HEADERS, timeout=30)
+    r.raise_for_status()
+    arr = r.json()
+    return arr[0]["id"] if arr else None
+
+def wp_get_page_html_by_id(page_id: int) -> str:
+    url = f"{BASE}/wp-json/wp/v2/pages/{page_id}"
+    r = requests.get(url, params={"_fields": "content.rendered"}, headers=HEADERS, timeout=30)
+    r.raise_for_status()
+    j = r.json()
+    return j.get("content", {}).get("rendered", "") or ""
+
+def flatten_to_lines(html: str) -> List[str]:
+    soup = BeautifulSoup(html, "html.parser")
+    lines: List[str] = []
+    for el in soup.find_all(True, recursive=True):
+        if el.name in {"script", "style", "noscript"}: continue
+        txt = el.get_text("\n", strip=True)
+        if not txt: continue
+        lines.extend([ln.strip() for ln in txt.split("\n") if ln.strip()])
+    return lines
+
+def lines_from_rest_or_html(url: str, slug_hint: str) -> List[str]:
+    html = ""
+    try:
+        if slug_hint:
+            pid = wp_page_id_by_slug(slug_hint)
+            if pid:
+                html = wp_get_page_html_by_id(pid)
+    except Exception:
+        html = ""
+    if not html:
+        # Fallback to full HTML
+        r = requests.get(url, headers=HEADERS, timeout=30)
+        r.raise_for_status()
+        html = r.text
+    return flatten_to_lines(html)
+
+# ---------- Page parsing ----------
 def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_key: str) -> List[Dict]:
     """
-    Robust: stream all text lines; begin a bucket when a line contains a group label.
-    Stop collecting when we hit a different 'Championship' line not in the allowed set.
-    Also writes a small debug file with the first ~150 lines.
+    Get page lines via REST (preferred) or HTML fallback; detect allowed group blocks;
+    parse each block into match records.
     """
-    soup = fetch_soup(url)
-    body = soup.select_one("main") or soup.body or soup
+    # choose slug from URL
+    slug = ""
+    for key, s in SLUGS.items():
+        if URLS.get(key) == url:
+            slug = s
+            break
 
-    # Flatten page to ordered lines (skip scripts/styles)
-    all_lines: List[str] = []
-    for el in body.find_all(True, recursive=True):
-        if el.name in {"script", "style", "noscript"}:
-            continue
-        txt = el.get_text("\n", strip=True)
-        if not txt:
-            continue
-        for ln in txt.split("\n"):
-            ln = ln.strip()
-            if ln:
-                all_lines.append(ln)
+    all_lines = lines_from_rest_or_html(url, slug)
 
-    # DEBUG: write first lines so we can inspect structure if needed
+    # DEBUG snapshot
     try:
         ensure_parent("data/_debug/")
-        sample = "\n".join(all_lines[:150])
-        key = ("SHC_FIX" if "senior-hurling-fixtures" in url else
-               "SHC_RES" if "senior-hurling-results" in url else
-               "PI_I_FIX" if "intermediate-hurling-fixtures" in url else
-               "PI_I_RES")
-        with open(f"data/_debug/lines_{key}.txt", "w", encoding="utf-8") as df:
+        sample = "\n".join(all_lines[:200])
+        keyname = ("SHC_FIX" if "senior-hurling-fixtures" in url else
+                   "SHC_RES" if "senior-hurling-results" in url else
+                   "PI_I_FIX" if "intermediate-hurling-fixtures" in url else
+                   "PI_I_RES")
+        with open(f"data/_debug/lines_{keyname}.txt", "w", encoding="utf-8") as df:
             df.write(sample)
     except Exception:
         pass
@@ -200,13 +231,13 @@ def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_
     for ln in all_lines:
         n = normalize(ln)
 
-        # If inside a group and we hit a different '... Championship ...' line, stop that group.
+        # If inside a group and we hit a different '* Championship *' line, stop that group.
         if current_group and ("championship" in n) and not any(k in n for k in norm_allowed.keys()):
             flush_bucket()
             current_group = None
             continue
 
-        # Start a new group when an allowed label appears in the line
+        # Start a new group when an allowed label appears
         matched_label = None
         for k_norm, raw in norm_allowed.items():
             if k_norm in n:
@@ -228,9 +259,9 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
     Handles:
       - split dates: 'Saturday 23' + 'rd' + 'August, 2025'
       - split metadata: 'Venue:' + next line is the value; same for 'Referee'
-      - results: team lines that include trailing 'G - P' scores, OR score on next line
+      - results: team lines 'Team 1 - 20' or separate score lines
     """
-    # --- Preprocess lines: stitch date and metadata into single lines ---
+    # --- Pre-stitch dates and metadata ---
     stitched: List[str] = []
     i = 0
     while i < len(lines):
@@ -241,7 +272,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
         if weekday_day and i + 2 < len(lines):
             suf = lines[i+1].strip()
             month_yr = lines[i+2].strip()
-            if re.fullmatch(r'(\^{\s*(st|nd|rd|th)\s*}|st|nd|rd|th)', suf.strip(), flags=re.I) and re.search(r'\b\d{4}\b', month_yr):
+            if re.fullmatch(r'(\^{\s*(st|nd|rd|th)\s*}|st|nd|rd|th)', suf, flags=re.I) and re.search(r'\b\d{4}\b', month_yr):
                 s = f"{s}{suf if suf.startswith('^') else suf} {month_yr}"
                 i += 3
                 stitched.append(s)
@@ -270,7 +301,6 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
         "round": None, "date_line": None,
         "team_a": None, "team_b": None,
         "time_line": None, "venue": "TBC", "referee": "TBC",
-        "score_text": None,
         "home_goals": None, "home_points": None,
         "away_goals": None, "away_points": None,
     }
@@ -280,11 +310,9 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
     def flush(c):
         nonlocal results
         if not ready(c):
-            # reset but don't append
             return {
-                "round": c["round"],
-                "date_line": None, "team_a": None, "team_b": None,
-                "time_line": None, "venue": "TBC", "referee": "TBC", "score_text": None,
+                "round": c["round"], "date_line": None, "team_a": None, "team_b": None,
+                "time_line": None, "venue": "TBC", "referee": "TBC",
                 "home_goals": None, "home_points": None, "away_goals": None, "away_points": None,
             }
         d = parse_date(c["date_line"])
@@ -306,37 +334,34 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
             "status": status_default,
             "source_url": source_url
         }
-        # If we captured scores (results mode), include them
         if mode == "results":
             if c["home_goals"] is not None and c["home_points"] is not None:
                 rec["home_goals"] = c["home_goals"]; rec["home_points"] = c["home_points"]
             if c["away_goals"] is not None and c["away_points"] is not None:
                 rec["away_goals"] = c["away_goals"]; rec["away_points"] = c["away_points"]
         results.append(rec)
-        # fresh record with same round persisted
         return {
-            "round": c["round"],
-            "date_line": None, "team_a": None, "team_b": None,
-            "time_line": None, "venue": "TBC", "referee": "TBC", "score_text": None,
+            "round": c["round"], "date_line": None, "team_a": None, "team_b": None,
+            "time_line": None, "venue": "TBC", "referee": "TBC",
             "home_goals": None, "home_points": None, "away_goals": None, "away_points": None,
         }
 
-    # Main parse over stitched lines
+    # --- Main parse ---
     for s in stitched:
         low = s.strip().lower()
 
-        # Skip orphan ordinal fragments outright
+        # ignore standalone ordinal fragments
         if ORD_TOKEN_RE.match(s):
             continue
 
-        # Round header
+        # Round
         if re.match(r'^Round\s+\d+', s, flags=re.I):
             if cur["team_a"] and cur["team_b"] and cur["date_line"]:
                 cur = flush(cur)
             cur["round"] = s
             continue
 
-        # Date line (after stitching)
+        # Date
         if (re.match(rf'^{WEEKDAYS}\s+\d{{1,2}}(?:\^\{{\s*(?:st|nd|rd|th)\s*\}}|st|nd|rd|th)?\s+\w+.*\d{{4}}$', s, flags=re.I)
             or re.match(r'^\d{1,2}\s+\w+\s+\d{4}$', s)):
             if cur["team_a"] and cur["team_b"] and cur["date_line"]:
@@ -344,9 +369,9 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
             cur["date_line"] = s
             continue
 
-        # Results: team line with trailing score on same line
+        # Results: team + inline score
         mres = RESULT_TEAM_RE.match(s)
-        if mode == "results" and mres:
+        if mres and mode == "results":
             team = mres.group("team").strip()
             g = int(mres.group("g")); p = int(mres.group("p"))
             if not cur["team_a"]:
@@ -358,7 +383,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
                 cur["away_goals"], cur["away_points"] = g, p
                 continue
 
-        # Results: score-only line following a team name (e.g., "Kilmallock" then "0 - 18")
+        # Results: separate score line (e.g. "0 - 18")
         if mode == "results":
             ms = SCORE_ONLY_RE.match(s)
             if ms:
@@ -369,47 +394,38 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
                     cur["home_goals"], cur["home_points"] = g, p
                 continue
             if s.upper() in {"V", "VS"}:
-                continue  # never treat divider as a team in results mode
+                continue
 
         # Metadata
         if low.startswith("venue:"):
-            cur["venue"] = s.split(":", 1)[1].strip() or "TBC"
-            continue
+            cur["venue"] = s.split(":", 1)[1].strip() or "TBC"; continue
         if low.startswith("referee:"):
-            cur["referee"] = s.split(":", 1)[1].strip() or "TBC"
-            continue
+            cur["referee"] = s.split(":", 1)[1].strip() or "TBC"; continue
 
         # Time
         if TIME_RE.search(s):
-            cur["time_line"] = s
-            continue
+            cur["time_line"] = s; continue
 
         # Divider
         if s.upper() in ("V","VS"):
             continue
 
-        # Teams (fixtures mode or results where scores are split & already handled)
+        # Teams (fixtures mode; or results when scores are handled separately)
         if not cur["team_a"]:
-            cur["team_a"] = s
-            continue
+            cur["team_a"] = s; continue
         elif not cur["team_b"]:
-            cur["team_b"] = s
-            continue
+            cur["team_b"] = s; continue
         else:
             cur = flush(cur)
-            cur["team_a"] = s
-            cur["team_b"] = None
-            continue
+            cur["team_a"] = s; cur["team_b"] = None; continue
 
     if cur["date_line"] and cur["team_a"] and cur["team_b"]:
         flush(cur)
 
     return results
 
-# ------------- De-duplication (within each grade) -------------
-
+# ---------- De-duplication (within each grade) ----------
 def _mk_key(rec):
-    # consider these fields to identify the same match within a grade
     return (
         rec.get("round") or "",
         rec.get("group") or "",
@@ -419,7 +435,6 @@ def _mk_key(rec):
     )
 
 def _prefer(a, b):
-    """merge two records for the same match; prefer non-empty / more-informative fields."""
     out = dict(a)
     for k in ["time_local", "datetime_iso", "venue", "referee", "status",
               "home_goals", "home_points", "away_goals", "away_points", "source_url"]:
@@ -441,18 +456,11 @@ def dedupe_merge(records):
             merged[key] = r
     return list(merged.values())
 
-# ------------- Orchestration -------------
-
+# ---------- Combined file ----------
 def write_combined_hurling(payloads: Dict[str, Dict]):
     """
-    Build data/hurling_2025.json in the app's expected format:
-    {
-      "updated": "<UTC ISO>",
-      "matches": [ { competition, group, round, date, time, home, away, venue, status,
-                     home_goals, home_points, away_goals, away_points }, ... ]
-    }
-    De-duplicate: if a fixture and a result share (competition, group, date, home, away),
-    keep the result and drop the fixture.
+    Build data/hurling_2025.json in the app's expected format.
+    De-duplicate across fixtures/results: prefer results.
     """
     updated_ts = None
     buckets = []  # (is_result, match_dict)
@@ -473,7 +481,7 @@ def write_combined_hurling(payloads: Dict[str, Dict]):
                 "home": r.get("home") or "",
                 "away": r.get("away") or "",
                 "venue": r.get("venue") or "",
-                "status": "",  # fixtures are not "Result"
+                "status": "",
                 "home_goals": r.get("home_goals"),
                 "home_points": r.get("home_points"),
                 "away_goals": r.get("away_goals"),
@@ -498,7 +506,7 @@ def write_combined_hurling(payloads: Dict[str, Dict]):
                 "away_points": r.get("away_points"),
             }))
 
-    # dedupe by key; prefer results
+    # de-dupe by key; prefer results
     by_key: Dict[Tuple[str,str,str,str,str], Dict] = {}
     for is_result, m in buckets:
         key = (m["competition"], m["group"], m["date"], m["home"], m["away"])
@@ -512,6 +520,7 @@ def write_combined_hurling(payloads: Dict[str, Dict]):
     with open("data/hurling_2025.json", "w", encoding="utf-8") as f:
         json.dump(combined, f, ensure_ascii=False, indent=2)
 
+# ---------- Orchestration ----------
 def scrape():
     # Senior
     shc_fix = dedupe_merge(parse_blocks_from_page(URLS["SHC_FIX"], GROUPS["SHC"], "fixtures", "SHC"))
