@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Limerick GAA Hub</title>
 <meta name="color-scheme" content="light only">
+
+<!-- Font Awesome for social icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <style>
 :root { --card:#ffffff; --muted:#6b7280; --accent:#00a651; --accent-weak:#e7f7ee; --line:#e9ecef; --text:#111; --bg:#f6f7f8; }
 * { box-sizing:border-box; }
@@ -78,8 +82,22 @@ td.match { text-align:center; }
   .mobile-only { display:block; font-size:11px; color:#6b7280; margin:6px 0 0 6px; }
 }
 th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
+
+/* --- Optional About panel icon styles --- */
+#panel-about i {
+  margin-right: 6px;
+  color: #444;
+}
+#panel-about a {
+  margin-right: 16px;
+  text-decoration: none;
+}
+#panel-about a:hover i {
+  color: #0077b5;
+}
 </style>
 </head>
+
 <body>
   <h1>Limerick GAA Hub</h1>
   <div class="sub">Hurling — live fixtures & results (JSON-driven). Football & About: Coming soon.</div>
