@@ -24,7 +24,7 @@ h1 { margin:0 0 6px 0; font-weight:800; }
 
 .card { background:#fff; border-radius:18px; box-shadow:0 8px 24px rgba(0,0,0,.05); padding:14px; }
 
-/* Section tabs (2nd level under Hurling) */
+/* Second-level tabs (Competition / Team / Date) */
 .section-tabs { display:flex; gap:10px; margin:6px 0 12px; flex-wrap:wrap; }
 .section-tabs .seg { padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
 .section-tabs .seg.active { background:var(--accent); color:#fff; border-color:var(--accent); }
@@ -49,7 +49,8 @@ tbody tr:nth-child(even) td { background:#fcfcfd; }
 tbody tr:hover td { background:#f1f9f4; }
 
 /* Match presentation */
-td.match { text-align:center; }
+td.match, th.match { text-align:center; }
+td.vcol, th.vcol { text-align:center; }
 .match-block { display:grid; grid-template-rows:auto auto auto; row-gap:3px; justify-items:center; }
 .match-team { display:block; text-align:center; }
 .match-score { font-weight:800; }
@@ -71,13 +72,13 @@ td.match { text-align:center; }
 .mobile-only { display:none; }
 @media (max-width:880px){
   thead th, tbody td { padding:10px 8px; font-size:13px; }
-  /* Hide Round & Status columns completely on mobile to avoid scroll */
-  .rcol, .stcol { display:none; }
-  /* Wider venue and match column balance for no horizontal scroll */
-  th.dcol, td.dcol { width:9.5ch; text-align:center; }
-  th.tcol, td.tcol { width:5.2ch; text-align:center; }
-  th.vcol, td.vcol { width:auto; } /* allow venue to flex */
-  td.match { padding:8px 6px; }
+  /* Keep R column visible, hide status col; widen match, center venue */
+  th.rcol, td.rcol { width:2.4ch; text-align:center; }
+  th.dcol, td.dcol { width:9ch; text-align:center; }
+  th.tcol, td.tcol { width:4.8ch; text-align:center; }
+  th.vcol, td.vcol { width:12ch; text-align:center; }
+  td.match { padding:8px 6px; text-align:center; }
+  .stcol { display:none; }
   .mobile-only { display:block; font-size:11px; color:#6b7280; margin:6px 0 0 6px; }
 }
 th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
@@ -128,6 +129,12 @@ th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
         <h2 id="panel-title" style="margin:0 0 10px 0;">—</h2>
       </div>
 
+      <!-- Matches/Table pills moved higher, above the filter -->
+      <div class="section-tabs">
+        <div class="seg active" data-view="matches">Matches</div>
+        <div class="seg" data-view="table">Table</div>
+      </div>
+
       <div class="controls card">
         <select id="status">
           <option value="">All (fixtures & results)</option>
@@ -148,11 +155,6 @@ th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
             </thead><tbody></tbody>
           </table>
         </div>
-      </div>
-
-      <div class="section-tabs">
-        <div class="seg active" data-view="matches">Matches</div>
-        <div class="seg" data-view="table">Table</div>
       </div>
     </div>
 
@@ -196,6 +198,11 @@ th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
   </div>
 
   <script src="js/app_v7_3_2.js"></script>
-  <script>window.addEventListener('load', ()=>{ if(window.LGH_V7_3_READY!==true) document.getElementById('lgh-warning').style.display='block'; });</script>
+  <script>
+    window.addEventListener('load', ()=>{
+      if(window.LGH_V7_3_READY!==true)
+        document.getElementById('lgh-warning').style.display='block';
+    });
+  </script>
 </body>
 </html>
