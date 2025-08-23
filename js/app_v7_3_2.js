@@ -1,4 +1,5 @@
-// app_v7_3_2.js — hierarchy tabs, mobile fit, fixtures filter, score dash
+// app_v7_3_2.js — mobile R column restored, wider match cell, centered cells,
+// Competition view hides comp/group meta; Team/Date keeps it (PIHC meta simplified)
 (function(){
   window.LGH_V7_3_READY = true;
   const DATA_URL = 'data/hurling_2025.json';
@@ -32,20 +33,20 @@
     return m;
   };
 
-  let MATCHES=[]; let RAW=null;
+  let MATCHES=[];
   async function load(){
     const res = await fetch(`${DATA_URL}?t=${Date.now()}`, {cache:'no-cache'});
-    const j = await res.json(); RAW=j;
+    const j = await res.json();
     MATCHES = (j.matches||j||[]).map(r=>{
       const statusNorm = (r.status && String(r.status).toLowerCase().startsWith('res')) ? 'Result' : 'Fixture';
       const out = {
-        competition: r.competition || r.comp || '',
-        group: r.group || r.grp || '',
-        round: r.round || r.rnd || '',
-        date: r.date || r.match_date || '',
-        time: r.time || r.match_time || '',
-        home: r.home || r.home_team || '',
-        away: r.away || r.away_team || '',
+        competition: r.competition || '',
+        group: r.group || '',
+        round: r.round || '',
+        date: r.date || '',
+        time: r.time || '',
+        home: r.home || '',
+        away: r.away || '',
         venue: r.venue || '',
         status: statusNorm,
         home_goals: r.home_goals, home_points: r.home_points,
@@ -59,36 +60,53 @@
     return (a._rnum-b._rnum) || (a.date||'').localeCompare(b.date||'') || (a.time||'').localeCompare(b.time||'');
   }
 
-  function buildHead(thead,isMobile,isTiny){
+  // ------- table builders
+  function buildHead(thead,isMobile,isTiny,showRound=true,showStatus=false){
     if(isMobile){
-      // No Round (R) and no Status column on mobile → prevents horizontal scroll
-      thead.innerHTML = isTiny
-        ? `<tr><th class="dcol">Date/Time</th><th>Match</th><th class="vcol">Venue</th></tr>`
-        : `<tr><th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th class="vcol">Venue</th></tr>`;
+      // Mobile: R | Date | Time | Match | Venue
+      const colsTiny = showRound
+        ? `<th class="rcol">R</th><th class="dcol">Date/Time</th><th>Match</th><th class="vcol">Venue</th>`
+        : `<th class="dcol">Date/Time</th><th>Match</th><th class="vcol">Venue</th>`;
+      const cols = showRound
+        ? `<th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th class="vcol">Venue</th>`
+        : `<th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th class="vcol">Venue</th>`;
+      thead.innerHTML = `<tr>${isTiny?colsTiny:cols}${showStatus?`<th class="stcol">S</th>`:''}</tr>`;
     } else {
-      // Desktop (no 'Comp' column to match Team/Date view layout)
       thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th>Venue</th><th>Status</th></tr>`;
     }
   }
 
-  function rowHTML(r,isMobile,isTiny){
+  function metaTextFor(r){
+    const g = groupShort(r.group||'');
+    // In Team/Date views: keep comp code; drop "Premier Intermediate" tail for PIHC
+    if (r.code === 'PIHC') return 'PIHC';
+    return g ? `${r.code} · ${g}` : `${r.code}`;
+  }
+
+  function rowHTML(r,isMobile,isTiny,{showMeta=true, showRound=true, showStatus=false}={}){
     const rShort = String(r.round||'').replace(/round\s*/i,'R').replace(/\s+/g,'') || '—';
     const dShort=fmtDateShort(r.date), tShort=fmtTimeShort(r.time||'');
-    const scoreMid=(r._homeMid&&r._awayMid)?esc(r._homeMid+' – '+r._awayMid):'—'; // shorter dash
-    const matchCell = `<div class="match-block"><span class="match-team">${esc(r.home||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away||'')}</span><div class="match-meta">${esc(compCode(r.competition))} · ${esc(groupShort(r.group||''))}</div></div>`;
+    const scoreMid=(r._homeMid&&r._awayMid)?esc(r._homeMid+' – '+r._awayMid):'—';
+    const meta = showMeta ? `<div class="match-meta">${esc(metaTextFor(r))}</div>` : '';
+    const matchCell = `<div class="match-block"><span class="match-team">${esc(r.home||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away||'')}</span>${meta}</div>`;
 
     if(isMobile){
       if(isTiny){
         const dt=`${dShort} ${tShort}`.trim();
-        return `<tr><td class="dcol">${esc(dt)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td></tr>`;
+        return `<tr>${
+          showRound?`<td class="rcol" style="text-align:center">${esc(rShort)}</td>`:''
+        }<td class="dcol">${esc(dt)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td>${showStatus?`<td class="stcol">${r.status==='Result'?'R':'F'}</td>`:''}</tr>`;
       } else {
-        return `<tr><td class="dcol">${esc(dShort)}</td><td class="tcol">${esc(tShort)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td></tr>`;
+        return `<tr>${
+          showRound?`<td class="rcol" style="text-align:center">${esc(rShort)}</td>`:''
+        }<td class="dcol">${esc(dShort)}</td><td class="tcol">${esc(tShort)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td>${showStatus?`<td class="stcol">${r.status==='Result'?'R':'F'}</td>`:''}</tr>`;
       }
     } else {
       return `<tr><td>${esc(rShort)}</td><td class="dcol">${esc(r.date||'')}</td><td class="tcol">${esc(r.time||'')}</td><td class="match">${matchCell}</td><td>${esc(r.venue||'')}</td><td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td></tr>`;
     }
   }
 
+  // ------- menus
   function buildMenus(){
     const PRIORITY = [
       "Senior Hurling Championship",
@@ -101,7 +119,7 @@
         return (ia===-1)-(ib===-1) || (ia-ib) || a.localeCompare(b);
       });
 
-    const compMenu=document.getElementById('comp-menu');
+    const compMenu=el('comp-menu');
     compMenu.innerHTML = comps.map((c,i)=>`<div class="item ${i===0?'active':''}" data-comp="${esc(c)}">${esc(c)}</div>`).join('');
     function groupsFor(c){ return [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group||'Unassigned'))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})); }
     function setComp(name){
@@ -125,20 +143,21 @@
   const mGroup = (function(){ const trig=el('group-trigger'), menu=el('group-menu'); function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {close}; })();
 
   const state={comp:null, group:null};
-
   function renderPanelTitle(){ el('panel-title').textContent = `${compCode(state.comp)} — ${state.group}`; }
 
   function renderGroupTable(){
     const tbl=el('g-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
-    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
+    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches;
+    buildHead(thead,isMobile,isTiny,true,false); // showRound on mobile, hide status col
     const status=el('status').value;
     const rows = MATCHES
       .filter(r=>r.competition===state.comp && r.group===state.group)
       .filter(r=> !status || r.status===status)
       .sort(sortRoundDate);
-    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny,{showMeta:false, showRound:true, showStatus:false})).join('');
   }
 
+  // standings (unchanged)
   function totalPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
   function renderStandings(){
     const rows = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group && r.status==='Result');
@@ -160,7 +179,7 @@
 
   el('status').addEventListener('input', renderGroupTable);
 
-  // Matches/Table toggle inside Competition view
+  // Matches/Table toggle (keep this near top of panel)
   $$('.section-tabs .seg').forEach(seg=>{
     seg.addEventListener('click', ()=>{
       seg.parentElement.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
@@ -172,25 +191,8 @@
     });
   });
 
-  // Second-level view tabs under Hurling: Competition / Team / Date
-  document.querySelectorAll('.view-tabs .vt').forEach(tab=>{
-    tab.addEventListener('click', ()=>{
-      document.querySelectorAll('.view-tabs .vt').forEach(t=>t.classList.remove('active'));
-      tab.classList.add('active');
-      const target = tab.dataset.target;
-      ['group-panel','by-team','by-date'].forEach(id=>{
-        const node = el(id); if(node) node.style.display = (id===target)? '' : 'none';
-      });
-      // show/hide the Competition controls row
-      const cc = document.querySelector('.comp-controls');
-      if(cc) cc.style.display = (target==='group-panel') ? '' : 'none';
-      if(target==='by-team') renderByTeam();
-      if(target==='by-date') renderByDate();
-    });
-  });
-
+  // More views
   function rowSorter(a,b){ return sortRoundDate(a,b); }
-  function buildHeadSimple(thead,isMobile,isTiny){ buildHead(thead,isMobile,isTiny); }
 
   function renderByTeam(){
     const sel=el('team');
@@ -199,21 +201,23 @@
     sel.oninput=draw; addEventListener('resize', draw);
     function draw(){
       const team=sel.value||''; const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
-      const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHeadSimple(thead,isMobile,isTiny);
+      const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches;
+      buildHead(thead,isMobile,isTiny,true,false);
       const rows = MATCHES.filter(r=>!team || r.home===team || r.away===team).sort(rowSorter);
-      tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+      tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny,{showMeta:true, showRound:true, showStatus:false})).join('');
     }
     draw();
   }
 
   function renderByDate(){
     const tbl=el('date-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
-    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
+    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches;
+    buildHead(thead,isMobile,isTiny,true,false);
     const rows=[...MATCHES].sort(rowSorter);
-    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny,{showMeta:true, showRound:true, showStatus:false})).join('');
   }
 
-  // Top nav: Hurling / Football / About
+  // Top nav
   $$('.navtab').forEach(tab=>{
     tab.addEventListener('click', ()=>{
       $$('.navtab').forEach(t=>t.classList.remove('active'));
