@@ -1,12 +1,12 @@
 name: Update fixtures/results (Limerick GAA Hub)
 
 on:
-  workflow_dispatch:      # allow manual run from GitHub → Actions → Run workflow
+  workflow_dispatch:
   schedule:
-    - cron: "15 7,17 * * *"   # runs at 07:15 and 17:15 Europe/Dublin daily
+    - cron: "15 7,17 * * *"   # 07:15 & 17:15 Europe/Dublin
 
 permissions:
-  contents: write   # needed so the workflow can commit JSON updates
+  contents: write
 
 concurrency:
   group: limerickgaahub-data-update
@@ -15,12 +15,11 @@ concurrency:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0    # so we can push a commit
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -33,8 +32,7 @@ jobs:
           pip install requests beautifulsoup4
 
       - name: Run scraper
-        run: |
-          python scripts/scrape_limerickgaa.py
+        run: python scripts/scrape_limerickgaa.py
 
       - name: Commit data changes
         run: |
@@ -49,4 +47,3 @@ jobs:
           else
             echo "No changes to commit."
           fi
-
