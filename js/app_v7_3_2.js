@@ -1,4 +1,4 @@
-// app_v7_3_2.js — Competition/Team/Date views + mobile R + date jump + tidy meta
+// app_v7_3_2.js — hide comp controls in Team/Date, better mobile width, date jump bounds
 (function(){
   window.LGH_V7_3_READY = true;
   const DATA_URL = 'data/hurling_2025.json';
@@ -19,15 +19,10 @@
   const toInt=v=>v==null||v===''?null:(Number(v)||0);
   const parseRoundNum=r=>{ const m=String(r||'').match(/(\d+)/); return m?Number(m[1]):999; };
 
-  // controls whether to show the small comp/group meta in the Match cell
-  let VIEW_MODE = 'competition'; // 'competition' | 'team' | 'date'
+  let VIEW_MODE='competition';
+  let MATCHES=[];
 
   const attachScores=m=>{
-    if(m.home_score && m.away_score && !('home_goals' in m)) {
-      const a = (m.home_score||'').match(/(\d+)[-–—](\d+)/), b=(m.away_score||'').match(/(\d+)[-–—](\d+)/);
-      if(a){ m.home_goals=Number(a[1]); m.home_points=Number(a[2]); }
-      if(b){ m.away_goals=Number(b[1]); m.away_points=Number(b[2]); }
-    }
     m.home_goals = toInt(m.home_goals); m.home_points = toInt(m.home_points);
     m.away_goals = toInt(m.away_goals); m.away_points = toInt(m.away_points);
     m._homeMid = (m.home_goals!=null && m.home_points!=null) ? `${m.home_goals}-${m.home_points}` : '';
@@ -36,25 +31,18 @@
     return m;
   };
 
-  let MATCHES=[]; let RAW=null;
   async function load(){
     const res = await fetch(`${DATA_URL}?t=${Date.now()}`, {cache:'no-cache'});
-    const j = await res.json(); RAW=j;
+    const j = await res.json();
     MATCHES = (j.matches||j||[]).map(r=>{
       const out = {
-        competition: r.competition || r.comp || '',
-        group: r.group || r.grp || '',
-        round: r.round || r.rnd || '',
-        date: r.date || r.match_date || '',
-        time: r.time || r.match_time || '',
-        home: r.home || r.home_team || '',
-        away: r.away || r.away_team || '',
-        venue: r.venue || '',
-        status: r.status || r.result_status || '',
-        home_goals: r.home_goals, home_points: r.home_points,
-        away_goals: r.away_goals, away_points: r.away_points,
+        competition: r.competition || '', group: r.group || '', round: r.round || '',
+        date: r.date || '', time: r.time || '', home: r.home || '', away: r.away || '',
+        venue: r.venue || '', status: r.status || '',
+        home_goals: r.home_goals, home_points: r.home_points, away_goals: r.away_goals, away_points: r.away_points,
       };
-      attachScores(out); out.code = compCode(out.competition); return out;
+      out.code = compCode(out.competition);
+      return attachScores(out);
     });
   }
 
@@ -73,17 +61,17 @@
   }
 
   function rowHTML(r,isMobile,isTiny){
-    const rShort=(r.round||'').replace(/^Round\s*/i,'R')||'—';
-    const dShort=fmtDateShort(r.date);
-    const tShort=fmtTimeShort(r.time||'');
-    const stShort=(r.status||'').startsWith('R')?'R':'F';
-    const scoreMid=(r._homeMid&&r._awayMid)?esc(r._homeMid+' - '+r._awayMid):'—'; // shorter dash
-    const showMeta = (VIEW_MODE!=='competition');
+    const rShort=(r.round||'').replace(/^Round\s*/i,'R').replace(/\s+/g,'')||'—';
+    const dShort=fmtDateShort(r.date), tShort=fmtTimeShort(r.time||'');
+    const stShort=(r.status||'').toLowerCase().startsWith('res')?'R':'F';
+    const scoreMid=(r._homeMid&&r._awayMid)?esc(r._homeMid+' - '+r._awayMid):'—'; // short dash
+
+    // meta only in Team/Date
+    const showMeta=(VIEW_MODE!=='competition');
     const meta = showMeta ? `<div class="match-meta">${esc(r.code)} · ${esc(groupShort(r.group||''))}</div>` : '';
     const matchCell = `<div class="match-block"><span class="match-team">${esc(r.home||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away||'')}</span>${meta}</div>`;
-    const compBadge = `<span class="comp-badge"><span class="comp-code">${esc(r.code)}</span><span class="group-code">${esc(groupShort(r.group))}</span></span>`;
-
-    const trAttr = `data-date="${esc(r.date||'')}"`;
+    const compBadge = `<span class="comp-badge"><span class="comp-code">${esc(r.code)}</span><span class="group-code">${esc(groupShort(r.group||''))}</span></span>`;
+    const trAttr=`data-date="${esc(r.date||'')}"`;
 
     if(isMobile){
       if(isTiny){
@@ -97,8 +85,8 @@
     }
   }
 
+  // Menus
   function buildMenus(){
-    // Competition order: SHC, PIHC, IHC first if present, then any others
     const all = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))];
     const preferred = ["Senior Hurling Championship","Premier Intermediate Hurling Championship","Intermediate Hurling Championship"];
     const rest = all.filter(c=>!preferred.includes(c)).sort();
@@ -110,15 +98,14 @@
     function groupsFor(c){ return [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group||'Unassigned'))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})); }
 
     function setComp(name){
-      state.comp=name;
-      el('comp-current').textContent=compCode(name); // just the code
+      state.comp=name; el('comp-current').textContent=compCode(name);
       $$('#comp-menu .item').forEach(i=>i.classList.toggle('active', i.dataset.comp===name));
       const gs=groupsFor(name); const gMenu=el('group-menu');
       gMenu.innerHTML = gs.map((g,i)=>`<div class="item ${i===0?'active':''}" data-group="${esc(g)}">${esc(g)}</div>`).join('');
       setGroup(gs[0]);
     }
     function setGroup(g){
-      state.group=g; el('group-current').textContent=g; // no "Group:"
+      state.group=g; el('group-current').textContent=g;
       $$('#group-menu .item').forEach(i=>i.classList.toggle('active', i.dataset.group===g));
       renderGroupTable();
     }
@@ -137,10 +124,17 @@
     const tbl=el('g-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
     const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
     const status=el('status').value;
-    const rows = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group && (!status||r.status===status)).sort(sortRoundDate);
+    const rows = MATCHES.filter(r=>{
+      if(state.comp && r.competition!==state.comp) return false;
+      if(state.group && r.group!==state.group) return false;
+      if(status==='Result')  return r.status==='Result';
+      if(status==='Fixture') return r.status!=='Result';
+      return true;
+    }).sort(sortRoundDate);
     tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
   }
 
+  // Standings
   function totalPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
   function renderStandings(){
     const rows = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group && r.status==='Result');
@@ -162,7 +156,7 @@
 
   el('status').addEventListener('input', renderGroupTable);
 
-  // Switch between Matches/Table (in Competition)
+  // Matches/Table toggle (Competition)
   $$('.section-tabs .seg').forEach(seg=>{
     seg.addEventListener('click', ()=>{
       const wrap = seg.parentElement;
@@ -179,6 +173,7 @@
   $$('.navtab').forEach(tab=>{
     tab.addEventListener('click', ()=>{
       $$('.navtab').forEach(t=>t.classList.remove('active'));
+      tab.addEventListener
       tab.classList.add('active');
       const name=tab.dataset.nav;
       el('panel-hurling').style.display = name==='hurling'?'':'none';
@@ -187,9 +182,10 @@
     });
   });
 
-  // Team view
+  // Team view (hide comp controls; empty until selection)
   function renderByTeam(){
     VIEW_MODE='team';
+    el('comp-controls')?.style?.setProperty('display','none');
     const sel=el('team');
     const teams=[...new Set(MATCHES.flatMap(r=>[r.home,r.away]).filter(Boolean))].sort();
     sel.innerHTML='<option value="">Select team…</option>'+teams.map(t=>`<option>${esc(t)}</option>`).join('');
@@ -198,29 +194,46 @@
       const team=sel.value||'';
       const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
       const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
-      if(!team){ tbody.innerHTML=''; return; } // show nothing until a team is selected
+      if(!team){ tbody.innerHTML=''; return; }
       const rows = MATCHES.filter(r=> r.home===team || r.away===team).sort(sortRoundDate);
       tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
     }
-    // initial: none
     const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); buildHead(thead, matchMedia('(max-width:880px)').matches, matchMedia('(max-width:400px)').matches);
     tbl.tBodies[0] ? (tbl.tBodies[0].innerHTML='') : tbl.createTBody();
   }
 
-  // Date view + Go-to-date jump
+  // Date view (hide comp controls) + Go-to-date with bounds (to first/last if out of range)
   function renderByDate(){
     VIEW_MODE='date';
+    el('comp-controls')?.style?.setProperty('display','none');
     const tbl=el('date-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
     const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
     const rows=[...MATCHES].sort(sortRoundDate);
     tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
 
+    const allDates = rows.map(r=>r.date).filter(Boolean).sort();
+    const minD = allDates[0] || null;
+    const maxD = allDates[allDates.length-1] || null;
+
     const jump=el('date-jump');
     if(jump){
+      if(minD) jump.min=minD;
+      if(maxD) jump.max=maxD;
       jump.onchange=()=>{
         const ymd = jump.value; if(!ymd) return;
-        const target = tbody.querySelector(`tr[data-date="${CSS.escape(ymd)}"]`);
-        if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); target.style.outline='2px solid var(--accent)'; setTimeout(()=>{ target.style.outline=''; }, 1500); }
+        let targetRow = tbody.querySelector(`tr[data-date="${CSS.escape(ymd)}"]`);
+        if(!targetRow){
+          // find first match with date >= selected; if none, go last; if selected < min, go first
+          const candidates = Array.from(tbody.querySelectorAll('tr[data-date]'));
+          targetRow = candidates.find(tr => (tr.getAttribute('data-date')||'') >= ymd)
+                    || candidates[candidates.length-1]
+                    || null;
+        }
+        if(targetRow){
+          targetRow.scrollIntoView({behavior:'smooth', block:'start'});
+          targetRow.style.outline='2px solid var(--accent)';
+          setTimeout(()=>{ targetRow.style.outline=''; }, 1500);
+        }
       };
     }
   }
@@ -233,6 +246,9 @@
       const target = seg.getAttribute('data-target');
       $$('#panel-hurling .panel').forEach(p=> p.style.display='none');
       el(target).style.display='';
+      // show/hide comp controls
+      const cc = document.querySelector('.comp-controls');
+      if(cc) cc.style.display = (target==='group-panel') ? '' : 'none';
       if(target==='group-panel') renderGroupTable();
       if(target==='by-team') renderByTeam();
       if(target==='by-date') renderByDate();
