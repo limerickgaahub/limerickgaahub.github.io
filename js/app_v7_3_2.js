@@ -1,0 +1,187 @@
+// app_v7_3_2.js — round-aware sorting
+(function(){
+  window.LGH_V7_3_READY = true;
+  const DATA_URL = 'data/hurling_2025.json';
+  const COMP_CODES = {
+    "Senior Hurling Championship": "SHC",
+    "Premier Intermediate Hurling Championship": "PIHC",
+    "Intermediate Hurling Championship": "IHC",
+    "Premier Junior A Hurling Championship": "PJAHC",
+    "Junior A Hurling Championship": "JAHC",
+  };
+  const el=id=>document.getElementById(id), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+  const pad2=n=>String(n).padStart(2,'0'); const day3=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const fmtDateShort=iso=>{ if(!iso) return ''; const d=new Date(iso+'T00:00:00'); return `${day3[d.getDay()]} ${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`; };
+  const fmtTimeShort=t=>{ if(!t) return ''; const m=t.match(/^(\d{1,2}):(\d{2})/); return m?`${pad2(m[1])}${m[2]}`:t; };
+  const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const groupShort=g=> (g||'').replace(/^Group\s*/i,'G').trim();
+  const compCode=name=> COMP_CODES[name] || (name? name.split(/\s+/).map(w=>w[0]).join('').toUpperCase() : '?');
+  const toInt=v=>v==null||v===''?null:(Number(v)||0);
+  const parseRoundNum=r=>{ const m=String(r||'').match(/(\d+)/); return m?Number(m[1]):999; };
+  const attachScores=m=>{
+    if(m.home_score && m.away_score && !('home_goals' in m)) {
+      const a = (m.home_score||'').match(/(\d+)[-–—](\d+)/), b=(m.away_score||'').match(/(\d+)[-–—](\d+)/);
+      if(a){ m.home_goals=Number(a[1]); m.home_points=Number(a[2]); }
+      if(b){ m.away_goals=Number(b[1]); m.away_points=Number(b[2]); }
+    }
+    m.home_goals = toInt(m.home_goals); m.home_points = toInt(m.home_points);
+    m.away_goals = toInt(m.away_goals); m.away_points = toInt(m.away_points);
+    m._homeMid = (m.home_goals!=null && m.home_points!=null) ? `${m.home_goals}-${m.home_points}` : '';
+    m._awayMid = (m.away_goals!=null && m.away_points!=null) ? `${m.away_goals}-${m.away_points}` : '';
+    m._rnum = parseRoundNum(m.round);
+    return m;
+  };
+  let MATCHES=[]; let RAW=null;
+  async function load(){
+    const res = await fetch(`${DATA_URL}?t=${Date.now()}`, {cache:'no-cache'});
+    const j = await res.json(); RAW=j;
+    MATCHES = (j.matches||j||[]).map(r=>{
+      const out = {
+        competition: r.competition || r.comp || '',
+        group: r.group || r.grp || '',
+        round: r.round || r.rnd || '',
+        date: r.date || r.match_date || '',
+        time: r.time || r.match_time || '',
+        home: r.home || r.home_team || '',
+        away: r.away || r.away_team || '',
+        venue: r.venue || '',
+        status: r.status || r.result_status || '',
+        home_goals: r.home_goals, home_points: r.home_points,
+        away_goals: r.away_goals, away_points: r.away_points,
+      }; 
+      attachScores(out); out.code = compCode(out.competition); return out;
+    });
+    el('last-updated').textContent = j.updated ? `Updated: ${j.updated}` : '';
+  }
+  function sortRoundDate(a,b){
+    return (a._rnum-b._rnum) || (a.date||'').localeCompare(b.date||'') || (a.time||'').localeCompare(b.time||'');
+  }
+  function buildHead(thead,isMobile,isTiny){
+    if(isMobile){
+      thead.innerHTML = isTiny
+        ? `<tr><th class="rcol">R</th><th class="dcol">Date/Time</th><th>Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`
+        : `<tr><th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`;
+    } else {
+      thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="ccol">Comp</th><th>Match</th><th>Venue</th><th>Status</th></tr>`;
+    }
+  }
+  function rowHTML(r,isMobile,isTiny){
+    const rShort=(r.round||'').replace(/^Round\s*/i,'R')||'—', dShort=fmtDateShort(r.date), tShort=fmtTimeShort(r.time||'');
+    const stShort=(r.status||'').startsWith('R')?'R':'F';
+    const scoreMid=(r._homeMid&&r._awayMid)?esc(r._homeMid+' — '+r._awayMid):'—';
+    const compBadge = `<span class="comp-badge"><span class="comp-code">${esc(r.code)}</span><span class="group-code">${esc(groupShort(r.group))}</span></span>`;
+    const matchCell = `<div class="match-block"><span class="match-team">${esc(r.home||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away||'')}</span><div class="match-meta">${esc(r.code)} · ${esc(groupShort(r.group||''))}</div></div>`;
+    if(isMobile){
+      if(isTiny){
+        const dt=`${dShort} ${tShort}`.trim();
+        return `<tr><td class="rcol" style="text-align:center">${esc(rShort)}</td><td class="dcol">${esc(dt)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td><td class="stcol">${stShort}</td></tr>`;
+      } else {
+        return `<tr><td class="rcol" style="text-align:center">${esc(rShort)}</td><td class="dcol">${esc(dShort)}</td><td class="tcol">${esc(tShort)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td><td class="stcol">${stShort}</td></tr>`;
+      }
+    } else {
+      return `<tr><td>${esc(r.round||'')}</td><td class="dcol">${esc(r.date||'')}</td><td class="tcol">${esc(r.time||'')}</td><td class="ccol">${compBadge}</td><td class="match">${matchCell}</td><td>${esc(r.venue||'')}</td><td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td></tr>`;
+    }
+  }
+  function buildMenus(){
+    const comps=[...new Set(MATCHES.map(m=>m.competition).filter(Boolean))].sort();
+    const compMenu=document.getElementById('comp-menu');
+    compMenu.innerHTML = comps.map((c,i)=>`<div class="item ${i===0?'active':''}" data-comp="${esc(c)}">${esc(c)}</div>`).join('');
+    function groupsFor(c){ return [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group||'Unassigned'))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})); }
+    function setComp(name){
+      state.comp=name; document.getElementById('comp-current').textContent=compCode(name);
+      $$('#comp-menu .item').forEach(i=>i.classList.toggle('active', i.dataset.comp===name));
+      const gs=groupsFor(name); const gMenu=document.getElementById('group-menu');
+      gMenu.innerHTML = gs.map((g,i)=>`<div class="item ${i===0?'active':''}" data-group="${esc(g)}">${esc(g)}</div>`).join('');
+      setGroup(gs[0]);
+    }
+    function setGroup(g){
+      state.group=g; document.getElementById('group-current').textContent=g;
+      $$('#group-menu .item').forEach(i=>i.classList.toggle('active', i.dataset.group===g));
+      renderPanelTitle(); renderGroupTable();
+    }
+    document.getElementById('comp-menu').onclick=e=>{ const it=e.target.closest('.item'); if(!it) return; setComp(it.dataset.comp); mComp.close(); };
+    document.getElementById('group-menu').onclick=e=>{ const it=e.target.closest('.item'); if(!it) return; setGroup(it.dataset.group); mGroup.close(); };
+    setComp(comps[0]);
+  }
+  const mComp = (function(){ const trig=document.getElementById('comp-trigger'), menu=document.getElementById('comp-menu'); function open(){menu.classList.add('open');} function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {open,close}; })();
+  const mGroup = (function(){ const trig=document.getElementById('group-trigger'), menu=document.getElementById('group-menu'); function open(){menu.classList.add('open');} function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {open,close}; })();
+  const mMore = (function(){ const trig=document.getElementById('more-trigger'), menu=document.getElementById('more-menu'); function open(){menu.classList.add('open');} function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {open,close}; })();
+  const state={comp:null, group:null};
+  function renderPanelTitle(){ document.getElementById('panel-title').textContent = `${compCode(state.comp)} — ${state.group}`; }
+  function renderGroupTable(){
+    const tbl=document.getElementById('g-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
+    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
+    const status=document.getElementById('status').value;
+    const rows = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group && (!status||r.status===status)).sort(sortRoundDate);
+    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+  }
+  function totalPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
+  function renderStandings(){
+    const rows = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group && r.status==='Result');
+    const teams=new Map();
+    for(const m of rows){
+      const hs=totalPoints(m.home_goals,m.home_points), as=totalPoints(m.away_goals,m.away_points);
+      if(hs==null||as==null) continue;
+      if(!teams.has(m.home)) teams.set(m.home,{team:m.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
+      if(!teams.has(m.away)) teams.set(m.away,{team:m.away,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
+      const H=teams.get(m.home), A=teams.get(m.away);
+      H.p++; A.p++; H.pf+=hs; H.pa+=as; A.pf+=as; A.pa+=hs;
+      if(hs>as){ H.w++; H.pts+=2; A.l++; } else if(hs<as){ A.w++; A.pts+=2; H.l++; } else { H.d++; A.d++; H.pts++; A.pts++; }
+    }
+    for(const t of teams.values()) t.diff=t.pf-t.pa;
+    const sorted=[...teams.values()].sort((a,b)=> b.pts-a.pts || b.diff-a.diff || b.pf-a.pf || a.team.localeCompare(b.team));
+    const tbody=document.querySelector('#g-standings-table tbody');
+    tbody.innerHTML = sorted.map(r=>`<tr><td>${esc(r.team)}</td><td class="right">${r.p}</td><td class="right">${r.w}</td><td class="right">${r.d}</td><td class="right">${r.l}</td><td class="right">${r.pf}</td><td class="right">${r.pa}</td><td class="right">${r.diff}</td><td class="right"><strong>${r.pts}</strong></td></tr>`).join('');
+  }
+  document.getElementById('status').addEventListener('input', renderGroupTable);
+  $$('.section-tabs .seg').forEach(seg=>{
+    seg.addEventListener('click', ()=>{
+      seg.parentElement.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
+      seg.classList.add('active');
+      const showTable = seg.getAttribute('data-view')==='table';
+      document.getElementById('g-standings').style.display = showTable ? '' : 'none';
+      document.querySelector('.matches-wrap').style.display = showTable ? 'none' : '';
+      if(showTable) renderStandings();
+    });
+  });
+  document.getElementById('more-menu').addEventListener('click', (e)=>{
+    const it=e.target.closest('.item'); if(!it) return;
+    $$('#panel-hurling .panel').forEach(p=> p.style.display='none');
+    document.getElementById(it.dataset.target).style.display='';
+    mMore.close();
+    if(it.dataset.target==='by-team'){ renderByTeam(); }
+    if(it.dataset.target==='by-date'){ renderByDate(); }
+  });
+  function rowSorter(a,b){ return sortRoundDate(a,b); }
+  function renderByTeam(){
+    const sel=document.getElementById('team');
+    const teams=[...new Set(MATCHES.flatMap(r=>[r.home,r.away]).filter(Boolean))].sort();
+    sel.innerHTML='<option value="">Select team…</option>'+teams.map(t=>`<option>${esc(t)}</option>`).join('');
+    sel.oninput=draw; addEventListener('resize', draw);
+    function draw(){
+      const team=sel.value||''; const tbl=document.getElementById('team-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
+      const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
+      const rows = MATCHES.filter(r=>!team || r.home===team || r.away===team).sort(rowSorter);
+      tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+    }
+    draw();
+  }
+  function renderByDate(){
+    const tbl=document.getElementById('date-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
+    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
+    const rows=[...MATCHES].sort(rowSorter);
+    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+  }
+  $$('.navtab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      $$('.navtab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const name=tab.dataset.nav;
+      document.getElementById('panel-hurling').style.display = name==='hurling'?'':'none';
+      document.getElementById('panel-football').style.display = name==='football'?'':'none';
+      document.getElementById('panel-about').style.display = name==='about'?'':'none';
+    });
+  });
+  document.getElementById('refresh').addEventListener('click', async ()=>{ await load(); buildMenus(); });
+  (async function(){ await load(); buildMenus(); })();
+})();
