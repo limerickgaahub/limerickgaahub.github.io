@@ -1,22 +1,7 @@
 {
   "competition": "Intermediate Hurling Championship",
-  "updated_at": "2025-08-23T15:11:49Z",
+  "updated_at": "2025-08-23T15:48:55Z",
   "fixtures": [
-    {
-      "id": "2025-IHC-G2-R3-PAL-ST-",
-      "round": "R 3",
-      "group": "Group 2",
-      "date": "2025-08-23",
-      "time_local": "15:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-23T15:00:00",
-      "home": "Pallasgreen",
-      "away": "St Kieran's",
-      "venue": "Adare",
-      "referee": "Kieran Guina",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    },
     {
       "id": "2025-IHC-G1-R3-MUN-HOS",
       "round": "R 3",
@@ -214,6 +199,25 @@
     }
   ],
   "results": [
+    {
+      "id": "2025-IHC-G2-R3-PAL-ST-",
+      "round": "R 3",
+      "group": "Group 2",
+      "date": "2025-08-23",
+      "time_local": "15:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-23T15:00:00",
+      "home": "Pallasgreen",
+      "away": "St Kieran's",
+      "venue": "Adare",
+      "referee": "Kieran Guina",
+      "status": "FT",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 1,
+      "home_points": 16,
+      "away_goals": 0,
+      "away_points": 19
+    },
     {
       "id": "2025-IHC-G1-R3-FEE-BRU",
       "round": "R 3",
