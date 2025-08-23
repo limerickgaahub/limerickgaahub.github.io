@@ -140,18 +140,27 @@ def textlines(el):
         if t:
             yield t
 
+def normalize(s: str) -> str:
+    """lowercase, collapse spaces, strip punctuation-like chars for robust matching"""
+    s = s.lower()
+    # replace non-alphanum with space
+    s = re.sub(r'[^a-z0-9]+', ' ', s)
+    # collapse spaces
+    s = re.sub(r'\s+', ' ', s).strip()
+    return s
+
 def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_key: str) -> List[Dict]:
     """
-    Robust version: stream all text lines in order; when a line matches a group
-    label, start a new bucket. Parse each bucket with parse_group_lines.
+    Robust version: stream all text lines in order; when a line *contains* a group
+    label (case/spacing-insensitive), start a new bucket. Also writes a small debug
+    file with the first ~150 lines so we can inspect what the site returned.
     """
     soup = fetch_soup(url)
     body = soup.select_one("main") or soup.body or soup
 
-    # Flatten ALL text into an ordered list of lines
+    # Flatten ALL text into an ordered list of lines (skip scripts/styles)
     all_lines: List[str] = []
     for el in body.find_all(True, recursive=True):
-        # skip menus/sidebars if you want (safe to leave as-is too)
         if el.name in {"script", "style", "noscript"}:
             continue
         txt = el.get_text("\n", strip=True)
@@ -162,28 +171,47 @@ def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_
             if ln:
                 all_lines.append(ln)
 
-    # Stream through lines, collecting per-group buckets
+    # --- DEBUG: write a sample of lines so we can see what's on the page ---
+    try:
+        ensure_parent("data/_debug/")
+        sample = "\n".join(all_lines[:150])
+        # Use a short key for filename
+        key = ("SHC_FIX" if "senior-hurling-fixtures" in url else
+               "SHC_RES" if "senior-hurling-results" in url else
+               "PI_I_FIX" if "intermediate-hurling-fixtures" in url else
+               "PI_I_RES")
+        with open(f"data/_debug/lines_{key}.txt", "w", encoding="utf-8") as df:
+            df.write(sample)
+    except Exception:
+        pass
+    # --- end DEBUG ---
+
+    # Prepare normalized lookup for group labels
+    norm_allowed = {normalize(g): g for g in allowed_groups}
+
     out: List[Dict] = []
     current_group: Optional[str] = None
     bucket: List[str] = []
 
-    # helper to flush a finished group
     def flush_bucket():
         nonlocal bucket, current_group, out
         if current_group and bucket:
             out.extend(parse_group_lines(bucket, mode, comp_key, current_group, url))
         bucket = []
 
-    # normalise labels for quick matching
-    norm_allowed = {g.lower(): g for g in allowed_groups}
-
     for ln in all_lines:
-        key = ln.lower()
-        if key in norm_allowed:             # hit a new group label line
+        n = normalize(ln)
+        # Match if the normalized allowed label is a SUBSTRING of the normalized line
+        matched_label = None
+        for k_norm, raw in norm_allowed.items():
+            if k_norm in n:
+                matched_label = raw
+                break
+        if matched_label:
             flush_bucket()
-            current_group = norm_allowed[key]
+            current_group = matched_label
             continue
-        if current_group:                    # only collect when inside a known group
+        if current_group:
             bucket.append(ln)
 
     # final flush
