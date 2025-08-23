@@ -141,34 +141,53 @@ def textlines(el):
             yield t
 
 def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_key: str) -> List[Dict]:
+    """
+    Robust version: stream all text lines in order; when a line matches a group
+    label, start a new bucket. Parse each bucket with parse_group_lines.
+    """
     soup = fetch_soup(url)
     body = soup.select_one("main") or soup.body or soup
-    out: List[Dict] = []
 
-    current_group = None
+    # Flatten ALL text into an ordered list of lines
+    all_lines: List[str] = []
+    for el in body.find_all(True, recursive=True):
+        # skip menus/sidebars if you want (safe to leave as-is too)
+        if el.name in {"script", "style", "noscript"}:
+            continue
+        txt = el.get_text("\n", strip=True)
+        if not txt:
+            continue
+        for ln in txt.split("\n"):
+            ln = ln.strip()
+            if ln:
+                all_lines.append(ln)
+
+    # Stream through lines, collecting per-group buckets
+    out: List[Dict] = []
+    current_group: Optional[str] = None
     bucket: List[str] = []
 
-    def flush_group(glabel: str, lines: List[str]):
-        if not glabel or not lines: return []
-        return parse_group_lines(lines, mode, comp_key, glabel, url)
+    # helper to flush a finished group
+    def flush_bucket():
+        nonlocal bucket, current_group, out
+        if current_group and bucket:
+            out.extend(parse_group_lines(bucket, mode, comp_key, current_group, url))
+        bucket = []
 
-    for el in body.find_all(["h1","h2","h3","h4","section","div","p","li"], recursive=True):
-        text = el.get_text(" ", strip=True)
-        if not text: continue
-        matched = None
-        for g in allowed_groups:
-            if g.lower() in text.lower():
-                matched = g; break
-        if matched:
-            if current_group and bucket:
-                out.extend(flush_group(current_group, bucket))
-            current_group = matched; bucket = []; continue
-        if current_group:
-            bucket.extend(list(textlines(el)))
+    # normalise labels for quick matching
+    norm_allowed = {g.lower(): g for g in allowed_groups}
 
-    if current_group and bucket:
-        out.extend(flush_group(current_group, bucket))
+    for ln in all_lines:
+        key = ln.lower()
+        if key in norm_allowed:             # hit a new group label line
+            flush_bucket()
+            current_group = norm_allowed[key]
+            continue
+        if current_group:                    # only collect when inside a known group
+            bucket.append(ln)
 
+    # final flush
+    flush_bucket()
     return out
 
 def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: str, source_url: str) -> List[Dict]:
