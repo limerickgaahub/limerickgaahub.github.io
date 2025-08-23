@@ -74,11 +74,8 @@ td.vcol, th.vcol { text-align:center; }
 /* Mobile widening + better column balance */
 .mobile-only { display:none; }
 @media (max-width:880px){
-  body { margin:10px; }                 /* widen the usable area */
-  .card { padding:12px; }
-
+  body { margin:10px; } .card { padding:12px; }
   thead th, tbody td { padding:10px 7px; font-size:13px; }
-  /* Keep Round visible; give more room overall; center venue */
   th.rcol, td.rcol { width:3.1ch; text-align:center; }
   th.dcol, td.dcol { width:10ch; text-align:center; }
   th.tcol, td.tcol { width:5.6ch; text-align:center; }
@@ -91,6 +88,11 @@ td.vcol, th.vcol { text-align:center; }
 #panel-about i { margin-right:6px; color:#444; }
 #panel-about a { margin-right:16px; text-decoration:none; }
 #panel-about a:hover i { color:#0077b5; }
+
+/* NEW: stack About links on mobile */
+@media (max-width: 600px){
+  #panel-about p a { display:block; margin:6px 0; }
+}
 </style>
 </head>
 
@@ -129,7 +131,6 @@ td.vcol, th.vcol { text-align:center; }
 
     <!-- Competition view -->
     <div class="panel card" id="group-panel" style="margin-top:6px;">
-      <!-- Matches/Table pills -->
       <div class="section-tabs">
         <div class="seg active" data-view="matches">Matches</div>
         <div class="seg" data-view="table">Table</div>
@@ -184,12 +185,11 @@ td.vcol, th.vcol { text-align:center; }
 
   <!-- About -->
   <div id="panel-about" class="card" style="display:none;">
-    <h2>About</h2>
     <p>
-      Limerick GAA Hub is designed to provide a clear and intuitive overview of fixtures and results — easily filterable by competition, team, or date.
+      Limerick GAA Hub is designed to provide a clear and intuitive overview of fixtures and results, easily filterable by competition, team, or date.
     </p>
-    <p>Over time, the aim is to build an archive of historical results.</p>
-    <p>Please note: this site is not associated with Limerick GAA — it is run solely by a club member and Limerick supporter sharing resources.</p>
+    <p>Over time, the aim is to additionally build an archive of historical results.</p>
+    <p>Please note, this site is not associated with Limerick GAA — it is run solely by a club member and Limerick supporter.</p>
     <p>
       <a href="https://www.instagram.com/limerickgaahub" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-instagram"></i> @limerickgaahub
