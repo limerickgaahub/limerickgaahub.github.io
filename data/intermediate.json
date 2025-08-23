@@ -1,22 +1,7 @@
 {
   "competition": "Intermediate Hurling Championship",
-  "updated_at": "2025-08-23T15:48:55Z",
+  "updated_at": "2025-08-23T17:36:22Z",
   "fixtures": [
-    {
-      "id": "2025-IHC-G1-R3-MUN-HOS",
-      "round": "R 3",
-      "group": "Group 1",
-      "date": "2025-08-23",
-      "time_local": "16:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-23T16:00:00",
-      "home": "Mungret St Pauls",
-      "away": "Hospital Herbertstown",
-      "venue": "Fedamore",
-      "referee": "Liam O Sullivan",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    },
     {
       "id": "2025-IHC-G2-R4-KNO-MUR",
       "round": "R 4",
@@ -217,6 +202,25 @@
       "home_points": 16,
       "away_goals": 0,
       "away_points": 19
+    },
+    {
+      "id": "2025-IHC-G1-R3-MUN-HOS",
+      "round": "R 3",
+      "group": "Group 1",
+      "date": "2025-08-23",
+      "time_local": "16:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-23T16:00:00",
+      "home": "Mungret St Pauls",
+      "away": "Hospital Herbertstown",
+      "venue": "Fedamore",
+      "referee": "Liam O Sullivan",
+      "status": "FT",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 1,
+      "home_points": 13,
+      "away_goals": 0,
+      "away_points": 20
     },
     {
       "id": "2025-IHC-G1-R3-FEE-BRU",

@@ -1,6 +1,6 @@
 {
   "competition": "Senior Hurling Championship",
-  "updated_at": "2025-08-23T15:48:55Z",
+  "updated_at": "2025-08-23T17:36:22Z",
   "fixtures": [
     {
       "id": "2025-SHC-G2-R3-NEW-DRO",
@@ -229,6 +229,25 @@
     }
   ],
   "results": [
+    {
+      "id": "2025-SHC-G2-R3-NEW-DRO",
+      "round": "R 3",
+      "group": "Group 2",
+      "date": "2025-08-23",
+      "time_local": "15:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-23T15:00:00",
+      "home": "Newcastle West",
+      "away": "Dromin Athlacca",
+      "venue": "Croagh",
+      "referee": "Liam Berkery",
+      "status": "FT",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 0,
+      "home_points": 14,
+      "away_goals": 0,
+      "away_points": 14
+    },
     {
       "id": "2025-SHC-G2-R3-MUN-MON",
       "round": "R 3",

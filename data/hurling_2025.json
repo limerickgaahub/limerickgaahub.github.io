@@ -1,5 +1,5 @@
 {
-  "updated": "2025-08-23T15:48:55Z",
+  "updated": "2025-08-23T17:36:22Z",
   "matches": [
     {
       "competition": "Senior Hurling Championship",
@@ -10,11 +10,11 @@
       "home": "Newcastle West",
       "away": "Dromin Athlacca",
       "venue": "Croagh",
-      "status": "",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 14,
+      "away_goals": 0,
+      "away_points": 14
     },
     {
       "competition": "Senior Hurling Championship",
@@ -873,21 +873,6 @@
     },
     {
       "competition": "Intermediate Hurling Championship",
-      "group": "Group 1",
-      "round": "R 3",
-      "date": "2025-08-23",
-      "time": "16:00",
-      "home": "Mungret St Pauls",
-      "away": "Hospital Herbertstown",
-      "venue": "Fedamore",
-      "status": "",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Intermediate Hurling Championship",
       "group": "Group 2",
       "round": "R 4",
       "date": "2025-08-28",
@@ -1080,6 +1065,21 @@
       "home_points": 16,
       "away_goals": 0,
       "away_points": 19
+    },
+    {
+      "competition": "Intermediate Hurling Championship",
+      "group": "Group 1",
+      "round": "R 3",
+      "date": "2025-08-23",
+      "time": "16:00",
+      "home": "Mungret St Pauls",
+      "away": "Hospital Herbertstown",
+      "venue": "Fedamore",
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 13,
+      "away_goals": 0,
+      "away_points": 20
     },
     {
       "competition": "Intermediate Hurling Championship",
