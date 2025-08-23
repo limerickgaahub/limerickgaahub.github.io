@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Limerick GAA Hub is designed to provide you a clear and intuitive overview of fixtures and results — easily filterable by competition, team, or date. Over time, the aim is to build an archive of historical results*
+Limerick GAA Hub is designed to provide a clear and intuitive overview of fixtures and results — easily filterable by competition, team, or date. Over time, the aim is to build an archive of historical results.
 
 Please note, this site is not associated with Limerick GAA — I am solely a club member sharing resources.
 
