@@ -36,14 +36,17 @@ jobs:
 
       - name: Commit data changes
         run: |
-          if [[ -n "$(git status --porcelain data)" ]]; then
+          CHANGES="$(git status --porcelain data)"
+          if [[ -n "$CHANGES" ]]; then
             git config user.name  "gha-bot"
             git config user.email "gha-bot@example.com"
-            git fetch origin main
-            git pull --rebase origin main
-            git add data/*.json
+            git add -A data
             git commit -m "Auto-update fixtures/results"
+            # Rebase onto latest main; --autostash handles any local diffs safely
+            git fetch origin main
+            git pull --rebase --autostash origin main
             git push
           else
             echo "No changes to commit."
           fi
+
