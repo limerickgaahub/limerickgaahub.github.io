@@ -1,5 +1,4 @@
-// app_v7_3_2.js — mobile R column restored, wider match cell, centered cells,
-// Competition view hides comp/group meta; Team/Date keeps it (PIHC meta simplified)
+// app_v7_3_2.js — Competition/Team/Date views + mobile R + date jump + tidy meta
 (function(){
   window.LGH_V7_3_READY = true;
   const DATA_URL = 'data/hurling_2025.json';
@@ -19,6 +18,10 @@
   const compCode=name=> COMP_CODES[name] || (name? name.split(/\s+/).map(w=>w[0]).join('').toUpperCase() : '?');
   const toInt=v=>v==null||v===''?null:(Number(v)||0);
   const parseRoundNum=r=>{ const m=String(r||'').match(/(\d+)/); return m?Number(m[1]):999; };
+
+  // controls whether to show the small comp/group meta in the Match cell
+  let VIEW_MODE = 'competition'; // 'competition' | 'team' | 'date'
+
   const attachScores=m=>{
     if(m.home_score && m.away_score && !('home_goals' in m)) {
       const a = (m.home_score||'').match(/(\d+)[-–—](\d+)/), b=(m.away_score||'').match(/(\d+)[-–—](\d+)/);
@@ -33,22 +36,21 @@
     return m;
   };
 
-  let MATCHES=[];
+  let MATCHES=[]; let RAW=null;
   async function load(){
     const res = await fetch(`${DATA_URL}?t=${Date.now()}`, {cache:'no-cache'});
-    const j = await res.json();
+    const j = await res.json(); RAW=j;
     MATCHES = (j.matches||j||[]).map(r=>{
-      const statusNorm = (r.status && String(r.status).toLowerCase().startsWith('res')) ? 'Result' : 'Fixture';
       const out = {
-        competition: r.competition || '',
-        group: r.group || '',
-        round: r.round || '',
-        date: r.date || '',
-        time: r.time || '',
-        home: r.home || '',
-        away: r.away || '',
+        competition: r.competition || r.comp || '',
+        group: r.group || r.grp || '',
+        round: r.round || r.rnd || '',
+        date: r.date || r.match_date || '',
+        time: r.time || r.match_time || '',
+        home: r.home || r.home_team || '',
+        away: r.away || r.away_team || '',
         venue: r.venue || '',
-        status: statusNorm,
+        status: r.status || r.result_status || '',
         home_goals: r.home_goals, home_points: r.home_points,
         away_goals: r.away_goals, away_points: r.away_points,
       };
@@ -60,79 +62,65 @@
     return (a._rnum-b._rnum) || (a.date||'').localeCompare(b.date||'') || (a.time||'').localeCompare(b.time||'');
   }
 
-  // ------- table builders
-  function buildHead(thead,isMobile,isTiny,showRound=true,showStatus=false){
+  function buildHead(thead,isMobile,isTiny){
     if(isMobile){
-      // Mobile: R | Date | Time | Match | Venue
-      const colsTiny = showRound
-        ? `<th class="rcol">R</th><th class="dcol">Date/Time</th><th>Match</th><th class="vcol">Venue</th>`
-        : `<th class="dcol">Date/Time</th><th>Match</th><th class="vcol">Venue</th>`;
-      const cols = showRound
-        ? `<th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th class="vcol">Venue</th>`
-        : `<th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th class="vcol">Venue</th>`;
-      thead.innerHTML = `<tr>${isTiny?colsTiny:cols}${showStatus?`<th class="stcol">S</th>`:''}</tr>`;
+      thead.innerHTML = isTiny
+        ? `<tr><th class="rcol">R</th><th class="dcol">Date/Time</th><th>Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`
+        : `<tr><th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`;
     } else {
-      thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th>Venue</th><th>Status</th></tr>`;
+      thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="ccol">Comp</th><th>Match</th><th>Venue</th><th>Status</th></tr>`;
     }
   }
 
-  function metaTextFor(r){
-    const g = groupShort(r.group||'');
-    // In Team/Date views: keep comp code; drop "Premier Intermediate" tail for PIHC
-    if (r.code === 'PIHC') return 'PIHC';
-    return g ? `${r.code} · ${g}` : `${r.code}`;
-  }
-
-  function rowHTML(r,isMobile,isTiny,{showMeta=true, showRound=true, showStatus=false}={}){
-    const rShort = String(r.round||'').replace(/round\s*/i,'R').replace(/\s+/g,'') || '—';
-    const dShort=fmtDateShort(r.date), tShort=fmtTimeShort(r.time||'');
-    const scoreMid=(r._homeMid&&r._awayMid)?esc(r._homeMid+' – '+r._awayMid):'—';
-    const meta = showMeta ? `<div class="match-meta">${esc(metaTextFor(r))}</div>` : '';
+  function rowHTML(r,isMobile,isTiny){
+    const rShort=(r.round||'').replace(/^Round\s*/i,'R')||'—';
+    const dShort=fmtDateShort(r.date);
+    const tShort=fmtTimeShort(r.time||'');
+    const stShort=(r.status||'').startsWith('R')?'R':'F';
+    const scoreMid=(r._homeMid&&r._awayMid)?esc(r._homeMid+' - '+r._awayMid):'—'; // shorter dash
+    const showMeta = (VIEW_MODE!=='competition');
+    const meta = showMeta ? `<div class="match-meta">${esc(r.code)} · ${esc(groupShort(r.group||''))}</div>` : '';
     const matchCell = `<div class="match-block"><span class="match-team">${esc(r.home||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away||'')}</span>${meta}</div>`;
+    const compBadge = `<span class="comp-badge"><span class="comp-code">${esc(r.code)}</span><span class="group-code">${esc(groupShort(r.group))}</span></span>`;
+
+    const trAttr = `data-date="${esc(r.date||'')}"`;
 
     if(isMobile){
       if(isTiny){
         const dt=`${dShort} ${tShort}`.trim();
-        return `<tr>${
-          showRound?`<td class="rcol" style="text-align:center">${esc(rShort)}</td>`:''
-        }<td class="dcol">${esc(dt)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td>${showStatus?`<td class="stcol">${r.status==='Result'?'R':'F'}</td>`:''}</tr>`;
+        return `<tr ${trAttr}><td class="rcol" style="text-align:center">${esc(rShort)}</td><td class="dcol">${esc(dt)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td><td class="stcol">${stShort}</td></tr>`;
       } else {
-        return `<tr>${
-          showRound?`<td class="rcol" style="text-align:center">${esc(rShort)}</td>`:''
-        }<td class="dcol">${esc(dShort)}</td><td class="tcol">${esc(tShort)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td>${showStatus?`<td class="stcol">${r.status==='Result'?'R':'F'}</td>`:''}</tr>`;
+        return `<tr ${trAttr}><td class="rcol" style="text-align:center">${esc(rShort)}</td><td class="dcol">${esc(dShort)}</td><td class="tcol">${esc(tShort)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td><td class="stcol">${stShort}</td></tr>`;
       }
     } else {
-      return `<tr><td>${esc(rShort)}</td><td class="dcol">${esc(r.date||'')}</td><td class="tcol">${esc(r.time||'')}</td><td class="match">${matchCell}</td><td>${esc(r.venue||'')}</td><td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td></tr>`;
+      return `<tr ${trAttr}><td>${esc(r.round||'')}</td><td class="dcol">${esc(r.date||'')}</td><td class="tcol">${esc(r.time||'')}</td><td class="ccol">${compBadge}</td><td class="match">${matchCell}</td><td>${esc(r.venue||'')}</td><td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td></tr>`;
     }
   }
 
-  // ------- menus
   function buildMenus(){
-    const PRIORITY = [
-      "Senior Hurling Championship",
-      "Premier Intermediate Hurling Championship",
-      "Intermediate Hurling Championship"
-    ];
-    const comps = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))]
-      .sort((a,b)=>{
-        const ia = PRIORITY.indexOf(a), ib = PRIORITY.indexOf(b);
-        return (ia===-1)-(ib===-1) || (ia-ib) || a.localeCompare(b);
-      });
+    // Competition order: SHC, PIHC, IHC first if present, then any others
+    const all = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))];
+    const preferred = ["Senior Hurling Championship","Premier Intermediate Hurling Championship","Intermediate Hurling Championship"];
+    const rest = all.filter(c=>!preferred.includes(c)).sort();
+    const comps = preferred.filter(c=>all.includes(c)).concat(rest);
 
     const compMenu=el('comp-menu');
     compMenu.innerHTML = comps.map((c,i)=>`<div class="item ${i===0?'active':''}" data-comp="${esc(c)}">${esc(c)}</div>`).join('');
+
     function groupsFor(c){ return [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group||'Unassigned'))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})); }
+
     function setComp(name){
-      state.comp=name; el('comp-current').textContent=compCode(name);
+      state.comp=name;
+      el('comp-current').textContent=compCode(name); // just the code
       $$('#comp-menu .item').forEach(i=>i.classList.toggle('active', i.dataset.comp===name));
       const gs=groupsFor(name); const gMenu=el('group-menu');
       gMenu.innerHTML = gs.map((g,i)=>`<div class="item ${i===0?'active':''}" data-group="${esc(g)}">${esc(g)}</div>`).join('');
       setGroup(gs[0]);
     }
     function setGroup(g){
-      state.group=g; el('group-current').textContent=g;
+      state.group=g; el('group-current').textContent=g; // no "Group:"
       $$('#group-menu .item').forEach(i=>i.classList.toggle('active', i.dataset.group===g));
-      renderPanelTitle(); renderGroupTable();
+      renderGroupTable();
     }
     el('comp-menu').onclick=e=>{ const it=e.target.closest('.item'); if(!it) return; setComp(it.dataset.comp); mComp.close(); };
     el('group-menu').onclick=e=>{ const it=e.target.closest('.item'); if(!it) return; setGroup(it.dataset.group); mGroup.close(); };
@@ -143,21 +131,16 @@
   const mGroup = (function(){ const trig=el('group-trigger'), menu=el('group-menu'); function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {close}; })();
 
   const state={comp:null, group:null};
-  function renderPanelTitle(){ el('panel-title').textContent = `${compCode(state.comp)} — ${state.group}`; }
 
   function renderGroupTable(){
+    VIEW_MODE='competition';
     const tbl=el('g-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
-    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches;
-    buildHead(thead,isMobile,isTiny,true,false); // showRound on mobile, hide status col
+    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
     const status=el('status').value;
-    const rows = MATCHES
-      .filter(r=>r.competition===state.comp && r.group===state.group)
-      .filter(r=> !status || r.status===status)
-      .sort(sortRoundDate);
-    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny,{showMeta:false, showRound:true, showStatus:false})).join('');
+    const rows = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group && (!status||r.status===status)).sort(sortRoundDate);
+    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
   }
 
-  // standings (unchanged)
   function totalPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
   function renderStandings(){
     const rows = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group && r.status==='Result');
@@ -179,10 +162,11 @@
 
   el('status').addEventListener('input', renderGroupTable);
 
-  // Matches/Table toggle (keep this near top of panel)
+  // Switch between Matches/Table (in Competition)
   $$('.section-tabs .seg').forEach(seg=>{
     seg.addEventListener('click', ()=>{
-      seg.parentElement.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
+      const wrap = seg.parentElement;
+      wrap.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
       seg.classList.add('active');
       const showTable = seg.getAttribute('data-view')==='table';
       el('g-standings').style.display = showTable ? '' : 'none';
@@ -191,33 +175,7 @@
     });
   });
 
-  // More views
-  function rowSorter(a,b){ return sortRoundDate(a,b); }
-
-  function renderByTeam(){
-    const sel=el('team');
-    const teams=[...new Set(MATCHES.flatMap(r=>[r.home,r.away]).filter(Boolean))].sort();
-    sel.innerHTML='<option value="">Select team…</option>'+teams.map(t=>`<option>${esc(t)}</option>`).join('');
-    sel.oninput=draw; addEventListener('resize', draw);
-    function draw(){
-      const team=sel.value||''; const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
-      const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches;
-      buildHead(thead,isMobile,isTiny,true,false);
-      const rows = MATCHES.filter(r=>!team || r.home===team || r.away===team).sort(rowSorter);
-      tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny,{showMeta:true, showRound:true, showStatus:false})).join('');
-    }
-    draw();
-  }
-
-  function renderByDate(){
-    const tbl=el('date-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
-    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches;
-    buildHead(thead,isMobile,isTiny,true,false);
-    const rows=[...MATCHES].sort(rowSorter);
-    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny,{showMeta:true, showRound:true, showStatus:false})).join('');
-  }
-
-  // Top nav
+  // Top-level tabs (Hurling/Football/About)
   $$('.navtab').forEach(tab=>{
     tab.addEventListener('click', ()=>{
       $$('.navtab').forEach(t=>t.classList.remove('active'));
@@ -226,6 +184,58 @@
       el('panel-hurling').style.display = name==='hurling'?'':'none';
       el('panel-football').style.display = name==='football'?'':'none';
       el('panel-about').style.display = name==='about'?'':'none';
+    });
+  });
+
+  // Team view
+  function renderByTeam(){
+    VIEW_MODE='team';
+    const sel=el('team');
+    const teams=[...new Set(MATCHES.flatMap(r=>[r.home,r.away]).filter(Boolean))].sort();
+    sel.innerHTML='<option value="">Select team…</option>'+teams.map(t=>`<option>${esc(t)}</option>`).join('');
+    sel.oninput=draw; addEventListener('resize', draw);
+    function draw(){
+      const team=sel.value||'';
+      const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
+      const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
+      if(!team){ tbody.innerHTML=''; return; } // show nothing until a team is selected
+      const rows = MATCHES.filter(r=> r.home===team || r.away===team).sort(sortRoundDate);
+      tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+    }
+    // initial: none
+    const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); buildHead(thead, matchMedia('(max-width:880px)').matches, matchMedia('(max-width:400px)').matches);
+    tbl.tBodies[0] ? (tbl.tBodies[0].innerHTML='') : tbl.createTBody();
+  }
+
+  // Date view + Go-to-date jump
+  function renderByDate(){
+    VIEW_MODE='date';
+    const tbl=el('date-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
+    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
+    const rows=[...MATCHES].sort(sortRoundDate);
+    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+
+    const jump=el('date-jump');
+    if(jump){
+      jump.onchange=()=>{
+        const ymd = jump.value; if(!ymd) return;
+        const target = tbody.querySelector(`tr[data-date="${CSS.escape(ymd)}"]`);
+        if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); target.style.outline='2px solid var(--accent)'; setTimeout(()=>{ target.style.outline=''; }, 1500); }
+      };
+    }
+  }
+
+  // Switch between Competition / Team / Date views
+  $$('.view-tabs .vt').forEach(seg=>{
+    seg.addEventListener('click', ()=>{
+      seg.parentElement.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
+      seg.classList.add('active');
+      const target = seg.getAttribute('data-target');
+      $$('#panel-hurling .panel').forEach(p=> p.style.display='none');
+      el(target).style.display='';
+      if(target==='group-panel') renderGroupTable();
+      if(target==='by-team') renderByTeam();
+      if(target==='by-date') renderByDate();
     });
   });
 
