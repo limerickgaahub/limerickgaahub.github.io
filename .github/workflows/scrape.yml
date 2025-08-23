@@ -36,7 +36,7 @@ jobs:
         run: |
           python scripts/scrape_limerickgaa.py
 
-                - name: Commit data changes
+      - name: Commit data changes
         run: |
           if [[ -n "$(git status --porcelain data)" ]]; then
             git config user.name  "gha-bot"
