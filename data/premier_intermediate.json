@@ -1,22 +1,7 @@
 {
   "competition": "Premier Intermediate Hurling Championship",
-  "updated_at": "2025-08-23T17:36:22Z",
+  "updated_at": "2025-08-23T20:11:35Z",
   "fixtures": [
-    {
-      "id": "2025-PIHC-GX-R4-BLA-GAR",
-      "round": "R 4",
-      "group": "Premier Intermediate",
-      "date": "2025-08-23",
-      "time_local": "18:30",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-23T18:30:00",
-      "home": "Blackrock",
-      "away": "Garryspillane",
-      "venue": "Killmallock",
-      "referee": "John O Halloran",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    },
     {
       "id": "2025-PIHC-GX-R5-SOU-BRU",
       "round": "R 5",
@@ -199,6 +184,25 @@
     }
   ],
   "results": [
+    {
+      "id": "2025-PIHC-GX-R4-BLA-GAR",
+      "round": "R 4",
+      "group": "Premier Intermediate",
+      "date": "2025-08-23",
+      "time_local": "18:30",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-23T18:30:00",
+      "home": "Blackrock",
+      "away": "Garryspillane",
+      "venue": "Killmallock",
+      "referee": "John O Halloran",
+      "status": "FT",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 0,
+      "home_points": 12,
+      "away_goals": 4,
+      "away_points": 15
+    },
     {
       "id": "2025-PIHC-GX-R4-BRU-GLE",
       "round": "R 4",

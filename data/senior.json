@@ -1,37 +1,7 @@
 {
   "competition": "Senior Hurling Championship",
-  "updated_at": "2025-08-23T17:36:22Z",
+  "updated_at": "2025-08-23T20:11:35Z",
   "fixtures": [
-    {
-      "id": "2025-SHC-G2-R3-NEW-DRO",
-      "round": "R 3",
-      "group": "Group 2",
-      "date": "2025-08-23",
-      "time_local": "15:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-23T15:00:00",
-      "home": "Newcastle West",
-      "away": "Dromin Athlacca",
-      "venue": "Croagh",
-      "referee": "Liam Berkery",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
-    },
-    {
-      "id": "2025-SHC-G1-R3-PAT-BAL",
-      "round": "R 3",
-      "group": "Group 1",
-      "date": "2025-08-23",
-      "time_local": "18:30",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-23T18:30:00",
-      "home": "Patrickswell",
-      "away": "Ballybrown",
-      "venue": "Mick Neville Park",
-      "referee": "Johnny Murphy",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
-    },
     {
       "id": "2025-SHC-G1-R3-NA--AHA",
       "round": "R 3",
@@ -247,6 +217,25 @@
       "home_points": 14,
       "away_goals": 0,
       "away_points": 14
+    },
+    {
+      "id": "2025-SHC-G1-R3-PAT-BAL",
+      "round": "R 3",
+      "group": "Group 1",
+      "date": "2025-08-23",
+      "time_local": "18:30",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-23T18:30:00",
+      "home": "Patrickswell",
+      "away": "Ballybrown",
+      "venue": "Mick Neville Park",
+      "referee": "Johnny Murphy",
+      "status": "FT",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 2,
+      "home_points": 9,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "id": "2025-SHC-G2-R3-MUN-MON",
