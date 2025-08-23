@@ -71,17 +71,20 @@ td.vcol, th.vcol { text-align:center; }
 /* Standings tighter so Diff fits */
 #g-standings-table thead th, #g-standings-table tbody td { padding:10px 8px; font-size:13px; }
 
-/* Mobile */
+/* Mobile widening + better column balance */
 .mobile-only { display:none; }
 @media (max-width:880px){
-  thead th, tbody td { padding:10px 8px; font-size:13px; }
-  /* Keep Round visible; hide Status; widen match/venue to avoid horizontal scroll */
-  th.rcol, td.rcol { width:2.6ch; text-align:center; }
-  th.dcol, td.dcol { width:9.5ch; text-align:center; }
-  th.tcol, td.tcol { width:5.2ch; text-align:center; }
+  body { margin:10px; }                 /* widen the usable area */
+  .card { padding:12px; }
+
+  thead th, tbody td { padding:10px 7px; font-size:13px; }
+  /* Keep Round visible; give more room overall; center venue */
+  th.rcol, td.rcol { width:3.1ch; text-align:center; }
+  th.dcol, td.dcol { width:10ch; text-align:center; }
+  th.tcol, td.tcol { width:5.6ch; text-align:center; }
   th.vcol, td.vcol { width:auto; text-align:center; }
-  .stcol { display:none; }
   td.match { padding:8px 6px; text-align:center; }
+  .stcol { display:none; }
 }
 
 /* About links */
@@ -112,7 +115,7 @@ td.vcol, th.vcol { text-align:center; }
       <div class="seg vt" data-target="by-date">Date</div>
     </div>
 
-    <!-- Competition controls (only visible when Competition tab active) -->
+    <!-- Competition controls (hidden on Team/Date) -->
     <div class="h-row comp-controls">
       <div class="menu-wrap">
         <div class="trigger" id="comp-trigger"><span id="comp-current">—</span></div>
@@ -126,8 +129,7 @@ td.vcol, th.vcol { text-align:center; }
 
     <!-- Competition view -->
     <div class="panel card" id="group-panel" style="margin-top:6px;">
-      <!-- removed SHC — Group X heading -->
-      <!-- Matches/Table pills (kept high) -->
+      <!-- Matches/Table pills -->
       <div class="section-tabs">
         <div class="seg active" data-view="matches">Matches</div>
         <div class="seg" data-view="table">Table</div>
