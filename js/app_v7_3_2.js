@@ -1,4 +1,4 @@
-// app_v7_3_2.js — round-aware sorting
+// app_v7_3_2.js — round-aware sorting + view tabs + ordering
 (function(){
   window.LGH_V7_3_READY = true;
   const DATA_URL = 'data/hurling_2025.json';
@@ -48,10 +48,10 @@
         status: r.status || r.result_status || '',
         home_goals: r.home_goals, home_points: r.home_points,
         away_goals: r.away_goals, away_points: r.away_points,
-      }; 
+      };
       attachScores(out); out.code = compCode(out.competition); return out;
     });
-    el('last-updated').textContent = j.updated ? `Updated: ${j.updated}` : '';
+    // timestamp removed (no #last-updated element now)
   }
   function sortRoundDate(a,b){
     return (a._rnum-b._rnum) || (a.date||'').localeCompare(b.date||'') || (a.time||'').localeCompare(b.time||'');
@@ -66,7 +66,9 @@
     }
   }
   function rowHTML(r,isMobile,isTiny){
-    const rShort=(r.round||'').replace(/^Round\s*/i,'R')||'—', dShort=fmtDateShort(r.date), tShort=fmtTimeShort(r.time||'');
+    let rShort = String(r.round||'').replace(/round\s*/i,'R').replace(/\s+/g,''); // R1/R2
+    if(!rShort) rShort = '—';
+    const dShort=fmtDateShort(r.date), tShort=fmtTimeShort(r.time||'');
     const stShort=(r.status||'').startsWith('R')?'R':'F';
     const scoreMid=(r._homeMid&&r._awayMid)?esc(r._homeMid+' — '+r._awayMid):'—';
     const compBadge = `<span class="comp-badge"><span class="comp-code">${esc(r.code)}</span><span class="group-code">${esc(groupShort(r.group))}</span></span>`;
@@ -83,7 +85,17 @@
     }
   }
   function buildMenus(){
-    const comps=[...new Set(MATCHES.map(m=>m.competition).filter(Boolean))].sort();
+    const PRIORITY = [
+      "Senior Hurling Championship",
+      "Premier Intermediate Hurling Championship",
+      "Intermediate Hurling Championship"
+    ];
+    const comps = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))]
+      .sort((a,b)=>{
+        const ia = PRIORITY.indexOf(a), ib = PRIORITY.indexOf(b);
+        return (ia===-1)-(ib===-1) || (ia-ib) || a.localeCompare(b);
+      });
+
     const compMenu=document.getElementById('comp-menu');
     compMenu.innerHTML = comps.map((c,i)=>`<div class="item ${i===0?'active':''}" data-comp="${esc(c)}">${esc(c)}</div>`).join('');
     function groupsFor(c){ return [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group||'Unassigned'))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})); }
@@ -105,7 +117,7 @@
   }
   const mComp = (function(){ const trig=document.getElementById('comp-trigger'), menu=document.getElementById('comp-menu'); function open(){menu.classList.add('open');} function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {open,close}; })();
   const mGroup = (function(){ const trig=document.getElementById('group-trigger'), menu=document.getElementById('group-menu'); function open(){menu.classList.add('open');} function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {open,close}; })();
-  const mMore = (function(){ const trig=document.getElementById('more-trigger'), menu=document.getElementById('more-menu'); function open(){menu.classList.add('open');} function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {open,close}; })();
+
   const state={comp:null, group:null};
   function renderPanelTitle(){ document.getElementById('panel-title').textContent = `${compCode(state.comp)} — ${state.group}`; }
   function renderGroupTable(){
@@ -144,14 +156,22 @@
       if(showTable) renderStandings();
     });
   });
-  document.getElementById('more-menu').addEventListener('click', (e)=>{
-    const it=e.target.closest('.item'); if(!it) return;
-    $$('#panel-hurling .panel').forEach(p=> p.style.display='none');
-    document.getElementById(it.dataset.target).style.display='';
-    mMore.close();
-    if(it.dataset.target==='by-team'){ renderByTeam(); }
-    if(it.dataset.target==='by-date'){ renderByDate(); }
+
+  // New: view tabs under Hurling (Competition / Team / Date)
+  document.querySelectorAll('.view-tabs .vt').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.view-tabs .vt').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.dataset.target;
+      ['group-panel','by-team','by-date'].forEach(id=>{
+        const el = document.getElementById(id);
+        if(el) el.style.display = (id===target)? '' : 'none';
+      });
+      if(target==='by-team') renderByTeam();
+      if(target==='by-date') renderByDate();
+    });
   });
+
   function rowSorter(a,b){ return sortRoundDate(a,b); }
   function renderByTeam(){
     const sel=document.getElementById('team');
@@ -172,6 +192,7 @@
     const rows=[...MATCHES].sort(rowSorter);
     tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
   }
+
   $$('.navtab').forEach(tab=>{
     tab.addEventListener('click', ()=>{
       $$('.navtab').forEach(t=>t.classList.remove('active'));
@@ -182,6 +203,7 @@
       document.getElementById('panel-about').style.display = name==='about'?'':'none';
     });
   });
-  document.getElementById('refresh').addEventListener('click', async ()=>{ await load(); buildMenus(); });
+
+  // Removed refresh button handler (no #refresh in HTML)
   (async function(){ await load(); buildMenus(); })();
 })();
