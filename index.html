@@ -38,17 +38,10 @@ h1 { margin:0; font-weight:800; font-size:20px; }
 .section-tabs .seg { padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
 .section-tabs .seg.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-/* Competition controls */
-<div class="h-row comp-controls">
-  <div class="menu-wrap">
-    <div class="trigger" id="compgroup-trigger" aria-label="Competition">
-      <span id="compgroup-current">—</span>
-      <i class="fa-solid fa-chevron-down" style="font-size:12px; margin-left:6px;"></i>
-    </div>
-    <div class="menu" id="compgroup-menu"></div>
-  </div>
-</div>
-
+/* Competition controls (single green pill trigger) */
+#compgroup-trigger { background:#eaf6ef; border:1px solid #cdebd8; border-radius:999px; padding:10px 14px; font-weight:800; display:inline-flex; align-items:center; cursor:pointer; user-select:none; }
+#compgroup-trigger::after { content:none; } /* avoid duplicate arrow from generic .trigger */
+#compgroup-current { font-weight:800; }
 
 /* Share bar */
 .sharebar { display:flex; align-items:center; gap:8px; margin:6px 0 10px; }
@@ -69,14 +62,8 @@ tbody tr:hover td { background:#f1f9f4; }
 td.match, th.match { text-align:center; }
 .match-block { display:grid; grid-template-rows:auto auto auto; row-gap:3px; justify-items:center; }
 .match-team { display:block; line-height:1.2; }
-.match-score { display:block; font-weight:800; font-size:16px; line-height:1.2; }
-
-/* Make the whole Competition pill the trigger (keep your green background) */
-#compgroup-trigger::after { content: none; } /* avoid double arrow since we add our own icon */
-#compgroup-current { font-weight:800; }
-
-/* Slightly smaller score under Match */
-.match-score { font-size:14px; } /* down from 16px */
+/* Slightly smaller score under Match (as requested) */
+.match-score { display:block; font-weight:800; font-size:14px; line-height:1.2; } /* down from 16px */
 
 /* Standings tighter */
 #g-standings-table thead th, #g-standings-table tbody td { padding:10px 8px; font-size:13px; }
@@ -97,7 +84,7 @@ td.match, th.match { text-align:center; }
   .card { padding:12px; }
   thead th, tbody td { padding:10px 7px; font-size:13px; }
   .stcol { display:none; }
-  /* Center Date + Time on mobile as requested */
+  /* Center Date + Time on mobile */
   th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
 }
 
@@ -147,14 +134,14 @@ td.match, th.match { text-align:center; }
       <div class="seg vt" data-target="by-date">Date</div>
     </div>
 
+    <!-- Single Competition pill + dropdown -->
     <div class="h-row comp-controls">
       <div class="menu-wrap">
-        <div class="trigger" id="comp-trigger"><span id="comp-current">—</span></div>
-        <div class="menu" id="comp-menu"></div>
-      </div>
-      <div class="menu-wrap">
-        <div class="trigger" id="group-trigger"><span id="group-current">—</span></div>
-        <div class="menu" id="group-menu"></div>
+        <div class="trigger" id="compgroup-trigger" aria-label="Choose competition & group">
+          <span id="compgroup-current">—</span>
+          <i class="fa-solid fa-chevron-down" style="font-size:12px; margin-left:6px;"></i>
+        </div>
+        <div class="menu" id="compgroup-menu"></div>
       </div>
     </div>
 
@@ -188,7 +175,6 @@ td.match, th.match { text-align:center; }
         <div class="table-wrap">
           <table id="g-standings-table">
             <thead>
-              <!-- Default view: Team, P, W, D, L, Pts -->
               <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">Pts</th></tr>
             </thead><tbody></tbody>
           </table>
@@ -230,7 +216,7 @@ td.match, th.match { text-align:center; }
     </p>
   </div>
 
-  <!-- Expand modal (full columns: adds PF, PA, Diff) -->
+  <!-- Expand modal -->
   <div class="modal" id="standings-modal" aria-hidden="true">
     <div class="sheet">
       <div class="sheet-header"><h3>Standings</h3><button class="close" id="modal-close">Close</button></div>
@@ -243,7 +229,7 @@ td.match, th.match { text-align:center; }
     </div>
   </div>
 
-   <footer class="site-footer">Limerick GAA Hub · 2025</footer>
+  <footer class="site-footer">Limerick GAA Hub · 2025</footer>
 
   <!-- IMPORTANT: update if you rename the JS file -->
   <script src="./js/app_v7_3_3.js?v=fix3"></script>
