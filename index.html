@@ -16,8 +16,9 @@ h1 { margin:0; font-weight:800; font-size:20px; }
 /* Header */
 .header { position:fixed; top:0; left:0; right:0; z-index:100; background:#fff; border-bottom:1px solid var(--line); }
 .header-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; max-width:1100px; margin:0 auto; }
-.brand { display:flex; align-items:center; gap:10px; }
-.brand .dot { width:10px; height:10px; background:var(--accent); border-radius:50%; }
+/* brand: make it a link and show favicon image */
+.brand { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+.brand img { width:20px; height:20px; }
 .navtabs { display:flex; gap:8px; align-items:center; }
 .navtab { padding:8px 12px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; }
 .navtab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
@@ -47,7 +48,7 @@ h1 { margin:0; font-weight:800; font-size:20px; }
 /* Selected label */
 .comp-selected { margin:8px 0 10px; font-weight:800; font-size:15px; color:#1f2937; }
 
-/* Share bar (moved below content) */
+/* Share bar */
 .sharebar { display:flex; align-items:center; gap:8px; margin:12px 0 0; }
 .sharebar .spacer { flex:1; }
 .iconbtn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:8px 10px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; font-weight:700; font-size:13px; }
@@ -99,6 +100,10 @@ td.match, th.match { text-align:center; }
 
 /* Footer */
 .site-footer { max-width:1100px; margin:16px auto 24px; text-align:center; color:#6b7280; font-size:12px; }
+
+/* Back button (Date view) */
+.back-btn { display:inline-flex; align-items:center; gap:6px; margin:8px 0; padding:6px 10px; border:1px solid var(--line); border-radius:999px; background:#f9fafb; cursor:pointer; font-size:13px; color:#333; }
+.back-btn i { font-size:12px; }
 </style>
 
 <!-- Favicons -->
@@ -112,7 +117,11 @@ td.match, th.match { text-align:center; }
   <!-- Header -->
   <div class="header">
     <div class="header-inner">
-      <div class="brand"><span class="dot"></span><h1>Limerick GAA Hub</h1></div>
+      <!-- Brand links “home” and shows favicon instead of dot -->
+      <a href="/" class="brand">
+        <img src="/favicon-32x32.png" alt="Logo">
+        <h1>Limerick GAA Hub</h1>
+      </a>
       <div class="navtabs">
         <div class="navtab active" data-nav="hurling">Hurling</div>
         <div class="navtab" data-nav="football">Football</div>
@@ -139,7 +148,7 @@ td.match, th.match { text-align:center; }
   <!-- Hurling -->
   <div id="panel-hurling" class="card">
     <div class="section-tabs view-tabs" id="view-tabs">
-      <div class="seg vt active" data-target="group-panel" id="comp-tab">Competition <i class="fa-solid fa-chevron-down" aria-hidden="true" style="font-size:12px; margin-left:6px;"></i></div>
+      <div class="seg vt active" data-target="group-panel" id="comp-tab">Competition <i class="fa-solid fa-chevron-down" style="font-size:12px; margin-left:6px;"></i></div>
       <div class="seg vt" data-target="by-team">Team</div>
       <div class="seg vt" data-target="by-date">Date</div>
     </div>
@@ -147,7 +156,6 @@ td.match, th.match { text-align:center; }
     <div class="menu" id="comp-menu" role="menu" aria-hidden="true"></div>
 
     <div class="panel card" id="group-panel" style="margin-top:6px;">
-      <!-- Selected competition label -->
       <div class="comp-selected" id="comp-selected"></div>
 
       <div class="section-tabs">
@@ -180,7 +188,6 @@ td.match, th.match { text-align:center; }
         </div>
       </div>
 
-      <!-- Share / Copy -->
       <div class="sharebar">
         <span class="spacer"></span>
         <button class="iconbtn" id="btn-share"><i class="fa-solid fa-share-nodes"></i> Share</button>
@@ -195,6 +202,8 @@ td.match, th.match { text-align:center; }
     </div>
 
     <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
+      <!-- Back to Competition button -->
+      <button class="back-btn" id="back-to-comp"><i class="fa-solid fa-arrow-left"></i> Back to Competition</button>
       <h2>By Date</h2>
       <div class="controls card">
         <label for="date-jump" class="sm-muted" style="margin-right:8px;">Go to date</label>
@@ -238,7 +247,7 @@ td.match, th.match { text-align:center; }
   <footer class="site-footer">Limerick GAA Hub · 2025</footer>
 
   <!-- IMPORTANT: update if you rename the JS file -->
-  <script src="./js/app_v7_3_3.js?v=fix7"></script>
+  <script src="./js/app_v7_3_3.js?v=fix8"></script>
   <script>
     // Burger toggle
     (function(){
@@ -256,6 +265,37 @@ td.match, th.match { text-align:center; }
         }
       });
     })();
+
+    // Close competition dropdown helper
+    function closeCompMenu(){
+      const menu = document.getElementById('comp-menu');
+      if(menu){ menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    }
+
+    // Auto-close dropdown when switching Competition → Team/Date
+    document.querySelectorAll('.view-tabs .vt').forEach(seg=>{
+      seg.addEventListener('click', ()=>{
+        if(seg.dataset.target !== 'group-panel'){ closeCompMenu(); }
+      });
+    });
+    // Auto-close when switching top tabs (Hurling/Football/About)
+    document.querySelectorAll('.navtab').forEach(tab=>{
+      tab.addEventListener('click', ()=>{ closeCompMenu(); });
+    });
+
+    // Back button in Date view
+    document.addEventListener('click', e=>{
+      if(e.target.closest('#back-to-comp')){
+        document.querySelector('#view-tabs .vt[data-target="group-panel"]').click();
+      }
+    });
+
+    // Brand click = reset to Hurling Competition (no reload)
+    document.querySelector('.brand').addEventListener('click', e=>{
+      e.preventDefault(); // stop full reload
+      document.querySelector('.navtab[data-nav="hurling"]').click(); // show Hurling
+      document.querySelector('#view-tabs .vt[data-target="group-panel"]').click(); // show Competition
+    });
 
     // Show warning if JS didn't set the ready flag
     window.addEventListener('load', ()=>{
