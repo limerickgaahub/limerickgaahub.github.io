@@ -38,14 +38,6 @@ h1 { margin:0; font-weight:800; font-size:20px; }
 .section-tabs .seg { padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
 .section-tabs .seg.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-<!-- Favicons -->
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="shortcut icon" href="/favicon.ico">
-
-
 /* Competition dropdown (white, anchored to Competition tab) */
 .menu { position:absolute; min-width:280px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 28px rgba(0,0,0,.12); padding:6px; display:none; max-height:60vh; overflow:auto; z-index:130; }
 .menu.open { display:block; }
@@ -108,6 +100,13 @@ td.match, th.match { text-align:center; }
 /* Footer */
 .site-footer { max-width:1100px; margin:16px auto 24px; text-align:center; color:#6b7280; font-size:12px; }
 </style>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="shortcut icon" href="/favicon.ico">
 </head>
 <body>
   <!-- Header -->
@@ -144,11 +143,11 @@ td.match, th.match { text-align:center; }
       <div class="seg vt" data-target="by-team">Team</div>
       <div class="seg vt" data-target="by-date">Date</div>
     </div>
-    <!-- Dropdown root (positioned by JS under the Competition tab) -->
+    <!-- Dropdown root -->
     <div class="menu" id="comp-menu" role="menu" aria-hidden="true"></div>
 
     <div class="panel card" id="group-panel" style="margin-top:6px;">
-      <!-- Selected competition label (official name + group) -->
+      <!-- Selected competition label -->
       <div class="comp-selected" id="comp-selected"></div>
 
       <div class="section-tabs">
@@ -181,7 +180,7 @@ td.match, th.match { text-align:center; }
         </div>
       </div>
 
-      <!-- Share / Copy moved below content -->
+      <!-- Share / Copy -->
       <div class="sharebar">
         <span class="spacer"></span>
         <button class="iconbtn" id="btn-share"><i class="fa-solid fa-share-nodes"></i> Share</button>
