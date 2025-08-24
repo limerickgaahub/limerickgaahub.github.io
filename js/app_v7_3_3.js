@@ -1,10 +1,12 @@
-// app_v7_3_3.js — Fixtures, Results, Tables, deep links, share, expand modal
+// app_v7_3_3.js — Competition dropdown on tab, official names, standings init to zeros
 (function(){
   // Ready flag (for the warning banner)
   window.LGH_V7_3_READY = true;
 
   // ---- Config / helpers
   const DATA_URL = 'data/hurling_2025.json';
+
+  // Short codes (unchanged)
   const COMP_CODES = {
     "Senior Hurling Championship": "SHC",
     "Premier Intermediate Hurling Championship": "PIHC",
@@ -12,6 +14,15 @@
     "Premier Junior A Hurling Championship": "PJAHC",
     "Junior A Hurling Championship": "JAHC",
   };
+
+  // OFFICIAL (sponsored) display names
+  const DISPLAY_COMP_NAMES = {
+    "Senior Hurling Championship": "WhiteBox Senior Hurling Championship",
+    // Add more sponsors here as needed, e.g.:
+    // "Premier Intermediate Hurling Championship": "SponsorName Premier Intermediate Hurling Championship",
+    // "Intermediate Hurling Championship": "SponsorName Intermediate Hurling Championship",
+  };
+
   const el=id=>document.getElementById(id), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
   const pad2=n=>String(n).padStart(2,'0'); const day3=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const fmtDateShort=iso=>{ if(!iso) return ''; const d=new Date(iso+'T00:00:00'); return `${day3[d.getDay()]} ${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`; };
@@ -22,10 +33,10 @@
   const toInt=v=>v==null||v===''?null:(Number(v)||0);
   const parseRoundNum=r=>{ const m=String(r||'').match(/(\d+)/); return m?Number(m[1]):999; };
 
-  // Polyfill: CSS.escape for older browsers
+  // Polyfill: CSS.escape
   const cssEscape = (window.CSS && typeof CSS.escape === 'function')
     ? CSS.escape
-    : function (str) { return String(str).replace(/[^a-zA-Z0-9_\-]/g, '\\$&'); };
+    : (str)=>String(str).replace(/[^a-zA-Z0-9_\-]/g,'\\$&');
 
   const RESULT_RE = /^(res|final)/i;
   const isResult = s => RESULT_RE.test(String(s||''));
@@ -105,64 +116,90 @@
     }
   }
 
-  // ---- Competition+Group dropdown (each pair is a selectable item)
-  function buildMenus(){
-    // Build flattened list of pairs: {comp, group, label}
+  // ----- Competition dropdown on the Competition tab
+  function buildCompetitionMenu(){
+    // Build flattened list of (comp, group, labelDisplay)
     const pairs = [];
     const comps = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))];
     for(const c of comps){
+      const official = DISPLAY_COMP_NAMES[c] || c;
       const groups = [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group || 'Unassigned'))]
         .sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
-      for(const g of groups){
-        const lab = `${c} — ${g}`;
-        pairs.push({ comp:c, group:g, label:lab });
+      if(groups.length === 0){
+        pairs.push({comp:c, group:null, label:official, labelShort:official});
+      }else{
+        for(const g of groups){
+          pairs.push({comp:c, group:g, label:`${official} — ${g}`, labelShort:`${official} — ${g}`});
+        }
       }
     }
 
-    // Default to SHC — Group 1 if present, else first pair
-    let desired = pairs.find(p => /Senior Hurling Championship/i.test(p.comp) && /^Group\s*1$/i.test(p.group)) || pairs[0] || null;
+    // Default: SHC — Group 1 if present, else first
+    let desired = pairs.find(p => /Senior Hurling Championship/i.test(p.comp) && /^Group\s*1$/i.test(p.group||'')) || pairs[0] || null;
 
-    // Apply URL params if valid
-    if (params.comp && params.group){
-      const m = pairs.find(p => p.comp===params.comp && p.group===params.group);
+    // Apply URL if valid
+    if (params.comp){
+      const m = pairs.find(p => p.comp===params.comp && (p.group||'')===(params.group||''));
       if (m) desired = m;
     }
 
-    // Build dropdown menu
+    // Build menu HTML
     const menu = el('comp-menu');
     menu.innerHTML = pairs.map(p =>
-      `<div class="item${(desired && p.comp===desired.comp && p.group===desired.group) ? ' active':''}" data-comp="${esc(p.comp)}" data-group="${esc(p.group)}">${esc(p.label)}</div>`
+      `<div class="item${(desired && p.comp===desired.comp && (p.group||'')===(desired.group||''))?' active':''}" data-comp="${esc(p.comp)}" data-group="${esc(p.group||'')}">${esc(p.label)}</div>`
     ).join('');
 
-    function setPair(p){
+    function setPair(p, push=false){
       state.comp = p.comp;
       state.group = p.group;
-      el('comp-current').textContent = p.comp;                  // pill shows competition
-      const lbl = el('comp-selected'); if(lbl) lbl.textContent = p.label; // black label shows full "Comp — Group"
+      const official = DISPLAY_COMP_NAMES[p.comp] || p.comp;
+      el('comp-selected').textContent = p.group ? `${official} — ${p.group}` : official;
 
       const onTable = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
       if (onTable) renderStandings(); else renderGroupTable();
-      syncURL();
+      syncURL(push);
     }
     if(desired) setPair(desired);
 
-    // Click handling
-    menu.onclick = (e)=>{
+    // Open/close behavior anchored to the Competition tab
+    const compTab = el('comp-tab');
+    const openMenu = ()=>{
+      // Position under the tab
+      const rect = compTab.getBoundingClientRect();
+      menu.style.top = `${rect.bottom + window.scrollY + 6}px`;
+      menu.style.left = `${rect.left + window.scrollX}px`;
+      menu.classList.add('open');
+      menu.setAttribute('aria-hidden','false');
+    };
+    const closeMenu = ()=>{
+      menu.classList.remove('open');
+      menu.setAttribute('aria-hidden','true');
+    };
+
+    // Click handler on Competition tab
+    compTab.addEventListener('click', (e)=>{
+      // ensure the group-panel is visible (normal tab switch already does this elsewhere)
+      if(menu.classList.contains('open')) closeMenu(); else openMenu();
+    });
+
+    // Menu item selection
+    menu.addEventListener('click', (e)=>{
       const it = e.target.closest('.item'); if(!it) return;
       $$('#comp-menu .item').forEach(i=>i.classList.remove('active'));
       it.classList.add('active');
-      setPair({ comp: it.getAttribute('data-comp'), group: it.getAttribute('data-group'), label: it.textContent });
-      combo.close();
-    };
+      setPair({ comp: it.getAttribute('data-comp'), group: it.getAttribute('data-group') || null }, true);
+      closeMenu();
+    });
 
-    // Open/close on whole pill
-    const combo = (function(){
-      const trig = el('comp-trigger');
-      function close(){ menu.classList.remove('open'); }
-      trig.addEventListener('click', e=>{ e.stopPropagation(); menu.classList.toggle('open'); });
-      document.addEventListener('click', e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); });
-      return { close };
-    })();
+    // Outside click closes
+    document.addEventListener('click', (e)=>{
+      if(menu.classList.contains('open') && !menu.contains(e.target) && !compTab.contains(e.target)){
+        closeMenu();
+      }
+    });
+    // Resize/scroll: close (keeps it simple)
+    window.addEventListener('resize', closeMenu);
+    window.addEventListener('scroll', closeMenu, {passive:true});
   }
 
   // ---- Renders
@@ -173,7 +210,7 @@
     const status=el('status').value;
     const rows = MATCHES.filter(r=>{
       if(state.comp && r.competition!==state.comp) return false;
-      if(state.group && r.group!==state.group) return false;
+      if(state.group && (r.group||'')!==(state.group||'')) return false;
       if(status==='Result')  return isResult(r.status);
       if(status==='Fixture') return isFixture(r.status);
       return true;
@@ -185,11 +222,11 @@
 
   function renderStandings(){
     // Build team list from ALL fixtures in this comp+group (so zeros print cleanly)
-    const fixtures = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group);
+    const fixtures = MATCHES.filter(r=>r.competition===state.comp && (r.group||'')===(state.group||''));
     const teams = new Map();
     for(const f of fixtures){
       if(!teams.has(f.home)) teams.set(f.home,{team:f.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
-      if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
+      if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,pf:0,pa:0,diff:0,pts:0});
     }
 
     // Apply only RESULT rows to update stats
@@ -212,7 +249,7 @@
       // TODO: Head-to-Head tiebreaker could be inserted here
     );
 
-    // Default compact table (no PF/PA/Diff)
+    // Compact table
     const tbody=document.querySelector('#g-standings-table tbody');
     tbody.innerHTML = sorted.map(r =>
       `<tr>
@@ -315,10 +352,6 @@
       $$('#panel-hurling .panel').forEach(p=> p.style.display='none');
       el(target).style.display='';
 
-      // comp controls visibility
-      const cc = document.querySelector('.comp-controls');
-      if(cc) cc.style.display = (target==='group-panel') ? '' : 'none';
-
       if(target==='group-panel'){ state.view='matches'; renderGroupTable(); }
       if(target==='by-team'){ renderByTeam(); }
       if(target==='by-date'){ renderByDate(); }
@@ -393,10 +426,10 @@
   // Status filter
   el('status').addEventListener('input', ()=>{ renderGroupTable(); syncURL(); });
 
-  // ---- Init: load data, menus, then apply URL state
+  // ---- Init
   (async function(){
     await load();
-    buildMenus();
+    buildCompetitionMenu();
 
     // Section
     const s = params.s || 'hurling';
