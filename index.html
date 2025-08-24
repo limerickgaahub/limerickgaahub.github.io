@@ -234,11 +234,11 @@ td.match, th.match { text-align:center; }
     </div>
   </div>
 
-  <footer class="site-footer">Limerick GAA Hub · ©2025</footer>
+   <footer class="site-footer">Limerick GAA Hub · 2025</footer>
 
   <!-- IMPORTANT: update if you rename the JS file -->
   <script src="./js/app_v7_3_3.js?v=fix3"></script>
-
+  <script>
     // Burger toggle
     (function(){
       const burger=document.getElementById('burger'), oc=document.getElementById('offcanvas'), bd=document.getElementById('oc-backdrop');
@@ -246,7 +246,14 @@ td.match, th.match { text-align:center; }
       const close=()=>{oc.classList.remove('open'); bd.classList.remove('show');};
       burger.addEventListener('click', open);
       bd.addEventListener('click', close);
-      oc.addEventListener('click', e=>{ const link=e.target.closest('.oc-link'); if(link){ document.querySelector(`.navtab[data-nav="${link.dataset.nav}"]`).click(); close(); }});
+      oc.addEventListener('click', e=>{
+        const link=e.target.closest('.oc-link');
+        if(link){
+          const tab=document.querySelector(`.navtab[data-nav="${link.dataset.nav}"]`);
+          if(tab) tab.click();
+          close();
+        }
+      });
     })();
 
     // Show warning if JS didn't set the ready flag
