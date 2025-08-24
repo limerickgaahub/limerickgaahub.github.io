@@ -1,26 +1,43 @@
 // app_v7_3_3.js — Competition dropdown on tab, official names, standings init to zeros
 (function(){
-  // Ready flag (for the warning banner)
   window.LGH_V7_3_READY = true;
 
-  // ---- Config / helpers
   const DATA_URL = 'data/hurling_2025.json';
 
-  // Short codes (unchanged)
   const COMP_CODES = {
     "Senior Hurling Championship": "SHC",
     "Premier Intermediate Hurling Championship": "PIHC",
     "Intermediate Hurling Championship": "IHC",
-    "Premier Junior A Hurling Championship": "PJAHC",
-    "Junior A Hurling Championship": "JAHC",
   };
 
-  // OFFICIAL (sponsored) display names
-  const DISPLAY_COMP_NAMES = {
-    "Senior Hurling Championship": "WhiteBox Senior Hurling Championship",
-    // Add more sponsors here as needed, e.g.:
-    // "Premier Intermediate Hurling Championship": "SponsorName Premier Intermediate Hurling Championship",
-    // "Intermediate Hurling Championship": "SponsorName Intermediate Hurling Championship",
+  // Custom naming (short for dropdown, long for black label)
+  const DISPLAY_NAMES = {
+    "Senior Hurling Championship": {
+      "Group 1": {
+        short: "WhiteBox SHC - Group 1",
+        long: "WhiteBox County Senior Hurling Championship - Group 1"
+      },
+      "Group 2": {
+        short: "WhiteBox SHC - Group 2",
+        long: "WhiteBox County Senior Hurling Championship - Group 2"
+      }
+    },
+    "Premier Intermediate Hurling Championship": {
+      "": {
+        short: "Lyons of Limerick PIHC",
+        long: "Lyons of Limerick County Premier Intermediate Hurling Championship"
+      }
+    },
+    "Intermediate Hurling Championship": {
+      "Group 1": {
+        short: "IHC - Group 1",
+        long: "County Intermediate Hurling Championship - Group 1"
+      },
+      "Group 2": {
+        short: "IHC - Group 2",
+        long: "County Intermediate Hurling Championship - Group 2"
+      }
+    }
   };
 
   const el=id=>document.getElementById(id), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -33,16 +50,10 @@
   const toInt=v=>v==null||v===''?null:(Number(v)||0);
   const parseRoundNum=r=>{ const m=String(r||'').match(/(\d+)/); return m?Number(m[1]):999; };
 
-  // Polyfill: CSS.escape
-  const cssEscape = (window.CSS && typeof CSS.escape === 'function')
-    ? CSS.escape
-    : (str)=>String(str).replace(/[^a-zA-Z0-9_\-]/g,'\\$&');
-
   const RESULT_RE = /^(res|final)/i;
   const isResult = s => RESULT_RE.test(String(s||''));
   const isFixture = s => !isResult(s);
 
-  // URL/state
   const params = new Proxy(new URLSearchParams(location.search), { get:(sp,prop)=> sp.get(prop) });
   const state={ section:'hurling', view:'matches', comp:null, group:null, team:null, date:null };
 
@@ -88,7 +99,7 @@
         ? `<tr><th class="rcol">R</th><th class="dcol">Date/Time</th><th class="match">Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`
         : `<tr><th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="match">Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`;
     } else {
-      thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="ccol">Comp</th><th class="match">Match</th><th>Venue</th><th>Status</th></tr>`;
+      thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="match">Match</th><th>Venue</th><th>Status</th></tr>`;
     }
   }
 
@@ -101,7 +112,6 @@
     const showMeta=(VIEW_MODE!=='competition');
     const meta = showMeta ? `<div class="match-meta">${esc(r.code)} · ${esc(groupShort(r.group||''))}</div>` : '';
     const matchCell = `<div class="match-block"><span class="match-team">${esc(r.home||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away||'')}</span>${meta}</div>`;
-    const compBadge = `<span class="comp-badge"><span class="comp-code">${esc(r.code)}</span><span class="group-code">${esc(groupShort(r.group||''))}</span></span>`;
     const trAttr=`data-date="${esc(r.date||'')}"`;
 
     if(isMobile){
@@ -112,97 +122,62 @@
         return `<tr ${trAttr}><td class="rcol">${esc(rShort)}</td><td class="dcol">${esc(dShort)}</td><td class="tcol">${esc(tShort)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td><td class="stcol">${stShort}</td></tr>`;
       }
     } else {
-      return `<tr ${trAttr}><td>${esc(r.round||'')}</td><td class="dcol">${esc(r.date||'')}</td><td class="tcol">${esc(r.time||'')}</td><td class="ccol">${compBadge}</td><td class="match">${matchCell}</td><td>${esc(r.venue||'')}</td><td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td></tr>`;
+      return `<tr ${trAttr}><td>${esc(r.round||'')}</td><td class="dcol">${esc(r.date||'')}</td><td class="tcol">${esc(r.time||'')}</td><td class="match">${matchCell}</td><td>${esc(r.venue||'')}</td><td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td></tr>`;
     }
   }
 
-  // ----- Competition dropdown on the Competition tab
   function buildCompetitionMenu(){
-    // Build flattened list of (comp, group, labelDisplay)
     const pairs = [];
     const comps = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))];
     for(const c of comps){
-      const official = DISPLAY_COMP_NAMES[c] || c;
-      const groups = [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group || 'Unassigned'))]
+      const groups = [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group || ''))]
         .sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
-      if(groups.length === 0){
-        pairs.push({comp:c, group:null, label:official, labelShort:official});
-      }else{
+      if(groups.length===0){
+        const names = DISPLAY_NAMES[c]?.[""] || {short:c, long:c};
+        pairs.push({comp:c, group:"", short:names.short, long:names.long});
+      } else {
         for(const g of groups){
-          pairs.push({comp:c, group:g, label:`${official} — ${g}`, labelShort:`${official} — ${g}`});
+          const names = DISPLAY_NAMES[c]?.[g] || {short:`${c} ${g}`, long:`${c} ${g}`};
+          pairs.push({comp:c, group:g, short:names.short, long:names.long});
         }
       }
     }
 
-    // Default: SHC — Group 1 if present, else first
-    let desired = pairs.find(p => /Senior Hurling Championship/i.test(p.comp) && /^Group\s*1$/i.test(p.group||'')) || pairs[0] || null;
-
-    // Apply URL if valid
-    if (params.comp){
-      const m = pairs.find(p => p.comp===params.comp && (p.group||'')===(params.group||''));
-      if (m) desired = m;
+    let desired = pairs.find(p => /Senior Hurling Championship/i.test(p.comp) && /Group 1/i.test(p.group)) || pairs[0] || null;
+    if(params.comp){
+      const m = pairs.find(p => p.comp===params.comp && (p.group||'')===(params.group||'')); if(m) desired=m;
     }
 
-    // Build menu HTML
-    const menu = el('comp-menu');
+    const menu=el('comp-menu');
     menu.innerHTML = pairs.map(p =>
-      `<div class="item${(desired && p.comp===desired.comp && (p.group||'')===(desired.group||''))?' active':''}" data-comp="${esc(p.comp)}" data-group="${esc(p.group||'')}">${esc(p.label)}</div>`
+      `<div class="item${(desired && p.comp===desired.comp && (p.group||'')===(desired.group||''))?' active':''}" data-comp="${esc(p.comp)}" data-group="${esc(p.group)}">${esc(p.short)}</div>`
     ).join('');
 
-    function setPair(p, push=false){
-      state.comp = p.comp;
-      state.group = p.group;
-      const official = DISPLAY_COMP_NAMES[p.comp] || p.comp;
-      el('comp-selected').textContent = p.group ? `${official} — ${p.group}` : official;
-
-      const onTable = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
-      if (onTable) renderStandings(); else renderGroupTable();
+    function setPair(p,push=false){
+      state.comp=p.comp; state.group=p.group;
+      el('comp-selected').textContent = p.long;
+      const onTable=document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
+      if(onTable) renderStandings(); else renderGroupTable();
       syncURL(push);
     }
     if(desired) setPair(desired);
 
-    // Open/close behavior anchored to the Competition tab
-    const compTab = el('comp-tab');
-    const openMenu = ()=>{
-      // Position under the tab
-      const rect = compTab.getBoundingClientRect();
-      menu.style.top = `${rect.bottom + window.scrollY + 6}px`;
-      menu.style.left = `${rect.left + window.scrollX}px`;
-      menu.classList.add('open');
-      menu.setAttribute('aria-hidden','false');
-    };
-    const closeMenu = ()=>{
-      menu.classList.remove('open');
-      menu.setAttribute('aria-hidden','true');
-    };
+    const compTab=el('comp-tab');
+    const openMenu=()=>{ const rect=compTab.getBoundingClientRect(); menu.style.top=`${rect.bottom+window.scrollY+6}px`; menu.style.left=`${rect.left+window.scrollX}px`; menu.classList.add('open'); menu.setAttribute('aria-hidden','false'); };
+    const closeMenu=()=>{ menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); };
 
-    // Click handler on Competition tab
-    compTab.addEventListener('click', (e)=>{
-      // ensure the group-panel is visible (normal tab switch already does this elsewhere)
-      if(menu.classList.contains('open')) closeMenu(); else openMenu();
-    });
-
-    // Menu item selection
-    menu.addEventListener('click', (e)=>{
-      const it = e.target.closest('.item'); if(!it) return;
-      $$('#comp-menu .item').forEach(i=>i.classList.remove('active'));
-      it.classList.add('active');
-      setPair({ comp: it.getAttribute('data-comp'), group: it.getAttribute('data-group') || null }, true);
+    compTab.addEventListener('click',()=>{ if(menu.classList.contains('open')) closeMenu(); else openMenu(); });
+    menu.addEventListener('click',(e)=>{ const it=e.target.closest('.item'); if(!it) return;
+      $$('#comp-menu .item').forEach(i=>i.classList.remove('active')); it.classList.add('active');
+      const comp=it.getAttribute('data-comp'), group=it.getAttribute('data-group');
+      const pair=pairs.find(pp=>pp.comp===comp && pp.group===group);
+      if(pair) setPair(pair,true);
       closeMenu();
     });
-
-    // Outside click closes
-    document.addEventListener('click', (e)=>{
-      if(menu.classList.contains('open') && !menu.contains(e.target) && !compTab.contains(e.target)){
-        closeMenu();
-      }
-    });
-    // Resize/scroll: close (keeps it simple)
-    window.addEventListener('resize', closeMenu);
-    window.addEventListener('scroll', closeMenu, {passive:true});
+    document.addEventListener('click',(e)=>{ if(menu.classList.contains('open') && !menu.contains(e.target) && !compTab.contains(e.target)) closeMenu(); });
+    window.addEventListener('resize',closeMenu); window.addEventListener('scroll',closeMenu,{passive:true});
   }
 
-  // ---- Renders
   function renderGroupTable(){
     VIEW_MODE='competition';
     const tbl=el('g-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
@@ -221,15 +196,12 @@
   function pointsFromGoalsPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
 
   function renderStandings(){
-    // Build team list from ALL fixtures in this comp+group (so zeros print cleanly)
     const fixtures = MATCHES.filter(r=>r.competition===state.comp && (r.group||'')===(state.group||''));
     const teams = new Map();
     for(const f of fixtures){
       if(!teams.has(f.home)) teams.set(f.home,{team:f.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
-      if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,pf:0,pa:0,diff:0,pts:0});
+      if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
     }
-
-    // Apply only RESULT rows to update stats
     const results = fixtures.filter(r=>isResult(r.status));
     for(const m of results){
       const hs=pointsFromGoalsPoints(m.home_goals,m.home_points);
@@ -243,13 +215,10 @@
     }
     for(const t of teams.values()){ t.diff=(t.pf||0)-(t.pa||0); }
 
-    // Sort: Pts desc → Diff desc → PF desc → Team asc
     const sorted=[...teams.values()].sort((a,b)=>
       (b.pts||0)-(a.pts||0) || (b.diff||0)-(a.diff||0) || (b.pf||0)-(a.pf||0) || a.team.localeCompare(b.team)
-      // TODO: Head-to-Head tiebreaker could be inserted here
     );
 
-    // Compact table
     const tbody=document.querySelector('#g-standings-table tbody');
     tbody.innerHTML = sorted.map(r =>
       `<tr>
@@ -262,7 +231,6 @@
       </tr>`
     ).join('');
 
-    // Expanded modal table (full columns)
     const mt=el('modal-standings');
     if(mt){
       if(!mt.tHead || !mt.tHead.rows.length){
@@ -285,7 +253,6 @@
     }
   }
 
-  // ---- Share / deep links
   function syncURL(push=false){
     const sp=new URLSearchParams();
     sp.set('s', state.section);
@@ -305,9 +272,6 @@
     if(e.target.closest('#btn-copy')){ navigator.clipboard?.writeText(currentShareURL()); toast('Link copied'); }
   });
 
-  // ---- Event wiring
-
-  // Matches/Table (Competition panel ONLY)
   $$('#group-panel .section-tabs .seg').forEach(seg=>{
     seg.addEventListener('click', ()=>{
       const wrap = seg.parentElement;
@@ -319,7 +283,6 @@
       el('g-standings').style.display = showTable ? '' : 'none';
       document.querySelector('.matches-wrap').style.display = showTable ? 'none' : '';
 
-      // Hide status in Table view
       const controls = document.querySelector('#group-panel .controls');
       if (controls) controls.style.display = showTable ? 'none' : '';
 
@@ -328,7 +291,6 @@
     });
   });
 
-  // Top-level tabs
   $$('.navtab').forEach(tab=>{
     tab.addEventListener('click', ()=>{
       $$('.navtab').forEach(t=>t.classList.remove('active'));
@@ -342,7 +304,6 @@
     });
   });
 
-  // Competition / Team / Date switcher
   $$('.view-tabs .vt').forEach(seg=>{
     seg.addEventListener('click', ()=>{
       seg.parentElement.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
@@ -359,7 +320,6 @@
     });
   });
 
-  // Team view
   function renderByTeam(){
     VIEW_MODE='team'; state.view='team';
     const sel=el('team');
@@ -376,11 +336,9 @@
     sel.oninput=draw; addEventListener('resize', draw);
     const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); buildHead(thead, matchMedia('(max-width:880px)').matches, matchMedia('(max-width:400px)').matches);
     tbl.tBodies[0] ? (tbl.tBodies[0].innerHTML='') : tbl.createTBody();
-
     if(params.team){ sel.value=params.team; sel.dispatchEvent(new Event('input')); }
   }
 
-  // Date view
   function renderByDate(){
     VIEW_MODE='date'; state.view='date';
     const tbl=el('date-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
@@ -399,12 +357,12 @@
       jump.onchange=()=>{
         const ymd = jump.value; state.date = ymd || null; syncURL();
         if(!ymd || candidates.length===0) return;
-        let target = tbody.querySelector(`tr[data-date="${cssEscape(ymd)}"]`);
+        let target = tbody.querySelector(`tr[data-date="${ymd}"]`);
         if(!target){
           let chosen=null;
           for(const tr of candidates){ const d = tr.getAttribute('data-date')||''; if(d<=ymd) chosen = tr; else break; }
           target = chosen || candidates[candidates.length-1] || candidates[0] || null;
-          if(target){ const td = target.getAttribute('data-date') || ''; if(td){ const firstOfDate = tbody.querySelector(`tr[data-date="${cssEscape(td)}"]`); if(firstOfDate) target = firstOfDate; } }
+          if(target){ const td = target.getAttribute('data-date') || ''; if(td){ const firstOfDate = tbody.querySelector(`tr[data-date="${td}"]`); if(firstOfDate) target = firstOfDate; } }
         }
         if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); target.style.outline='2px solid var(--accent)'; setTimeout(()=>{ target.style.outline=''; }, 1500); }
       };
@@ -413,7 +371,6 @@
     }
   }
 
-  // Expand modal
   (function(){
     const btn=el('btn-expand'), modal=el('standings-modal'), close=el('modal-close');
     if(btn && modal && close){
@@ -423,30 +380,17 @@
     }
   })();
 
-  // Status filter
   el('status').addEventListener('input', ()=>{ renderGroupTable(); syncURL(); });
 
-  // ---- Init
   (async function(){
     await load();
     buildCompetitionMenu();
-
-    // Section
-    const s = params.s || 'hurling';
-    (function(n){ if(n) n.click(); })(document.querySelector(`.navtab[data-nav="${s}"]`));
-
-    // View
-    const v = params.v || 'matches';
-    if(v==='table'){
-      (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="table"]'));
-    } else if(v==='matches'){
-      (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="matches"]'));
-    } else if(v==='team'){
-      (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-team"]'));
-    } else if(v==='date'){
-      (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-date"]'));
-    } else {
-      renderGroupTable();
-    }
+    const s=params.s||'hurling'; (function(n){ if(n) n.click(); })(document.querySelector(`.navtab[data-nav="${s}"]`));
+    const v=params.v||'matches';
+    if(v==='table'){ (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="table"]`)); }
+    else if(v==='matches'){ (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="matches"]`)); }
+    else if(v==='team'){ (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-team"]`)); }
+    else if(v==='date'){ (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-date"]`)); }
+    else { renderGroupTable(); }
   })();
 })();
