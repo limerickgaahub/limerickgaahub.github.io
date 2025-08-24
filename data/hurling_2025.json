@@ -1,21 +1,6 @@
 {
-  "updated": "2025-08-24T07:35:30Z",
+  "updated": "2025-08-24T17:37:26Z",
   "matches": [
-    {
-      "competition": "Senior Hurling Championship",
-      "group": "Group 1",
-      "round": "R 3",
-      "date": "2025-08-24",
-      "time": "14:00",
-      "home": "Na Piarsaigh",
-      "away": "Ahane",
-      "venue": "Claughaun GAA, Childers Rd",
-      "status": "",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
     {
       "competition": "Senior Hurling Championship",
       "group": "Group 2",
@@ -195,6 +180,21 @@
       "home_points": null,
       "away_goals": null,
       "away_points": null
+    },
+    {
+      "competition": "Senior Hurling Championship",
+      "group": "Group 1",
+      "round": "R 3",
+      "date": "2025-08-24",
+      "time": "14:00",
+      "home": "Na Piarsaigh",
+      "away": "Ahane",
+      "venue": "Claughaun GAA, Childers Rd",
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 25,
+      "away_goals": 1,
+      "away_points": 13
     },
     {
       "competition": "Senior Hurling Championship",

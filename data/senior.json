@@ -1,22 +1,7 @@
 {
   "competition": "Senior Hurling Championship",
-  "updated_at": "2025-08-24T07:35:30Z",
+  "updated_at": "2025-08-24T17:37:26Z",
   "fixtures": [
-    {
-      "id": "2025-SHC-G1-R3-NA--AHA",
-      "round": "R 3",
-      "group": "Group 1",
-      "date": "2025-08-24",
-      "time_local": "14:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-24T14:00:00",
-      "home": "Na Piarsaigh",
-      "away": "Ahane",
-      "venue": "Claughaun GAA, Childers Rd",
-      "referee": "Michael Sexton",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
-    },
     {
       "id": "2025-SHC-G2-R4-MON-NEW",
       "round": "R 4",
@@ -199,6 +184,25 @@
     }
   ],
   "results": [
+    {
+      "id": "2025-SHC-G1-R3-NA--AHA",
+      "round": "R 3",
+      "group": "Group 1",
+      "date": "2025-08-24",
+      "time_local": "14:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-24T14:00:00",
+      "home": "Na Piarsaigh",
+      "away": "Ahane",
+      "venue": "Claughaun GAA, Childers Rd",
+      "referee": "Michael Sexton",
+      "status": "FT",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 2,
+      "home_points": 25,
+      "away_goals": 1,
+      "away_points": 13
+    },
     {
       "id": "2025-SHC-G2-R3-NEW-DRO",
       "round": "R 3",
