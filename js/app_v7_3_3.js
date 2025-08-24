@@ -1,6 +1,6 @@
 // app_v7_3_3.js — Fixtures, Results, Tables, deep links, share, expand modal
 (function(){
-  // Signal ready unless a crash prevents this from running
+  // Ready flag (kept for the warning banner)
   window.LGH_V7_3_READY = true;
 
   // ---- Config / helpers
@@ -26,7 +26,7 @@
   const isResult = s => RESULT_RE.test(String(s||''));
   const isFixture = s => !isResult(s);
 
-  // URL params state
+  // URL/state
   const params = new Proxy(new URLSearchParams(location.search), { get:(sp,prop)=> sp.get(prop) });
   const state={ section:'hurling', view:'matches', comp:null, group:null, team:null, date:null };
 
@@ -61,7 +61,6 @@
   const sortDateComp=(a,b)=> {
     const da=a.date||'', db=b.date||'';
     if(da!==db) return da.localeCompare(db);
-    // same date → sort by competition name, then time
     const ca=(a.competition||''), cb=(b.competition||'');
     if(ca!==cb) return ca.localeCompare(cb);
     return (a.time||'').localeCompare(b.time||'');
@@ -73,7 +72,7 @@
         ? `<tr><th class="rcol">R</th><th class="dcol">Date/Time</th><th>Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`
         : `<tr><th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`;
     } else {
-      thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="ccol">Comp</th><th>Match</th><th>Venue</th><th>Status</th></tr>`;
+      thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="ccol">Comp</th><th class="match">Match</th><th>Venue</th><th>Status</th></tr>`;
     }
   }
 
@@ -165,13 +164,13 @@
     tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
   }
 
-  function totalPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
+  function pointsFromGoalsPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
 
   function renderStandings(){
     const rows = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group && isResult(r.status));
     const teams=new Map();
     for(const m of rows){
-      const hs=totalPoints(m.home_goals,m.home_points), as=totalPoints(m.away_goals,m.away_points);
+      const hs=pointsFromGoalsPoints(m.home_goals,m.home_points), as=pointsFromGoalsPoints(m.away_goals,m.away_points);
       if(hs==null||as==null) continue;
       if(!teams.has(m.home)) teams.set(m.home,{team:m.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
       if(!teams.has(m.away)) teams.set(m.away,{team:m.away,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
@@ -180,23 +179,50 @@
       if(hs>as){ H.w++; H.pts+=2; A.l++; } else if(hs<as){ A.w++; A.pts+=2; H.l++; } else { H.d++; A.d++; H.pts++; A.pts++; }
     }
     for(const t of teams.values()) t.diff=t.pf-t.pa;
+
+    // Sort order: Pts desc → Diff desc → PF desc → Team asc
     const sorted=[...teams.values()].sort((a,b)=>
       b.pts-a.pts || b.diff-a.diff || b.pf-a.pf || a.team.localeCompare(b.team)
-      // TODO: Head-to-Head tiebreaker could be inserted here
+      // TODO: Head-to-Head tiebreaker can be added here in future
     );
-    const tbody=document.querySelector('#g-standings-table tbody');
-    tbody.innerHTML = sorted.map(r=>`<tr><td>${esc(r.team)}</td><td class="right">${r.p}</td><td class="right">${r.w}</td><td class="right">${r.d}</td><td class="right">${r.l}</td><td class="right">${r.pf}</td><td class="right">${r.pa}</td><td class="right">${r.diff}</td><td class="right"><strong>${r.pts}</strong></td></tr>`).join('');
 
-    // Mirror into modal table
+    // Default compact table (no PF/PA/Diff)
+    const tbody=document.querySelector('#g-standings-table tbody');
+    tbody.innerHTML = sorted.map(r =>
+      `<tr>
+        <td>${esc(r.team)}</td>
+        <td class="right">${r.p}</td>
+        <td class="right">${r.w}</td>
+        <td class="right">${r.d}</td>
+        <td class="right">${r.l}</td>
+        <td class="right"><strong>${r.pts}</strong></td>
+      </tr>`
+    ).join('');
+
+    // Expanded modal table (full columns)
     const mt=el('modal-standings');
     if(mt){
-      if(!mt.tHead || !mt.tHead.rows.length){ mt.createTHead().innerHTML=document.querySelector('#g-standings-table thead').innerHTML; }
+      if(!mt.tHead || !mt.tHead.rows.length){
+        mt.createTHead().innerHTML = `<tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>`;
+      }
       const mb = mt.tBodies[0]||mt.createTBody();
-      mb.innerHTML = tbody.innerHTML;
+      mb.innerHTML = sorted.map(r =>
+        `<tr>
+          <td>${esc(r.team)}</td>
+          <td class="right">${r.p}</td>
+          <td class="right">${r.w}</td>
+          <td class="right">${r.d}</td>
+          <td class="right">${r.l}</td>
+          <td class="right">${r.pf}</td>
+          <td class="right">${r.pa}</td>
+          <td class="right">${r.diff}</td>
+          <td class="right"><strong>${r.pts}</strong></td>
+        </tr>`
+      ).join('');
     }
   }
 
-  // ---- Share / links
+  // ---- Share / deep links
   function syncURL(push=false){
     const sp=new URLSearchParams();
     sp.set('s', state.section);
@@ -218,7 +244,7 @@
 
   // ---- Event wiring
 
-  // Scope Matches/Table toggle to the Competition panel ONLY
+  // Matches/Table (Competition panel ONLY)
   $$('#group-panel .section-tabs .seg').forEach(seg=>{
     seg.addEventListener('click', ()=>{
       const wrap = seg.parentElement;
@@ -230,7 +256,7 @@
       el('g-standings').style.display = showTable ? '' : 'none';
       document.querySelector('.matches-wrap').style.display = showTable ? 'none' : '';
 
-      // hide status in Table view
+      // Hide status in Table view
       const controls = document.querySelector('#group-panel .controls');
       if (controls) controls.style.display = showTable ? 'none' : '';
 
@@ -239,7 +265,7 @@
     });
   });
 
-  // Top-level section tabs (Hurling/Football/About)
+  // Top-level tabs
   $$('.navtab').forEach(tab=>{
     tab.addEventListener('click', ()=>{
       $$('.navtab').forEach(t=>t.classList.remove('active'));
@@ -351,7 +377,7 @@
     const tab = document.querySelector(`.navtab[data-nav="${s}"]`);
     if(tab) tab.click();
 
-    // View under hurling
+    // View
     const v = params.v || 'matches';
     if(v==='table'){
       document.querySelector('#group-panel .section-tabs .seg[data-view="table"]')?.click();
