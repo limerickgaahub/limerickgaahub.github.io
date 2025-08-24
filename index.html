@@ -7,13 +7,13 @@
 <meta name="color-scheme" content="light only">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
-:root { --card:#ffffff; --muted:#6b7280; --accent:#00a651; --accent-weak:#e7f7ee; --line:#e9ecef; --text:#111; --bg:#f6f7f8; }
+:root { --card:#ffffff; --muted:#6b7280; --accent:#00a651; --line:#e9ecef; --text:#111; --bg:#f6f7f8; }
 * { box-sizing:border-box; }
 body { margin:70px 20px 20px; font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
 h1 { margin:0; font-weight:800; font-size:20px; }
 .sm-muted { color:#6b7280; font-size:12px; }
 
-/* Sticky header */
+/* Header */
 .header { position:fixed; top:0; left:0; right:0; z-index:100; background:#fff; border-bottom:1px solid var(--line); }
 .header-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; max-width:1100px; margin:0 auto; }
 .brand { display:flex; align-items:center; gap:10px; }
@@ -63,24 +63,14 @@ td.right, th.right { text-align:right; }
 tbody tr:nth-child(even) td { background:#fcfcfd; }
 tbody tr:hover td { background:#f1f9f4; }
 
+/* Match block (stacked, centered) */
+td.match, th.match { text-align:center; }
+.match-block { display:grid; grid-template-rows:auto auto auto; row-gap:3px; justify-items:center; }
+.match-team { display:block; line-height:1.2; }
+.match-score { display:block; font-weight:800; font-size:16px; line-height:1.2; }
+
 /* Standings tighter */
 #g-standings-table thead th, #g-standings-table tbody td { padding:10px 8px; font-size:13px; }
-
-/* Mobile widen */
-@media (max-width:880px){
-  body { margin:60px 10px 10px; }
-  .navtabs { display:none; }
-  .burger { display:inline-block; }
-  .card { padding:12px; }
-  thead th, tbody td { padding:10px 7px; font-size:13px; }
-  .stcol { display:none; }
-}
-
-/* About links */
-#panel-about i { margin-right:6px; color:#444; }
-#panel-about a { margin-right:16px; text-decoration:none; }
-#panel-about a:hover i { color:#0077b5; }
-@media (max-width: 600px){ #panel-about p a { display:block; margin:6px 0; } }
 
 /* Expand modal */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:flex-end; justify-content:center; z-index:130; }
@@ -89,6 +79,27 @@ tbody tr:hover td { background:#f1f9f4; }
 .modal .sheet-header { display:flex; align-items:center; gap:10px; padding:12px; border-bottom:1px solid var(--line); position:sticky; top:0; background:#fff; }
 .modal .sheet-header h3 { margin:0; font-size:16px; }
 .modal .close { margin-left:auto; background:none; border:1px solid var(--line); border-radius:10px; padding:6px 10px; cursor:pointer; }
+
+/* Mobile-only refinements */
+@media (max-width:880px){
+  body { margin:60px 10px 10px; }
+  .navtabs { display:none; }
+  .burger { display:inline-block; }
+  .card { padding:12px; }
+  thead th, tbody td { padding:10px 7px; font-size:13px; }
+  .stcol { display:none; }
+  /* Center Date + Time on mobile as requested */
+  th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
+}
+
+/* About links */
+#panel-about i { margin-right:6px; color:#444; }
+#panel-about a { margin-right:16px; text-decoration:none; }
+#panel-about a:hover i { color:#0077b5; }
+@media (max-width: 600px){ #panel-about p a { display:block; margin:6px 0; } }
+
+/* Footer */
+.site-footer { max-width:1100px; margin:16px auto 24px; text-align:center; color:#6b7280; font-size:12px; }
 </style>
 </head>
 <body>
@@ -162,11 +173,14 @@ tbody tr:hover td { background:#f1f9f4; }
       </div>
 
       <div id="g-standings" style="margin-top:12px; display:none;">
-        <button class="iconbtn" id="btn-expand"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Expand</button>
+        <div style="display:flex; gap:8px; justify-content:flex-end; margin-bottom:8px;">
+          <button class="iconbtn" id="btn-expand"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Expand</button>
+        </div>
         <div class="table-wrap">
           <table id="g-standings-table">
             <thead>
-              <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>
+              <!-- Default view: Team, P, W, D, L, Pts -->
+              <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">Pts</th></tr>
             </thead><tbody></tbody>
           </table>
         </div>
@@ -207,14 +221,22 @@ tbody tr:hover td { background:#f1f9f4; }
     </p>
   </div>
 
-  <!-- Expand modal -->
+  <!-- Expand modal (full columns: adds PF, PA, Diff) -->
   <div class="modal" id="standings-modal" aria-hidden="true">
     <div class="sheet">
       <div class="sheet-header"><h3>Standings</h3><button class="close" id="modal-close">Close</button></div>
-      <div class="table-wrap"><table id="modal-standings"><thead></thead><tbody></tbody></table></div>
+      <div class="table-wrap"><table id="modal-standings">
+        <thead>
+          <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table></div>
     </div>
   </div>
 
+  <footer class="site-footer">Limerick GAA Hub · ©2025</footer>
+
+  <!-- IMPORTANT: update if you rename the JS file -->
   <script src="js/app_v7_3_3.js"></script>
   <script>
     // Burger toggle
@@ -229,9 +251,9 @@ tbody tr:hover td { background:#f1f9f4; }
 
     // Show warning if JS didn't set the ready flag
     window.addEventListener('load', ()=>{
-      if(window.LGH_V7_3_READY!==true){
+      if(window.LGH_V7_3_3_READY!==true && window.LGH_V7_3_READY!==true){
         document.getElementById('lgh-warning').style.display='block';
-        console.warn('App not ready. Check js/app_v7_3_3.js path and console for errors.');
+        console.warn('App not ready. Check JavaScript path and console for errors.');
       }
     });
   </script>
