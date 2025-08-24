@@ -1,4 +1,4 @@
-// app_v7_3_2.js — Fixtures, Results, Tables
+// app_v7_3_3.js — Fixtures, Results, Tables
 (function(){
   window.LGH_V7_3_READY = true;
   const DATA_URL = 'data/hurling_2025.json';
