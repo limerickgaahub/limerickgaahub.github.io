@@ -74,8 +74,8 @@
   function buildHead(thead,isMobile,isTiny){
     if(isMobile){
       thead.innerHTML = isTiny
-        ? `<tr><th class="rcol">R</th><th class="dcol">Date/Time</th><th>Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`
-        : `<tr><th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`;
+        ? `<tr><th class="rcol">R</th><th class="dcol">Date/Time</th><th class="match">Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`
+        : `<tr><th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="match">Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`;
     } else {
       thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="ccol">Comp</th><th class="match">Match</th><th>Venue</th><th>Status</th></tr>`;
     }
@@ -105,53 +105,66 @@
     }
   }
 
-  // ---- Menus (Competition panel)
+  // ---- Combined Competition + Group menu
   function buildMenus(){
-    const all = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))];
-    const preferred = ["Senior Hurling Championship","Premier Intermediate Hurling Championship","Intermediate Hurling Championship"];
-    const rest = all.filter(c=>!preferred.includes(c)).sort();
-    const comps = preferred.filter(c=>all.includes(c)).concat(rest);
-
-    const compMenu=el('comp-menu');
-    compMenu.innerHTML = comps.map((c,i)=>`<div class="item ${i===0?'active':''}" data-comp="${esc(c)}">${esc(c)}</div>`).join('');
-
-    function groupsFor(c){ return [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group||'Unassigned'))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})); }
-
-    function setComp(name){
-      state.comp=name; el('comp-current').textContent=compCode(name);
-      $$('#comp-menu .item').forEach(i=>i.classList.toggle('active', i.dataset.comp===name));
-
-      const gs=groupsFor(name);
-      const gMenu=el('group-menu');
-      gMenu.innerHTML = gs.map((g,i)=>`<div class="item ${i===0?'active':''}" data-group="${esc(g)}">${esc(g)}</div>`).join('');
-
-      // pick from URL if valid, else prefer Group 1, else first
-      const desiredG = params.group && gs.includes(params.group) ? params.group : (gs.find(g => /^Group\s*1$/i.test(g)) || gs[0]);
-      setGroup(desiredG);
-      syncURL();
+    // Build a list of {comp, group, label} options
+    const allPairs = [];
+    const comps = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))];
+    for(const c of comps){
+      const groups = [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group||'Unassigned'))]
+        .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+      for(const g of groups){
+        const niceComp = c.replace(' Championship','');
+        const niceGroup = g.replace(/^Group\s*/i,'Group ');
+        allPairs.push({ comp:c, group:g, label:`${niceComp} ${niceGroup}`.trim() });
+      }
     }
 
-    function setGroup(g){
-      state.group=g; el('group-current').textContent=g;
-      $$('#group-menu .item').forEach(i=>i.classList.toggle('active', i.dataset.group===g));
+    // Default: Senior Hurling Championship + Group 1 (if available)
+    let desired = allPairs.find(p => /Senior Hurling Championship/i.test(p.comp) && /^Group\s*1$/i.test(p.group))
+               || allPairs[0];
 
-      // Re-render correct subview
+    // Apply URL params if valid
+    if (params.comp && params.group) {
+      const match = allPairs.find(p => p.comp===params.comp && p.group===params.group);
+      if (match) desired = match;
+    }
+
+    // Render dropdown
+    const menu = el('compgroup-menu');
+    menu.innerHTML = allPairs.map(p =>
+      `<div class="item${(p===desired?' active':'')}" data-comp="${esc(p.comp)}" data-group="${esc(p.group)}">${esc(p.label)}</div>`
+    ).join('');
+
+    // Apply selection to state + UI
+    function setPair(p){
+      state.comp = p.comp;
+      state.group = p.group;
+      el('compgroup-current').textContent = p.label;
       const tableSegActive = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
       if (tableSegActive) { renderStandings(); } else { renderGroupTable(); }
       syncURL();
     }
+    setPair(desired);
 
-    el('comp-menu').onclick=e=>{ const it=e.target.closest('.item'); if(!it) return; setComp(it.dataset.comp); mComp.close(); };
-    el('group-menu').onclick=e=>{ const it=e.target.closest('.item'); if(!it) return; setGroup(it.dataset.group); mGroup.close(); };
+    // Click handling
+    menu.onclick = (e)=>{
+      const it = e.target.closest('.item'); if(!it) return;
+      $$('#compgroup-menu .item').forEach(i=>i.classList.remove('active'));
+      it.classList.add('active');
+      setPair({ comp: it.getAttribute('data-comp'), group: it.getAttribute('data-group'), label: it.textContent });
+      combo.close();
+    };
 
-    // choose competition from URL if possible
-    const desiredComp = params.comp && comps.includes(params.comp) ? params.comp : comps[0];
-    setComp(desiredComp);
+    // Open/close wiring (whole pill clickable, chevron is just affordance)
+    const combo = (function(){
+      const trig = el('compgroup-trigger');
+      function close(){ menu.classList.remove('open'); }
+      trig.addEventListener('click', e=>{ e.stopPropagation(); menu.classList.toggle('open'); });
+      document.addEventListener('click', e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); });
+      return { close };
+    })();
   }
-
-  // dropdown open/close
-  const mComp = (function(){ const trig=el('comp-trigger'), menu=el('comp-menu'); function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {close}; })();
-  const mGroup = (function(){ const trig=el('group-trigger'), menu=el('group-menu'); function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {close}; })();
 
   // ---- Renders
   function renderGroupTable(){
@@ -178,7 +191,7 @@
       const hs=pointsFromGoalsPoints(m.home_goals,m.home_points), as=pointsFromGoalsPoints(m.away_goals,m.away_points);
       if(hs==null||as==null) continue;
       if(!teams.has(m.home)) teams.set(m.home,{team:m.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
-      if(!teams.has(m.away)) teams.set(m.away,{team:m.away,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
+      if(!teams.has(m.away)) teams.set(m.away,{team:m.away,p:0,w:0,d:0,pf:0,pa:0,diff:0,pts:0});
       const H=teams.get(m.home), A=teams.get(m.away);
       H.p++; A.p++; H.pf+=hs; H.pa+=as; A.pf+=as; A.pa+=hs;
       if(hs>as){ H.w++; H.pts+=2; A.l++; } else if(hs<as){ A.w++; A.pts+=2; H.l++; } else { H.d++; A.d++; H.pts++; A.pts++; }
