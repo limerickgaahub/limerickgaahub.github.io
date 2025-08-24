@@ -38,10 +38,20 @@ h1 { margin:0; font-weight:800; font-size:20px; }
 .section-tabs .seg { padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
 .section-tabs .seg.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-/* Competition controls (single green pill trigger) */
-#compgroup-trigger { background:#eaf6ef; border:1px solid #cdebd8; border-radius:999px; padding:10px 14px; font-weight:800; display:inline-flex; align-items:center; cursor:pointer; user-select:none; }
-#compgroup-trigger::after { content:none; } /* avoid duplicate arrow from generic .trigger */
-#compgroup-current { font-weight:800; }
+/* Competition pill (single trigger) */
+.comp-controls { margin-bottom:8px; }
+.menu-wrap { position:relative; display:inline-block; }
+.trigger { background:#eaf6ef; border:1px solid #cdebd8; border-radius:999px; padding:10px 14px; font-weight:800; display:inline-flex; align-items:center; cursor:pointer; user-select:none; }
+.trigger i { margin-left:6px; font-size:12px; }
+
+/* Dropdown menu (hidden until open) */
+.menu { position:absolute; top:calc(100% + 6px); left:0; min-width:280px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 28px rgba(0,0,0,.12); padding:6px; display:none; max-height:60vh; overflow:auto; z-index:10; }
+.menu.open { display:block; }
+.menu .item { padding:12px 14px; border-radius:10px; cursor:pointer; font-weight:700; }
+.menu .item:hover, .menu .item.active { background:#f1f9f4; }
+
+/* Subheader label (selected competition) */
+.comp-selected { margin:6px 0 6px; font-weight:800; font-size:15px; color:#1f2937; }
 
 /* Share bar */
 .sharebar { display:flex; align-items:center; gap:8px; margin:6px 0 10px; }
@@ -62,8 +72,8 @@ tbody tr:hover td { background:#f1f9f4; }
 td.match, th.match { text-align:center; }
 .match-block { display:grid; grid-template-rows:auto auto auto; row-gap:3px; justify-items:center; }
 .match-team { display:block; line-height:1.2; }
-/* Slightly smaller score under Match (as requested) */
-.match-score { display:block; font-weight:800; font-size:14px; line-height:1.2; } /* down from 16px */
+/* Slightly smaller score under Match */
+.match-score { display:block; font-weight:800; font-size:14px; line-height:1.2; }
 
 /* Standings tighter */
 #g-standings-table thead th, #g-standings-table tbody td { padding:10px 8px; font-size:13px; }
@@ -134,18 +144,21 @@ td.match, th.match { text-align:center; }
       <div class="seg vt" data-target="by-date">Date</div>
     </div>
 
-    <!-- Single Competition pill + dropdown -->
+    <!-- Competition pill + dropdown of competitions only -->
     <div class="h-row comp-controls">
       <div class="menu-wrap">
-        <div class="trigger" id="compgroup-trigger" aria-label="Choose competition & group">
-          <span id="compgroup-current">—</span>
-          <i class="fa-solid fa-chevron-down" style="font-size:12px; margin-left:6px;"></i>
+        <div class="trigger" id="comp-trigger" aria-label="Choose competition">
+          <span id="comp-current">—</span>
+          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
         </div>
-        <div class="menu" id="compgroup-menu"></div>
+        <div class="menu" id="comp-menu"></div>
       </div>
     </div>
 
     <div class="panel card" id="group-panel" style="margin-top:6px;">
+      <!-- Selected competition label (full name) -->
+      <div class="comp-selected" id="comp-selected"></div>
+
       <div class="section-tabs">
         <div class="seg active" data-view="matches">Matches</div>
         <div class="seg" data-view="table">Table</div>
@@ -232,7 +245,7 @@ td.match, th.match { text-align:center; }
   <footer class="site-footer">Limerick GAA Hub · 2025</footer>
 
   <!-- IMPORTANT: update if you rename the JS file -->
-  <script src="./js/app_v7_3_3.js?v=fix3"></script>
+  <script src="./js/app_v7_3_3.js?v=fix5"></script>
   <script>
     // Burger toggle
     (function(){
