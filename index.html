@@ -5,31 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Limerick GAA Hub</title>
 <meta name="color-scheme" content="light only">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 :root { --card:#ffffff; --muted:#6b7280; --accent:#00a651; --accent-weak:#e7f7ee; --line:#e9ecef; --text:#111; --bg:#f6f7f8; }
 * { box-sizing:border-box; }
-body { margin:20px; font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
-h1 { margin:0 0 6px 0; font-weight:800; }
+body { margin:70px 20px 20px; font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
+h1 { margin:0; font-weight:800; font-size:20px; }
 .sm-muted { color:#6b7280; font-size:12px; }
 
-.navtabs { display:flex; gap:8px; margin:16px 0 10px; flex-wrap:wrap; align-items:center; }
-.navtab { padding:10px 14px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; }
+/* Sticky header */
+.header { position:fixed; top:0; left:0; right:0; z-index:100; background:#fff; border-bottom:1px solid var(--line); }
+.header-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; max-width:1100px; margin:0 auto; }
+.brand { display:flex; align-items:center; gap:10px; }
+.brand .dot { width:10px; height:10px; background:var(--accent); border-radius:50%; }
+.navtabs { display:flex; gap:8px; align-items:center; }
+.navtab { padding:8px 12px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; }
 .navtab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-#lgh-warning { display:none; padding:10px 12px; background:#fff3cd; color:#664d03; border:1px solid #ffe69c; border-radius:10px; margin:12px 0; }
-#lgh-error { display:none; padding:10px 12px; background:#fee2e2; color:#991b1b; border:1px solid #fecaca; border-radius:10px; margin:12px 0; white-space:pre-wrap; }
+/* Burger */
+.burger { display:none; background:none; border:none; font-size:20px; padding:8px; }
+.offcanvas { position:fixed; inset:0 0 0 auto; width:80%; max-width:320px; background:#fff; box-shadow:-10px 0 24px rgba(0,0,0,.12); transform:translateX(100%); transition:transform .25s ease; z-index:120; }
+.offcanvas.open { transform:translateX(0); }
+.offcanvas .oc-head { padding:14px 16px; font-weight:800; border-bottom:1px solid var(--line); }
+.offcanvas .oc-body { padding:10px; display:flex; flex-direction:column; gap:8px; }
+.offcanvas .oc-link { padding:10px 12px; border-radius:12px; background:#f6f7f8; cursor:pointer; font-weight:700; }
+.oc-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .2s; z-index:110; }
+.oc-backdrop.show { opacity:1; pointer-events:auto; }
 
-.card { background:#fff; border-radius:18px; box-shadow:0 8px 24px rgba(0,0,0,.05); padding:14px; }
-
-/* Second-level tabs (Competition / Team / Date) */
+/* Cards & sections */
+.card { background:#fff; border-radius:18px; box-shadow:0 8px 24px rgba(0,0,0,.05); padding:14px; max-width:1100px; margin:0 auto; }
 .section-tabs { display:flex; gap:10px; margin:6px 0 12px; flex-wrap:wrap; }
 .section-tabs .seg { padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
 .section-tabs .seg.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-/* Competition controls (only shown on Competition tab) */
+/* Competition controls */
 .h-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:8px 0 12px; }
 .menu-wrap { position:relative; display:inline-block; }
 .trigger { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:#eaf6ef; border:1px solid #cdebd8; font-weight:800; cursor:pointer; user-select:none; }
@@ -38,6 +48,12 @@ h1 { margin:0 0 6px 0; font-weight:800; }
 .menu.open { display:block; }
 .item { padding:10px 12px; border-radius:10px; cursor:pointer; font-weight:700; }
 .item:hover { background:#f1f9f4; } .item.active { background:var(--accent); color:#fff; }
+
+/* Share bar */
+.sharebar { display:flex; align-items:center; gap:8px; margin:6px 0 10px; }
+.sharebar .spacer { flex:1; }
+.iconbtn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:8px 10px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; font-weight:700; font-size:13px; }
+.iconbtn i { font-size:14px; }
 
 /* Tables */
 .table-wrap { overflow-x:hidden; border-radius:14px; border:1px solid var(--line); background:#fff; }
@@ -48,39 +64,16 @@ td.right, th.right { text-align:right; }
 tbody tr:nth-child(even) td { background:#fcfcfd; }
 tbody tr:hover td { background:#f1f9f4; }
 
-/* Match presentation */
-td.match, th.match { text-align:center; }
-td.vcol, th.vcol { text-align:center; }
-.match-block { display:grid; grid-template-rows:auto auto auto; row-gap:3px; justify-items:center; }
-.match-team { display:block; text-align:center; }
-.match-score { font-weight:800; }
-.match-meta { font-size:11px; color:#6b7280; margin-top:2px; }
-
-/* Badges */
-.status-badge { font-size:12px; padding:3px 8px; border-radius:999px; display:inline-block; border:1px solid var(--line); }
-.status-Fixture { background:#fff; }
-.status-Result { background:#eaf6ef; color:#065f46; border-color:#cdebd8; }
-.comp-badge { display:inline-flex; align-items:center; gap:6px; }
-.comp-code { font-weight:800; font-size:12px; padding:3px 8px; border-radius:999px; border:1px solid #dbece3; background:#eefaf4; color:#065f46; }
-.group-code { font-size:12px; color:#374151; }
-
-/* Filters row in Competition panel */
-.controls { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
-.controls > * { padding:10px 12px; border:1px solid var(--line); background:#fff; border-radius:12px; font-size:15px; min-height:42px; }
-
 /* Standings tighter so Diff fits */
 #g-standings-table thead th, #g-standings-table tbody td { padding:10px 8px; font-size:13px; }
 
-/* Mobile widening + better column balance */
-.mobile-only { display:none; }
+/* Mobile widen */
 @media (max-width:880px){
-  body { margin:10px; } .card { padding:12px; }
+  body { margin:60px 10px 10px; }
+  .navtabs { display:none; }
+  .burger { display:inline-block; }
+  .card { padding:12px; }
   thead th, tbody td { padding:10px 7px; font-size:13px; }
-  th.rcol, td.rcol { width:3.1ch; text-align:center; }
-  th.dcol, td.dcol { width:10ch; text-align:center; }
-  th.tcol, td.tcol { width:5.6ch; text-align:center; }
-  th.vcol, td.vcol { width:auto; text-align:center; }
-  td.match { padding:8px 6px; text-align:center; }
   .stcol { display:none; }
 }
 
@@ -88,52 +81,62 @@ td.vcol, th.vcol { text-align:center; }
 #panel-about i { margin-right:6px; color:#444; }
 #panel-about a { margin-right:16px; text-decoration:none; }
 #panel-about a:hover i { color:#0077b5; }
+@media (max-width: 600px){ #panel-about p a { display:block; margin:6px 0; } }
 
-/* NEW: stack About links on mobile */
-@media (max-width: 600px){
-  #panel-about p a { display:block; margin:6px 0; }
-}
+/* Expand modal for standings */
+.modal { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:flex-end; justify-content:center; z-index:130; }
+.modal.open { display:flex; }
+.modal .sheet { width:100%; max-height:92vh; background:#fff; border-radius:16px 16px 0 0; overflow:auto; }
+.modal .sheet-header { display:flex; align-items:center; gap:10px; padding:12px; border-bottom:1px solid var(--line); position:sticky; top:0; background:#fff; }
+.modal .sheet-header h3 { margin:0; font-size:16px; }
+.modal .close { margin-left:auto; background:none; border:1px solid var(--line); border-radius:10px; padding:6px 10px; cursor:pointer; }
 </style>
 </head>
-
 <body>
-  <h1>Limerick GAA Hub</h1>
-
-  <div class="navtabs">
-    <div class="navtab active" data-nav="hurling">Hurling</div>
-    <div class="navtab" data-nav="football">Football</div>
-    <div class="navtab" data-nav="about">About</div>
+  <!-- Sticky header -->
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand"><span class="dot"></span><h1>Limerick GAA Hub</h1></div>
+      <div class="navtabs">
+        <div class="navtab active" data-nav="hurling">Hurling</div>
+        <div class="navtab" data-nav="football">Football</div>
+        <div class="navtab" data-nav="about">About</div>
+      </div>
+      <button class="burger" id="burger"><i class="fa-solid fa-bars"></i></button>
+    </div>
   </div>
+  <div class="oc-backdrop" id="oc-backdrop"></div>
+  <div class="offcanvas" id="offcanvas"><div class="oc-head">Menu</div><div class="oc-body">
+    <div class="oc-link" data-nav="hurling">Hurling</div>
+    <div class="oc-link" data-nav="football">Football</div>
+    <div class="oc-link" data-nav="about">About</div>
+  </div></div>
 
   <div id="lgh-warning">Some features didn’t load. Ensure <code>js/app_v7_3_2.js</code> exists.</div>
   <div id="lgh-error"></div>
 
   <!-- Hurling -->
   <div id="panel-hurling" class="card">
-    <!-- Second-level tabs -->
     <div class="section-tabs view-tabs">
       <div class="seg vt active" data-target="group-panel">Competition</div>
       <div class="seg vt" data-target="by-team">Team</div>
       <div class="seg vt" data-target="by-date">Date</div>
     </div>
 
-    <!-- Competition controls (hidden on Team/Date) -->
     <div class="h-row comp-controls">
-      <div class="menu-wrap">
-        <div class="trigger" id="comp-trigger"><span id="comp-current">—</span></div>
-        <div class="menu" id="comp-menu"></div>
-      </div>
-      <div class="menu-wrap">
-        <div class="trigger" id="group-trigger"><span id="group-current">—</span></div>
-        <div class="menu" id="group-menu"></div>
-      </div>
+      <div class="menu-wrap"><div class="trigger" id="comp-trigger"><span id="comp-current">—</span></div><div class="menu" id="comp-menu"></div></div>
+      <div class="menu-wrap"><div class="trigger" id="group-trigger"><span id="group-current">—</span></div><div class="menu" id="group-menu"></div></div>
     </div>
 
-    <!-- Competition view -->
     <div class="panel card" id="group-panel" style="margin-top:6px;">
       <div class="section-tabs">
         <div class="seg active" data-view="matches">Matches</div>
         <div class="seg" data-view="table">Table</div>
+        <div class="sharebar">
+          <span class="spacer"></span>
+          <button class="iconbtn" id="btn-share"><i class="fa-solid fa-share-nodes"></i> Share</button>
+          <button class="iconbtn" id="btn-copy"><i class="fa-solid fa-link"></i> Copy link</button>
+        </div>
       </div>
 
       <div class="controls card">
@@ -149,26 +152,24 @@ td.vcol, th.vcol { text-align:center; }
       </div>
 
       <div id="g-standings" style="margin-top:12px; display:none;">
+        <button class="iconbtn" id="btn-expand"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Expand</button>
         <div class="table-wrap">
           <table id="g-standings-table">
-            <thead>
-              <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>
-            </thead><tbody></tbody>
+            <thead><tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr></thead>
+            <tbody></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- Team view -->
     <div class="panel card" id="by-team" style="display:none; margin-top:6px;">
-      <div class="headband"><h2>By Team</h2></div>
+      <h2>By Team</h2>
       <div class="controls card"><select id="team"><option value="">Select team…</option></select></div>
       <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table></div>
     </div>
 
-    <!-- Date view -->
     <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
-      <div class="headband"><h2>By Date</h2></div>
+      <h2>By Date</h2>
       <div class="controls card">
         <label for="date-jump" class="sm-muted" style="margin-right:8px;">Go to date</label>
         <input id="date-jump" type="date" />
@@ -177,36 +178,32 @@ td.vcol, th.vcol { text-align:center; }
     </div>
   </div>
 
-  <!-- Football -->
-  <div id="panel-football" class="card" style="display:none;">
-    <h2>Football</h2>
-    <div class="sm-muted">Coming soon.</div>
-  </div>
+  <div id="panel-football" class="card" style="display:none;"><h2>Football</h2><div class="sm-muted">Coming soon.</div></div>
 
-  <!-- About -->
   <div id="panel-about" class="card" style="display:none;">
-    <p>
-      Limerick GAA Hub is designed to provide a clear and intuitive overview of fixtures and results, easily filterable by competition, team, or date.
-    </p>
+    <p>Limerick GAA Hub is designed to provide a clear and intuitive overview of fixtures and results, easily filterable by competition, team, or date.</p>
     <p>Over time, the aim is to additionally build an archive of historical results.</p>
     <p>Please note, this site is not associated with Limerick GAA, it has been developed solely by a club member and Limerick supporter.</p>
     <p>
-      <a href="https://www.instagram.com/limerickgaahub" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-instagram"></i> @limerickgaahub
-      </a>
-      <a href="https://x.com/limerickgaahub" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-x-twitter"></i> @limerickgaahub
-      </a>
+      <a href="https://www.instagram.com/limerickgaahub" target="_blank"><i class="fab fa-instagram"></i> @limerickgaahub</a>
+      <a href="https://x.com/limerickgaahub" target="_blank"><i class="fab fa-x-twitter"></i> @limerickgaahub</a>
       <a href="mailto:limerickgaahub@gmail.com"><i class="fas fa-envelope"></i> limerickgaahub@gmail.com</a>
     </p>
   </div>
 
+  <!-- Expand modal -->
+  <div class="modal" id="standings-modal"><div class="sheet"><div class="sheet-header"><h3>Standings</h3><button class="close" id="modal-close">Close</button></div><div class="table-wrap"><table id="modal-standings"><thead></thead><tbody></tbody></table></div></div></div>
+
   <script src="js/app_v7_3_2.js"></script>
   <script>
-    window.addEventListener('load', ()=>{
-      if(window.LGH_V7_3_READY!==true)
-        document.getElementById('lgh-warning').style.display='block';
-    });
+    // Burger toggle
+    (function(){
+      const burger=document.getElementById('burger'),oc=document.getElementById('offcanvas'),bd=document.getElementById('oc-backdrop');
+      function open(){oc.classList.add('open');bd.classList.add('show');}
+      function close(){oc.classList.remove('open');bd.classList.remove('show');}
+      burger.addEventListener('click',open); bd.addEventListener('click',close);
+      oc.addEventListener('click',e=>{const link=e.target.closest('.oc-link');if(link){document.querySelector(`.navtab[data-nav=\"${link.dataset.nav}\"]`).click();close();}});
+    })();
   </script>
 </body>
 </html>
