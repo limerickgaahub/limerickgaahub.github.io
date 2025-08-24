@@ -105,34 +105,57 @@
     }
   }
 
-  // ---- Competition dropdown only (group picked automatically)
+  // ---- Competition+Group dropdown (each pair is a selectable item)
   function buildMenus(){
-    // Unique competitions
+    // Build flattened list of pairs: {comp, group, label}
+    const pairs = [];
     const comps = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))];
+    for(const c of comps){
+      const groups = [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group || 'Unassigned'))]
+        .sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
+      for(const g of groups){
+        const lab = `${c} — ${g}`;
+        pairs.push({ comp:c, group:g, label:lab });
+      }
+    }
 
-    // Preferred default: Senior Hurling Championship
-    let desiredComp = comps.find(c => /Senior Hurling Championship/i.test(c)) || comps[0] || '';
+    // Default to SHC — Group 1 if present, else first pair
+    let desired = pairs.find(p => /Senior Hurling Championship/i.test(p.comp) && /^Group\s*1$/i.test(p.group)) || pairs[0] || null;
 
-    // If URL has comp and it exists, use it
-    if (params.comp && comps.includes(params.comp)) desiredComp = params.comp;
+    // Apply URL params if valid
+    if (params.comp && params.group){
+      const m = pairs.find(p => p.comp===params.comp && p.group===params.group);
+      if (m) desired = m;
+    }
 
-    // Build menu
+    // Build dropdown menu
     const menu = el('comp-menu');
-    menu.innerHTML = comps.map(c =>
-      `<div class="item${c===desiredComp?' active':''}" data-comp="${esc(c)}">${esc(c)}</div>`
+    menu.innerHTML = pairs.map(p =>
+      `<div class="item${(desired && p.comp===desired.comp && p.group===desired.group) ? ' active':''}" data-comp="${esc(p.comp)}" data-group="${esc(p.group)}">${esc(p.label)}</div>`
     ).join('');
+
+    function setPair(p){
+      state.comp = p.comp;
+      state.group = p.group;
+      el('comp-current').textContent = p.comp;                  // pill shows competition
+      const lbl = el('comp-selected'); if(lbl) lbl.textContent = p.label; // black label shows full "Comp — Group"
+
+      const onTable = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
+      if (onTable) renderStandings(); else renderGroupTable();
+      syncURL();
+    }
+    if(desired) setPair(desired);
 
     // Click handling
     menu.onclick = (e)=>{
       const it = e.target.closest('.item'); if(!it) return;
-      const comp = it.getAttribute('data-comp');
       $$('#comp-menu .item').forEach(i=>i.classList.remove('active'));
       it.classList.add('active');
-      setCompetition(comp);
+      setPair({ comp: it.getAttribute('data-comp'), group: it.getAttribute('data-group'), label: it.textContent });
       combo.close();
     };
 
-    // Trigger open/close (whole pill clickable)
+    // Open/close on whole pill
     const combo = (function(){
       const trig = el('comp-trigger');
       function close(){ menu.classList.remove('open'); }
@@ -140,32 +163,6 @@
       document.addEventListener('click', e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); });
       return { close };
     })();
-
-    // Initial apply
-    setCompetition(desiredComp);
-  }
-
-  // Choose competition, auto-select group (Group 1 if available), update label and render
-  function setCompetition(compName){
-    state.comp = compName || null;
-
-    // Determine default group within this competition
-    const groups = [...new Set(MATCHES.filter(m=>m.competition===compName).map(m=>m.group || 'Unassigned'))]
-      .sort((a,b)=> a.localeCompare(b, undefined, {numeric:true}));
-    let chosenGroup = groups.find(g => /^Group\s*1$/i.test(g)) || groups[0] || null;
-    state.group = chosenGroup;
-
-    // Update pill and subheader label
-    el('comp-current').textContent = compName || '—';
-    const label = el('comp-selected');
-    if (label) label.textContent = compName || '';
-
-    // Re-render current subview
-    const tableSegActive = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
-    if (tableSegActive) { renderStandings(); } else { renderGroupTable(); }
-
-    // Deep link
-    syncURL();
   }
 
   // ---- Renders
@@ -187,22 +184,31 @@
   function pointsFromGoalsPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
 
   function renderStandings(){
-    const rows = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group && isResult(r.status));
-    const teams=new Map();
-    for(const m of rows){
-      const hs=pointsFromGoalsPoints(m.home_goals,m.home_points), as=pointsFromGoalsPoints(m.away_goals,m.away_points);
-      if(hs==null||as==null) continue;
-      if(!teams.has(m.home)) teams.set(m.home,{team:m.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
-      if(!teams.has(m.away)) teams.set(m.away,{team:m.away,p:0,w:0,d:0,pf:0,pa:0,diff:0,pts:0});
+    // Build team list from ALL fixtures in this comp+group (so zeros print cleanly)
+    const fixtures = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group);
+    const teams = new Map();
+    for(const f of fixtures){
+      if(!teams.has(f.home)) teams.set(f.home,{team:f.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
+      if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
+    }
+
+    // Apply only RESULT rows to update stats
+    const results = fixtures.filter(r=>isResult(r.status));
+    for(const m of results){
+      const hs=pointsFromGoalsPoints(m.home_goals,m.home_points);
+      const as=pointsFromGoalsPoints(m.away_goals,m.away_points);
+      if(hs==null || as==null) continue;
       const H=teams.get(m.home), A=teams.get(m.away);
       H.p++; A.p++; H.pf+=hs; H.pa+=as; A.pf+=as; A.pa+=hs;
-      if(hs>as){ H.w++; H.pts+=2; A.l++; } else if(hs<as){ A.w++; A.pts+=2; H.l++; } else { H.d++; A.d++; H.pts++; A.pts++; }
+      if(hs>as){ H.w++; H.pts+=2; A.l++; }
+      else if(hs<as){ A.w++; A.pts+=2; H.l++; }
+      else { H.d++; A.d++; H.pts++; A.pts++; }
     }
-    for(const t of teams.values()) t.diff=t.pf-t.pa;
+    for(const t of teams.values()){ t.diff=(t.pf||0)-(t.pa||0); }
 
     // Sort: Pts desc → Diff desc → PF desc → Team asc
     const sorted=[...teams.values()].sort((a,b)=>
-      b.pts-a.pts || b.diff-a.diff || b.pf-a.pf || a.team.localeCompare(b.team)
+      (b.pts||0)-(a.pts||0) || (b.diff||0)-(a.diff||0) || (b.pf||0)-(a.pf||0) || a.team.localeCompare(b.team)
       // TODO: Head-to-Head tiebreaker could be inserted here
     );
 
@@ -211,11 +217,11 @@
     tbody.innerHTML = sorted.map(r =>
       `<tr>
         <td>${esc(r.team)}</td>
-        <td class="right">${r.p}</td>
-        <td class="right">${r.w}</td>
-        <td class="right">${r.d}</td>
-        <td class="right">${r.l}</td>
-        <td class="right"><strong>${r.pts}</strong></td>
+        <td class="right">${r.p||0}</td>
+        <td class="right">${r.w||0}</td>
+        <td class="right">${r.d||0}</td>
+        <td class="right">${r.l||0}</td>
+        <td class="right"><strong>${r.pts||0}</strong></td>
       </tr>`
     ).join('');
 
@@ -229,14 +235,14 @@
       mb.innerHTML = sorted.map(r =>
         `<tr>
           <td>${esc(r.team)}</td>
-          <td class="right">${r.p}</td>
-          <td class="right">${r.w}</td>
-          <td class="right">${r.d}</td>
-          <td class="right">${r.l}</td>
-          <td class="right">${r.pf}</td>
-          <td class="right">${r.pa}</td>
-          <td class="right">${r.diff}</td>
-          <td class="right"><strong>${r.pts}</strong></td>
+          <td class="right">${r.p||0}</td>
+          <td class="right">${r.w||0}</td>
+          <td class="right">${r.d||0}</td>
+          <td class="right">${r.l||0}</td>
+          <td class="right">${r.pf||0}</td>
+          <td class="right">${r.pa||0}</td>
+          <td class="right">${r.diff||0}</td>
+          <td class="right"><strong>${r.pts||0}</strong></td>
         </tr>`
       ).join('');
     }
