@@ -105,65 +105,67 @@
     }
   }
 
-  // ---- Combined Competition + Group menu
+  // ---- Competition dropdown only (group picked automatically)
   function buildMenus(){
-    // Build a list of {comp, group, label} options
-    const allPairs = [];
+    // Unique competitions
     const comps = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))];
-    for(const c of comps){
-      const groups = [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group||'Unassigned'))]
-        .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
-      for(const g of groups){
-        const niceComp = c.replace(' Championship','');
-        const niceGroup = g.replace(/^Group\s*/i,'Group ');
-        allPairs.push({ comp:c, group:g, label:`${niceComp} ${niceGroup}`.trim() });
-      }
-    }
 
-    // Default: Senior Hurling Championship + Group 1 (if available)
-    let desired = allPairs.find(p => /Senior Hurling Championship/i.test(p.comp) && /^Group\s*1$/i.test(p.group))
-               || allPairs[0];
+    // Preferred default: Senior Hurling Championship
+    let desiredComp = comps.find(c => /Senior Hurling Championship/i.test(c)) || comps[0] || '';
 
-    // Apply URL params if valid
-    if (params.comp && params.group) {
-      const match = allPairs.find(p => p.comp===params.comp && p.group===params.group);
-      if (match) desired = match;
-    }
+    // If URL has comp and it exists, use it
+    if (params.comp && comps.includes(params.comp)) desiredComp = params.comp;
 
-    // Render dropdown
-    const menu = el('compgroup-menu');
-    menu.innerHTML = allPairs.map(p =>
-      `<div class="item${(p===desired?' active':'')}" data-comp="${esc(p.comp)}" data-group="${esc(p.group)}">${esc(p.label)}</div>`
+    // Build menu
+    const menu = el('comp-menu');
+    menu.innerHTML = comps.map(c =>
+      `<div class="item${c===desiredComp?' active':''}" data-comp="${esc(c)}">${esc(c)}</div>`
     ).join('');
-
-    // Apply selection to state + UI
-    function setPair(p){
-      state.comp = p.comp;
-      state.group = p.group;
-      el('compgroup-current').textContent = p.label;
-      const tableSegActive = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
-      if (tableSegActive) { renderStandings(); } else { renderGroupTable(); }
-      syncURL();
-    }
-    setPair(desired);
 
     // Click handling
     menu.onclick = (e)=>{
       const it = e.target.closest('.item'); if(!it) return;
-      $$('#compgroup-menu .item').forEach(i=>i.classList.remove('active'));
+      const comp = it.getAttribute('data-comp');
+      $$('#comp-menu .item').forEach(i=>i.classList.remove('active'));
       it.classList.add('active');
-      setPair({ comp: it.getAttribute('data-comp'), group: it.getAttribute('data-group'), label: it.textContent });
+      setCompetition(comp);
       combo.close();
     };
 
-    // Open/close wiring (whole pill clickable, chevron is just affordance)
+    // Trigger open/close (whole pill clickable)
     const combo = (function(){
-      const trig = el('compgroup-trigger');
+      const trig = el('comp-trigger');
       function close(){ menu.classList.remove('open'); }
       trig.addEventListener('click', e=>{ e.stopPropagation(); menu.classList.toggle('open'); });
       document.addEventListener('click', e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); });
       return { close };
     })();
+
+    // Initial apply
+    setCompetition(desiredComp);
+  }
+
+  // Choose competition, auto-select group (Group 1 if available), update label and render
+  function setCompetition(compName){
+    state.comp = compName || null;
+
+    // Determine default group within this competition
+    const groups = [...new Set(MATCHES.filter(m=>m.competition===compName).map(m=>m.group || 'Unassigned'))]
+      .sort((a,b)=> a.localeCompare(b, undefined, {numeric:true}));
+    let chosenGroup = groups.find(g => /^Group\s*1$/i.test(g)) || groups[0] || null;
+    state.group = chosenGroup;
+
+    // Update pill and subheader label
+    el('comp-current').textContent = compName || '—';
+    const label = el('comp-selected');
+    if (label) label.textContent = compName || '';
+
+    // Re-render current subview
+    const tableSegActive = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
+    if (tableSegActive) { renderStandings(); } else { renderGroupTable(); }
+
+    // Deep link
+    syncURL();
   }
 
   // ---- Renders
