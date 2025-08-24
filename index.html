@@ -6,7 +6,6 @@
 <title>Limerick GAA Hub</title>
 <meta name="color-scheme" content="light only">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 <style>
 :root { --card:#ffffff; --muted:#6b7280; --accent:#00a651; --accent-weak:#e7f7ee; --line:#e9ecef; --text:#111; --bg:#f6f7f8; }
 * { box-sizing:border-box; }
@@ -64,7 +63,7 @@ td.right, th.right { text-align:right; }
 tbody tr:nth-child(even) td { background:#fcfcfd; }
 tbody tr:hover td { background:#f1f9f4; }
 
-/* Standings tighter so Diff fits */
+/* Standings tighter */
 #g-standings-table thead th, #g-standings-table tbody td { padding:10px 8px; font-size:13px; }
 
 /* Mobile widen */
@@ -83,7 +82,7 @@ tbody tr:hover td { background:#f1f9f4; }
 #panel-about a:hover i { color:#0077b5; }
 @media (max-width: 600px){ #panel-about p a { display:block; margin:6px 0; } }
 
-/* Expand modal for standings */
+/* Expand modal */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:flex-end; justify-content:center; z-index:130; }
 .modal.open { display:flex; }
 .modal .sheet { width:100%; max-height:92vh; background:#fff; border-radius:16px 16px 0 0; overflow:auto; }
@@ -93,7 +92,7 @@ tbody tr:hover td { background:#f1f9f4; }
 </style>
 </head>
 <body>
-  <!-- Sticky header -->
+  <!-- Header -->
   <div class="header">
     <div class="header-inner">
       <div class="brand"><span class="dot"></span><h1>Limerick GAA Hub</h1></div>
@@ -102,18 +101,23 @@ tbody tr:hover td { background:#f1f9f4; }
         <div class="navtab" data-nav="football">Football</div>
         <div class="navtab" data-nav="about">About</div>
       </div>
-      <button class="burger" id="burger"><i class="fa-solid fa-bars"></i></button>
+      <button class="burger" id="burger" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
     </div>
   </div>
   <div class="oc-backdrop" id="oc-backdrop"></div>
-  <div class="offcanvas" id="offcanvas"><div class="oc-head">Menu</div><div class="oc-body">
-    <div class="oc-link" data-nav="hurling">Hurling</div>
-    <div class="oc-link" data-nav="football">Football</div>
-    <div class="oc-link" data-nav="about">About</div>
-  </div></div>
+  <div class="offcanvas" id="offcanvas" aria-hidden="true">
+    <div class="oc-head">Menu</div>
+    <div class="oc-body">
+      <div class="oc-link" data-nav="hurling">Hurling</div>
+      <div class="oc-link" data-nav="football">Football</div>
+      <div class="oc-link" data-nav="about">About</div>
+    </div>
+  </div>
 
-  <div id="lgh-warning">Some features didn’t load. Ensure <code>js/app_v7_3_3.js</code> exists.</div>
-  <div id="lgh-error"></div>
+  <div id="lgh-warning" style="max-width:1100px; margin:12px auto; display:none; padding:10px 12px; background:#fff3cd; color:#664d03; border:1px solid #ffe69c; border-radius:10px;">
+    Some features didn’t load. Check the JS file path and console errors.
+  </div>
+  <div id="lgh-error" style="max-width:1100px; margin:12px auto; display:none; padding:10px 12px; background:#fee2e2; color:#991b1b; border:1px solid #fecaca; border-radius:10px; white-space:pre-wrap;"></div>
 
   <!-- Hurling -->
   <div id="panel-hurling" class="card">
@@ -124,8 +128,14 @@ tbody tr:hover td { background:#f1f9f4; }
     </div>
 
     <div class="h-row comp-controls">
-      <div class="menu-wrap"><div class="trigger" id="comp-trigger"><span id="comp-current">—</span></div><div class="menu" id="comp-menu"></div></div>
-      <div class="menu-wrap"><div class="trigger" id="group-trigger"><span id="group-current">—</span></div><div class="menu" id="group-menu"></div></div>
+      <div class="menu-wrap">
+        <div class="trigger" id="comp-trigger"><span id="comp-current">—</span></div>
+        <div class="menu" id="comp-menu"></div>
+      </div>
+      <div class="menu-wrap">
+        <div class="trigger" id="group-trigger"><span id="group-current">—</span></div>
+        <div class="menu" id="group-menu"></div>
+      </div>
     </div>
 
     <div class="panel card" id="group-panel" style="margin-top:6px;">
@@ -155,8 +165,9 @@ tbody tr:hover td { background:#f1f9f4; }
         <button class="iconbtn" id="btn-expand"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Expand</button>
         <div class="table-wrap">
           <table id="g-standings-table">
-            <thead><tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr></thead>
-            <tbody></tbody>
+            <thead>
+              <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>
+            </thead><tbody></tbody>
           </table>
         </div>
       </div>
@@ -178,8 +189,13 @@ tbody tr:hover td { background:#f1f9f4; }
     </div>
   </div>
 
-  <div id="panel-football" class="card" style="display:none;"><h2>Football</h2><div class="sm-muted">Coming soon.</div></div>
+  <!-- Football -->
+  <div id="panel-football" class="card" style="display:none;">
+    <h2>Football</h2>
+    <div class="sm-muted">Coming soon.</div>
+  </div>
 
+  <!-- About -->
   <div id="panel-about" class="card" style="display:none;">
     <p>Limerick GAA Hub is designed to provide a clear and intuitive overview of fixtures and results, easily filterable by competition, team, or date.</p>
     <p>Over time, the aim is to additionally build an archive of historical results.</p>
@@ -192,18 +208,32 @@ tbody tr:hover td { background:#f1f9f4; }
   </div>
 
   <!-- Expand modal -->
-  <div class="modal" id="standings-modal"><div class="sheet"><div class="sheet-header"><h3>Standings</h3><button class="close" id="modal-close">Close</button></div><div class="table-wrap"><table id="modal-standings"><thead></thead><tbody></tbody></table></div></div></div>
+  <div class="modal" id="standings-modal" aria-hidden="true">
+    <div class="sheet">
+      <div class="sheet-header"><h3>Standings</h3><button class="close" id="modal-close">Close</button></div>
+      <div class="table-wrap"><table id="modal-standings"><thead></thead><tbody></tbody></table></div>
+    </div>
+  </div>
 
   <script src="js/app_v7_3_3.js"></script>
   <script>
     // Burger toggle
     (function(){
-      const burger=document.getElementById('burger'),oc=document.getElementById('offcanvas'),bd=document.getElementById('oc-backdrop');
-      function open(){oc.classList.add('open');bd.classList.add('show');}
-      function close(){oc.classList.remove('open');bd.classList.remove('show');}
-      burger.addEventListener('click',open); bd.addEventListener('click',close);
-      oc.addEventListener('click',e=>{const link=e.target.closest('.oc-link');if(link){document.querySelector(`.navtab[data-nav=\"${link.dataset.nav}\"]`).click();close();}});
+      const burger=document.getElementById('burger'), oc=document.getElementById('offcanvas'), bd=document.getElementById('oc-backdrop');
+      const open=()=>{oc.classList.add('open'); bd.classList.add('show');};
+      const close=()=>{oc.classList.remove('open'); bd.classList.remove('show');};
+      burger.addEventListener('click', open);
+      bd.addEventListener('click', close);
+      oc.addEventListener('click', e=>{ const link=e.target.closest('.oc-link'); if(link){ document.querySelector(`.navtab[data-nav="${link.dataset.nav}"]`).click(); close(); }});
     })();
+
+    // Show warning if JS didn't set the ready flag
+    window.addEventListener('load', ()=>{
+      if(window.LGH_V7_3_READY!==true){
+        document.getElementById('lgh-warning').style.display='block';
+        console.warn('App not ready. Check js/app_v7_3_3.js path and console for errors.');
+      }
+    });
   </script>
 </body>
 </html>
