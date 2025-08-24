@@ -1,261 +1,398 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Limerick GAA Hub</title>
-<meta name="color-scheme" content="light only">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<style>
-:root { --card:#ffffff; --muted:#6b7280; --accent:#00a651; --line:#e9ecef; --text:#111; --bg:#f6f7f8; }
-* { box-sizing:border-box; }
-body { margin:70px 20px 20px; font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
-h1 { margin:0; font-weight:800; font-size:20px; }
-.sm-muted { color:#6b7280; font-size:12px; }
+// app_v7_3_3.js — Fixtures, Results, Tables, deep links, share, expand modal
+(function(){
+  // Ready flag (for the warning banner)
+  window.LGH_V7_3_READY = true;
 
-/* Header */
-.header { position:fixed; top:0; left:0; right:0; z-index:100; background:#fff; border-bottom:1px solid var(--line); }
-.header-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; max-width:1100px; margin:0 auto; }
-.brand { display:flex; align-items:center; gap:10px; }
-.brand .dot { width:10px; height:10px; background:var(--accent); border-radius:50%; }
-.navtabs { display:flex; gap:8px; align-items:center; }
-.navtab { padding:8px 12px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; }
-.navtab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+  // ---- Config / helpers
+  const DATA_URL = 'data/hurling_2025.json';
+  const COMP_CODES = {
+    "Senior Hurling Championship": "SHC",
+    "Premier Intermediate Hurling Championship": "PIHC",
+    "Intermediate Hurling Championship": "IHC",
+    "Premier Junior A Hurling Championship": "PJAHC",
+    "Junior A Hurling Championship": "JAHC",
+  };
+  const el=id=>document.getElementById(id), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+  const pad2=n=>String(n).padStart(2,'0'); const day3=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const fmtDateShort=iso=>{ if(!iso) return ''; const d=new Date(iso+'T00:00:00'); return `${day3[d.getDay()]} ${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`; };
+  const fmtTimeShort=t=>{ if(!t) return ''; const m=t.match(/^(\d{1,2}):(\d{2})/); return m?`${pad2(m[1])}${m[2]}`:t; };
+  const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const groupShort=g=> (g||'').replace(/^Group\s*/i,'G').trim();
+  const compCode=name=> COMP_CODES[name] || (name? name.split(/\s+/).map(w=>w[0]).join('').toUpperCase() : '?');
+  const toInt=v=>v==null||v===''?null:(Number(v)||0);
+  const parseRoundNum=r=>{ const m=String(r||'').match(/(\d+)/); return m?Number(m[1]):999; };
 
-/* Burger */
-.burger { display:none; background:none; border:none; font-size:20px; padding:8px; }
-.offcanvas { position:fixed; inset:0 0 0 auto; width:80%; max-width:320px; background:#fff; box-shadow:-10px 0 24px rgba(0,0,0,.12); transform:translateX(100%); transition:transform .25s ease; z-index:120; }
-.offcanvas.open { transform:translateX(0); }
-.offcanvas .oc-head { padding:14px 16px; font-weight:800; border-bottom:1px solid var(--line); }
-.offcanvas .oc-body { padding:10px; display:flex; flex-direction:column; gap:8px; }
-.offcanvas .oc-link { padding:10px 12px; border-radius:12px; background:#f6f7f8; cursor:pointer; font-weight:700; }
-.oc-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .2s; z-index:110; }
-.oc-backdrop.show { opacity:1; pointer-events:auto; }
+  // Polyfill: CSS.escape for older browsers
+  const cssEscape = (window.CSS && typeof CSS.escape === 'function')
+    ? CSS.escape
+    : function (str) { return String(str).replace(/[^a-zA-Z0-9_\-]/g, '\\$&'); };
 
-/* Cards & sections */
-.card { background:#fff; border-radius:18px; box-shadow:0 8px 24px rgba(0,0,0,.05); padding:14px; max-width:1100px; margin:0 auto; }
-.section-tabs { display:flex; gap:10px; margin:6px 0 12px; flex-wrap:wrap; }
-.section-tabs .seg { padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
-.section-tabs .seg.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+  const RESULT_RE = /^(res|final)/i;
+  const isResult = s => RESULT_RE.test(String(s||''));
+  const isFixture = s => !isResult(s);
 
-/* Competition controls */
-.h-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:8px 0 12px; }
-.menu-wrap { position:relative; display:inline-block; }
-.trigger { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:#eaf6ef; border:1px solid #cdebd8; font-weight:800; cursor:pointer; user-select:none; }
-.trigger::after { content:"▾"; font-size:12px; }
-.menu { position:absolute; z-index:40; margin-top:8px; min-width:280px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); padding:6px; display:none; }
-.menu.open { display:block; }
-.item { padding:10px 12px; border-radius:10px; cursor:pointer; font-weight:700; }
-.item:hover { background:#f1f9f4; } .item.active { background:var(--accent); color:#fff; }
+  // URL/state
+  const params = new Proxy(new URLSearchParams(location.search), { get:(sp,prop)=> sp.get(prop) });
+  const state={ section:'hurling', view:'matches', comp:null, group:null, team:null, date:null };
 
-/* Share bar */
-.sharebar { display:flex; align-items:center; gap:8px; margin:6px 0 10px; }
-.sharebar .spacer { flex:1; }
-.iconbtn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:8px 10px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; font-weight:700; font-size:13px; }
-.iconbtn i { font-size:14px; }
+  let MATCHES=[];
+  let VIEW_MODE='competition';
 
-/* Tables */
-.table-wrap { overflow-x:hidden; border-radius:14px; border:1px solid var(--line); background:#fff; }
-table { width:100%; border-collapse:separate; border-spacing:0; table-layout:auto; }
-thead th { position:sticky; top:0; background:#f8fafb; border-bottom:1px solid var(--line); font-size:14px; font-weight:800; color:#1f2937; text-align:left; padding:14px; }
-tbody td { padding:14px; border-bottom:1px solid var(--line); font-size:15px; }
-td.right, th.right { text-align:right; }
-tbody tr:nth-child(even) td { background:#fcfcfd; }
-tbody tr:hover td { background:#f1f9f4; }
+  const attachScores=m=>{
+    m.home_goals = toInt(m.home_goals); m.home_points = toInt(m.home_points);
+    m.away_goals = toInt(m.away_goals); m.away_points = toInt(m.away_points);
+    m._homeMid = (m.home_goals!=null && m.home_points!=null) ? `${m.home_goals}-${m.home_points}` : '';
+    m._awayMid = (m.away_goals!=null && m.away_points!=null) ? `${m.away_goals}-${m.away_points}` : '';
+    m._rnum = parseRoundNum(m.round);
+    return m;
+  };
 
-/* Match block (stacked, centered) */
-td.match, th.match { text-align:center; }
-.match-block { display:grid; grid-template-rows:auto auto auto; row-gap:3px; justify-items:center; }
-.match-team { display:block; line-height:1.2; }
-.match-score { display:block; font-weight:800; font-size:16px; line-height:1.2; }
-
-/* Standings tighter */
-#g-standings-table thead th, #g-standings-table tbody td { padding:10px 8px; font-size:13px; }
-
-/* Expand modal */
-.modal { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:flex-end; justify-content:center; z-index:130; }
-.modal.open { display:flex; }
-.modal .sheet { width:100%; max-height:92vh; background:#fff; border-radius:16px 16px 0 0; overflow:auto; }
-.modal .sheet-header { display:flex; align-items:center; gap:10px; padding:12px; border-bottom:1px solid var(--line); position:sticky; top:0; background:#fff; }
-.modal .sheet-header h3 { margin:0; font-size:16px; }
-.modal .close { margin-left:auto; background:none; border:1px solid var(--line); border-radius:10px; padding:6px 10px; cursor:pointer; }
-
-/* Mobile-only refinements */
-@media (max-width:880px){
-  body { margin:60px 10px 10px; }
-  .navtabs { display:none; }
-  .burger { display:inline-block; }
-  .card { padding:12px; }
-  thead th, tbody td { padding:10px 7px; font-size:13px; }
-  .stcol { display:none; }
-  /* Center Date + Time on mobile as requested */
-  th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
-}
-
-/* About links */
-#panel-about i { margin-right:6px; color:#444; }
-#panel-about a { margin-right:16px; text-decoration:none; }
-#panel-about a:hover i { color:#0077b5; }
-@media (max-width: 600px){ #panel-about p a { display:block; margin:6px 0; } }
-
-/* Footer */
-.site-footer { max-width:1100px; margin:16px auto 24px; text-align:center; color:#6b7280; font-size:12px; }
-</style>
-</head>
-<body>
-  <!-- Header -->
-  <div class="header">
-    <div class="header-inner">
-      <div class="brand"><span class="dot"></span><h1>Limerick GAA Hub</h1></div>
-      <div class="navtabs">
-        <div class="navtab active" data-nav="hurling">Hurling</div>
-        <div class="navtab" data-nav="football">Football</div>
-        <div class="navtab" data-nav="about">About</div>
-      </div>
-      <button class="burger" id="burger" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
-    </div>
-  </div>
-  <div class="oc-backdrop" id="oc-backdrop"></div>
-  <div class="offcanvas" id="offcanvas" aria-hidden="true">
-    <div class="oc-head">Menu</div>
-    <div class="oc-body">
-      <div class="oc-link" data-nav="hurling">Hurling</div>
-      <div class="oc-link" data-nav="football">Football</div>
-      <div class="oc-link" data-nav="about">About</div>
-    </div>
-  </div>
-
-  <div id="lgh-warning" style="max-width:1100px; margin:12px auto; display:none; padding:10px 12px; background:#fff3cd; color:#664d03; border:1px solid #ffe69c; border-radius:10px;">
-    Some features didn’t load. Check the JS file path and console errors.
-  </div>
-  <div id="lgh-error" style="max-width:1100px; margin:12px auto; display:none; padding:10px 12px; background:#fee2e2; color:#991b1b; border:1px solid #fecaca; border-radius:10px; white-space:pre-wrap;"></div>
-
-  <!-- Hurling -->
-  <div id="panel-hurling" class="card">
-    <div class="section-tabs view-tabs">
-      <div class="seg vt active" data-target="group-panel">Competition</div>
-      <div class="seg vt" data-target="by-team">Team</div>
-      <div class="seg vt" data-target="by-date">Date</div>
-    </div>
-
-    <div class="h-row comp-controls">
-      <div class="menu-wrap">
-        <div class="trigger" id="comp-trigger"><span id="comp-current">—</span></div>
-        <div class="menu" id="comp-menu"></div>
-      </div>
-      <div class="menu-wrap">
-        <div class="trigger" id="group-trigger"><span id="group-current">—</span></div>
-        <div class="menu" id="group-menu"></div>
-      </div>
-    </div>
-
-    <div class="panel card" id="group-panel" style="margin-top:6px;">
-      <div class="section-tabs">
-        <div class="seg active" data-view="matches">Matches</div>
-        <div class="seg" data-view="table">Table</div>
-        <div class="sharebar">
-          <span class="spacer"></span>
-          <button class="iconbtn" id="btn-share"><i class="fa-solid fa-share-nodes"></i> Share</button>
-          <button class="iconbtn" id="btn-copy"><i class="fa-solid fa-link"></i> Copy link</button>
-        </div>
-      </div>
-
-      <div class="controls card">
-        <select id="status">
-          <option value="">All (fixtures & results)</option>
-          <option value="Result">Results only</option>
-          <option value="Fixture">Fixtures only</option>
-        </select>
-      </div>
-
-      <div class="table-wrap matches-wrap">
-        <table id="g-table"><thead></thead><tbody></tbody></table>
-      </div>
-
-      <div id="g-standings" style="margin-top:12px; display:none;">
-        <div style="display:flex; gap:8px; justify-content:flex-end; margin-bottom:8px;">
-          <button class="iconbtn" id="btn-expand"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Expand</button>
-        </div>
-        <div class="table-wrap">
-          <table id="g-standings-table">
-            <thead>
-              <!-- Default view: Team, P, W, D, L, Pts -->
-              <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">Pts</th></tr>
-            </thead><tbody></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel card" id="by-team" style="display:none; margin-top:6px;">
-      <h2>By Team</h2>
-      <div class="controls card"><select id="team"><option value="">Select team…</option></select></div>
-      <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table></div>
-    </div>
-
-    <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
-      <h2>By Date</h2>
-      <div class="controls card">
-        <label for="date-jump" class="sm-muted" style="margin-right:8px;">Go to date</label>
-        <input id="date-jump" type="date" />
-      </div>
-      <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
-    </div>
-  </div>
-
-  <!-- Football -->
-  <div id="panel-football" class="card" style="display:none;">
-    <h2>Football</h2>
-    <div class="sm-muted">Coming soon.</div>
-  </div>
-
-  <!-- About -->
-  <div id="panel-about" class="card" style="display:none;">
-    <p>Limerick GAA Hub is designed to provide a clear and intuitive overview of fixtures and results, easily filterable by competition, team, or date.</p>
-    <p>Over time, the aim is to additionally build an archive of historical results.</p>
-    <p>Please note, this site is not associated with Limerick GAA, it has been developed solely by a club member and Limerick supporter.</p>
-    <p>
-      <a href="https://www.instagram.com/limerickgaahub" target="_blank"><i class="fab fa-instagram"></i> @limerickgaahub</a>
-      <a href="https://x.com/limerickgaahub" target="_blank"><i class="fab fa-x-twitter"></i> @limerickgaahub</a>
-      <a href="mailto:limerickgaahub@gmail.com"><i class="fas fa-envelope"></i> limerickgaahub@gmail.com</a>
-    </p>
-  </div>
-
-  <!-- Expand modal (full columns: adds PF, PA, Diff) -->
-  <div class="modal" id="standings-modal" aria-hidden="true">
-    <div class="sheet">
-      <div class="sheet-header"><h3>Standings</h3><button class="close" id="modal-close">Close</button></div>
-      <div class="table-wrap"><table id="modal-standings">
-        <thead>
-          <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table></div>
-    </div>
-  </div>
-
-  <footer class="site-footer">Limerick GAA Hub · ©2025</footer>
-
-  <!-- IMPORTANT: update if you rename the JS file -->
-  <script src="js/app_v7_3_3.js"></script>
-  <script>
-    // Burger toggle
-    (function(){
-      const burger=document.getElementById('burger'), oc=document.getElementById('offcanvas'), bd=document.getElementById('oc-backdrop');
-      const open=()=>{oc.classList.add('open'); bd.classList.add('show');};
-      const close=()=>{oc.classList.remove('open'); bd.classList.remove('show');};
-      burger.addEventListener('click', open);
-      bd.addEventListener('click', close);
-      oc.addEventListener('click', e=>{ const link=e.target.closest('.oc-link'); if(link){ document.querySelector(`.navtab[data-nav="${link.dataset.nav}"]`).click(); close(); }});
-    })();
-
-    // Show warning if JS didn't set the ready flag
-    window.addEventListener('load', ()=>{
-      if(window.LGH_V7_3_3_READY!==true && window.LGH_V7_3_READY!==true){
-        document.getElementById('lgh-warning').style.display='block';
-        console.warn('App not ready. Check JavaScript path and console for errors.');
-      }
+  async function load(){
+    const res = await fetch(`${DATA_URL}?t=${Date.now()}`, {cache:'no-cache'});
+    const j = await res.json();
+    MATCHES = (j.matches||j||[]).map(r=>{
+      const out = {
+        competition: r.competition || '', group: r.group || '', round: r.round || '',
+        date: r.date || '', time: r.time || '', home: r.home || '', away: r.away || '',
+        venue: r.venue || '', status: r.status || '',
+        home_goals: r.home_goals, home_points: r.home_points, away_goals: r.away_goals, away_points: r.away_points,
+      };
+      out.code = compCode(out.competition);
+      return attachScores(out);
     });
-  </script>
-</body>
-</html>
+  }
+
+  const sortRoundDate=(a,b)=> (a._rnum-b._rnum) || (a.date||'').localeCompare(b.date||'') || (a.time||'').localeCompare(b.time||'');
+  const sortDateComp=(a,b)=> {
+    const da=a.date||'', db=b.date||'';
+    if(da!==db) return da.localeCompare(db);
+    const ca=(a.competition||''), cb=(b.competition||'');
+    if(ca!==cb) return ca.localeCompare(cb);
+    return (a.time||'').localeCompare(b.time||'');
+  };
+
+  function buildHead(thead,isMobile,isTiny){
+    if(isMobile){
+      thead.innerHTML = isTiny
+        ? `<tr><th class="rcol">R</th><th class="dcol">Date/Time</th><th>Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`
+        : `<tr><th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th>Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`;
+    } else {
+      thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="ccol">Comp</th><th class="match">Match</th><th>Venue</th><th>Status</th></tr>`;
+    }
+  }
+
+  function rowHTML(r,isMobile,isTiny){
+    const rShort=(r.round||'').replace(/^Round\s*/i,'R').replace(/\s+/g,'')||'—';
+    const dShort=fmtDateShort(r.date), tShort=fmtTimeShort(r.time||'');
+    const stShort=isResult(r.status)?'R':'F';
+    const scoreMid=(r._homeMid&&r._awayMid)?esc(r._homeMid+' - '+r._awayMid):'—';
+
+    const showMeta=(VIEW_MODE!=='competition');
+    const meta = showMeta ? `<div class="match-meta">${esc(r.code)} · ${esc(groupShort(r.group||''))}</div>` : '';
+    const matchCell = `<div class="match-block"><span class="match-team">${esc(r.home||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away||'')}</span>${meta}</div>`;
+    const compBadge = `<span class="comp-badge"><span class="comp-code">${esc(r.code)}</span><span class="group-code">${esc(groupShort(r.group||''))}</span></span>`;
+    const trAttr=`data-date="${esc(r.date||'')}"`;
+
+    if(isMobile){
+      if(isTiny){
+        const dt=`${dShort} ${tShort}`.trim();
+        return `<tr ${trAttr}><td class="rcol">${esc(rShort)}</td><td class="dcol">${esc(dt)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td><td class="stcol">${stShort}</td></tr>`;
+      } else {
+        return `<tr ${trAttr}><td class="rcol">${esc(rShort)}</td><td class="dcol">${esc(dShort)}</td><td class="tcol">${esc(tShort)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td><td class="stcol">${stShort}</td></tr>`;
+      }
+    } else {
+      return `<tr ${trAttr}><td>${esc(r.round||'')}</td><td class="dcol">${esc(r.date||'')}</td><td class="tcol">${esc(r.time||'')}</td><td class="ccol">${compBadge}</td><td class="match">${matchCell}</td><td>${esc(r.venue||'')}</td><td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td></tr>`;
+    }
+  }
+
+  // ---- Menus (Competition panel)
+  function buildMenus(){
+    const all = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))];
+    const preferred = ["Senior Hurling Championship","Premier Intermediate Hurling Championship","Intermediate Hurling Championship"];
+    const rest = all.filter(c=>!preferred.includes(c)).sort();
+    const comps = preferred.filter(c=>all.includes(c)).concat(rest);
+
+    const compMenu=el('comp-menu');
+    compMenu.innerHTML = comps.map((c,i)=>`<div class="item ${i===0?'active':''}" data-comp="${esc(c)}">${esc(c)}</div>`).join('');
+
+    function groupsFor(c){ return [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group||'Unassigned'))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})); }
+
+    function setComp(name){
+      state.comp=name; el('comp-current').textContent=compCode(name);
+      $$('#comp-menu .item').forEach(i=>i.classList.toggle('active', i.dataset.comp===name));
+
+      const gs=groupsFor(name);
+      const gMenu=el('group-menu');
+      gMenu.innerHTML = gs.map((g,i)=>`<div class="item ${i===0?'active':''}" data-group="${esc(g)}">${esc(g)}</div>`).join('');
+
+      // pick from URL if valid, else prefer Group 1, else first
+      const desiredG = params.group && gs.includes(params.group) ? params.group : (gs.find(g => /^Group\s*1$/i.test(g)) || gs[0]);
+      setGroup(desiredG);
+      syncURL();
+    }
+
+    function setGroup(g){
+      state.group=g; el('group-current').textContent=g;
+      $$('#group-menu .item').forEach(i=>i.classList.toggle('active', i.dataset.group===g));
+
+      // Re-render correct subview
+      const tableSegActive = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
+      if (tableSegActive) { renderStandings(); } else { renderGroupTable(); }
+      syncURL();
+    }
+
+    el('comp-menu').onclick=e=>{ const it=e.target.closest('.item'); if(!it) return; setComp(it.dataset.comp); mComp.close(); };
+    el('group-menu').onclick=e=>{ const it=e.target.closest('.item'); if(!it) return; setGroup(it.dataset.group); mGroup.close(); };
+
+    // choose competition from URL if possible
+    const desiredComp = params.comp && comps.includes(params.comp) ? params.comp : comps[0];
+    setComp(desiredComp);
+  }
+
+  // dropdown open/close
+  const mComp = (function(){ const trig=el('comp-trigger'), menu=el('comp-menu'); function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {close}; })();
+  const mGroup = (function(){ const trig=el('group-trigger'), menu=el('group-menu'); function close(){menu.classList.remove('open');} trig.addEventListener('click',e=>{e.stopPropagation(); menu.classList.toggle('open');}); document.addEventListener('click',e=>{ if(!menu.contains(e.target) && !trig.contains(e.target)) close(); }); return {close}; })();
+
+  // ---- Renders
+  function renderGroupTable(){
+    VIEW_MODE='competition';
+    const tbl=el('g-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
+    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
+    const status=el('status').value;
+    const rows = MATCHES.filter(r=>{
+      if(state.comp && r.competition!==state.comp) return false;
+      if(state.group && r.group!==state.group) return false;
+      if(status==='Result')  return isResult(r.status);
+      if(status==='Fixture') return isFixture(r.status);
+      return true;
+    }).sort(sortRoundDate);
+    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+  }
+
+  function pointsFromGoalsPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
+
+  function renderStandings(){
+    const rows = MATCHES.filter(r=>r.competition===state.comp && r.group===state.group && isResult(r.status));
+    const teams=new Map();
+    for(const m of rows){
+      const hs=pointsFromGoalsPoints(m.home_goals,m.home_points), as=pointsFromGoalsPoints(m.away_goals,m.away_points);
+      if(hs==null||as==null) continue;
+      if(!teams.has(m.home)) teams.set(m.home,{team:m.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
+      if(!teams.has(m.away)) teams.set(m.away,{team:m.away,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
+      const H=teams.get(m.home), A=teams.get(m.away);
+      H.p++; A.p++; H.pf+=hs; H.pa+=as; A.pf+=as; A.pa+=hs;
+      if(hs>as){ H.w++; H.pts+=2; A.l++; } else if(hs<as){ A.w++; A.pts+=2; H.l++; } else { H.d++; A.d++; H.pts++; A.pts++; }
+    }
+    for(const t of teams.values()) t.diff=t.pf-t.pa;
+
+    // Sort: Pts desc → Diff desc → PF desc → Team asc
+    const sorted=[...teams.values()].sort((a,b)=>
+      b.pts-a.pts || b.diff-a.diff || b.pf-a.pf || a.team.localeCompare(b.team)
+      // TODO: Head-to-Head tiebreaker could be inserted here
+    );
+
+    // Default compact table (no PF/PA/Diff)
+    const tbody=document.querySelector('#g-standings-table tbody');
+    tbody.innerHTML = sorted.map(r =>
+      `<tr>
+        <td>${esc(r.team)}</td>
+        <td class="right">${r.p}</td>
+        <td class="right">${r.w}</td>
+        <td class="right">${r.d}</td>
+        <td class="right">${r.l}</td>
+        <td class="right"><strong>${r.pts}</strong></td>
+      </tr>`
+    ).join('');
+
+    // Expanded modal table (full columns)
+    const mt=el('modal-standings');
+    if(mt){
+      if(!mt.tHead || !mt.tHead.rows.length){
+        mt.createTHead().innerHTML = `<tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>`;
+      }
+      const mb = mt.tBodies[0]||mt.createTBody();
+      mb.innerHTML = sorted.map(r =>
+        `<tr>
+          <td>${esc(r.team)}</td>
+          <td class="right">${r.p}</td>
+          <td class="right">${r.w}</td>
+          <td class="right">${r.d}</td>
+          <td class="right">${r.l}</td>
+          <td class="right">${r.pf}</td>
+          <td class="right">${r.pa}</td>
+          <td class="right">${r.diff}</td>
+          <td class="right"><strong>${r.pts}</strong></td>
+        </tr>`
+      ).join('');
+    }
+  }
+
+  // ---- Share / deep links
+  function syncURL(push=false){
+    const sp=new URLSearchParams();
+    sp.set('s', state.section);
+    sp.set('v', state.view);
+    if(state.comp) sp.set('comp', state.comp);
+    if(state.group) sp.set('group', state.group);
+    if(state.team) sp.set('team', state.team);
+    if(state.date) sp.set('date', state.date);
+    const url = `${location.pathname}?${sp.toString()}`;
+    (push?history.pushState:history.replaceState).call(history, null, '', url);
+  }
+  function currentShareURL(){ syncURL(false); return location.href; }
+  function toast(msg){ const div=document.createElement('div'); div.textContent=msg; div.style.cssText='position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:#111;color:#fff;padding:8px 12px;border-radius:8px;z-index:200;opacity:.95'; document.body.appendChild(div); setTimeout(()=>div.remove(),1500); }
+
+  document.addEventListener('click', (e)=>{
+    if(e.target.closest('#btn-share')){ const url=currentShareURL(); const title='Limerick GAA Hub'; const text='Fixtures, results & tables'; if(navigator.share){ navigator.share({title,text,url}); } else { navigator.clipboard?.writeText(url); toast('Link copied'); } }
+    if(e.target.closest('#btn-copy')){ navigator.clipboard?.writeText(currentShareURL()); toast('Link copied'); }
+  });
+
+  // ---- Event wiring
+
+  // Matches/Table (Competition panel ONLY)
+  $$('#group-panel .section-tabs .seg').forEach(seg=>{
+    seg.addEventListener('click', ()=>{
+      const wrap = seg.parentElement;
+      wrap.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
+      seg.classList.add('active');
+      const showTable = seg.getAttribute('data-view')==='table';
+      state.view = showTable ? 'table' : 'matches';
+
+      el('g-standings').style.display = showTable ? '' : 'none';
+      document.querySelector('.matches-wrap').style.display = showTable ? 'none' : '';
+
+      // Hide status in Table view
+      const controls = document.querySelector('#group-panel .controls');
+      if (controls) controls.style.display = showTable ? 'none' : '';
+
+      if(showTable) renderStandings(); else renderGroupTable();
+      syncURL(true);
+    });
+  });
+
+  // Top-level tabs
+  $$('.navtab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      $$('.navtab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const name=tab.dataset.nav;
+      state.section = name;
+      el('panel-hurling').style.display = name==='hurling'?'':'none';
+      el('panel-football').style.display = name==='football'?'':'none';
+      el('panel-about').style.display = name==='about'?'':'none';
+      syncURL(true);
+    });
+  });
+
+  // Competition / Team / Date switcher
+  $$('.view-tabs .vt').forEach(seg=>{
+    seg.addEventListener('click', ()=>{
+      seg.parentElement.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
+      seg.classList.add('active');
+      const target = seg.getAttribute('data-target');
+
+      $$('#panel-hurling .panel').forEach(p=> p.style.display='none');
+      el(target).style.display='';
+
+      // comp controls visibility
+      const cc = document.querySelector('.comp-controls');
+      if(cc) cc.style.display = (target==='group-panel') ? '' : 'none';
+
+      if(target==='group-panel'){ state.view='matches'; renderGroupTable(); }
+      if(target==='by-team'){ renderByTeam(); }
+      if(target==='by-date'){ renderByDate(); }
+      syncURL(true);
+    });
+  });
+
+  // Team view
+  function renderByTeam(){
+    VIEW_MODE='team'; state.view='team';
+    const sel=el('team');
+    const teams=[...new Set(MATCHES.flatMap(r=>[r.home,r.away]).filter(Boolean))].sort();
+    sel.innerHTML='<option value="">Select team…</option>'+teams.map(t=>`<option>${esc(t)}</option>`).join('');
+    const draw=()=>{
+      const team=sel.value||''; state.team = team || null; syncURL();
+      const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
+      const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
+      if(!team){ tbody.innerHTML=''; return; }
+      const rows = MATCHES.filter(r=> r.home===team || r.away===team).sort(sortRoundDate);
+      tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+    };
+    sel.oninput=draw; addEventListener('resize', draw);
+    const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); buildHead(thead, matchMedia('(max-width:880px)').matches, matchMedia('(max-width:400px)').matches);
+    tbl.tBodies[0] ? (tbl.tBodies[0].innerHTML='') : tbl.createTBody();
+
+    if(params.team){ sel.value=params.team; sel.dispatchEvent(new Event('input')); }
+  }
+
+  // Date view
+  function renderByDate(){
+    VIEW_MODE='date'; state.view='date';
+    const tbl=el('date-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
+    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
+
+    const rows=[...MATCHES].sort(sortDateComp);
+    tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+
+    const candidates = Array.from(tbody.querySelectorAll('tr[data-date]'));
+    const jump=el('date-jump');
+    if(jump){
+      const allDates = rows.map(r=>r.date).filter(Boolean).sort();
+      const minD = allDates[0] || ''; const maxD = allDates[allDates.length-1] || '';
+      if(minD) jump.min=minD; if(maxD) jump.max=maxD;
+
+      jump.onchange=()=>{
+        const ymd = jump.value; state.date = ymd || null; syncURL();
+        if(!ymd || candidates.length===0) return;
+        let target = tbody.querySelector(`tr[data-date="${cssEscape(ymd)}"]`);
+        if(!target){
+          let chosen=null;
+          for(const tr of candidates){ const d = tr.getAttribute('data-date')||''; if(d<=ymd) chosen = tr; else break; }
+          target = chosen || candidates[candidates.length-1] || candidates[0] || null;
+          if(target){ const td = target.getAttribute('data-date') || ''; if(td){ const firstOfDate = tbody.querySelector(`tr[data-date="${cssEscape(td)}"]`); if(firstOfDate) target = firstOfDate; } }
+        }
+        if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); target.style.outline='2px solid var(--accent)'; setTimeout(()=>{ target.style.outline=''; }, 1500); }
+      };
+
+      if(params.date){ jump.value=params.date; jump.dispatchEvent(new Event('change')); }
+    }
+  }
+
+  // Expand modal
+  (function(){
+    const btn=el('btn-expand'), modal=el('standings-modal'), close=el('modal-close');
+    if(btn && modal && close){
+      btn.addEventListener('click', ()=>{ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; });
+      close.addEventListener('click', ()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
+      modal.addEventListener('click', (e)=>{ if(e.target===modal) close.click(); });
+    }
+  })();
+
+  // Status filter
+  el('status').addEventListener('input', ()=>{ renderGroupTable(); syncURL(); });
+
+  // ---- Init: load data, menus, then apply URL state
+  (async function(){
+    await load();
+    buildMenus();
+
+    // Section
+    const s = params.s || 'hurling';
+    (function(n){ if(n) n.click(); })(document.querySelector(`.navtab[data-nav="${s}"]`));
+
+    // View
+    const v = params.v || 'matches';
+    if(v==='table'){
+      (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="table"]'));
+    } else if(v==='matches'){
+      (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="matches"]'));
+    } else if(v==='team'){
+      (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-team"]'));
+    } else if(v==='date'){
+      (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-date"]'));
+    } else {
+      renderGroupTable();
+    }
+  })();
+})();
