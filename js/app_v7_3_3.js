@@ -1,6 +1,8 @@
 // app_v7_3_3.js — Competition dropdown on tab, official names, standings init to zeros
 (function(){
+  // Ready flags (used by index.html warning)
   window.LGH_V7_3_READY = true;
+  window.LGH_V7_3_3_READY = true;
 
   const DATA_URL = 'data/hurling_2025.json';
 
@@ -387,10 +389,10 @@
     buildCompetitionMenu();
     const s=params.s||'hurling'; (function(n){ if(n) n.click(); })(document.querySelector(`.navtab[data-nav="${s}"]`));
     const v=params.v||'matches';
-    if(v==='table'){ (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="table"]`)); }
-    else if(v==='matches'){ (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="matches"]`)); }
-    else if(v==='team'){ (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-team"]`)); }
-    else if(v==='date'){ (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-date"]`)); }
+    if(v==='table'){ (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="table"]')); }
+    else if(v==='matches'){ (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="matches"]')); }
+    else if(v==='team'){ (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-team"]')); }
+    else if(v==='date'){ (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-date"]')); }
     else { renderGroupTable(); }
   })();
 })();
