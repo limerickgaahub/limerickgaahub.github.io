@@ -140,6 +140,20 @@ td.match, th.match{ text-align:center; }
 /* Controls lighter */
 .controls.card{ box-shadow:none; border-radius:12px; border:1px solid var(--line); }
 
+/* Give Team more space in both compact and expanded tables */
+#g-standings-table, #modal-standings{ table-layout:fixed; width:100%; }
+#g-standings-table th:first-child, #g-standings-table td:first-child,
+#modal-standings th:first-child, #modal-standings td:first-child{
+  width:52%;
+  white-space:normal; word-break:normal; overflow-wrap:anywhere;
+}
+#g-standings-table th:not(:first-child), #g-standings-table td:not(:first-child),
+#modal-standings th:not(:first-child), #modal-standings td:not(:first-child){
+  width:auto;           /* slightly narrower numeric cols */
+  min-width:2.4rem;
+}
+
+
 /* Mobile niceties */
 @supports(padding:max(0px)){
   body{
@@ -181,16 +195,13 @@ td.match, th.match{ text-align:center; }
   }
 }
 
-/* XS: keep ALL columns in Matches; compact Team/Date only */
-@media (max-width:390px){
-  #team-table thead th:first-child, #team-table tbody td:first-child,
-  #date-table thead th:first-child, #date-table tbody td:first-child,
-  #team-table thead th:last-child,  #team-table tbody td:last-child,
-  #date-table thead th:last-child,  #date-table tbody td:last-child{ display:none; }
+/* XS phones: keep Venue visible; just hide the R column */
+#team-table thead th:nth-child(1), #team-table tbody td:nth-child(1),
+#date-table thead th:nth-child(1), #date-table tbody td:nth-child(1){ display:none; }
 
-  thead th, tbody td{ padding:.55rem .55rem; }
-  .match-score{ font-size:12.5px; }
-}
+thead th, tbody td{ padding:.55rem .55rem; }
+.match-score{ font-size:12.5px; }
+
 
 /* Footer */
 .site-footer{ max-width:1100px; margin:16px auto 24px; text-align:center; color:#6b7280; font-size:12px; }
@@ -340,7 +351,7 @@ td.match, th.match{ text-align:center; }
   <!-- Expand modal -->
   <div class="modal" id="standings-modal" aria-hidden="true">
     <div class="sheet">
-      <div class="sheet-header"><h3>Standings</h3><button class="close" id="modal-close">Close</button></div>
+      <div class="sheet-header"><h3>Table</h3><button class="close" id="modal-close">Close</button></div>
       <div class="table-wrap"><table id="modal-standings">
         <thead>
           <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>
