@@ -1,6 +1,6 @@
 {
   "competition": "Intermediate Hurling Championship",
-  "updated_at": "2025-08-25T07:39:22Z",
+  "updated_at": "2025-08-25T16:17:26Z",
   "fixtures": [
     {
       "id": "2025-IHC-G2-R4-KNO-MUR",
@@ -27,7 +27,7 @@
       "datetime_iso": "2025-08-28T18:30:00",
       "home": "Hospital Herbertstown",
       "away": "Croom",
-      "venue": "Referee:",
+      "venue": "Knocklong",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
