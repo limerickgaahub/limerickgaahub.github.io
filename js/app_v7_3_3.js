@@ -74,13 +74,13 @@
   const sortDateComp=(a,b)=>{ const da=a.date||'', db=b.date||''; if(da!==db) return da.localeCompare(db); const ca=a.competition||'', cb=b.competition||''; if(ca!==cb) return ca.localeCompare(cb); return (a.time||'').localeCompare(b.time||''); };
 
   function buildHead(thead,isMobile,isTiny){
-    if(isMobile){
-      thead.innerHTML = isTiny
-        ? `<tr><th class="rcol">R</th><th class="dcol">Date/Time</th><th class="match">Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`
-        : `<tr><th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="match">Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`;
-    } else {
-      thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="match">Match</th><th>Venue</th><th>Status</th></tr>`;
-    }
+          if(isMobile){
+            thead.innerHTML = isTiny
+              ? `<tr><th class="rcol">R</th><th class="dcol">Date/Time</th><th class="match">Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`
+              : `<tr><th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="match">Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`;
+          } else {
+            thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="match">Match</th><th>Venue</th><th>Status</th></tr>`;
+          }
   }
 
   function rowHTML(r,isMobile,isTiny){
@@ -101,14 +101,13 @@
 
     if(isMobile){
       if(isTiny){
-        const dt=`${dShort} ${tShort}`.trim();
-        return `<tr ${trAttr}><td class="rcol">${esc(rShort)}</td><td class="dcol">${esc(dt)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td><td class="stcol">${stShort}</td></tr>`;
-      } else {
-        return `<tr ${trAttr}><td class="rcol">${esc(rShort)}</td><td class="dcol">${esc(dShort)}</td><td class="tcol">${esc(tShort)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td><td class="stcol">${stShort}</td></tr>`;
-      }
+      const dt=`${dShort} ${tShort}`.trim();
+      return `<tr ${trAttr}><td class="rcol">${esc(rShort)}</td><td class="dcol">${esc(dt)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td></tr>`;
     } else {
-      return `<tr ${trAttr}><td>${esc(r.round||'')}</td><td class="dcol">${esc(r.date||'')}</td><td class="tcol">${esc(r.time||'')}</td><td class="match">${matchCell}</td><td>${esc(r.venue||'')}</td><td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td></tr>`;
+      return `<tr ${trAttr}><td class="rcol">${esc(rShort)}</td><td class="dcol">${esc(dShort)}</td><td class="tcol">${esc(tShort)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td></tr>`;
     }
+  } else {
+    return `<tr ${trAttr}><td>${esc(r.round||'')}</td><td class="dcol">${esc(r.date||'')}</td><td class="tcol">${esc(r.time||'')}</td><td class="match">${matchCell}</td><td>${esc(r.venue||'')}</td><td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td></tr>`;
   }
 
   function buildCompetitionMenu(){

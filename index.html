@@ -23,6 +23,12 @@ h1{ margin:0; font-weight:800; font-size:20px; }
 h2{ margin:0 0 8px; font-size:16px; }
 .sm-muted{ color:#6b7280; font-size:12px; }
 
+/* Competition (mobile) alignment */
+td.rcol, th.rcol { vertical-align: middle; }      /* center R vertically */
+td.vcol, th.vcol { text-align: center; vertical-align: middle; }  /* center Venue */
+td.dcol, th.dcol,
+td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
+  
 /* Header */
 .header{ position:fixed; top:0; left:0; right:0; z-index:100; background:#fff; border-bottom:1px solid var(--line); }
 .header::before{ content:""; display:block; height:4px; background:var(--accent); }
@@ -148,6 +154,8 @@ td.match, th.match{ text-align:center; }
   .card{ padding:12px; }
   thead th, tbody td{ padding:10px 7px; font-size:13px; }
   .match-score{ font-size:13px; }
+   /* Hide the S column on mobile */
+  th.stcol, td.stcol { display: none; }
 }
 
 /* XS: keep ALL columns in Matches; compact Team/Date only */
