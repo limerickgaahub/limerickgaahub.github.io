@@ -1,6 +1,6 @@
 {
   "competition": "Junior A Hurling Championship",
-  "updated_at": "2025-08-25T16:17:26Z",
+  "updated_at": "2025-08-25T17:01:34Z",
   "fixtures": [
     {
       "id": "2025-JAHC-G2-R4-CAS-GAR",
@@ -102,7 +102,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Claughaun",
       "away": "Patrickswell",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
@@ -117,7 +117,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Ballybricken Bohermore",
       "away": "Kildimo Pallaskenry",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
@@ -132,7 +132,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Old Christians",
       "away": "Killeedy",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
@@ -147,7 +147,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Ahane",
       "away": "Templeglantine",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
@@ -162,7 +162,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Garryspillane",
       "away": "Bruff",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
@@ -177,7 +177,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Rathkeale",
       "away": "Castletown Ballyagran",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
@@ -356,24 +356,7 @@
       "away_points": 19
     },
     {
-      "id": "2025-JAHC-G2-R2-MIC-EFF",
-      "round": "R 2",
-      "group": "Woodlands House Hotel County Junior A Hurling Championship Group 2",
-      "date": "2025-08-09",
-      "time_local": null,
-      "tz": "Europe/Dublin",
-      "datetime_iso": null,
-      "home": "Michael Meade",
-      "away": "Effin",
-      "venue": "TBC",
-      "referee": "SJBHCG1",
-      "status": "FT",
-      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
-      "away_goals": 0,
-      "away_points": 15
-    },
-    {
-      "id": "2025-JAHC-G2-R2-SJB-SJB",
+      "id": "2025-JAHC-G2-R2-SJB-EFF",
       "round": "R 2",
       "group": "Woodlands House Hotel County Junior A Hurling Championship Group 2",
       "date": "2025-08-09",
@@ -381,30 +364,32 @@
       "tz": "Europe/Dublin",
       "datetime_iso": null,
       "home": "SJBHCG1",
-      "away": "SJBHCG1",
+      "away": "Effin",
       "venue": "TBC",
       "referee": "TBC",
       "status": "FT",
-      "source_url": "https://limerickgaa.ie/junior-hurling-results/"
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
+      "away_goals": 0,
+      "away_points": 15
     },
     {
-      "id": "2025-JAHC-G2-R2-EFF-GLE",
+      "id": "2025-JAHC-G2-R2-GLE-EFF",
       "round": "R 2",
       "group": "Woodlands House Hotel County Junior A Hurling Championship Group 2",
       "date": "2025-08-09",
       "time_local": "19:00",
       "tz": "Europe/Dublin",
       "datetime_iso": "2025-08-09T19:00:00",
-      "home": "Effin",
-      "away": "Glenroe",
+      "home": "Glenroe",
+      "away": "Effin",
       "venue": "TBC",
       "referee": "TBC",
       "status": "FT",
       "source_url": "https://limerickgaa.ie/junior-hurling-results/",
       "home_goals": 0,
-      "home_points": 15,
+      "home_points": 18,
       "away_goals": 0,
-      "away_points": 18
+      "away_points": 15
     },
     {
       "id": "2025-JAHC-G1-R2-PAT-KIL",

@@ -1,6 +1,6 @@
 {
   "competition": "Premier Intermediate Hurling Championship",
-  "updated_at": "2025-08-25T16:17:26Z",
+  "updated_at": "2025-08-25T17:01:34Z",
   "fixtures": [
     {
       "id": "2025-PIHC-GX-R5-SOU-BRU",
@@ -12,7 +12,7 @@
       "datetime_iso": "2025-08-28T18:00:00",
       "home": "South Liberties",
       "away": "Bruff",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -72,7 +72,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Garryspillane",
       "away": "Granagh Ballingarry",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -87,7 +87,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Croagh Kilfinny",
       "away": "South Liberties",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -102,7 +102,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Bruff",
       "away": "Effin",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -117,7 +117,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Blackrock",
       "away": "Glenroe",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -132,7 +132,7 @@
       "datetime_iso": "2025-09-18T12:00:00",
       "home": "Glenroe",
       "away": "Garryspillane",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -147,7 +147,7 @@
       "datetime_iso": "2025-09-18T12:00:00",
       "home": "Effin",
       "away": "Granagh Ballingarry",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -162,7 +162,7 @@
       "datetime_iso": "2025-09-18T12:00:00",
       "home": "Bruff",
       "away": "Croagh Kilfinny",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -177,7 +177,7 @@
       "datetime_iso": "2025-09-18T12:00:00",
       "home": "South Liberties",
       "away": "Blackrock",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"

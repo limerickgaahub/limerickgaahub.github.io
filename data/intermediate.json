@@ -1,6 +1,6 @@
 {
   "competition": "Intermediate Hurling Championship",
-  "updated_at": "2025-08-25T16:17:26Z",
+  "updated_at": "2025-08-25T17:01:34Z",
   "fixtures": [
     {
       "id": "2025-IHC-G2-R4-KNO-MUR",
@@ -102,7 +102,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Croom",
       "away": "Mungret St Pauls",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -117,7 +117,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Feenagh Kilmeedy",
       "away": "Hospital Herbertstown",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -132,7 +132,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Bruree",
       "away": "Cappamore",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -147,7 +147,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Feohanagh",
       "away": "Pallasgreen",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -162,7 +162,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Murroe Boher",
       "away": "St Kieran's",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
@@ -177,7 +177,7 @@
       "datetime_iso": "2025-10-09T12:00:00",
       "home": "Na Piarsaigh",
       "away": "Knockainey",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"

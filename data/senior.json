@@ -1,6 +1,6 @@
 {
   "competition": "Senior Hurling Championship",
-  "updated_at": "2025-08-25T16:17:26Z",
+  "updated_at": "2025-08-25T17:01:34Z",
   "fixtures": [
     {
       "id": "2025-SHC-G2-R4-MON-NEW",
@@ -102,7 +102,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Patrickswell",
       "away": "Na Piarsaigh",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
@@ -117,7 +117,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Doon",
       "away": "Ahane",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
@@ -132,7 +132,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Kilmallock",
       "away": "Ballybrown",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
@@ -147,7 +147,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Adare",
       "away": "Newcastle West",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
@@ -162,7 +162,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Mungret St Pauls",
       "away": "Dromin Athlacca",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
@@ -177,7 +177,7 @@
       "datetime_iso": "2025-09-11T12:00:00",
       "home": "Monaleen",
       "away": "Kildimo Pallaskenry",
-      "venue": "Referee:",
+      "venue": "TBC",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
