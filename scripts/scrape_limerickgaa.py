@@ -224,10 +224,11 @@ def lines_from_rest_or_html(url: str, slug_hint: str) -> List[str]:
         html = r.text
     return flatten_to_lines(html)
 
+
 def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_key: str) -> List[Dict]:
     """
     Get page lines via REST (preferred) or HTML fallback; detect allowed group blocks;
-    parse each block into match records. Includes PIHC-specific guard to stop on 'League' headings.
+    parse each block into match records. 'League' headings end any open bucket.
     """
     # choose slug from URL
     slug = ""
@@ -238,7 +239,7 @@ def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_
 
     all_lines = lines_from_rest_or_html(url, slug)
 
-    # DEBUG snapshot (label includes Juniors now)
+    # DEBUG snapshot (label includes Juniors)
     try:
         ensure_parent("data/_debug/")
         sample = "\n".join(all_lines[:200])
@@ -256,8 +257,9 @@ def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_
     except Exception:
         keyname = "UNKNOWN"
 
-    # Build map of normalized allowed headings → raw headings
-    norm_allowed = {normalize(g): g for g in allowed_groups}
+    # Exact-match whitelist (normalized)
+    norm_allowed_map = {normalize(g): g for g in allowed_groups}
+    allowed_norm_set = set(norm_allowed_map.keys())
 
     out: List[Dict] = []
     current_group: Optional[str] = None
@@ -272,27 +274,22 @@ def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_
     for ln in all_lines:
         n = normalize(ln)
 
-        # Stop PIHC on any "... league ..." section so league content doesn't bleed in
-        if current_group and comp_key == "PIHC" and re.search(r'\bleague\b', n, flags=re.I):
+        # End any open bucket on a 'league' heading (applies to all comps)
+        if current_group and re.search(r'\bleague\b', n, flags=re.I):
             flush_bucket()
             current_group = None
             continue
 
-        # If inside a group and we see a different "* championship *" heading, end current group
-        if current_group and ("championship" in n) and not any(k in n for k in norm_allowed.keys()):
+        # Start a group only when the WHOLE normalized line matches an allowed heading
+        if n in allowed_norm_set:
             flush_bucket()
-            current_group = None
+            current_group = norm_allowed_map[n]
             continue
 
-        # Start a group when an allowed label appears in the line (normalized substring match)
-        matched_label = None
-        for k_norm, raw in norm_allowed.items():
-            if k_norm in n:
-                matched_label = raw
-                break
-        if matched_label:
+        # If inside a group and we hit some other "* championship *" heading, stop the group
+        if current_group and ("championship" in n) and (n not in allowed_norm_set):
             flush_bucket()
-            current_group = matched_label
+            current_group = None
             continue
 
         if current_group:
@@ -300,7 +297,7 @@ def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_
 
     flush_bucket()
 
-    # Telemetry: per-group counts for this page/comp
+    # Telemetry
     try:
         from collections import Counter
         with open(f"data/_debug/matches_{keyname}_{comp_key}.log", "w", encoding="utf-8") as lf:
@@ -322,10 +319,12 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
     """
     Handles:
       - split dates: 'Saturday 23' + 'rd' + 'August, 2025'
-      - split metadata: 'Venue:' + next line is the value; same for 'Referee'
+      - robust metadata: 'Venue:' / 'Referee:' inline or next-line, default to TBC if missing
       - results: team lines 'Team 1 - 20' or separate score lines
-      - (NEW) skip any '... league ...' headings so they never become team names
+      - skips any '... league ...' lines
     """
+    FIELD_LABEL_RE = re.compile(r'^(venue|referee|throw[\s\-]*in|time|date|round|group)\s*:?\s*$', re.I)
+
     # --- Pre-stitch dates and metadata ---
     stitched: List[str] = []
     i = 0
@@ -343,17 +342,44 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
                 stitched.append(s)
                 continue
 
-        # Join split metadata: "Venue:" then value on next line
-        if s.lower() == "venue:" and i + 1 < len(lines):
-            val = lines[i+1].strip()
-            stitched.append(f"Venue: {val}")
-            i += 2
+        # Venue: inline or next-line value; default to TBC if missing/next line is another label
+        if s.lower().startswith("venue:"):
+            inline = s.split(":", 1)[1].strip()
+            if inline:
+                stitched.append(f"Venue: {inline}")
+                i += 1
+                continue
+            if i + 1 < len(lines):
+                nxt = lines[i+1].strip()
+                if not nxt or FIELD_LABEL_RE.match(nxt) or re.search(r'\bleague\b', nxt, flags=re.I):
+                    stitched.append("Venue: TBC")
+                    i += 1
+                    continue
+                stitched.append(f"Venue: {nxt}")
+                i += 2
+                continue
+            stitched.append("Venue: TBC")
+            i += 1
             continue
 
-        if s.lower() == "referee:" and i + 1 < len(lines):
-            val = lines[i+1].strip()
-            stitched.append(f"Referee: {val}")
-            i += 2
+        # Referee: inline or next-line value; default to TBC if missing/next line is another label
+        if s.lower().startswith("referee:"):
+            inline = s.split(":", 1)[1].strip()
+            if inline:
+                stitched.append(f"Referee: {inline}")
+                i += 1
+                continue
+            if i + 1 < len(lines):
+                nxt = lines[i+1].strip()
+                if not nxt or FIELD_LABEL_RE.match(nxt) or re.search(r'\bleague\b', nxt, flags=re.I):
+                    stitched.append("Referee: TBC")
+                    i += 1
+                    continue
+                stitched.append(f"Referee: {nxt}")
+                i += 2
+                continue
+            stitched.append("Referee: TBC")
+            i += 1
             continue
 
         stitched.append(s)
@@ -415,7 +441,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_label: s
     for s in stitched:
         low = s.strip().lower()
 
-        # NEW: never let '... league ...' lines become teams/metadata
+        # Never let '... league ...' lines become teams/metadata
         if "league" in low:
             continue
 
