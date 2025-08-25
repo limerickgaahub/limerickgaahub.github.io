@@ -16,20 +16,20 @@
   const DISPLAY_NAMES = {
     "Senior Hurling Championship": {
       "Group 1": {
-        short: "WhiteBox SHC - Group 1",
+        short: "SHC - Group 1",
         long: "WhiteBox County Senior Hurling Championship - Group 1"
       },
       "Group 2": {
-        short: "WhiteBox SHC - Group 2",
+        short: "SHC - Group 2",
         long: "WhiteBox County Senior Hurling Championship - Group 2"
       }
     },
-    "Premier Intermediate Hurling Championship": {
-      "": {
-        short: "Lyons of Limerick PIHC",
-        long: "Lyons of Limerick County Premier Intermediate Hurling Championship"
-      }
-    },
+      "Premier Intermediate Hurling Championship": {
+        "default": {
+          short: "PIHC",
+          long: "Lyons of Limerick County Premier Intermediate Hurling Championship"
+        }
+      },
     "Intermediate Hurling Championship": {
       "Group 1": {
         short: "IHC - Group 1",
