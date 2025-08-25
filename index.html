@@ -304,6 +304,63 @@ thead th, tbody td{ padding:.55rem .55rem; }
   background:#f9fafb; cursor:pointer;
 }
 /* END LGH PATCH */
+
+/* === LGH PATCH — Mobile table readability + dead space reclaim === */
+@media (max-width:880px){
+
+  /* Trim outer margins + card padding slightly to reclaim dead space */
+  body{ margin:60px 8px 10px; }     /* was 60px 10px 10px */
+  .card{ padding:10px; }            /* was 12px */
+
+  /* Tighten table cell padding (safe for fingers, still readable) */
+  thead th, tbody td{ padding:8px 6px; }   /* was 10px 7px */
+
+  /* Column width rebalance:
+     - R shrinks slightly (2.25rem → 2.0rem)
+     - Date/Time shrinks slightly (5.25rem → 5.0rem)
+     - Venue gains space (22% → 26%) */
+  #g-table thead th:nth-child(1),  #g-table tbody td:nth-child(1),
+  #team-table thead th:nth-child(1),#team-table tbody td:nth-child(1),
+  #date-table thead th:nth-child(1),#date-table tbody td:nth-child(1){
+    width:2.0rem;
+  }
+
+  #g-table thead th:nth-child(2),  #g-table tbody td:nth-child(2),
+  #team-table thead th:nth-child(2),#team-table tbody td:nth-child(2),
+  #date-table thead th:nth-child(2),#date-table tbody td:nth-child(2){
+    width:5.0rem;
+  }
+
+  #g-table thead th:nth-child(4),  #g-table tbody td:nth-child(4),
+  #team-table thead th:nth-child(4),#team-table tbody td:nth-child(4),
+  #date-table thead th:nth-child(4),#date-table tbody td:nth-child(4){
+    width:26%;
+    text-align:center !important;
+    vertical-align:middle !important;
+  }
+}
+
+/* XS phones (≤360px) — squeeze a bit more without hurting readability */
+@media (max-width:360px){
+
+  .card{ padding:8px; }  /* was 10px above */
+  thead th, tbody td{ padding:7px 5px; } /* slightly tighter */
+
+  /* Give Venue a touch more space */
+  #g-table thead th:nth-child(4),  #g-table tbody td:nth-child(4),
+  #team-table thead th:nth-child(4),#team-table tbody td:nth-child(4),
+  #date-table thead th:nth-child(4),#date-table tbody td:nth-child(4){
+    width:27%;   /* was 26% above */
+  }
+
+  /* Optional: if Venue text still clips on very long names,
+     you can hide the R column entirely on XS */
+  #team-table thead th:nth-child(1), #team-table tbody td:nth-child(1),
+  #date-table thead th:nth-child(1), #date-table tbody td:nth-child(1){
+    display:none;
+  }
+}
+/* === END PATCH === */
 </style>
 
 </head>
