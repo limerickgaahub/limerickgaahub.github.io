@@ -74,14 +74,29 @@
   const sortDateComp=(a,b)=>{ const da=a.date||'', db=b.date||''; if(da!==db) return da.localeCompare(db); const ca=a.competition||'', cb=b.competition||''; if(ca!==cb) return ca.localeCompare(cb); return (a.time||'').localeCompare(b.time||''); };
 
   function buildHead(thead,isMobile,isTiny){
-    if(isMobile){
-      thead.innerHTML = isTiny
-        ? `<tr><th class="rcol">R</th><th class="dcol">Date/Time</th><th class="match">Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`
-        : `<tr><th class="rcol">R</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="match">Match</th><th class="vcol">Venue</th><th class="stcol">S</th></tr>`;
-    } else {
-      thead.innerHTML = `<tr><th>Round</th><th class="dcol">Date</th><th class="tcol">Time</th><th class="match">Match</th><th>Venue</th><th>Status</th></tr>`;
-    }
+  if(isMobile){
+    // Single Date/Time column for ALL mobile sizes (tiny & normal)
+    thead.innerHTML =
+      `<tr>
+        <th class="rcol">R</th>
+        <th class="dcol">Date/Time</th>
+        <th class="match">Match</th>
+        <th class="vcol">Venue</th>
+        <th class="stcol">S</th>
+      </tr>`;
+  } else {
+    thead.innerHTML =
+      `<tr>
+        <th>Round</th>
+        <th class="dcol">Date</th>
+        <th class="tcol">Time</th>
+        <th class="match">Match</th>
+        <th>Venue</th>
+        <th>Status</th>
+      </tr>`;
   }
+}
+
 
   function rowHTML(r,isMobile,isTiny){
     const rShort=(r.round||'').replace(/^Round\s*/i,'R').replace(/\s+/g,'')||'—';
@@ -100,15 +115,31 @@
     const trAttr=`data-date="${esc(r.date||'')}"`;
 
     if(isMobile){
-      if(isTiny){
-        const dt=`${dShort} ${tShort}`.trim();
-        return `<tr ${trAttr}><td class="rcol">${esc(rShort)}</td><td class="dcol">${esc(dt)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td></tr>`;
-      } else {
-        return `<tr ${trAttr}><td class="rcol">${esc(rShort)}</td><td class="dcol">${esc(dShort)}</td><td class="tcol">${esc(tShort)}</td><td class="match">${matchCell}</td><td class="vcol">${esc(r.venue||'')}</td></tr>`;
-      }
-    } else {
-      return `<tr ${trAttr}><td>${esc(r.round||'')}</td><td class="dcol">${esc(r.date||'')}</td><td class="tcol">${esc(r.time||'')}</td><td class="match">${matchCell}</td><td>${esc(r.venue||'')}</td><td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td></tr>`;
-    }
+  // Three-line Date/Time: day, date, time — centred via CSS
+  const parts = (dShort||'').split(' ');
+  const dayLine = parts[0] || '';
+  const dateLine = parts.slice(1).join(' ') || '';
+  const dtHTML = `<div class="dt3">
+                    <div class="dt-day">${esc(dayLine)}</div>
+                    <div class="dt-date">${esc(dateLine)}</div>
+                    <div class="dt-time">${esc(tShort)}</div>
+                  </div>`;
+  return `<tr ${trAttr}>
+            <td class="rcol">${esc(rShort)}</td>
+            <td class="dcol">${dtHTML}</td>
+            <td class="match">${matchCell}</td>
+            <td class="vcol">${esc(r.venue||'')}</td>
+          </tr>`;
+} else {
+  return `<tr ${trAttr}>
+            <td>${esc(r.round||'')}</td>
+            <td class="dcol">${esc(r.date||'')}</td>
+            <td class="tcol">${esc(r.time||'')}</td>
+            <td class="match">${matchCell}</td>
+            <td>${esc(r.venue||'')}</td>
+            <td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td>
+          </tr>`;
+}
   } // /* LGH PATCH: close rowHTML cleanly */
 
   function buildCompetitionMenu(){
