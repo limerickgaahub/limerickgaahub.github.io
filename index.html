@@ -306,12 +306,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
 /* END LGH PATCH */
 </style>
 
-<!-- Favicons -->
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="shortcut icon" href="/favicon.ico">
 </head>
 <body>
   <!-- Header -->
@@ -369,6 +363,14 @@ thead th, tbody td{ padding:.55rem .55rem; }
         </select>
       </div>
 
+      <!-- Share (Competition) -->
+      <div class="sharebar" id="sharebar-comp">
+        <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
+        <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
+        <div class="spacer"></div>
+        <a class="iconbtn" data-role="x" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Post on X</a>
+      </div>
+    
       <div class="table-wrap matches-wrap">
         <table id="g-table"><thead></thead><tbody></tbody></table>
       </div>
@@ -390,19 +392,36 @@ thead th, tbody td{ padding:.55rem .55rem; }
     <div class="panel card" id="by-team" style="display:none; margin-top:6px;">
       <h2>By Team</h2>
       <div class="controls card"><select id="team"><option value="">Select team…</option></select></div>
+      <!-- Share (Team) -->
+      <div class="sharebar" id="sharebar-team">
+        <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
+        <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
+        <div class="spacer"></div>
+        <a class="iconbtn" data-role="x" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Post on X</a>
+      </div>
+
       <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table></div>
     </div>
 
-    <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
-      <button class="back-btn" id="back-to-comp"><i class="fa-solid fa-arrow-left"></i> Back to Competition</button>
-      <h2>By Date</h2>
-      <div class="controls card">
-        <label for="date-jump" class="sm-muted" style="margin-right:8px;">Go to date</label>
-        <input id="date-jump" type="date" />
+      <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
+        <button class="back-btn" id="back-to-comp"><i class="fa-solid fa-arrow-left"></i> Back to Competition</button>
+        <h2>By Date</h2>
+        <div class="controls card">
+          <label for="date-jump" class="sm-muted" style="margin-right:8px;">Go to date</label>
+          <input id="date-jump" type="date" />
+        </div>
+
+        <!-- Share (Date) — inside the panel -->
+        <div class="sharebar" id="sharebar-date">
+          <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
+          <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
+          <div class="spacer"></div>
+          <a class="iconbtn" data-role="x" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Post on X</a>
+        </div>
+
+        <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
       </div>
-      <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
-    </div>
-  </div>
+
 
   <!-- Football -->
   <div id="panel-football" class="card" style="display:none;">
@@ -437,7 +456,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
 
   <footer class="site-footer">Limerick GAA Hub · 2025</footer>
 
-    <!-- JS -->
+  <!-- JS -->
   <script src="/js/app_v7_3_3.fix12.js" defer></script>
   <script>
     // Inline logger to confirm flags at load
@@ -530,6 +549,87 @@ thead th, tbody td{ padding:.55rem .55rem; }
       });
     })();
 
+    // Sharebar wiring
+    (function(){
+      function getContext(){
+        const activeCompSeg = document.querySelector('#group-panel .section-tabs .seg.active');
+        const compView = activeCompSeg ? activeCompSeg.getAttribute('data-view') : 'matches';
+        const compName = (document.getElementById('comp-selected')?.textContent || '').trim() || 'Competition';
+        const statusSel = document.getElementById('status');
+        const statusText = statusSel ? statusSel.options[statusSel.selectedIndex].text : 'All (fixtures & results)';
+
+        const teamSel = document.getElementById('team');
+        const teamText = teamSel ? teamSel.options[teamSel.selectedIndex]?.text || '' : '';
+
+        const dateInput = document.getElementById('date-jump');
+        const dateText = dateInput && dateInput.value ? dateInput.value : '';
+
+        const teamVisible = getComputedStyle(document.getElementById('by-team')).display !== 'none';
+        const dateVisible = getComputedStyle(document.getElementById('by-date')).display !== 'none';
+
+        if (teamVisible && teamText) return { msg: `Limerick GAA Hub — ${teamText} (${statusText})` };
+        if (dateVisible) {
+          const niceDate = dateText ? new Date(dateText+'T00:00:00').toDateString() : 'Selected date';
+          return { msg: `Limerick GAA Hub — By date: ${niceDate} (${statusText})` };
+        }
+        const viewLabel = compView === 'table' ? 'Table' : 'Matches';
+        return { msg: `Limerick GAA Hub — ${compName}: ${viewLabel} (${statusText})` };
+      }
+
+      function updateSharebars(){
+        const { msg } = getContext();
+        const url = location.href;
+        const intent = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(msg) + '&url=' + encodeURIComponent(url);
+
+        ['sharebar-comp','sharebar-team','sharebar-date'].forEach(id=>{
+          const bar = document.getElementById(id);
+          if (!bar) return;
+
+          const btnX = bar.querySelector('[data-role="x"]');
+          if (btnX) btnX.href = intent;
+
+          const btnCopy = bar.querySelector('[data-role="copy"]');
+          if (btnCopy) {
+            btnCopy.onclick = async () => {
+              try {
+                await navigator.clipboard.writeText(url);
+                btnCopy.textContent = 'Link copied!';
+                setTimeout(()=> btnCopy.innerHTML = '<i class="fa-solid fa-link"></i> Copy link', 1200);
+              } catch {
+                const t = document.createElement('textarea');
+                t.value = url; document.body.appendChild(t); t.select();
+                document.execCommand('copy'); document.body.removeChild(t);
+                btnCopy.textContent = 'Link copied!';
+                setTimeout(()=> btnCopy.innerHTML = '<i class="fa-solid fa-link"></i> Copy link', 1200);
+              }
+            };
+          }
+
+          const btnShare = bar.querySelector('[data-role="share"]');
+          if (btnShare) {
+            btnShare.onclick = async () => {
+              if (navigator.share) {
+                try { await navigator.share({ title: document.title, text: msg, url }); } catch {}
+              } else {
+                window.open(intent, '_blank', 'noopener,noreferrer');
+              }
+            };
+          }
+        });
+      }
+
+      ['change','click','input','popstate','hashchange'].forEach(evt=>{
+        window.addEventListener(evt, ()=> setTimeout(updateSharebars, 50), true);
+      });
+
+      const sel = document.getElementById('comp-selected');
+      if (sel && 'MutationObserver' in window) {
+        new MutationObserver(()=> setTimeout(updateSharebars, 10)).observe(sel, { childList:true, subtree:true, characterData:true });
+      }
+
+      window.addEventListener('load', ()=> setTimeout(updateSharebars, 100));
+    })();
+
     /* LGH PATCH — open/close the Standings modal (hidden by default) */
     document.getElementById('btn-expand')?.addEventListener('click', ()=>{
       document.getElementById('standings-modal')?.setAttribute('aria-hidden','false');
@@ -541,6 +641,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
       if(e.target.id==='standings-modal'){ e.currentTarget.setAttribute('aria-hidden','true'); }
     });
     /* END LGH PATCH */
-  </script>
+  </script> 
 </body>
 </html>
