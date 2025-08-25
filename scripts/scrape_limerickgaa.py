@@ -6,12 +6,15 @@ Scrape Limerick GAA fixtures/results for:
 - Senior Hurling Championship (SHC)
 - Premier Intermediate Hurling Championship (PIHC)
 - Intermediate Hurling Championship (IHC)
+- Premier Junior A / Junior A / Junior C Hurling (PJAHC, JAHC, JCHC)
 
 Sources (frontend URLs for reference):
 - SHC fixtures:  https://limerickgaa.ie/senior-hurling-fixtures/
 - SHC results:   https://limerickgaa.ie/senior-hurling-results/
 - PI+I fixtures: https://limerickgaa.ie/intermediate-hurling-fixtures/
 - PI+I results:  https://limerickgaa.ie/intermediate-hurling-results/
+- Junior fixtures: https://limerickgaa.ie/junior-hurling-fixtures/
+- Junior results:  https://limerickgaa.ie/junior-hurling-results/
 
 We fetch page bodies via the WP REST API:
 - GET /wp-json/wp/v2/pages?slug=<slug>&_fields=id
@@ -24,6 +27,7 @@ Outputs:
 - data/intermediate.json
 - data/hurling_2025.json   (combined: {updated, matches[]})
 """
+
 
 import re
 import json
@@ -41,6 +45,8 @@ URLS = {
     "SHC_RES": f"{BASE}/senior-hurling-results/",
     "PI_I_FIX": f"{BASE}/intermediate-hurling-fixtures/",
     "PI_I_RES": f"{BASE}/intermediate-hurling-results/",
+    "JNR_FIX": f"{BASE}/junior-hurling-fixtures/",
+    "JNR_RES": f"{BASE}/junior-hurling-results/",
 }
 
 SLUGS = {
@@ -48,6 +54,8 @@ SLUGS = {
     "SHC_RES": "senior-hurling-results",
     "PI_I_FIX": "intermediate-hurling-fixtures",
     "PI_I_RES": "intermediate-hurling-results",
+    "JNR_FIX": "junior-hurling-fixtures",
+    "JNR_RES": "junior-hurling-results",
 }
 
 # Group labels exactly as they appear on the pages
@@ -63,13 +71,41 @@ GROUPS = {
         "County Intermediate Hurling Championship Group 1",
         "County Intermediate Hurling Championship Group 2",
     ],
+    # NEW (Junior)
+    "PJAHC": [
+        "Woodlands House Hotel County Premier Junior A Hurling Championship Group 1",
+        "Woodlands House Hotel County Premier Junior A Hurling Championship Group 2",
+    ],
+    "JAHC": [
+        "Woodlands House Hotel County Junior A Hurling Championship Group 1",
+        "Woodlands House Hotel County Junior A Hurling Championship Group 2",
+    ],
+    "JCHC": [
+        "Woodlands House Hotel County Junior C Hurling Championship Group 1",
+        "Woodlands House Hotel County Junior C Hurling Championship Group 2",
+    ],
 }
+
 
 COMP_NAMES = {
     "SHC": "Senior Hurling Championship",
     "PIHC": "Premier Intermediate Hurling Championship",
     "IHC": "Intermediate Hurling Championship",
+    "PJAHC": "Premier Junior A Hurling Championship",
+    "JAHC":  "Junior A Hurling Championship",
+    "JCHC":  "Junior C Hurling Championship",
 }
+
+# --- NEW normaliser + whitelist ---
+def _norm(s: str) -> str:
+    return re.sub(r"\s+", " ", s or "").strip().lower()
+
+WHITELIST_NORM = {
+    _norm(name)
+    for group_list in GROUPS.values()
+    for name in group_list
+}
+
 
 # ---------- Helpers (dates/times/regex) ----------
 ORD_RE = re.compile(r'(\d+)(?:\^\{)?(st|nd|rd|th)(?:\})?', re.I)
@@ -549,9 +585,20 @@ def scrape():
     ihc_fix = dedupe_merge(parse_blocks_from_page(URLS["PI_I_FIX"], GROUPS["IHC"], "fixtures", "IHC"))
     ihc_res = dedupe_merge(parse_blocks_from_page(URLS["PI_I_RES"], GROUPS["IHC"], "results",  "IHC"))
 
+    # Junior competitions (from junior pages)
+    pjahc_fix = dedupe_merge(parse_blocks_from_page(URLS["JNR_FIX"], GROUPS["PJAHC"], "fixtures", "PJAHC"))
+    pjahc_res = dedupe_merge(parse_blocks_from_page(URLS["JNR_RES"], GROUPS["PJAHC"], "results",  "PJAHC"))
+
+    jahc_fix  = dedupe_merge(parse_blocks_from_page(URLS["JNR_FIX"], GROUPS["JAHC"],  "fixtures", "JAHC"))
+    jahc_res  = dedupe_merge(parse_blocks_from_page(URLS["JNR_RES"], GROUPS["JAHC"],  "results",  "JAHC"))
+
+    jchc_fix  = dedupe_merge(parse_blocks_from_page(URLS["JNR_FIX"], GROUPS["JCHC"],  "fixtures", "JCHC"))
+    jchc_res  = dedupe_merge(parse_blocks_from_page(URLS["JNR_RES"], GROUPS["JCHC"],  "results",  "JCHC"))
+
+
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    payloads = {
+        payloads = {
         "data/senior.json": {
             "competition": COMP_NAMES["SHC"], "updated_at": now,
             "fixtures": shc_fix, "results": shc_res
@@ -564,7 +611,21 @@ def scrape():
             "competition": COMP_NAMES["IHC"], "updated_at": now,
             "fixtures": ihc_fix, "results": ihc_res
         },
+        # NEW junior outputs (also flow into combined hurling_2025.json)
+        "data/premier_junior_a.json": {
+            "competition": COMP_NAMES["PJAHC"], "updated_at": now,
+            "fixtures": pjahc_fix, "results": pjahc_res
+        },
+        "data/junior_a.json": {
+            "competition": COMP_NAMES["JAHC"], "updated_at": now,
+            "fixtures": jahc_fix, "results": jahc_res
+        },
+        "data/junior_c.json": {
+            "competition": COMP_NAMES["JCHC"], "updated_at": now,
+            "fixtures": jchc_fix, "results": jchc_res
+        },
     }
+
 
     # Write per‑grade files
     for path, obj in payloads.items():
@@ -575,7 +636,9 @@ def scrape():
     # Write combined file for the existing frontend
     write_combined_hurling(payloads)
 
-    print("Done: wrote data/senior.json, data/premier_intermediate.json, data/intermediate.json and data/hurling_2025.json")
+    print("Done: wrote data/senior.json, data/premier_intermediate.json, data/intermediate.json, "
+          "data/premier_junior_a.json, data/junior_a.json, data/junior_c.json and data/hurling_2025.json")
+
 
 if __name__ == "__main__":
     scrape()
