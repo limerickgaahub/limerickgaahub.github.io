@@ -399,6 +399,14 @@ thead th, tbody td{ padding:.55rem .55rem; }
   <!-- JS -->
   <script src="/js/app_v7_3_3.js?v=fix11" defer></script>
   <script>
+  window.addEventListener('load', () => {
+    console.log("[LGH] onload flags:",
+      "LGH_V7_3_READY =", window.LGH_V7_3_READY,
+      "LGH_V7_3_3_READY =", window.LGH_V7_3_3_READY
+    );
+  });
+</script>
+  <script>
     // Burger
     (function(){
       const burger=document.getElementById('burger'), oc=document.getElementById('offcanvas'), bd=document.getElementById('oc-backdrop');
@@ -457,16 +465,26 @@ thead th, tbody td{ padding:.55rem .55rem; }
       document.querySelector('#view-tabs .vt[data-target="group-panel"]').click();
     });
 
-    // Warn if app didn't init
-    window.addEventListener('load', ()=>{
-      if(window.LGH_V7_3_3_READY!==true && window.LGH_V7_3_READY!==true){
-        document.getElementById('lgh-warning').style.display='block';
-      }
-      // Force default view visibility to Matches on first load
-      document.getElementById('g-standings').style.display='none';
-      document.querySelector('.matches-wrap').style.display='';
-    });
 
+    <!-- Warn if app didn't init (tolerant) -->
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const ok = (window.LGH_V7_3_3_READY === true) || (window.LGH_V7_3_READY === true);
+      if (!ok) {
+        document.getElementById('lgh-warning').style.display = 'block';
+        console.error("[LGH] Warning shown: READY flags not true at load.");
+      } else {
+        console.log("[LGH] App ready; warning suppressed.");
+      }
+      // Ensure default view on first load
+      document.getElementById('g-standings').style.display = 'none';
+      document.querySelector('.matches-wrap').style.display = '';
+    }, 50);
+  });
+</script>
+
+    
     // Blur selects on Android to close pickers
     (function(){
       ['team','status','date-jump'].forEach(id=>{
