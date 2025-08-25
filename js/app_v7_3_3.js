@@ -1,3 +1,11 @@
+console.log("[LGH] app js evaluating");
+window.LGH_V7_3_READY = true;
+window.LGH_V7_3_3_READY = true;
+console.log("[LGH] flags now:",
+  "LGH_V7_3_READY =", window.LGH_V7_3_READY,
+  "LGH_V7_3_3_READY =", window.LGH_V7_3_3_READY
+);
+
 // app_v7_3_3.js — stable markup, naming, views
 (function(){
   window.LGH_V7_3_READY = true;
