@@ -79,7 +79,7 @@ td.right, th.right { text-align:right; }
 tbody tr:nth-child(even) td { background:#fcfcfd; }
 tbody tr:hover td { background:#f1f9f4; }
 
-/* Subtle Limerick identity on rows */
+/* Subtle Limerick identity on rows (REMOVED) */
 .table-wrap tbody tr{ position:relative; }
 .table-wrap tbody tr::before{
   content:""; position:absolute; left:0; top:0; bottom:0; width:3px;
@@ -102,6 +102,40 @@ td.match, th.match { text-align:center; }
 .modal .sheet-header { display:flex; align-items:center; gap:10px; padding:12px; border-bottom:1px solid var(--line); position:sticky; top:0; background:#fff; }
 .modal .sheet-header h3 { margin:0; font-size:16px; }
 .modal .close { margin-left:auto; background:none; border:1px solid var(--line); border-radius:10px; padding:6px 10px; cursor:pointer; }
+
+/* ---------- Minimal visual tweaks you requested ---------- */
+
+/* 1) Remove vertical identity bar on rows */
+.table-wrap tbody tr::before { content: none; }
+
+/* 2) Lighten inner controls card */
+.controls.card {
+  box-shadow: none;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+/* 3) Status badge: subtle pill (desktop shows in Status col) */
+.status-badge {
+  display:inline-block;
+  padding:3px 8px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:12px;
+  background:#f3f4f6;
+  color:#111;
+}
+.status-badge.status-Result,
+.status-badge.status-final,
+.status-badge.status-Final { background:#e8f5e9; }
+.status-badge.status-Fixture { background:#eef2ff; }
+
+/* 4) Match meta line: small & muted */
+.match-meta {
+  margin-top:4px;
+  font-size:12px;
+  color:var(--muted);
+}
 
 /* Mobile-only refinements */
 @supports(padding:max(0px)){
