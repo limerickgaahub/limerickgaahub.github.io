@@ -1,6 +1,6 @@
 {
   "competition": "Junior A Hurling Championship",
-  "updated_at": "2025-08-25T17:40:12Z",
+  "updated_at": "2025-08-25T22:04:13Z",
   "fixtures": [
     {
       "id": "2025-JAHC-G2-R4-CAS-GAR",
@@ -58,7 +58,7 @@
       "home": "Killeedy",
       "away": "Ballybricken Bohermore",
       "venue": "Staker Wallace",
-      "referee": "TBC",
+      "referee": "John O Donnell",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },
