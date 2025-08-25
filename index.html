@@ -154,8 +154,31 @@ td.match, th.match{ text-align:center; }
   .card{ padding:12px; }
   thead th, tbody td{ padding:10px 7px; font-size:13px; }
   .match-score{ font-size:13px; }
-   /* Hide the S column on mobile */
+  /* Hide the S column on mobile */
   th.stcol, td.stcol { display: none; }
+
+  /* LGH PATCH — mobile polish for Competition > Matches table */
+  #g-table{ table-layout:fixed; width:100%; }
+  /* R column: narrow & centred */
+  #g-table thead th:nth-child(1),
+  #g-table tbody td:nth-child(1){
+    width:3.25rem;
+    text-align:center !important;
+    vertical-align:middle !important;
+    white-space:nowrap;
+  }
+  /* Date/Time: left aligned */
+  #g-table thead th:nth-child(2),
+  #g-table tbody td:nth-child(2){
+    text-align:left !important;
+    vertical-align:middle !important;
+  }
+  /* Venue: centred */
+  #g-table thead th:nth-child(4),
+  #g-table tbody td:nth-child(4){
+    text-align:center !important;
+    vertical-align:middle !important;
+  }
 }
 
 /* XS: keep ALL columns in Matches; compact Team/Date only */
@@ -175,6 +198,27 @@ td.match, th.match{ text-align:center; }
 /* Back button */
 .back-btn{ display:inline-flex; align-items:center; gap:6px; margin:8px 0; padding:6px 10px; border:1px solid var(--line); border-radius:999px; background:#f9fafb; cursor:pointer; font-size:13px; color:#333; }
 .back-btn i{ font-size:12px; }
+
+/* LGH PATCH — hide modal by default; show only when opened */
+.modal{ 
+  position:fixed; inset:0; display:none; 
+  align-items:center; justify-content:center; 
+  background:rgba(0,0,0,.35); z-index:200; padding:20px;
+}
+.modal[aria-hidden="false"]{ display:flex; }
+.modal .sheet{
+  width:min(900px,96vw); max-height:90vh; overflow:auto;
+  background:#fff; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.2);
+}
+.modal .sheet-header{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; padding:12px 14px; border-bottom:1px solid var(--line);
+}
+.modal .close{
+  border:1px solid var(--line); border-radius:8px; padding:6px 10px;
+  background:#f9fafb; cursor:pointer;
+}
+/* END LGH PATCH */
 </style>
 
 <!-- Favicons -->
@@ -386,6 +430,18 @@ td.match, th.match{ text-align:center; }
         if(el){ el.addEventListener('change',()=>el.blur()); }
       });
     })();
+
+    /* LGH PATCH — open/close the Standings modal (hidden by default) */
+    document.getElementById('btn-expand')?.addEventListener('click', ()=>{
+      document.getElementById('standings-modal')?.setAttribute('aria-hidden','false');
+    });
+    document.getElementById('modal-close')?.addEventListener('click', ()=>{
+      document.getElementById('standings-modal')?.setAttribute('aria-hidden','true');
+    });
+    document.getElementById('standings-modal')?.addEventListener('click', (e)=>{
+      if(e.target.id==='standings-modal'){ e.currentTarget.setAttribute('aria-hidden','true'); }
+    });
+    /* END LGH PATCH */
   </script>
 </body>
 </html>
