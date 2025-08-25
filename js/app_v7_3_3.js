@@ -5,26 +5,59 @@
 
   const DATA_URL = 'data/hurling_2025.json';
 
-  const COMP_CODES = {
-    "Senior Hurling Championship": "SHC",
-    "Premier Intermediate Hurling Championship": "PIHC",
-    "Intermediate Hurling Championship": "IHC",
-  };
+// Codes used internally (must match combined JSON "competition" strings)
+const COMP_CODES = {
+  "Senior Hurling Championship": "SHC",
+  "Premier Intermediate Hurling Championship": "PIHC",
+  "Intermediate Hurling Championship": "IHC",
 
-  const DISPLAY_NAMES = {
-    "Senior Hurling Championship": {
-      "Group 1": { short:"SHC - Group 1", long:"WhiteBox County Senior Hurling Championship - Group 1" },
-      "Group 2": { short:"SHC - Group 2", long:"WhiteBox County Senior Hurling Championship - Group 2" }
-    },
-    "Premier Intermediate Hurling Championship": {
-      short:"PIHC",
-      long:"Lyons of Limerick County Premier Intermediate Hurling Championship"
-    },
-    "Intermediate Hurling Championship": {
-      "Group 1": { short:"IHC - Group 1", long:"County Intermediate Hurling Championship - Group 1" },
-      "Group 2": { short:"IHC - Group 2", long:"County Intermediate Hurling Championship - Group 2" }
-    }
-  };
+  // NEW
+  "Premier Junior A Hurling Championship": "PJAHC",
+  "Junior A Hurling Championship": "JAHC",
+  "Junior C Hurling Championship": "JCHC",
+};
+
+// Optional, if you have an explicit display/order list:
+const COMPETITION_ORDER = [
+  "Senior Hurling Championship",
+  "Premier Intermediate Hurling Championship",
+  "Intermediate Hurling Championship",
+  // NEW
+  "Premier Junior A Hurling Championship",
+  "Junior A Hurling Championship",
+  "Junior C Hurling Championship",
+];
+
+// Display labels used for dropdown pills and expanded headers
+const DISPLAY_NAMES = {
+  "Senior Hurling Championship": {
+    "Group 1": { short:"SHC – G1", long:"WhiteBox County Senior Hurling Championship - Group 1" },
+    "Group 2": { short:"SHC – G2", long:"WhiteBox County Senior Hurling Championship - Group 2" },
+  },
+  "Premier Intermediate Hurling Championship": {
+    short:"PIHC",
+    long:"Lyons of Limerick County Premier Intermediate Hurling Championship"
+  },
+  "Intermediate Hurling Championship": {
+    "Group 1": { short:"IHC – G1", long:"County Intermediate Hurling Championship - Group 1" },
+    "Group 2": { short:"IHC – G2", long:"County Intermediate Hurling Championship - Group 2" },
+  },
+
+  // NEW — Junior comps (match backend group strings)
+  "Premier Junior A Hurling Championship": {
+    "Group 1": { short:"PJAHC – G1", long:"Woodlands House Hotel County Premier Junior A Hurling Championship - Group 1" },
+    "Group 2": { short:"PJAHC – G2", long:"Woodlands House Hotel County Premier Junior A Hurling Championship - Group 2" },
+  },
+  "Junior A Hurling Championship": {
+    "Group 1": { short:"JAHC – G1", long:"Woodlands House Hotel County Junior A Hurling Championship - Group 1" },
+    "Group 2": { short:"JAHC – G2", long:"Woodlands House Hotel County Junior A Hurling Championship - Group 2" },
+  },
+  "Junior C Hurling Championship": {
+    "Group 1": { short:"JCHC -G1", long:"Woodlands House Hotel County Junior C Hurling Championship - Group 1" },
+    "Group 2": { short:"JCHC – G2", long:"Woodlands House Hotel County Junior C Hurling Championship - Group 2" },
+  },
+};
+
 
   const el=id=>document.getElementById(id), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
   const pad2=n=>String(n).padStart(2,'0'); const day3=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
