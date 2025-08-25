@@ -171,16 +171,49 @@ td.match, th.match{ text-align:center; }
   /* Hide the S column on mobile */
   th.stcol, td.stcol { display: none; }
 
-  /* LGH PATCH — mobile polish for Competition > Matches table */
-  #g-table{ table-layout:fixed; width:100%; }
-  /* R column: narrow & centred */
-  #g-table thead th:nth-child(1),
-  #g-table tbody td:nth-child(1){
-    width:3.25rem;
-    text-align:center !important;
-    vertical-align:middle !important;
-    white-space:nowrap;
-  }
+  /* LGH PATCH — mobile polish for all match tables */
+#g-table, #team-table, #date-table{ table-layout:fixed; width:100%; }
+
+/* R column: narrower & centred */
+#g-table thead th:nth-child(1),  #g-table tbody td:nth-child(1),
+#team-table thead th:nth-child(1),#team-table tbody td:nth-child(1),
+#date-table thead th:nth-child(1),#date-table tbody td:nth-child(1){
+  width:2.25rem;
+  text-align:center !important;
+  vertical-align:middle !important;
+  white-space:nowrap;
+}
+
+/* Date/Time (single column on mobile): centred and compact width */
+#g-table thead th:nth-child(2),  #g-table tbody td:nth-child(2),
+#team-table thead th:nth-child(2),#team-table tbody td:nth-child(2),
+#date-table thead th:nth-child(2),#date-table tbody td:nth-child(2){
+  width:5.25rem;
+  text-align:center !important;
+  vertical-align:middle !important;
+}
+
+/* Match column: give it the flex space to prevent overlap */
+#g-table thead th:nth-child(3),  #g-table tbody td:nth-child(3),
+#team-table thead th:nth-child(3),#team-table tbody td:nth-child(3),
+#date-table thead th:nth-child(3),#date-table tbody td:nth-child(3){
+  width:auto;
+}
+
+/* Venue: keep visible, centred, modest width */
+#g-table thead th:nth-child(4),  #g-table tbody td:nth-child(4),
+#team-table thead th:nth-child(4),#team-table tbody td:nth-child(4),
+#date-table thead th:nth-child(4),#date-table tbody td:nth-child(4){
+  width:22%;
+  text-align:center !important;
+  vertical-align:middle !important;
+}
+
+/* Three-line Date/Time stack */
+.dt3{ display:grid; grid-auto-rows:min-content; row-gap:2px; justify-items:center; line-height:1.05; }
+.dt3 .dt-day{ font-weight:700; }
+.dt3 .dt-date, .dt3 .dt-time{ font-variant-numeric:tabular-nums; }
+
   /* Date/Time: left aligned */
   #g-table thead th:nth-child(2),
   #g-table tbody td:nth-child(2){
