@@ -13,6 +13,8 @@
   };
 
   // Custom naming (short for dropdown, long for black label)
+  // Note: For comps *with* explicit groups, include nested objects.
+  // For comps *without* explicit groups (like PIHC here), provide base short/long.
   const DISPLAY_NAMES = {
     "Senior Hurling Championship": {
       "Group 1": {
@@ -24,9 +26,9 @@
         long: "WhiteBox County Senior Hurling Championship - Group 2"
       }
     },
-      "Premier Intermediate Hurling Championship": {
-          short: "PIHC",
-          long: "Lyons of Limerick County Premier Intermediate Hurling Championship"
+    "Premier Intermediate Hurling Championship": {
+      short: "PIHC",
+      long: "Lyons of Limerick County Premier Intermediate Hurling Championship"
     },
     "Intermediate Hurling Championship": {
       "Group 1": {
@@ -107,11 +109,17 @@
     const rShort=(r.round||'').replace(/^Round\s*/i,'R').replace(/\s+/g,'')||'—';
     const dShort=fmtDateShort(r.date), tShort=fmtTimeShort(r.time||'');
     const stShort=isResult(r.status)?'R':'F';
-    const scoreMid=(r._homeMid&&r._awayMid)?esc(r._homeMid+' - '+r._awayMid):'—';
+    const scoreMid=(r._homeMid&&r._awayMid)?`${r._homeMid} - ${r._awayMid}`:'—';
 
     const showMeta=(VIEW_MODE!=='competition');
     const meta = showMeta ? `<div class="match-meta">${esc(r.code)} · ${esc(groupShort(r.group||''))}</div>` : '';
-    const matchCell = `<div class="match-block"><span class="match-team">${esc(r.home||'')}</span><span class="match-score">${scoreMid}</span><span class="match-team">${esc(r.away||'')}</span>${meta}</div>`;
+
+    // Always ensure .match-score wrapper exists so CSS applies consistently
+    const homeHTML  = `<span class="match-team">${esc(r.home || '')}</span>`;
+    const scoreHTML = `<span class="match-score">${esc(scoreMid)}</span>`;
+    const awayHTML  = `<span class="match-team">${esc(r.away || '')}</span>`;
+    const matchCell = `<div class="match-block">${homeHTML}${scoreHTML}${awayHTML}${meta}</div>`;
+
     const trAttr=`data-date="${esc(r.date||'')}"`;
 
     if(isMobile){
@@ -129,21 +137,62 @@
   function buildCompetitionMenu(){
     const pairs = [];
     const comps = [...new Set(MATCHES.map(m=>m.competition).filter(Boolean))];
+
     for(const c of comps){
-      const groups = [...new Set(MATCHES.filter(m=>m.competition===c).map(m=>m.group || ''))]
-        .sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
+      const groupsRaw = MATCHES.filter(m=>m.competition===c).map(m=>m.group || '');
+      const groups = [...new Set(groupsRaw)].sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
+
+      const dn = DISPLAY_NAMES[c];
+
+      // Helper to take base (short/long) and optionally append group
+      const withGroup = (base, g) => {
+        if(!g) return { short: base.short, long: base.long };
+        return {
+          short: `${base.short} - ${g}`,
+          long:  `${base.long} - ${g}`
+        };
+      };
+
       if(groups.length===0){
-        const names = DISPLAY_NAMES[c]?.[""] || {short:c, long:c};
+        // No groups present at all
+        let names;
+        if(dn){
+          // dn may be a base {short,long} or an object keyed by "" (rare)
+          if('short' in dn && 'long' in dn) names = dn;
+          else if(dn[""]) names = dn[""];
+        }
+        if(!names) names = { short: c, long: c };
+
         pairs.push({comp:c, group:"", short:names.short, long:names.long});
       } else {
+        // We have at least one group (may include empty string)
         for(const g of groups){
-          const names = DISPLAY_NAMES[c]?.[g] || {short:`${c} ${g}`, long:`${c} ${g}`};
+          let names;
+
+          if(dn){
+            if(dn[g]) {
+              names = dn[g]; // explicit per-group naming provided
+            } else if('short' in dn && 'long' in dn) {
+              names = withGroup(dn, g); // build from base PIHC + " - Group X"
+            } else if(dn[""]) {
+              names = withGroup(dn[""], g);
+            }
+          }
+
+          if(!names){
+            const base = { short: c, long: c };
+            names = g ? withGroup(base, g) : base;
+          }
+
           pairs.push({comp:c, group:g, short:names.short, long:names.long});
         }
       }
     }
 
+    // Default selection: SHC Group 1 if present; otherwise first
     let desired = pairs.find(p => /Senior Hurling Championship/i.test(p.comp) && /Group 1/i.test(p.group)) || pairs[0] || null;
+
+    // URL params override
     if(params.comp){
       const m = pairs.find(p => p.comp===params.comp && (p.group||'')===(params.group||'')); if(m) desired=m;
     }
