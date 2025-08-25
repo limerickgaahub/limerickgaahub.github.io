@@ -25,11 +25,9 @@
       }
     },
       "Premier Intermediate Hurling Championship": {
-        "default": {
           short: "PIHC",
           long: "Lyons of Limerick County Premier Intermediate Hurling Championship"
-        }
-      },
+    },
     "Intermediate Hurling Championship": {
       "Group 1": {
         short: "IHC - Group 1",
