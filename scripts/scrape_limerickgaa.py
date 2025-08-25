@@ -224,11 +224,10 @@ def lines_from_rest_or_html(url: str, slug_hint: str) -> List[str]:
         html = r.text
     return flatten_to_lines(html)
 
-# ---------- Page parsing ----------
 def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_key: str) -> List[Dict]:
     """
     Get page lines via REST (preferred) or HTML fallback; detect allowed group blocks;
-    parse each block into match records. Adds a PIHC-specific guard to stop on 'League' headings.
+    parse each block into match records. Includes PIHC-specific guard to stop on 'League' headings.
     """
     # choose slug from URL
     slug = ""
@@ -239,19 +238,25 @@ def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_
 
     all_lines = lines_from_rest_or_html(url, slug)
 
-    # DEBUG snapshot
+    # DEBUG snapshot (label includes Juniors now)
     try:
         ensure_parent("data/_debug/")
         sample = "\n".join(all_lines[:200])
-        keyname = ("SHC_FIX" if "senior-hurling-fixtures" in url else
-                   "SHC_RES" if "senior-hurling-results" in url else
-                   "PI_I_FIX" if "intermediate-hurling-fixtures" in url else
-                   "PI_I_RES")
+        keyname = (
+            "SHC_FIX" if "senior-hurling-fixtures" in url else
+            "SHC_RES" if "senior-hurling-results" in url else
+            "PI_I_FIX" if "intermediate-hurling-fixtures" in url else
+            "PI_I_RES" if "intermediate-hurling-results" in url else
+            "JNR_FIX" if "junior-hurling-fixtures" in url else
+            "JNR_RES" if "junior-hurling-results" in url else
+            "UNKNOWN"
+        )
         with open(f"data/_debug/lines_{keyname}.txt", "w", encoding="utf-8") as df:
             df.write(sample)
     except Exception:
-        pass
+        keyname = "UNKNOWN"
 
+    # Build map of normalized allowed headings → raw headings
     norm_allowed = {normalize(g): g for g in allowed_groups}
 
     out: List[Dict] = []
@@ -267,21 +272,19 @@ def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_
     for ln in all_lines:
         n = normalize(ln)
 
-        # --- NEW: If we're inside PIHC and hit any '... League ...' section heading, end that block.
-        # This stops league content (e.g. "Bons Secours ... Intermediate Hurling League") from being
-        # appended to the Premier Intermediate Championship bucket.
+        # Stop PIHC on any "... league ..." section so league content doesn't bleed in
         if current_group and comp_key == "PIHC" and re.search(r'\bleague\b', n, flags=re.I):
             flush_bucket()
             current_group = None
             continue
 
-        # If inside a group and we hit a different '* Championship *' line, stop that group.
+        # If inside a group and we see a different "* championship *" heading, end current group
         if current_group and ("championship" in n) and not any(k in n for k in norm_allowed.keys()):
             flush_bucket()
             current_group = None
             continue
 
-        # Start a new group when an allowed label appears in the line
+        # Start a group when an allowed label appears in the line (normalized substring match)
         matched_label = None
         for k_norm, raw in norm_allowed.items():
             if k_norm in n:
@@ -296,7 +299,22 @@ def parse_blocks_from_page(url: str, allowed_groups: List[str], mode: str, comp_
             bucket.append(ln)
 
     flush_bucket()
+
+    # Telemetry: per-group counts for this page/comp
+    try:
+        from collections import Counter
+        with open(f"data/_debug/matches_{keyname}_{comp_key}.log", "w", encoding="utf-8") as lf:
+            lf.write(f"URL: {url}\n")
+            lf.write(f"Allowed groups: {allowed_groups}\n")
+            lf.write(f"Parsed records: {len(out)}\n")
+            c = Counter([r.get("group", "") for r in out])
+            for g, n in c.items():
+                lf.write(f"{g}: {n}\n")
+    except Exception:
+        pass
+
     return out
+
 
 
 
@@ -597,8 +615,8 @@ def scrape():
 
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-        payloads = {
+    
+    payloads = {
         "data/senior.json": {
             "competition": COMP_NAMES["SHC"], "updated_at": now,
             "fixtures": shc_fix, "results": shc_res
