@@ -9,18 +9,25 @@
 <style>
 /* THEME */
 :root {
-  --card:#ffffff; --muted:#6b7280; --accent:#006B3C; /* Limerick green */
-  --accent-2:#88C999; --line:#e9ecef; --text:#111; --bg:#f6f7f8;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --accent:#006B3C;        /* Limerick green */
+  --accent-2:#88C999;
+  --line:#e9ecef;
+  --text:#111;
+  --bg:#f6f7f8;
 }
 * { box-sizing:border-box; }
 html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 body {
   margin:70px 20px 20px;
   font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:var(--bg); color:var(--text);
+  background:var(--bg);
+  color:var(--text);
   -webkit-font-smoothing:antialiased;
 }
 h1 { margin:0; font-weight:800; font-size:20px; }
+h2 { margin:0 0 8px; font-size:16px; }
 .sm-muted { color:#6b7280; font-size:12px; }
 
 /* Header */
@@ -36,7 +43,7 @@ h1 { margin:0; font-weight:800; font-size:20px; }
 .navtab { padding:8px 12px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; }
 .navtab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-/* Burger */
+/* Burger / offcanvas */
 .burger { display:none; background:none; border:none; font-size:20px; padding:8px; }
 .offcanvas { position:fixed; inset:0 0 0 auto; width:80%; max-width:320px; background:#fff; box-shadow:-10px 0 24px rgba(0,0,0,.12); transform:translateX(100%); transition:transform .25s ease; z-index:120; }
 .offcanvas.open { transform:translateX(0); }
@@ -70,7 +77,7 @@ h1 { margin:0; font-weight:800; font-size:20px; }
 .iconbtn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:8px 10px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; font-weight:700; font-size:13px; }
 .iconbtn i { font-size:14px; }
 
-/* Tables (hardened) */
+/* Tables */
 .table-wrap { overflow-x:hidden; border-radius:14px; border:1px solid var(--line); background:#fff; min-width:0; }
 table { width:100%; border-collapse:separate; border-spacing:0; table-layout:fixed; } /* fixed for predictable widths */
 thead th { position:sticky; top:0; background:#f8fafb; border-bottom:1px solid var(--line); font-size:14px; font-weight:800; color:#1f2937; text-align:left; padding:14px; }
@@ -79,43 +86,29 @@ td.right, th.right { text-align:right; }
 tbody tr:nth-child(even) td { background:#fcfcfd; }
 tbody tr:hover td { background:#f1f9f4; }
 
-/* Subtle Limerick identity on rows (REMOVED) */
+/* Remove old green identity bar on each row */
 .table-wrap tbody tr{ position:relative; }
-.table-wrap tbody tr::before{
-  content:""; position:absolute; left:0; top:0; bottom:0; width:3px;
-  background:linear-gradient(var(--accent), var(--accent-2)); opacity:.85;
-}
+.table-wrap tbody tr::before{ content:none; }
 
-/* Match block (stacked, centered) */
+/* Match block */
 td.match, th.match { text-align:center; }
 .match-block { display:grid; grid-template-rows:auto auto auto; row-gap:3px; justify-items:center; }
 .match-team { display:block; line-height:1.2; }
-.match-score { display:block; font-weight:800; font-size:15px; line-height:1.2; letter-spacing:.2px; }
 
-/* Standings tighter */
-#g-standings-table thead th, #g-standings-table tbody td { padding:10px 8px; font-size:13px; }
-
-/* Expand modal */
-.modal { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:flex-end; justify-content:center; z-index:130; }
-.modal.open { display:flex; }
-.modal .sheet { width:100%; max-height:92vh; background:#fff; border-radius:16px 16px 0 0; overflow:auto; }
-.modal .sheet-header { display:flex; align-items:center; gap:10px; padding:12px; border-bottom:1px solid var(--line); position:sticky; top:0; background:#fff; }
-.modal .sheet-header h3 { margin:0; font-size:16px; }
-.modal .close { margin-left:auto; background:none; border:1px solid var(--line); border-radius:10px; padding:6px 10px; cursor:pointer; }
-
-/* ---------- Minimal visual tweaks you requested ---------- */
-
-/* 1) Remove vertical identity bar on rows */
-.table-wrap tbody tr::before { content: none; }
-
-/* 2) Lighten inner controls card */
-.controls.card {
-  box-shadow: none;
-  border-radius: 12px;
-  border: 1px solid var(--line);
+/* Scoreline: green pill, slightly smaller font */
+.match-score {
+  display:inline-block;
+  padding:2px 9px;
+  border-radius:999px;
+  background:#e6f4ea;     /* light green */
+  color:var(--accent);    /* Limerick green */
+  font-weight:800;
+  font-size:14px;         /* was 15px */
+  line-height:1.2;
+  letter-spacing:.2px;
 }
 
-/* 3) Status badge: subtle pill (desktop shows in Status col) */
+/* Status badge */
 .status-badge {
   display:inline-block;
   padding:3px 8px;
@@ -130,14 +123,40 @@ td.match, th.match { text-align:center; }
 .status-badge.status-Final { background:#e8f5e9; }
 .status-badge.status-Fixture { background:#eef2ff; }
 
-/* 4) Match meta line: small & muted */
+/* Match meta line */
 .match-meta {
   margin-top:4px;
   font-size:12px;
   color:var(--muted);
 }
 
-/* Mobile-only refinements */
+/* Standings tighter + better widths */
+#g-standings-table thead th, #g-standings-table tbody td { padding:8px 6px; }
+#g-standings-table thead th:first-child, #g-standings-table tbody td:first-child {
+  width:48%;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+#g-standings-table thead th:not(:first-child), #g-standings-table tbody td:not(:first-child) {
+  width:auto; text-align:right;
+}
+#g-standings-table tbody td:not(:first-child) { font-variant-numeric: tabular-nums; }
+
+/* Modal standings mirror */
+#modal-standings thead th, #modal-standings tbody td { padding:8px 6px; }
+#modal-standings thead th:first-child, #modal-standings tbody td:first-child {
+  width:48%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+#modal-standings thead th:not(:first-child), #modal-standings tbody td:not(:first-child) { text-align:right; }
+#modal-standings tbody td:not(:first-child) { font-variant-numeric: tabular-nums; }
+
+/* Controls lighter */
+.controls.card {
+  box-shadow:none;
+  border-radius:12px;
+  border:1px solid var(--line);
+}
+
+/* Mobile niceties */
 @supports(padding:max(0px)){
   body{
     padding-left:max(env(safe-area-inset-left),0);
@@ -150,20 +169,20 @@ td.match, th.match { text-align:center; }
   .burger { display:inline-block; }
   .card { padding:12px; }
   thead th, tbody td { padding:10px 7px; font-size:13px; }
-  .stcol { display:none; }
-  th.dcol, td.dcol, th.tcol, td.tcol { text-align:center; }
+  .match-score { font-size:13px; } /* smaller score on small screens */
 }
 
-/* XS breakpoint: keep core columns only */
+/* XS breakpoint: keep ALL columns in Matches; compact Team/Date only */
 @media (max-width:390px){
-  /* Hide first & last columns (works for g-table, team-table, date-table) */
-  #g-table thead th:first-child,    #g-table tbody td:first-child,
+  /* Matches (g-table): keep everything visible, incl. Round */
+  /* Team & Date tables: hide first/last to avoid squish */
   #team-table thead th:first-child, #team-table tbody td:first-child,
   #date-table thead th:first-child, #date-table tbody td:first-child,
-  #g-table thead th:last-child,     #g-table tbody td:last-child,
   #team-table thead th:last-child,  #team-table tbody td:last-child,
   #date-table thead th:last-child,  #date-table tbody td:last-child { display:none; }
+
   thead th, tbody td { padding:.55rem .55rem; }
+  .match-score { font-size:12.5px; } /* extra-small screens */
 }
 
 /* Footer */
@@ -311,8 +330,8 @@ td.match, th.match { text-align:center; }
 
   <footer class="site-footer">Limerick GAA Hub · 2025</footer>
 
-  <!-- IMPORTANT: update if you rename the JS file -->
-  <script src="./js/app_v7_3_3.js?v=fix8"></script>
+  <!-- IMPORTANT: Update filename if needed -->
+  <script src="./js/app_v7_3_3.js?v=fix9"></script>
   <script>
     // Burger toggle
     (function(){
@@ -370,7 +389,7 @@ td.match, th.match { text-align:center; }
       }
     });
 
-    // Small Android nicety: blur selects after change so dropdown closes
+    // Android nicety: blur selects after change so dropdown closes
     (function(){
       ['team','status','date-jump'].forEach(id=>{
         const el=document.getElementById(id);
