@@ -479,7 +479,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
         <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
       </div>
 
-
+      </div>    <!-- end of #panel-hurling -->    
   <!-- Football -->
   <div id="panel-football" class="card" style="display:none;">
     <h2>Football</h2>
@@ -687,17 +687,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
       window.addEventListener('load', ()=> setTimeout(updateSharebars, 100));
     })();
 
-    /* LGH PATCH — open/close the Standings modal (hidden by default) */
-    document.getElementById('btn-expand')?.addEventListener('click', ()=>{
-      document.getElementById('standings-modal')?.setAttribute('aria-hidden','false');
-    });
-    document.getElementById('modal-close')?.addEventListener('click', ()=>{
-      document.getElementById('standings-modal')?.setAttribute('aria-hidden','true');
-    });
-    document.getElementById('standings-modal')?.addEventListener('click', (e)=>{
-      if(e.target.id==='standings-modal'){ e.currentTarget.setAttribute('aria-hidden','true'); }
-    });
-    /* END LGH PATCH */
   </script> 
 </body>
 </html>
