@@ -501,10 +501,15 @@ thead th, tbody td{ padding:.55rem .55rem; }
     <div class="panel card" id="group-panel" style="margin-top:6px;">
       <div class="comp-selected" id="comp-selected"></div>
 
-      <div class="section-tabs">
-        <div class="seg active" data-view="matches">Matches</div>
-        <div class="seg" data-view="table">Table</div>
+    <div class="section-tabs">
+      <div class="seg active" data-view="matches" id="matches-seg">
+        <span id="matches-label">Matches</span>
+        <i class="fa-solid fa-chevron-down" id="matches-chevron" style="font-size:12px; margin-left:6px;"></i>
       </div>
+      <div class="seg" data-view="table">Table</div>
+    </div>
+    <!-- New: Matches dropdown menu -->
+    <div class="menu" id="matches-menu" role="menu" aria-hidden="true"></div>
 
       <div class="controls card">
         <label for="status" class="sm-muted" style="margin-right:8px;">Filter</label>
