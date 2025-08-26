@@ -96,20 +96,110 @@ const DISPLAY_NAMES = {
     return m;
   };
 
-  async function load(){
-    const res=await fetch(`${DATA_URL}?t=${Date.now()}`,{cache:'no-cache'});
-    const j=await res.json();
-    MATCHES=(j.matches||j||[]).map(r=>{
+// ---------- GA4 helpers (SPA virtual pages + events) ----------
+const LGH_ANALYTICS = (function(){
+  let lastPath = null;
+
+  const slug = s => (s||'').toString()
+    .trim().toLowerCase()
+    .replace(/&/g,'and')
+    .replace(/[^a-z0-9]+/g,'-')
+    .replace(/^-+|-+$/g,'');
+
+  const page = (path, title) => {
+    if (!path) return;
+    if (path === lastPath) return;      // avoid duplicates
+    lastPath = path;
+    const full = location.origin + path;
+    if (typeof gtag === 'function') {
+      gtag('event', 'page_view', {
+        page_title: title || document.title,
+        page_location: full,
+        page_path: path
+      });
+    }
+  };
+
+  const viewAbout = () => page('/about', 'About – Limerick GAA Hub');
+  const viewPrivacy = () => page('/privacy', 'Privacy – Limerick GAA Hub');
+
+  const viewCompetition = (competition, group, viewMode /* 'matches' | 'table' */) => {
+    const p = `/competition/${slug(competition||'all')}/${slug(group||'all')}/${slug(viewMode||'matches')}`;
+    page(p, `${competition||'All'} – ${group||'All'} – ${viewMode||'Matches'}`);
+    if (typeof gtag === 'function') {
+      gtag('event','view_competition',{ competition: competition||'(none)', group: group||'(none)', view: viewMode||'matches' });
+    }
+  };
+
+  const viewTeam = (teamName) => {
+    const p = `/team/${slug(teamName||'none')}`;
+    page(p, `Team – ${teamName||'(none)'}`);
+    if (typeof gtag === 'function') gtag('event','view_team',{ team: teamName||'(none)' });
+  };
+
+  const viewDate = (isoDate) => {
+    const p = `/date/${isoDate||'none'}`;
+    page(p, `Date – ${isoDate||'(none)'}`);
+    if (typeof gtag === 'function') gtag('event','view_date',{ date: isoDate||'(none)' });
+  };
+
+  const clickSocial = (platform) => { if (typeof gtag === 'function') gtag('event','click_social',{ platform }); };
+  const clickOutbound = (host) => { if (typeof gtag === 'function') gtag('event','click_outbound',{ destination: host }); };
+  const clickShare = (method) => { if (typeof gtag === 'function') gtag('event','share_action',{ method }); };
+
+  const autoBind = () => {
+    // Socials (About panel)
+    document.querySelectorAll('.social-list .social-link').forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      const platform =
+        href.includes('instagram.com') ? 'instagram' :
+        href.includes('x.com') ? 'x' :
+        href.startsWith('mailto:') ? 'email' : 'other';
+      a.addEventListener('click', ()=> clickSocial(platform));
+    });
+    // Outbound official link
+    document.querySelectorAll('a[href*="limerickgaa.ie"]').forEach(a=>{
+      a.addEventListener('click', ()=> clickOutbound('limerickgaa.ie'));
+    });
+    // Share/copy buttons
+    document.querySelectorAll('[data-role="copy"]').forEach(btn=>{
+      btn.addEventListener('click', ()=> clickShare('copy'));
+    });
+    document.querySelectorAll('[data-role="share"]').forEach(btn=>{
+      btn.addEventListener('click', ()=> clickShare('share'));
+    });
+  };
+
+  return { page, viewAbout, viewPrivacy, viewCompetition, viewTeam, viewDate, clickSocial, clickOutbound, clickShare, autoBind };
+})();
+document.addEventListener('DOMContentLoaded', ()=> LGH_ANALYTICS.autoBind());
+
+
+  
+async function load(){
+  try {
+    const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache:'no-store' });
+    if (!res.ok) {
+      console.error('[LGH] Data fetch failed', res.status, res.statusText);
+      return;
+    }
+    const j = await res.json();
+    MATCHES = (j.matches||j||[]).map(r=>{
       const out={
         competition:r.competition||'', group:r.group||'', round:r.round||'',
         date:r.date||'', time:r.time||'', home:r.home||'', away:r.away||'',
         venue:r.venue||'', status:r.status||'',
-        home_goals:r.home_goals, home_points:r.home_points, away_goals:r.away_goals, away_points:r.away_points,
+        home_goals:r.home_goals, home_points:r.home_points,
+        away_goals:r.away_goals, away_points:r.away_points,
       };
       out.code=compCode(out.competition);
       return attachScores(out);
     });
+  } catch(err) {
+    console.error('[LGH] Data load threw error:', err);
   }
+}
+
 
   const sortRoundDate=(a,b)=> (a._rnum-b._rnum) || (a.date||'').localeCompare(b.date||'') || (a.time||'').localeCompare(b.time||'');
   const sortDateComp=(a,b)=>{ const da=a.date||'', db=b.date||''; if(da!==db) return da.localeCompare(db); const ca=a.competition||'', cb=b.competition||''; if(ca!==cb) return ca.localeCompare(cb); return (a.time||'').localeCompare(b.time||''); };
@@ -236,6 +326,8 @@ const DISPLAY_NAMES = {
       const onTable=document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
       if(onTable) renderStandings(); else renderGroupTable();
       syncURL(push);
+      LGH_ANALYTICS.viewCompetition(state.comp, state.group, onTable ? 'table' : 'matches');
+
     }
     if(desired) setPair(desired);
 
@@ -351,8 +443,24 @@ const DISPLAY_NAMES = {
   function toast(msg){ const div=document.createElement('div'); div.textContent=msg; div.style.cssText='position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:#111;color:#fff;padding:8px 12px;border-radius:8px;z-index:200;opacity:.95'; document.body.appendChild(div); setTimeout(()=>div.remove(),1500); }
 
   document.addEventListener('click',(e)=>{
-    if(e.target.closest('#btn-share')){ const url=currentShareURL(); const title='Limerick GAA Hub'; const text='Fixtures, results & tables'; if(navigator.share){ navigator.share({title,text,url}); } else { navigator.clipboard?.writeText(url); toast('Link copied'); } }
-    if(e.target.closest('#btn-copy')){ navigator.clipboard?.writeText(currentShareURL()); toast('Link copied'); }
+    if (e.target.closest('#btn-share')) {
+      const url = currentShareURL();
+      const title = 'Limerick GAA Hub';
+      const text  = 'Fixtures, results & tables';
+      if (navigator.share) {
+        navigator.share({ title, text, url });
+      } else {
+        navigator.clipboard?.writeText(url);
+        toast('Link copied');
+      }
+      LGH_ANALYTICS.clickShare('share');   // ← inside the if
+    }
+  
+    if (e.target.closest('#btn-copy')) {
+      navigator.clipboard?.writeText(currentShareURL());
+      toast('Link copied');
+      LGH_ANALYTICS.clickShare('copy');    // ← inside the if
+    }
   });
 
   // Section tabs (Matches/Table)
@@ -370,6 +478,8 @@ const DISPLAY_NAMES = {
 
       if(showTable) renderStandings(); else renderGroupTable();
       syncURL(true);
+      LGH_ANALYTICS.viewCompetition(state.comp, state.group, showTable ? 'table' : 'matches');
+
     });
   });
 
@@ -384,6 +494,9 @@ const DISPLAY_NAMES = {
       el('panel-football').style.display=(name==='football')?'':'none';
       el('panel-about').style.display=(name==='about')?'':'none';
       syncURL(true);
+      if (name === 'about') LGH_ANALYTICS.viewAbout();
+      else if (name === 'hurling') LGH_ANALYTICS.page('/hurling','Hurling – Limerick GAA Hub');
+      else if (name === 'football') LGH_ANALYTICS.page('/football','Football – Limerick GAA Hub');
     });
   });
 
@@ -397,9 +510,9 @@ const DISPLAY_NAMES = {
       $$('#panel-hurling .panel').forEach(p=>p.style.display='none');
       el(target).style.display='';
 
-      if(target==='group-panel'){ state.view='matches'; VIEW_MODE='competition'; renderGroupTable(); }
-      if(target==='by-team'){ VIEW_MODE='team'; renderByTeam(); }
-      if(target==='by-date'){ VIEW_MODE='date'; renderByDate(); }
+      if(target==='group-panel'){ state.view='matches'; VIEW_MODE='competition'; renderGroupTable(); LGH_ANALYTICS.viewCompetition(state.comp, state.group, 'matches'); }
+      if(target==='by-team'){ VIEW_MODE='team'; renderByTeam(); LGH_ANALYTICS.viewTeam(state.team||'(none)'); }
+      if(target==='by-date'){ VIEW_MODE='date'; renderByDate(); LGH_ANALYTICS.viewDate(state.date||'(none)'); }
       syncURL(true);
     });
   });
@@ -416,6 +529,7 @@ const DISPLAY_NAMES = {
       if(!team){ tbody.innerHTML=''; return; }
       const rows=MATCHES.filter(r=>r.home===team||r.away===team).sort(sortRoundDate);
       tbody.innerHTML=rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+      LGH_ANALYTICS.viewTeam(team);
     };
     sel.oninput=draw; addEventListener('resize',draw);
     const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); buildHead(thead, matchMedia('(max-width:880px)').matches, matchMedia('(max-width:400px)').matches);
@@ -449,6 +563,7 @@ const DISPLAY_NAMES = {
           if(target){ const td=target.getAttribute('data-date')||''; if(td){ const firstOfDate=tbody.querySelector(`tr[data-date="${td}"]`); if(firstOfDate) target=firstOfDate; } }
         }
         if(target){ target.scrollIntoView({behavior:'smooth',block:'start'}); target.style.outline='2px solid var(--accent)'; setTimeout(()=>{ target.style.outline=''; },1500); }
+        LGH_ANALYTICS.viewDate(ymd);
       };
 
       if(params.date){ jump.value=params.date; jump.dispatchEvent(new Event('change')); }
