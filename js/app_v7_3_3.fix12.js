@@ -274,81 +274,194 @@ async function load(){
 }
   } // /* LGH PATCH: close rowHTML cleanly */
 
-  function buildCompetitionMenu(){
-    const pairs=[];
-    const comps=[...new Set(MATCHES.map(m=>m.competition).filter(Boolean))];
+function buildCompetitionMenu(){
+  // Limit to your six comps (order preserved)
+  const ALL = [
+    "Senior Hurling Championship",
+    "Premier Intermediate Hurling Championship",
+    "Intermediate Hurling Championship",
+    "Premier Junior A Hurling Championship",
+    "Junior A Hurling Championship",
+    "Junior C Hurling Championship"
+  ];
 
-    for(const c of comps){
-      const groupsRaw=MATCHES.filter(m=>m.competition===c).map(m=>m.group||'');
-      const groups=[...new Set(groupsRaw)].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
-      const dn=DISPLAY_NAMES[c];
 
-      const withGroup=(base,g)=> g ? {short:`${base.short} - ${g}`, long:`${base.long} - ${g}`} : base;
+  // Build menu items (no groups here)
+  const menu = el('comp-menu');
+  menu.innerHTML = ALL.map(c => {
+    const dn = DISPLAY_NAMES[c];
+    // Prefer long name if present; otherwise use c
+    const label = (dn && dn.long) ? dn.long : c;
+    return `<div class="item" data-comp="${esc(c)}">${esc(label)}</div>`;
+  }).join('');
 
-      if(groups.length===0){
-        let names;
-        if(dn){
-          if('short' in dn && 'long' in dn) names=dn;
-          else if(dn[""]) names=dn[""];
-        }
-        if(!names) names={short:c,long:c};
-        pairs.push({comp:c, group:"", short:names.short, long:names.long});
-      }else{
-        for(const g of groups){
-          let names;
-          if(dn){
-            if(dn[g]) names=dn[g];
-            else if('short' in dn && 'long' in dn) names=withGroup(dn,g);
-            else if(dn[""]) names=withGroup(dn[""],g);
-          }
-          if(!names){ const base={short:c,long:c}; names=withGroup(base,g); }
-          pairs.push({comp:c, group:g, short:names.short, long:names.long});
-        }
-      }
+  // Desired default: Senior -> Group 1
+  function setCompetition(comp, push=false, suppressUrl=false){
+    state.comp = comp || ALL[0];
+
+    // Default group: Group 1 for all except PIHC (no groups)
+    if (state.comp === "Premier Intermediate Hurling Championship") {
+      state.group = null;
+    } else {
+      state.group = "Group 1";
     }
 
-    let desired=pairs.find(p=>/Senior Hurling Championship/i.test(p.comp)&&/Group 1/i.test(p.group))||pairs[0]||null;
-    if(params.comp){
-      const m=pairs.find(p=>p.comp===params.comp&&(p.group||'')===(params.group||'')); if(m) desired=m;
-    }
+    // Selected header
+    const dn = DISPLAY_NAMES[state.comp];
+    el('comp-selected').textContent = (dn && dn.long) ? dn.long : state.comp;
 
-    const menu=el('comp-menu');
-    menu.innerHTML=pairs.map(p=>`<div class="item${(desired&&p.comp===desired.comp&&(p.group||'')===(desired.group||''))?' active':''}" data-comp="${esc(p.comp)}" data-group="${esc(p.group)}">${esc(p.short)}</div>`).join('');
+    // Rebuild matches menu/label for this comp
+    rebuildMatchesMenu();
 
-    function setPair(p, push=false, suppressUrl=false){
-      state.comp = p.comp; state.group = p.group;
-      el('comp-selected').textContent = p.long;
-    
-      // default to Matches view visibility
-      el('g-standings').style.display = 'none';
-      document.querySelector('.matches-wrap').style.display = '';
-    
-      // render
-      const onTable = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
-      if (onTable) renderStandings(); else renderGroupTable();
-    
-      if (!suppressUrl) syncURL(push);
-      LGH_ANALYTICS.viewCompetition(state.comp, state.group, onTable ? 'table' : 'matches');
-    }
+    // Render matches (ensure Matches view visible)
+    el('g-standings').style.display = 'none';
+    document.querySelector('.matches-wrap').style.display = '';
 
-    if (desired) setPair(desired, false, FIRST_LOAD_NO_QUERY);
+    const onTable = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
+    if (onTable) renderStandings(); else renderGroupTable();
 
-    const compTab=el('comp-tab');
-    const openMenu=()=>{ const rect=compTab.getBoundingClientRect(); menu.style.top=`${rect.bottom+window.scrollY+6}px`; menu.style.left=`${rect.left+window.scrollX}px`; menu.classList.add('open'); menu.setAttribute('aria-hidden','false'); };
-    const closeMenu=()=>{ menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); };
-
-    compTab.addEventListener('click',()=>{ if(menu.classList.contains('open')) closeMenu(); else openMenu(); });
-    menu.addEventListener('click',(e)=>{ const it=e.target.closest('.item'); if(!it) return;
-      $$('#comp-menu .item').forEach(i=>i.classList.remove('active')); it.classList.add('active');
-      const comp=it.getAttribute('data-comp'), group=it.getAttribute('data-group');
-      const pair=pairs.find(pp=>pp.comp===comp&&pp.group===group);
-      if(pair) setPair(pair,true);
-      closeMenu();
-    });
-    document.addEventListener('click',(e)=>{ if(menu.classList.contains('open')&&!menu.contains(e.target)&&!compTab.contains(e.target)) closeMenu(); });
-    window.addEventListener('resize',closeMenu,{passive:true}); window.addEventListener('scroll',closeMenu,{passive:true});
+    if (!suppressUrl) syncURL(push);
+    LGH_ANALYTICS.viewCompetition(state.comp, state.group, onTable ? 'table' : 'matches');
   }
 
+  // Click binding
+  const compTab = el('comp-tab');
+  const openMenu = ()=>{
+    const rect = compTab.getBoundingClientRect();
+    menu.style.top = `${rect.bottom + window.scrollY + 6}px`;
+    menu.style.left = `${rect.left + window.scrollX}px`;
+    menu.classList.add('open');
+    menu.setAttribute('aria-hidden','false');
+  };
+  const closeMenu = ()=>{
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden','true');
+  };
+
+  compTab.addEventListener('click', ()=>{ 
+    if(menu.classList.contains('open')) closeMenu(); else openMenu();
+  });
+
+  menu.addEventListener('click', (e)=>{
+    const it = e.target.closest('.item');
+    if(!it) return;
+    $$('#comp-menu .item').forEach(i=>i.classList.remove('active'));
+    it.classList.add('active');
+    const comp = it.getAttribute('data-comp');
+    setCompetition(comp, true);
+    closeMenu();
+  });
+
+  document.addEventListener('click', (e)=>{
+    if(menu.classList.contains('open') && !menu.contains(e.target) && !compTab.contains(e.target)){
+      closeMenu();
+    }
+  });
+  window.addEventListener('resize', closeMenu, {passive:true});
+  window.addEventListener('scroll', closeMenu, {passive:true});
+
+  // Initial selection (URL overrides if present)
+  let initialComp = params.comp && ALL.includes(params.comp) ? params.comp : ALL[0];
+  setCompetition(initialComp, false, FIRST_LOAD_NO_QUERY);
+}
+
+function getGroupsForComp(comp){
+  // Infer from data; if nothing found and not PIHC, fallback to G1/G2
+  const groupsRaw = MATCHES.filter(m=>m.competition===comp).map(m=>m.group||'').filter(Boolean);
+  const uniq = [...new Set(groupsRaw)].sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
+  if (comp === "Premier Intermediate Hurling Championship") return []; // no groups
+  if (uniq.length) return uniq;
+  return ["Group 1","Group 2"]; // safe fallback
+}
+
+function setMatchesLabel(){
+  const matchesLabel = el('matches-label');
+  if (!matchesLabel) return;
+  if (state.comp === "Premier Intermediate Hurling Championship") {
+    matchesLabel.textContent = "PIHC Matches";
+  } else {
+    const g = state.group || "Group 1";
+    matchesLabel.textContent = `${g} Matches`;
+  }
+}
+
+function closeMatchesMenu(){
+  const mm = el('matches-menu');
+  if (!mm) return;
+  mm.classList.remove('open');
+  mm.setAttribute('aria-hidden','true');
+}
+
+function openMatchesMenu(){
+  const trig = el('matches-seg');
+  const mm = el('matches-menu');
+  if (!trig || !mm) return;
+  const rect = trig.getBoundingClientRect();
+  mm.style.top  = `${rect.bottom + window.scrollY + 6}px`;
+  mm.style.left = `${rect.left   + window.scrollX}px`;
+  mm.classList.add('open');
+  mm.setAttribute('aria-hidden','false');
+}
+
+function rebuildMatchesMenu(){
+  const mm = el('matches-menu');
+  if (!mm) return;
+
+  const groups = getGroupsForComp(state.comp);
+  mm.innerHTML = '';
+
+  if (!groups.length){
+    // PIHC: single static item
+    const b = document.createElement('div');
+    b.className = 'item';
+    b.textContent = 'PIHC';
+    b.addEventListener('click', ()=> closeMatchesMenu());
+    mm.appendChild(b);
+    state.group = null;
+  } else {
+    // Groups present
+    groups.forEach(g=>{
+      const b = document.createElement('div');
+      b.className = 'item';
+      b.textContent = g;
+      b.addEventListener('click', ()=>{
+        state.group = g;
+        setMatchesLabel();
+        closeMatchesMenu();
+        renderGroupTable();
+        syncURL();
+        LGH_ANALYTICS.viewCompetition(state.comp, state.group, 'matches');
+      });
+      mm.appendChild(b);
+    });
+
+    // Ensure default is G1 on comp change
+    if (!state.group || !groups.includes(state.group)) state.group = 'Group 1';
+  }
+
+  setMatchesLabel();
+}
+
+// Toggle/open the Matches dropdown only when Matches view is active
+(function(){
+  const seg = el('matches-seg');
+  if (!seg) return;
+  seg.addEventListener('click', ()=>{
+    const onTable = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
+    if (onTable) return; // don't open when Table is active
+    const mm = el('matches-menu');
+    if (mm?.classList.contains('open')) closeMatchesMenu(); else openMatchesMenu();
+  });
+
+  // Close when clicking elsewhere, or switching tabs/views
+  document.addEventListener('click', (e)=>{
+    const mm = el('matches-menu');
+    if (mm?.classList.contains('open') && !mm.contains(e.target) && !seg.contains(e.target)) closeMatchesMenu();
+  });
+})();
+
+
+  
   function renderGroupTable(){
     VIEW_MODE='competition';
     const tbl=el('g-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
@@ -481,6 +594,15 @@ async function load(){
       seg.classList.add('active');
 
       const showTable=seg.getAttribute('data-view')==='table';
+            // 2c: keep Matches dropdown state correct when switching views
+      if (showTable) {
+        // Close the Matches dropdown if it’s open
+        const mm = document.getElementById('matches-menu');
+        if (mm) { mm.classList.remove('open'); mm.setAttribute('aria-hidden','true'); }
+      } else {
+        // Ensure Matches pill label is correct when returning to Matches view
+        if (typeof setMatchesLabel === 'function') setMatchesLabel();
+      }
       state.view=showTable?'table':'matches';
 
 
@@ -642,6 +764,7 @@ async function load(){
    (async function(){
     await load();
     buildCompetitionMenu();
+    if (typeof rebuildMatchesMenu === 'function') rebuildMatchesMenu();
 
     // Select top-level section
     const s = params.s || 'hurling';
