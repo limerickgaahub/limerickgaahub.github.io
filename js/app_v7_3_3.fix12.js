@@ -378,10 +378,10 @@ function setMatchesLabel(){
   const matchesLabel = el('matches-label');
   if (!matchesLabel) return;
   if (state.comp === "Premier Intermediate Hurling Championship") {
-    matchesLabel.textContent = "PIHC Matches";
+    matchesLabel.textContent = "PIHC";
   } else {
     const g = state.group || "Group 1";
-    matchesLabel.textContent = `${g} Matches`;
+    matchesLabel.textContent = g;
   }
 }
 
