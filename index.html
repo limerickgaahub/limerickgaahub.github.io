@@ -374,6 +374,44 @@ thead th, tbody td{ padding:.55rem .55rem; }
 
 /* Share buttons – consistent look */
 .iconbtn[data-role]{ padding:8px 12px; font-weight:700; }
+
+/* === LGH PATCH — Coloured About links + green Share buttons === */
+
+/* Social link colours */
+.social-link[href*="instagram"] { 
+  background: #E1306C; /* Instagram pink */
+  color: #fff;
+}
+.social-link[href*="x.com"] { 
+  background: #000000; /* X black */
+  color: #fff;
+}
+.social-link[href^="mailto:"] { 
+  background: var(--accent); /* site green */
+  color: #fff;
+}
+
+/* Force icon + text inside social links to white */
+.social-link i,
+.social-link span {
+  color: #fff !important;
+}
+
+/* Copy + Share buttons: green theme */
+.iconbtn[data-role="copy"],
+.iconbtn[data-role="share"] {
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+}
+
+.iconbtn[data-role="copy"]:hover,
+.iconbtn[data-role="share"]:hover {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+}
+
+
 </style>
 
 </head>
@@ -438,10 +476,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
       <div class="sharebar" id="sharebar-comp">
         <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
         <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
-        <a class="iconbtn" data-role="x"  target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Share on X</a>
-        <a class="iconbtn" data-role="fb" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i> Share on Facebook</a>
-        <a class="iconbtn" data-role="wa" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Share on WhatsApp</a>
-        <a class="iconbtn" data-role="email"><i class="fa-solid fa-envelope"></i> Email</a>
         <div class="spacer"></div>
       </div>
 
@@ -471,10 +505,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
       <div class="sharebar" id="sharebar-team">
         <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
         <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
-        <a class="iconbtn" data-role="x"  target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Share on X</a>
-        <a class="iconbtn" data-role="fb" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i> Share on Facebook</a>
-        <a class="iconbtn" data-role="wa" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Share on WhatsApp</a>
-        <a class="iconbtn" data-role="email"><i class="fa-solid fa-envelope"></i> Email</a>
         <div class="spacer"></div>
       </div>
 
@@ -493,10 +523,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
       <div class="sharebar" id="sharebar-date">
         <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
         <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
-        <a class="iconbtn" data-role="x"  target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Share on X</a>
-        <a class="iconbtn" data-role="fb" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i> Share on Facebook</a>
-        <a class="iconbtn" data-role="wa" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Share on WhatsApp</a>
-        <a class="iconbtn" data-role="email"><i class="fa-solid fa-envelope"></i> Email</a>
         <div class="spacer"></div>
       </div>
 
