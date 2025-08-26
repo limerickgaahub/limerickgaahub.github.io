@@ -456,13 +456,52 @@ const DISPLAY_NAMES = {
   }
 
   (function(){
-    const btn=el('btn-expand'), modal=el('standings-modal'), close=el('modal-close');
-    if(btn&&modal&&close){
-      btn.addEventListener('click',()=>{ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; });
-      close.addEventListener('click',()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
-      modal.addEventListener('click',(e)=>{ if(e.target===modal) close.click(); });
+  const btn   = el('btn-expand');
+  const modal = el('standings-modal');
+  const close = el('modal-close');
+  const sheet = modal?.querySelector('.sheet');
+  if (!btn || !modal || !close || !sheet) return;
+
+  let lastFocused = null;
+  const onKeyDown = (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); closeModal(); }
+    // Simple focus trap: keep tab focus inside the modal
+    if (e.key === 'Tab') {
+      const focusables = sheet.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      const list = Array.from(focusables).filter(x => !x.hasAttribute('disabled') && x.tabIndex !== -1);
+      if (!list.length) return;
+      const first = list[0], last = list[list.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
-  })();
+  };
+
+  function openModal(){
+    lastFocused = document.activeElement;
+    modal.removeAttribute('inert');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    // Move focus inside dialog
+    (close.focus?.() || sheet.focus?.());
+    document.addEventListener('keydown', onKeyDown);
+  }
+
+  function closeModal(){
+    // Blur anything focused in the dialog before hiding
+    document.activeElement?.blur?.();
+    modal.setAttribute('aria-hidden', 'true');
+    modal.setAttribute('inert', '');
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', onKeyDown);
+    // Return focus to the trigger for a11y
+    lastFocused?.focus?.();
+  }
+
+  btn.addEventListener('click', openModal);
+  close.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+})();
+
 
   el('status').addEventListener('input',()=>{ renderGroupTable(); syncURL(); });
 
