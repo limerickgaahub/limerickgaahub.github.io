@@ -299,6 +299,27 @@ thead th, tbody td{ padding:.55rem .55rem; }
 .back-btn{ display:inline-flex; align-items:center; gap:6px; margin:8px 0; padding:6px 10px; border:1px solid var(--line); border-radius:999px; background:#f9fafb; cursor:pointer; font-size:13px; color:#333; }
 .back-btn i{ font-size:12px; }
 
+/* Back to top (Date view) */
+.scroll-top-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:150;          /* header=100, offcanvas=120, modal=200 */
+  display:none;         /* only shown when Date panel visible */
+  padding:10px 12px;
+  border-radius:999px;
+  background:var(--accent);
+  color:#fff;
+  border:1px solid var(--accent);
+  cursor:pointer;
+  font-size:16px;
+}
+.scroll-top-btn:hover{
+  background:var(--accent-2);
+  border-color:var(--accent-2);
+}
+
+
 /* LGH PATCH — hide modal by default; show only when opened */
 .modal{ 
   position:fixed; inset:0; display:none; 
@@ -472,7 +493,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
   <div id="panel-hurling" class="card">
     <div class="section-tabs view-tabs" id="view-tabs">
       <div class="seg vt active" data-target="group-panel" id="comp-tab">Competition <i class="fa-solid fa-chevron-down" style="font-size:12px; margin-left:6px;"></i></div>
-      <div class="seg vt" data-target="by-team">Team</div>
+      <div class="seg vt" data-target="by-team">Club</div>
       <div class="seg vt" data-target="by-date">Date</div>
     </div>
     <div class="menu" id="comp-menu" role="menu" aria-hidden="true"></div>
@@ -522,9 +543,9 @@ thead th, tbody td{ padding:.55rem .55rem; }
     </div>
 
       <div class="panel card" id="by-team" style="display:none; margin-top:6px;">
-        <h2>By Team</h2>
+        <h2>By Club</h2>
         <div class="controls card">
-          <select id="team"><option value="">Select team…</option></select>
+          <select id="team"><option value="">Select club…</option></select>
         </div>
       
         <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table></div>
@@ -540,7 +561,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
 
         <!-- Share (Date) — inside the panel -->
             <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
-              <button class="back-btn" id="back-to-comp"><i class="fa-solid fa-arrow-left"></i> Back to Competition</button>
               <h2>By Date</h2>
               <div class="controls card">
                 <label for="date-jump" class="sm-muted" style="margin-right:8px;">Go to date</label>
@@ -548,7 +568,14 @@ thead th, tbody td{ padding:.55rem .55rem; }
               </div>
             
               <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
+
+            <!-- Back to Top button (only shows when Date tab active) -->
+            <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Back to top">
+              <i class="fa-solid fa-arrow-up"></i>
+            </button>
+
             
+              
               <!-- Share (Date) -->
               <div class="sharebar" id="sharebar-date">
                 <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
@@ -558,6 +585,8 @@ thead th, tbody td{ padding:.55rem .55rem; }
             </div>
       </div>    <!-- end of #panel-hurling -->
 
+
+  
       
   <!-- Football -->
   <div id="panel-football" class="card" style="display:none;">
@@ -681,11 +710,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
     });
 
     // Back button
-    document.addEventListener('click', e=>{
-      if(e.target.closest('#back-to-comp')){
-        document.querySelector('#view-tabs .vt[data-target="group-panel"]').click();
-      }
-    });
 
     // Brand click = reset to Hurling Competition
     document.querySelector('.brand').addEventListener('click', e=>{
@@ -812,6 +836,28 @@ function updateSharebars(){
       }
 
       window.addEventListener('load', ()=> setTimeout(updateSharebars, 100));
+
+      // Back to top button logic
+(function(){
+  const btn = document.getElementById('scroll-top-btn');
+  if (!btn) return;
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Show button only when Date panel is active
+  const datePanel = document.getElementById('by-date');
+  const observer = new MutationObserver(() => {
+    const visible = getComputedStyle(datePanel).display !== 'none';
+    btn.style.display = visible ? 'inline-flex' : 'none';
+  });
+  observer.observe(datePanel, { attributes: true, attributeFilter: ['style'] });
+})();
+
+
+
+      
     })();
 
   </script> 
