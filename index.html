@@ -411,7 +411,14 @@ thead th, tbody td{ padding:.55rem .55rem; }
   border-color: var(--accent-2);
 }
 
+/* Give bottom sharebars a little space and tidy alignment */
+.sharebar { margin-top: 14px; }
+@media (max-width:880px){
+  .sharebar { justify-content:center; }
+  .sharebar .spacer { display:none; }
+}
 
+      
 </style>
 
 </head>
@@ -472,12 +479,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
         </select>
       </div>
 
-      <!-- Share (Competition) -->
-      <div class="sharebar" id="sharebar-comp">
-        <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
-        <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
-        <div class="spacer"></div>
-      </div>
 
     
       <div class="table-wrap matches-wrap">
@@ -496,41 +497,53 @@ thead th, tbody td{ padding:.55rem .55rem; }
           </table>
         </div>
       </div>
-    </div>
 
-    <div class="panel card" id="by-team" style="display:none; margin-top:6px;">
-      <h2>By Team</h2>
-      <div class="controls card"><select id="team"><option value="">Select team…</option></select></div>
-      <!-- Share (Team) -->
-      <div class="sharebar" id="sharebar-team">
+      <!-- Share (Competition) -->
+      <div class="sharebar" id="sharebar-comp">
         <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
         <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
         <div class="spacer"></div>
-      </div>
-
-      <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table></div>
+      </div> 
     </div>
 
-      <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
-        <button class="back-btn" id="back-to-comp"><i class="fa-solid fa-arrow-left"></i> Back to Competition</button>
-        <h2>By Date</h2>
+      <div class="panel card" id="by-team" style="display:none; margin-top:6px;">
+        <h2>By Team</h2>
         <div class="controls card">
-          <label for="date-jump" class="sm-muted" style="margin-right:8px;">Go to date</label>
-          <input id="date-jump" type="date" />
+          <select id="team"><option value="">Select team…</option></select>
         </div>
+      
+        <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table></div>
+      
+        <!-- Share (Team) -->
+        <div class="sharebar" id="sharebar-team">
+          <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
+          <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
+          <div class="spacer"></div>
+        </div>
+      </div>
+
 
         <!-- Share (Date) — inside the panel -->
-      <div class="sharebar" id="sharebar-date">
-        <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
-        <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
-        <div class="spacer"></div>
-      </div>
+            <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
+              <button class="back-btn" id="back-to-comp"><i class="fa-solid fa-arrow-left"></i> Back to Competition</button>
+              <h2>By Date</h2>
+              <div class="controls card">
+                <label for="date-jump" class="sm-muted" style="margin-right:8px;">Go to date</label>
+                <input id="date-jump" type="date" />
+              </div>
+            
+              <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
+            
+              <!-- Share (Date) -->
+              <div class="sharebar" id="sharebar-date">
+                <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
+                <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
+                <div class="spacer"></div>
+              </div>
+            </div>
+      </div>    <!-- end of #panel-hurling -->
 
-
-        <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
-      </div>
-
-      </div>    <!-- end of #panel-hurling -->    
+      
   <!-- Football -->
   <div id="panel-football" class="card" style="display:none;">
     <h2>Football</h2>
@@ -599,8 +612,8 @@ thead th, tbody td{ padding:.55rem .55rem; }
     // Burger
     (function(){
       const burger=document.getElementById('burger'), oc=document.getElementById('offcanvas'), bd=document.getElementById('oc-backdrop');
-      const open=()=>{oc.classList.add('open'); bd.classList.add('show');};
-      const close=()=>{oc.classList.remove('open'); bd.classList.remove('show');};
+      const open=()=>{ oc.classList.add('open'); bd.classList.add('show'); oc.setAttribute('aria-hidden','false'); };
+      const close=()=>{ oc.classList.remove('open'); bd.classList.remove('show'); oc.setAttribute('aria-hidden','true'); };
       burger.addEventListener('click', open);
       bd.addEventListener('click', close);
       oc.addEventListener('click', e=>{
