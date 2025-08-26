@@ -1,6 +1,6 @@
 {
   "competition": "Junior C Hurling Championship",
-  "updated_at": "2025-08-26T07:40:04Z",
+  "updated_at": "2025-08-26T17:40:09Z",
   "fixtures": [
     {
       "id": "2025-JCHC-G1-R4-PAT-BYE",
@@ -148,7 +148,7 @@
       "home": "St Kieran's",
       "away": "Crecora Manister",
       "venue": "St Kieran's G.A.A",
-      "referee": "TBC",
+      "referee": "Billy Philip",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },

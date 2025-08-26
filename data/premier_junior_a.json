@@ -1,6 +1,6 @@
 {
   "competition": "Premier Junior A Hurling Championship",
-  "updated_at": "2025-08-26T07:40:04Z",
+  "updated_at": "2025-08-26T17:40:09Z",
   "fixtures": [
     {
       "id": "2025-PJAHC-G1-R4-CRE-ASK",
@@ -12,7 +12,7 @@
       "datetime_iso": "2025-08-29T18:15:00",
       "home": "Crecora Manister",
       "away": "Askeaton Ballysteen Kilcornan",
-      "venue": "Adare",
+      "venue": "Sean Finn Park, Rathkeale",
       "referee": "David Burke",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
@@ -42,7 +42,7 @@
       "datetime_iso": "2025-08-29T18:15:00",
       "home": "Dromcollogher Broadford",
       "away": "Knockaderry",
-      "venue": "Quaid Park, Coolyroe",
+      "venue": "Newcastle West",
       "referee": "Donnacha O Callaghan",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"

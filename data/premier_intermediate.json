@@ -1,6 +1,6 @@
 {
   "competition": "Premier Intermediate Hurling Championship",
-  "updated_at": "2025-08-26T07:40:04Z",
+  "updated_at": "2025-08-26T17:40:09Z",
   "fixtures": [
     {
       "id": "2025-PIHC-GX-R5-SOU-BRU",
@@ -12,8 +12,8 @@
       "datetime_iso": "2025-08-28T18:00:00",
       "home": "South Liberties",
       "away": "Bruff",
-      "venue": "TBC",
-      "referee": "TBC",
+      "venue": "Ballybrown",
+      "referee": "Timmy Mc Grath",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
     },

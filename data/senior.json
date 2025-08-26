@@ -1,6 +1,6 @@
 {
   "competition": "Senior Hurling Championship",
-  "updated_at": "2025-08-26T07:40:04Z",
+  "updated_at": "2025-08-26T17:40:09Z",
   "fixtures": [
     {
       "id": "2025-SHC-G2-R4-MON-NEW",
@@ -73,7 +73,7 @@
       "home": "Dromin Athlacca",
       "away": "Adare",
       "venue": "Ballingarry",
-      "referee": "TBC",
+      "referee": "Michael Sexton",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
     },
