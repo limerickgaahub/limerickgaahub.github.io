@@ -499,17 +499,28 @@ thead th, tbody td{ padding:.55rem .55rem; }
   </div>
 
   <!-- Expand modal -->
-  <div class="modal" id="standings-modal" aria-hidden="true">
-    <div class="sheet">
-      <div class="sheet-header"><h3>Table</h3><button class="close" id="modal-close">Close</button></div>
-      <div class="table-wrap"><table id="modal-standings">
+<div class="modal" id="standings-modal" aria-hidden="true" inert>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+    <div class="sheet-header">
+      <h3 id="modal-title">Table</h3>
+      <button class="close" id="modal-close">Close</button>
+    </div>
+    <div class="table-wrap">
+      <table id="modal-standings">
         <thead>
-          <tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>
+          <tr>
+            <th>Team</th><th class="right">P</th><th class="right">W</th>
+            <th class="right">D</th><th class="right">L</th>
+            <th class="right">PF</th><th class="right">PA</th>
+            <th class="right">Diff</th><th class="right">Pts</th>
+          </tr>
         </thead>
         <tbody></tbody>
-      </table></div>
+      </table>
     </div>
   </div>
+</div>
+
 
   <footer class="site-footer">Limerick GAA Hub · 2025</footer>
 
