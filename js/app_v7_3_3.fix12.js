@@ -83,6 +83,7 @@ const DISPLAY_NAMES = {
 
   const params=new Proxy(new URLSearchParams(location.search),{get:(sp,prop)=>sp.get(prop)});
   const state={ section:'hurling', view:'matches', comp:null, group:null, team:null, date:null };
+  const FIRST_LOAD_NO_QUERY = !location.search;   // true if user landed without query params
 
   let MATCHES=[];
   let VIEW_MODE='competition';
@@ -131,11 +132,11 @@ const LGH_ANALYTICS = (function(){
     }
   };
 
-  const viewTeam = (teamName) => {
-    const p = `/team/${slug(teamName||'none')}`;
-    page(p, `Team – ${teamName||'(none)'}`);
-    if (typeof gtag === 'function') gtag('event','view_team',{ team: teamName||'(none)' });
-  };
+    const viewTeam = (teamName) => {
+      const p = `/club/${slug(teamName||'none')}`;
+      page(p, `Club – ${teamName||'(none)'}`);
+      if (typeof gtag === 'function') gtag('event','view_club',{ club: teamName||'(none)' });
+    };
 
   const viewDate = (isoDate) => {
     const p = `/date/${isoDate||'none'}`;
@@ -314,22 +315,23 @@ async function load(){
     const menu=el('comp-menu');
     menu.innerHTML=pairs.map(p=>`<div class="item${(desired&&p.comp===desired.comp&&(p.group||'')===(desired.group||''))?' active':''}" data-comp="${esc(p.comp)}" data-group="${esc(p.group)}">${esc(p.short)}</div>`).join('');
 
-    function setPair(p,push=false){
-      state.comp=p.comp; state.group=p.group;
-      el('comp-selected').textContent=p.long;
-
+    function setPair(p, push=false, suppressUrl=false){
+      state.comp = p.comp; state.group = p.group;
+      el('comp-selected').textContent = p.long;
+    
       // default to Matches view visibility
-      el('g-standings').style.display='none';
-      document.querySelector('.matches-wrap').style.display='';
-
+      el('g-standings').style.display = 'none';
+      document.querySelector('.matches-wrap').style.display = '';
+    
       // render
-      const onTable=document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
-      if(onTable) renderStandings(); else renderGroupTable();
-      syncURL(push);
+      const onTable = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
+      if (onTable) renderStandings(); else renderGroupTable();
+    
+      if (!suppressUrl) syncURL(push);
       LGH_ANALYTICS.viewCompetition(state.comp, state.group, onTable ? 'table' : 'matches');
-
     }
-    if(desired) setPair(desired);
+
+    if (desired) setPair(desired, false, FIRST_LOAD_NO_QUERY);
 
     const compTab=el('comp-tab');
     const openMenu=()=>{ const rect=compTab.getBoundingClientRect(); menu.style.top=`${rect.bottom+window.scrollY+6}px`; menu.style.left=`${rect.left+window.scrollX}px`; menu.classList.add('open'); menu.setAttribute('aria-hidden','false'); };
@@ -392,7 +394,8 @@ async function load(){
     const sorted=[...teams.values()].sort((a,b)=>
       (b.pts||0)-(a.pts||0) || (b.diff||0)-(a.diff||0) || (b.pf||0)-(a.pf||0) || a.team.localeCompare(b.team)
     );
-
+ 
+    
     // ensure visibility
     el('g-standings').style.display='';
     document.querySelector('.matches-wrap').style.display='none';
@@ -428,17 +431,24 @@ async function load(){
         </tr>`).join('');
     }
   }
-
+ 
   function syncURL(push=false){
-    const sp=new URLSearchParams();
-    sp.set('s',state.section); sp.set('v',state.view);
-    if(state.comp) sp.set('comp',state.comp);
-    if(state.group) sp.set('group',state.group);
-    if(state.team) sp.set('team',state.team);
-    if(state.date) sp.set('date',state.date);
-    const url=`${location.pathname}?${sp.toString()}`;
-    (push?history.pushState:history.replaceState).call(history,null,'',url);
+    const sp = new URLSearchParams();
+  
+    // only include non-defaults so the root stays clean
+    if (state.section && state.section !== 'hurling') sp.set('s', state.section);
+    if (state.view    && state.view    !== 'matches') sp.set('v', state.view);
+    if (state.comp)   sp.set('comp',  state.comp);
+    if (state.group)  sp.set('group', state.group);
+    if (state.team)   sp.set('team',  state.team);
+    if (state.date)   sp.set('date',  state.date);
+  
+    const q   = sp.toString();
+    const url = q ? `${location.pathname}?${q}` : location.pathname;
+    (push ? history.pushState : history.replaceState).call(history, null, '', url);
   }
+
+
   function currentShareURL(){ syncURL(false); return location.href; }
   function toast(msg){ const div=document.createElement('div'); div.textContent=msg; div.style.cssText='position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:#111;color:#fff;padding:8px 12px;border-radius:8px;z-index:200;opacity:.95'; document.body.appendChild(div); setTimeout(()=>div.remove(),1500); }
 
@@ -473,11 +483,20 @@ async function load(){
       const showTable=seg.getAttribute('data-view')==='table';
       state.view=showTable?'table':'matches';
 
+
       el('g-standings').style.display=showTable?'':'none';
       document.querySelector('.matches-wrap').style.display=showTable?'none':'';
 
       if(showTable) renderStandings(); else renderGroupTable();
-      syncURL(true);
+      // Only push a new URL if we’re NOT on the default (matches) view,
+      // or if there were already query params in the URL.
+      if (state.view !== 'matches' || location.search) {
+        syncURL(true);
+      } else {
+        // Clean any leftover query string (if present) without adding to history
+        syncURL(false);
+      }
+
       LGH_ANALYTICS.viewCompetition(state.comp, state.group, showTable ? 'table' : 'matches');
 
     });
@@ -521,7 +540,7 @@ async function load(){
     VIEW_MODE='team'; state.view='team';
     const sel=el('team');
     const teams=[...new Set(MATCHES.flatMap(r=>[r.home,r.away]).filter(Boolean))].sort();
-    sel.innerHTML='<option value="">Select team…</option>'+teams.map(t=>`<option>${esc(t)}</option>`).join('');
+    sel.innerHTML='<option value="">Select club…</option>'+teams.map(t=>`<option>${esc(t)}</option>`).join('');
     const draw=()=>{
       const team=sel.value||''; state.team=team||null; syncURL();
       const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
@@ -620,15 +639,25 @@ async function load(){
 
   el('status').addEventListener('input',()=>{ renderGroupTable(); syncURL(); });
 
-  (async function(){
+   (async function(){
     await load();
     buildCompetitionMenu();
-    const s=params.s||'hurling'; (function(n){ if(n) n.click(); })(document.querySelector(`.navtab[data-nav="${s}"]`));
-    const v=params.v||'matches';
-    if(v==='table'){ (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="table"]')); }
-    else if(v==='matches'){ (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="matches"]')); }
-    else if(v==='team'){ (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-team"]')); }
-    else if(v==='date'){ (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-date"]')); }
-    else { renderGroupTable(); }
+
+    // Select top-level section
+    const s = params.s || 'hurling';
+    (function(n){ if(n) n.click(); })(document.querySelector(`.navtab[data-nav="${s}"]`));
+
+    // Only click into non-default views when explicitly requested via params.
+    if (params.v === 'table') {
+      (function(n){ if(n) n.click(); })(document.querySelector('#group-panel .section-tabs .seg[data-view="table"]'));
+    } else if (params.v === 'team') {
+      (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-team"]'));
+    } else if (params.v === 'date') {
+      (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-date"]'));
+    } else {
+      // Default (matches) — render directly so the URL stays as /
+      renderGroupTable();
+    }
   })();
+
 })();
