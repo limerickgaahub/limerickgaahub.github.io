@@ -361,6 +361,19 @@ thead th, tbody td{ padding:.55rem .55rem; }
   }
 }
 /* === END PATCH === */
+
+/* Social links in About */
+.social-list{ display:flex; flex-wrap:wrap; gap:10px; margin:8px 0 0; }
+.social-link{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px; border:1px solid var(--line);
+  border-radius:999px; background:#fff; text-decoration:none; color:inherit;
+  font-weight:700; font-size:13px;
+}
+.social-link i{ font-size:14px; }
+
+/* Share buttons – consistent look */
+.iconbtn[data-role]{ padding:8px 12px; font-weight:700; }
 </style>
 
 </head>
@@ -413,6 +426,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
       </div>
 
       <div class="controls card">
+        <label for="status" class="sm-muted" style="margin-right:8px;">Filter</label>
         <select id="status">
           <option value="">All (fixtures & results)</option>
           <option value="Result">Results only</option>
@@ -424,9 +438,13 @@ thead th, tbody td{ padding:.55rem .55rem; }
       <div class="sharebar" id="sharebar-comp">
         <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
         <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
+        <a class="iconbtn" data-role="x"  target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Share on X</a>
+        <a class="iconbtn" data-role="fb" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i> Share on Facebook</a>
+        <a class="iconbtn" data-role="wa" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Share on WhatsApp</a>
+        <a class="iconbtn" data-role="email"><i class="fa-solid fa-envelope"></i> Email</a>
         <div class="spacer"></div>
-        <a class="iconbtn" data-role="x" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Post on X</a>
       </div>
+
     
       <div class="table-wrap matches-wrap">
         <table id="g-table"><thead></thead><tbody></tbody></table>
@@ -453,8 +471,11 @@ thead th, tbody td{ padding:.55rem .55rem; }
       <div class="sharebar" id="sharebar-team">
         <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
         <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
+        <a class="iconbtn" data-role="x"  target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Share on X</a>
+        <a class="iconbtn" data-role="fb" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i> Share on Facebook</a>
+        <a class="iconbtn" data-role="wa" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Share on WhatsApp</a>
+        <a class="iconbtn" data-role="email"><i class="fa-solid fa-envelope"></i> Email</a>
         <div class="spacer"></div>
-        <a class="iconbtn" data-role="x" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Post on X</a>
       </div>
 
       <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table></div>
@@ -469,12 +490,16 @@ thead th, tbody td{ padding:.55rem .55rem; }
         </div>
 
         <!-- Share (Date) — inside the panel -->
-        <div class="sharebar" id="sharebar-date">
-          <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
-          <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
-          <div class="spacer"></div>
-          <a class="iconbtn" data-role="x" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Post on X</a>
-        </div>
+      <div class="sharebar" id="sharebar-date">
+        <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
+        <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
+        <a class="iconbtn" data-role="x"  target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Share on X</a>
+        <a class="iconbtn" data-role="fb" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i> Share on Facebook</a>
+        <a class="iconbtn" data-role="wa" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Share on WhatsApp</a>
+        <a class="iconbtn" data-role="email"><i class="fa-solid fa-envelope"></i> Email</a>
+        <div class="spacer"></div>
+      </div>
+
 
         <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
       </div>
@@ -488,15 +513,25 @@ thead th, tbody td{ padding:.55rem .55rem; }
 
   <!-- About -->
   <div id="panel-about" class="card" style="display:none;">
-    <p>Limerick GAA Hub is designed to provide a clear and intuitive overview of fixtures and results, easily filterable by competition, team, or date.</p>
-    <p>Over time, the aim is to additionally build an archive of historical results.</p>
-    <p>Please note, this site is not associated with Limerick GAA, it has been developed solely by a club member and Limerick supporter.</p>
-    <p>
-      <a href="https://www.instagram.com/limerickgaahub" target="_blank"><i class="fab fa-instagram"></i> @limerickgaahub</a>
-      <a href="https://x.com/limerickgaahub" target="_blank"><i class="fab fa-x-twitter"></i> @limerickgaahub</a>
-      <a href="mailto:limerickgaahub@gmail.com"><i class="fas fa-envelope"></i> limerickgaahub@gmail.com</a>
-    </p>
-  </div>
+      <p>Limerick GAA Hub is designed to provide a clear and intuitive overview of fixtures and results, easily filterable by competition, team, or date.</p>
+      <p>Over time, the aim is to additionally build an archive of historical results.</p>
+      <p>Please note, this site is not associated with Limerick GAA, it has been developed solely by a club member and Limerick supporter.</p>
+      
+      <div class="social-list" aria-label="Social links">
+        <a class="social-link" href="https://www.instagram.com/limerickgaahub" target="_blank" rel="noopener noreferrer"
+           aria-label="Visit Limerick GAA Hub on Instagram">
+           <i class="fab fa-instagram"></i><span>@limerickgaahub</span>
+        </a>
+        <a class="social-link" href="https://x.com/limerickgaahub" target="_blank" rel="noopener noreferrer"
+           aria-label="Visit Limerick GAA Hub on X (Twitter)">
+           <i class="fa-brands fa-x-twitter"></i><span>@limerickgaahub</span>
+        </a>
+        <a class="social-link" href="mailto:limerickgaahub@gmail.com"
+           aria-label="Email Limerick GAA Hub">
+           <i class="fas fa-envelope"></i><span>limerickgaahub@gmail.com</span>
+        </a>
+      </div>
+</div> <!-- end of #panel-about -->
 
   <!-- Expand modal -->
 <div class="modal" id="standings-modal" aria-hidden="true" inert>
@@ -644,47 +679,62 @@ thead th, tbody td{ padding:.55rem .55rem; }
         return { msg: `Limerick GAA Hub — ${compName}: ${viewLabel} (${statusText})` };
       }
 
-      function updateSharebars(){
-        const { msg } = getContext();
-        const url = location.href;
-        const intent = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(msg) + '&url=' + encodeURIComponent(url);
+function updateSharebars(){
+  const { msg } = getContext();
+  const url = location.href;
 
-        ['sharebar-comp','sharebar-team','sharebar-date'].forEach(id=>{
-          const bar = document.getElementById(id);
-          if (!bar) return;
+  // Share intents
+  const xIntent  = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(msg) + '&url=' + encodeURIComponent(url);
+  const fbIntent = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
+  const waIntent = 'https://wa.me/?text=' + encodeURIComponent(msg + ' ' + url);
+  const mailto   = 'mailto:?subject=' + encodeURIComponent('Limerick GAA Hub') +
+                   '&body=' + encodeURIComponent(msg + '\n\n' + url);
 
-          const btnX = bar.querySelector('[data-role="x"]');
-          if (btnX) btnX.href = intent;
+  ['sharebar-comp','sharebar-team','sharebar-date'].forEach(id=>{
+    const bar = document.getElementById(id);
+    if (!bar) return;
 
-          const btnCopy = bar.querySelector('[data-role="copy"]');
-          if (btnCopy) {
-            btnCopy.onclick = async () => {
-              try {
-                await navigator.clipboard.writeText(url);
-                btnCopy.textContent = 'Link copied!';
-                setTimeout(()=> btnCopy.innerHTML = '<i class="fa-solid fa-link"></i> Copy link', 1200);
-              } catch {
-                const t = document.createElement('textarea');
-                t.value = url; document.body.appendChild(t); t.select();
-                document.execCommand('copy'); document.body.removeChild(t);
-                btnCopy.textContent = 'Link copied!';
-                setTimeout(()=> btnCopy.innerHTML = '<i class="fa-solid fa-link"></i> Copy link', 1200);
-              }
-            };
-          }
+    const btnX     = bar.querySelector('[data-role="x"]');
+    const btnFB    = bar.querySelector('[data-role="fb"]');
+    const btnWA    = bar.querySelector('[data-role="wa"]');
+    const btnEmail = bar.querySelector('[data-role="email"]');
+    const btnCopy  = bar.querySelector('[data-role="copy"]');
+    const btnShare = bar.querySelector('[data-role="share"]');
 
-          const btnShare = bar.querySelector('[data-role="share"]');
-          if (btnShare) {
-            btnShare.onclick = async () => {
-              if (navigator.share) {
-                try { await navigator.share({ title: document.title, text: msg, url }); } catch {}
-              } else {
-                window.open(intent, '_blank', 'noopener,noreferrer');
-              }
-            };
-          }
-        });
-      }
+    if (btnX)     btnX.href    = xIntent;
+    if (btnFB)    btnFB.href   = fbIntent;
+    if (btnWA)    btnWA.href   = waIntent;
+    if (btnEmail) btnEmail.href= mailto;
+
+    if (btnCopy) {
+      btnCopy.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(url);
+          btnCopy.textContent = 'Link copied!';
+          setTimeout(()=> btnCopy.innerHTML = '<i class="fa-solid fa-link"></i> Copy link', 1200);
+        } catch {
+          const t = document.createElement('textarea');
+          t.value = url; document.body.appendChild(t); t.select();
+          document.execCommand('copy'); document.body.removeChild(t);
+          btnCopy.textContent = 'Link copied!';
+          setTimeout(()=> btnCopy.innerHTML = '<i class="fa-solid fa-link"></i> Copy link', 1200);
+        }
+      };
+    }
+
+    if (btnShare) {
+      btnShare.onclick = async () => {
+        if (navigator.share) {
+          try { await navigator.share({ title: document.title, text: msg, url }); } catch {}
+        } else {
+          // No Web Share API — fall back to Facebook (best preview card)
+          window.open(fbIntent, '_blank', 'noopener,noreferrer');
+        }
+      };
+    }
+  });
+}
+
 
       ['change','click','input','popstate','hashchange'].forEach(evt=>{
         window.addEventListener(evt, ()=> setTimeout(updateSharebars, 50), true);
