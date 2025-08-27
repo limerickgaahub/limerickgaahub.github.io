@@ -570,17 +570,35 @@ thead th, tbody td{ padding:.55rem .55rem; }
 /* === LGH PATCH — widen numeric columns in expanded standings (modal) === */
 #modal-standings th.right,
 #modal-standings td.right {
-  min-width: 3.2em;   /* a touch wider than default */
+  min-width: 3.8em;   /* a touch wider than default */
 }
 
 @media (max-width:600px){
   #modal-standings th.right,
   #modal-standings td.right {
-    min-width: 3.4em; /* even wider on small screens */
+    min-width: 4.2em; /* even wider on small screens */
   }
 }
 
-      
+/* === LGH PATCH — keep card tables inside the card border === */
+#group-panel .table-wrap > table,
+#by-team .table-wrap > table,
+#by-date .table-wrap > table,
+#g-standings-table {
+  width: 99.5%;   /* was 100% via the global table rule */
+  margin: 0 auto; /* centers so both vertical edges align cleanly */
+}
+
+/* On very narrow screens, trim a touch more */
+@media (max-width: 420px){
+  #group-panel .table-wrap > table,
+  #by-team .table-wrap > table,
+  #by-date .table-wrap > table,
+  #g-standings-table {
+    width: 99%;
+  }
+}
+    
 </style>
 
 </head>
