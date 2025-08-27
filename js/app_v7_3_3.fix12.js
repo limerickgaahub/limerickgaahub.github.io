@@ -194,7 +194,7 @@ async function load(){
       return;
     }
     const j = await res.json();
-    MATCHES = (j.matches||j||[]).map(r=>{
+    (async function()
       const out={
         competition:r.competition||'', group:r.group||'', round:r.round||'',
         date:r.date||'', time:r.time||'', home:r.home||'', away:r.away||'',
@@ -203,6 +203,11 @@ async function load(){
         away_goals:r.away_goals, away_points:r.away_points,
       };
       out.code=compCode(out.competition);
+     // Normalise group names (strip competition prefix)
+      if (out.group) {
+        out.group = out.group.replace(out.competition, '').trim();
+      }
+      
       return attachScores(out);
     });
   } catch(err) {
