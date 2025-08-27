@@ -567,6 +567,19 @@ thead th, tbody td{ padding:.55rem .55rem; }
   .sharebar .spacer { display:none; }
 }
 
+/* === LGH PATCH — widen numeric columns in expanded standings (modal) === */
+#modal-standings th.right,
+#modal-standings td.right {
+  min-width: 3.2em;   /* a touch wider than default */
+}
+
+@media (max-width:600px){
+  #modal-standings th.right,
+  #modal-standings td.right {
+    min-width: 3.4em; /* even wider on small screens */
+  }
+}
+
       
 </style>
 
