@@ -66,12 +66,84 @@
 :root{
   --card:#ffffff; --muted:#6b7280; --accent:#006B3C; --accent-2:#88C999;
   --line:#e9ecef; --text:#111; --bg:#f6f7f8;
-
 }
+
+/* A11y-only label */
+.sr-only {
+  position:absolute!important; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* Controls container stays tidy */
+.controls.card { 
+  display:flex; align-items:center; gap:8px; 
+}
+
+/* Pretty SELECT (status / team) */
+.pretty-select {
+  position:relative; flex:1;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid var(--line);
+  overflow:hidden;
+}
+.pretty-select select {
+  appearance:none; -webkit-appearance:none; -moz-appearance:none;
+  border:0; outline:0; background:transparent;
+  width:100%;
+  padding:.65rem 2.2rem .65rem .9rem;
+  font-size:1rem; line-height:1.2;
+}
+.pretty-select::after {
+  content:"";
+  position:absolute; right:.8rem; top:50%; transform:translateY(-50%) rotate(45deg);
+  width:.55rem; height:.55rem; border-right:2px solid #666; border-bottom:2px solid #666;
+  pointer-events:none;
+}
+
+/* Pretty INPUT (date) to match the SELECT look */
+.pretty-input {
+  position:relative; flex:1;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid var(--line);
+  overflow:hidden;
+}
+.pretty-input input[type="date"] {
+  border:0; outline:0; background:transparent;
+  width:100%;
+  padding:.65rem .9rem;
+  font-size:1rem; line-height:1.2;
+}
+
+/* If you use a darker toolbar somewhere, you can add a .toolbar-dark parent and mirror colors:
+.toolbar-dark .pretty-select, .toolbar-dark .pretty-input { background:#111; border-color:#222; }
+.toolbar-dark .pretty-select select, .toolbar-dark .pretty-input input { color:#fff; }
+.toolbar-dark .pretty-select::after { border-color:#bbb; }
+*/
+
+/* ===== Safe dead-space reclaim (sides) ===== */
+body {                 /* was margin: 70px 20px 20px; */
+  margin:70px 12px 20px;
+}
+@media (max-width:880px){
+  body {               /* was 60px 10px 10px; you already had this block; override slightly */
+    margin:60px 8px 10px;
+  }
+  .card {              /* a touch tighter on mobile */
+    padding:10px;      /* you already apply 10px below; keep it consistent */
+  }
+}
+/* Optional: make the main cards slightly rounder/tighter to reduce the “double-outline” feel */
+.card { border:1px solid var(--line); }  /* adds a clean single boundary so the inner table border feels intentional */
+.table-wrap { border-color:#eef0f2; }    /* soften inner border */
+
+  
 *{ box-sizing:border-box; }
 html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 body{
-  margin:70px 20px 20px;
+  /* keep your new margins */
+  margin:70px 12px 20px;
   font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
   background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
 }
@@ -227,7 +299,6 @@ td.match, th.match{ text-align:center; }
   }
 }
 @media (max-width:880px){
-  body{ margin:60px 10px 10px; }
   .navtabs{ display:none; }
   .burger{ display:inline-block; }
   .card{ padding:12px; }
@@ -518,14 +589,16 @@ thead th, tbody td{ padding:.55rem .55rem; }
     <!-- New: Matches dropdown menu -->
     <div class="menu" id="matches-menu" role="menu" aria-hidden="true"></div>
 
-      <div class="controls card">
-        <label for="status" class="sm-muted" style="margin-right:8px;">Filter</label>
-        <select id="status">
-          <option value="">All (fixtures & results)</option>
-          <option value="Result">Results only</option>
-          <option value="Fixture">Fixtures only</option>
-        </select>
-      </div>
+      <div class="controls card" id="controls-matches">
+  <label for="status" class="sr-only">Show</label>
+  <div class="pretty-select">
+    <select id="status">
+      <option value="">All (fixtures & results)</option>
+      <option value="Result">Results only</option>
+      <option value="Fixture">Fixtures only</option>
+    </select>
+  </div>
+</div>
 
 
     
@@ -556,9 +629,13 @@ thead th, tbody td{ padding:.55rem .55rem; }
 
       <div class="panel card" id="by-team" style="display:none; margin-top:6px;">
         <h2>By Club</h2>
-        <div class="controls card">
+        <div class="controls card" id="controls-team">
+          <label for="team" class="sr-only">Select club</label>
+        <div class="pretty-select">
           <select id="team"><option value="">Select club…</option></select>
-        </div>
+    </div>
+  </div>
+
       
         <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table></div>
       
@@ -574,10 +651,13 @@ thead th, tbody td{ padding:.55rem .55rem; }
         <!-- Share (Date) — inside the panel -->
             <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
               <h2>By Date</h2>
-              <div class="controls card">
-                <label for="date-jump" class="sm-muted" style="margin-right:8px;">Go to date</label>
-                <input id="date-jump" type="date" />
+              <div class="controls card" id="controls-date">
+                <label for="date-jump" class="sr-only">Go to date</label>
+                <div class="pretty-input">
+                  <input id="date-jump" type="date" />
+                </div>
               </div>
+
             
               <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
 
@@ -633,11 +713,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
       <p style="font-size: 12px; color: #6b7280; margin-top: 15px;">
         Privacy: This site uses Google Analytics to collect anonymous visitor statistics. 
         No personal data is collected or shared.
-      </p>
-  </div>
-
-
-        
+      </p>     
 </div> <!-- end of #panel-about -->
 
   <!-- Expand modal -->
@@ -699,17 +775,31 @@ thead th, tbody td{ padding:.55rem .55rem; }
       if(menu){ menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
     }
 
-    // Tabs: ensure correct visibility each time
-    document.querySelectorAll('#group-panel .section-tabs .seg').forEach(seg=>{
-      seg.addEventListener('click', ()=>{
-        const wrap=seg.parentElement;
-        wrap.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
-        seg.classList.add('active');
-        const showTable = seg.getAttribute('data-view')==='table';
-        document.getElementById('g-standings').style.display = showTable ? '' : 'none';
-        document.querySelector('.matches-wrap').style.display = showTable ? 'none' : '';
-      });
+     // Tabs: ensure correct visibility each time
+  document.querySelectorAll('#group-panel .section-tabs .seg').forEach(seg=>{
+    seg.addEventListener('click', ()=>{
+      const wrap = seg.parentElement;
+      wrap.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
+      seg.classList.add('active');
+  
+      const showTable = seg.getAttribute('data-view') === 'table';
+  
+      // Toggle Matches vs Table content
+      document.getElementById('g-standings').style.display = showTable ? '' : 'none';
+      document.querySelector('.matches-wrap').style.display = showTable ? 'none' : '';
+  
+      // Hide/show the Matches-only filter controls
+      const matchesControls = document.getElementById('controls-matches');
+      if (matchesControls) matchesControls.style.display = showTable ? 'none' : '';
+  
+      // Optional: reset filter to "All" when leaving Matches
+      if (showTable) {
+        const sel = document.getElementById('status');
+        if (sel) sel.value = '';
+      }
     });
+  });
+
 
     // View tab switching closes dropdown
     document.querySelectorAll('.view-tabs .vt').forEach(seg=>{
@@ -721,6 +811,17 @@ thead th, tbody td{ padding:.55rem .55rem; }
       tab.addEventListener('click', ()=>{ closeCompMenu(); });
     });
 
+    // Also hide matches-only controls when leaving the Competition view
+      document.querySelectorAll('.view-tabs .vt').forEach(seg=>{
+        seg.addEventListener('click', ()=>{
+          const inGroup = seg.dataset.target === 'group-panel';
+          const mc = document.getElementById('controls-matches');
+          if (mc) mc.style.display = inGroup ? '' : 'none';
+        });
+      });
+
+
+    
     // Back button
 
     // Brand click = reset to Hurling Competition
