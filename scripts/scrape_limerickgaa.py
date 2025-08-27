@@ -152,6 +152,23 @@ LABEL_LIKE_RE = re.compile(
 WO_RE = re.compile(r'^(W\/O|Walkover)$', re.I)
 BYE_RE = re.compile(r'^BYE$', re.I)
 
+CODE_WITH_DIGITS_RE = re.compile(r'^[A-Z]{2,}\d+[A-Z0-9]*$')  # e.g., SJBHCG1
+
+def is_plausible_team(name: str) -> bool:
+    t = (name or "").strip()
+    if not t:
+        return False
+    # never treat these as teams
+    if BYE_RE.match(t) or WO_RE.match(t) or LABEL_LIKE_RE.match(t):
+        return False
+    # reject short ALL-CAPS tokens with digits and no spaces (competition/stage codes)
+    if " " not in t and t.upper() == t and CODE_WITH_DIGITS_RE.match(t):
+        return False
+    return True
+
+
+
+
 def ensure_parent(path: str):
     d = os.path.dirname(path)
     if d and not os.path.isdir(d):
@@ -310,6 +327,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
       - results: team lines 'Team 1 - 20' or separate score lines
       - skips 'league' lines and stage labels
       - recognises W/O (walkover) and BYE as statuses (not team names)
+      - blocks code-like tokens (e.g. SJBHCG1) from becoming team names
     """
     FIELD_LABEL_RE = re.compile(r'^(venue|referee|throw[\s\-]*in|time|date|round|group)\s*:?\s*$', re.I)
 
@@ -427,7 +445,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
 
         if mode == "results":
             if c["wo_winner"] in ("home", "away"):
-                # Leave scores blank for walkovers; UI can show "W/O"
+                # Leave scores blank for walkovers; UI can render "W/O"
                 rec["home_goals"] = None; rec["home_points"] = None
                 rec["away_goals"] = None; rec["away_points"] = None
             else:
@@ -477,12 +495,12 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
             team = mres.group("team").strip()
             g = int(mres.group("g")); p = int(mres.group("p"))
             if not cur["team_a"]:
-                if not LABEL_LIKE_RE.match(team) and not BYE_RE.match(team):
+                if is_plausible_team(team):
                     cur["team_a"] = team
                     cur["home_goals"], cur["home_points"] = g, p
                 continue
             elif not cur["team_b"]:
-                if not LABEL_LIKE_RE.match(team) and not BYE_RE.match(team):
+                if is_plausible_team(team):
                     cur["team_b"] = team
                     cur["away_goals"], cur["away_points"] = g, p
                 continue
@@ -535,18 +553,18 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
         if s.upper() in {"V", "VS"}:
             continue
 
-        # Teams (guarded)
+        # Teams (guarded by plausibility)
         if not cur["team_a"]:
-            if not LABEL_LIKE_RE.match(s) and not BYE_RE.match(s) and not WO_RE.match(s):
+            if is_plausible_team(s):
                 cur["team_a"] = s
             continue
         elif not cur["team_b"]:
-            if not LABEL_LIKE_RE.match(s) and not BYE_RE.match(s) and not WO_RE.match(s):
+            if is_plausible_team(s):
                 cur["team_b"] = s
             continue
         else:
             cur = flush(cur)
-            if not LABEL_LIKE_RE.match(s) and not BYE_RE.match(s) and not WO_RE.match(s):
+            if is_plausible_team(s):
                 cur["team_a"] = s
                 cur["team_b"] = None
             continue
@@ -555,6 +573,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
         flush(cur)
 
     return results
+
 
 # ---------- De-duplication (within each grade) ----------
 def _mk_key(rec):
