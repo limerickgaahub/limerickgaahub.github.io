@@ -86,9 +86,14 @@ const DISPLAY_NAMES = {
   const toInt=v=>v==null||v===''?null:(Number(v)||0);
   const parseRoundNum=r=>{ const m=String(r||'').match(/(\d+)/); return m?Number(m[1]):999; };
 
-  const RESULT_RE=/^(res|final)/i;
+  // Treat "Walkover" as a result for all filters/partitions.
+  const RESULT_RE=/^(res|final|walkover)/i;
   const isResult=s=>RESULT_RE.test(String(s||''));
   const isFixture=s=>!isResult(s);
+  
+  // Helper to sort Results first, then Fixtures (used in Team/Date views)
+  const resultRank = m => isResult(m?.status) ? 0 : 1;
+
 
   const params=new Proxy(new URLSearchParams(location.search),{get:(sp,prop)=>sp.get(prop)});
   const state={ section:'hurling', view:'matches', comp:null, group:null, team:null, date:null };
@@ -214,6 +219,19 @@ async function load(){
 
       out.code = compCode(out.competition);
 
+      // ---- Walkover detection (winner side) ----
+      const WO_STATUS = /walkover/i;
+      const WO_TAG = /\bW\/\s*O\b/i;   // matches "W/O" (with or without a space)
+      
+      if (WO_STATUS.test(out.status)) {
+        out.is_walkover = true;
+        if (WO_TAG.test(out.home))      out.walkover_winner = 'home';
+        else if (WO_TAG.test(out.away)) out.walkover_winner = 'away';
+        else                            out.walkover_winner = null; // fallback if not tagged in names
+      }
+
+
+
      // Normalise group names to "Group 1", "Group 2", etc.
       if (out.group) {
         const g = String(out.group).trim();
@@ -270,7 +288,9 @@ async function load(){
     const rShort=(r.round||'').replace(/^Round\s*/i,'R').replace(/\s+/g,'')||'—';
     const dShort=fmtDateShort(r.date), tShort=fmtTimeShort(r.time||'');
     const stShort=isResult(r.status)?'R':'F';
-    const scoreMid=(r._homeMid&&r._awayMid)?`${r._homeMid} - ${r._awayMid}`:'—';
+    const scoreMid = (/^walkover$/i.test(r.status))
+  ? 'W/O'
+  : ((r._homeMid && r._awayMid) ? `${r._homeMid} - ${r._awayMid}` : '—');
 
     const showMeta=(VIEW_MODE!=='competition');
     const meta = showMeta ? `<div class="match-meta">${esc(r.code)} · ${esc(groupShort(r.group||''))}</div>` : '';
@@ -549,17 +569,88 @@ function rebuildMatchesMenu(){
       if(!teams.has(f.home)) teams.set(f.home,{team:f.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
       if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
     }
-    const results=fixtures.filter(r=>isResult(r.status));
-    for(const m of results){
-      const hs=pointsFromGoalsPoints(m.home_goals,m.home_points);
-      const as=pointsFromGoalsPoints(m.away_goals,m.away_points);
-      if(hs==null||as==null) continue;
-      const H=teams.get(m.home), A=teams.get(m.away);
-      H.p++; A.p++; H.pf+=hs; H.pa+=as; A.pf+=as; A.pa+=hs;
-      if(hs>as){ H.w++; H.pts+=2; A.l++; }
-      else if(hs<as){ A.w++; A.pts+=2; H.l++; }
-      else{ H.d++; A.d++; H.pts++; A.pts++; }
+
+const results = fixtures.filter(r => isResult(r.status));
+
+for (const m of results) {
+  const H = teams.get(m.home);
+  const A = teams.get(m.away);
+
+  // --- Walkover branch: count as played, 2 pts to W/O side, no PF/PA ---
+  if (String(m.status).toLowerCase() === 'walkover') {
+    H.p++; A.p++;
+
+    // Prefer explicit flag from load(); fall back to "W/O" tag in names.
+    let winnerSide = m.walkover_winner;
+    if (!winnerSide) {
+      const WO_TAG = /\bW\/\s*O\b/i;
+      if (WO_TAG.test(m.home)) winnerSide = 'home';
+      else if (WO_TAG.test(m.away)) winnerSide = 'away';
     }
+
+    if (winnerSide === 'home') { H.w++; H.pts += 2; A.l++; }
+    else if (winnerSide === 'away') { A.w++; A.pts += 2; H.l++; }
+    else { console.warn('[LGH] Walkover without clear winner:', m); }
+
+    continue; // IMPORTANT: do not run normal score logic
+  }
+
+  // --- Normal scored result path ---
+  const hs = pointsFromGoalsPoints(m.home_goals, m.home_points);
+  const as = pointsFromGoalsPoints(m.away_goals, m.away_points);
+  if (hs == null || as == null) continue;
+
+  H.p++; A.p++;
+  H.pf += hs; H.pa += as;
+  A.pf += as; A.pa += hs;
+
+  if (hs > as) { H.w++; H.pts += 2; A.l++; }
+  else if (hs < as) { A.w++; A.pts += 2; H.l++; }
+  else { H.d++; A.d++; H.pts++; A.pts++; }
+}
+
+
+
+  // --- Walkover branch: count as played, 2 pts to the W/O side, no PF/PA ---
+  if (String(m.status).toLowerCase() === 'walkover') {
+    H.p++; A.p++;
+
+    // Prefer explicit winner flag from load(); fall back to "W/O" tag in names
+    let winnerSide = m.walkover_winner;
+    if (!winnerSide) {
+      const WO_TAG = /\bW\/\s*O\b/i;
+      if (WO_TAG.test(m.home)) winnerSide = 'home';
+      else if (WO_TAG.test(m.away)) winnerSide = 'away';
+    }
+
+    if (winnerSide === 'home') {
+      H.w++; H.pts += 2;
+      A.l++;
+    } else if (winnerSide === 'away') {
+      A.w++; A.pts += 2;
+      H.l++;
+    } else {
+      // If we can't determine winner, treat as admin-only result: don't award points
+      // (Still counted as played so the table rows align with your data reality)
+      console.warn('[LGH] Walkover without clear winner:', m);
+    }
+    continue; // IMPORTANT: skip normal score logic
+  }
+
+    // --- Normal scored result path ---
+    const hs = pointsFromGoalsPoints(m.home_goals, m.home_points);
+    const as = pointsFromGoalsPoints(m.away_goals, m.away_points);
+    if (hs == null || as == null) continue;
+  
+    H.p++; A.p++;
+    H.pf += hs; H.pa += as;
+    A.pf += as; A.pa += hs;
+  
+    if (hs > as) { H.w++; H.pts += 2; A.l++; }
+    else if (hs < as) { A.w++; A.pts += 2; H.l++; }
+    else { H.d++; A.d++; H.pts++; A.pts++; }
+  }
+
     for(const t of teams.values()){ t.diff=(t.pf||0)-(t.pa||0); }
 
     const sorted=[...teams.values()].sort((a,b)=>
@@ -726,7 +817,10 @@ function rebuildMatchesMenu(){
       const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
       const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
       if(!team){ tbody.innerHTML=''; return; }
-      const rows=MATCHES.filter(r=>r.home===team||r.away===team).sort(sortRoundDate);
+      const rows = MATCHES
+      .filter(r => r.home === team || r.away === team)
+      // Results (incl. Walkover) first, then normal round/date/time ordering
+      .sort((a,b) => resultRank(a) - resultRank(b) || sortRoundDate(a,b));
       tbody.innerHTML=rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
       LGH_ANALYTICS.viewTeam(team);
     };
@@ -741,7 +835,9 @@ function rebuildMatchesMenu(){
     const tbl=el('date-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
     const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
 
-    const rows=[...MATCHES].sort(sortDateComp);
+    const rows = [...MATCHES]
+    // Results (incl. Walkover) first, then your existing date/comp/time ordering
+    .sort((a,b) => resultRank(a) - resultRank(b) || sortDateComp(a,b));
     tbody.innerHTML=rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
 
     const candidates=Array.from(tbody.querySelectorAll('tr[data-date]'));
