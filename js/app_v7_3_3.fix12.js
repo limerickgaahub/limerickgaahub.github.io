@@ -793,6 +793,16 @@ function rebuildMatchesMenu(){
 
    (async function(){
     await load();
+
+console.groupCollapsed('[LGH] Data groups by competition');
+const comps = [...new Set(MATCHES.map(m => m.competition))];
+for (const c of comps) {
+  const gs = [...new Set(MATCHES.filter(m => m.competition===c).map(m => (m.group||'').trim() || '(none)'))];
+  console.log(c, '→', gs);
+}
+console.groupEnd();
+
+     
     buildCompetitionMenu();
     if (typeof rebuildMatchesMenu === 'function') rebuildMatchesMenu();
 
