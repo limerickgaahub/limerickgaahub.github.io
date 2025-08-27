@@ -82,7 +82,6 @@ const DISPLAY_NAMES = {
   "Junior B Hurling Championship": {
     label: "Junior B",
     long:  "Woodlands House Hotel Junior B Hurling Championship",
-    divisions:["City","East","West"]        // special case: City/East/West
   },
   "Junior C Hurling Championship": {
     label: "Junior C",
@@ -447,6 +446,7 @@ function buildCompetitionMenu(){
 
     // Rebuild matches menu/label for this comp
     rebuildMatchesMenu();
+    updateTableTabVisibility();
 
     // Render matches (ensure Matches view visible)
     el('g-standings').style.display = 'none';
@@ -544,6 +544,20 @@ function setMatchesLabel(){
   }
 }
 
+function updateTableTabVisibility(){
+  const tableSeg   = document.querySelector('#group-panel .section-tabs .seg[data-view="table"]');
+  const matchesSeg = document.querySelector('#group-panel .section-tabs .seg[data-view="matches"]');
+  if (!tableSeg) return;
+
+  const hide = (state.group === 'Knockout');
+  tableSeg.style.display = hide ? 'none' : '';
+
+  // If Table was active and we’re hiding it, switch back to Matches
+  if (hide && tableSeg.classList.contains('active') && matchesSeg) {
+    matchesSeg.click();
+  }
+}
+
 
 function closeMatchesMenu(){
   const mm = el('matches-menu');
@@ -579,6 +593,7 @@ function rebuildMatchesMenu(){
       state.group = null;
       setMatchesLabel();
       closeMatchesMenu();
+      updateTableTabVisibility();
       renderGroupTable();
       syncURL();
     });
@@ -593,6 +608,7 @@ function rebuildMatchesMenu(){
         state.group = 'Knockout';
         setMatchesLabel();
         closeMatchesMenu();
+        updateTableTabVisibility(); 
         renderGroupTable();
         syncURL();
       });
@@ -611,6 +627,7 @@ function rebuildMatchesMenu(){
         state.group = g;
         setMatchesLabel();
         closeMatchesMenu();
+        updateTableTabVisibility();
         renderGroupTable();
         syncURL();
         LGH_ANALYTICS.viewCompetition(state.comp, state.group, 'matches');
@@ -651,6 +668,7 @@ function rebuildMatchesMenu(){
   const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; 
   buildHead(thead,isMobile,isTiny);
   const status=el('status').value;
+  updateTableTabVisibility();
 
   // ensure visibility
   el('g-standings').style.display='none';
