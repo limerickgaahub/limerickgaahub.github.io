@@ -29,7 +29,19 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4
+          pip install requests beautifulsoup4 lxml python-dateutil pyyaml
+
+      - name: Run scraper to tmp
+        run: python scripts/scrape_limerickgaa.py --outdir tmp_data
+
+      - name: Validate scraped data
+        run: python scripts/validate_data.py --indir tmp_data
+
+      - name: Replace data on success
+        run: |
+          rm -rf data_old || true
+          mv data data_old || true
+          mv tmp_data data
 
       - name: Run scraper
         run: python scripts/scrape_limerickgaa.py
