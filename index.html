@@ -476,31 +476,40 @@ thead th, tbody td{ padding:.55rem .55rem; }
 }
 /* === END PATCH === */
 
-/* Make table & controls span to card edges on mobile and remove inner side borders */
+/* === LGH PATCH — mobile: bleed inner blocks to card edges (with +1px overbleed) === */
 @media (max-width: 880px){
-  /* match your mobile .card padding (you set it to 10px) */
+  /* declare mobile card padding + derived overbleed */
+  :root{
+    --card-pad: 10px;            /* your mobile .card padding */
+    --bleed: calc(var(--card-pad) + 1px);  /* +1px to hide curve/border seam */
+  }
+
+  /* Ensure cards actually use the variable (keeps things DRY if you change later) */
+  .card{ padding: var(--card-pad); }
+
+  /* Tables: Competition / Club / Date */
   #group-panel .table-wrap,
   #by-team .table-wrap,
   #by-date .table-wrap{
-    margin-left: -10px;
-    margin-right: -10px;
+    margin-left: calc(-1 * var(--bleed));
+    margin-right: calc(-1 * var(--bleed));
     border-left: 0;
     border-right: 0;
     border-radius: 0;
   }
 
-  /* Optional: align the filter/club/date control box to the edges too */
+  /* Controls (filter / club select / date picker) */
   #group-panel .controls.card,
   #by-team .controls.card,
   #by-date .controls.card{
-    margin-left: -10px;
-    margin-right: -10px;
+    margin-left: calc(-1 * var(--bleed));
+    margin-right: calc(-1 * var(--bleed));
     border-left: 0;
     border-right: 0;
     border-radius: 0;
   }
 }
-
+/* === END PATCH === */
   
 /* Social links in About */
 .social-list{ display:flex; flex-wrap:wrap; gap:10px; margin:8px 0 0; }
