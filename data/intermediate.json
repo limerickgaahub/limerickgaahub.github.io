@@ -1,15 +1,15 @@
 {
   "competition": "Intermediate Hurling Championship",
-  "updated_at": "2025-08-27T12:00:33Z",
+  "updated_at": "2025-08-27T12:32:32Z",
   "fixtures": [
     {
       "id": "2025-IHC-G2-R4-KNO-MUR",
       "round": "R 4",
       "group": "Group 2",
       "date": "2025-08-28",
-      "time_local": "18:00",
+      "time_local": "18:15",
       "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-28T18:00:00",
+      "datetime_iso": "2025-08-28T18:15:00",
       "home": "Knockainey",
       "away": "Murroe Boher",
       "venue": "Cappamore",
