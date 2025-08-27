@@ -1,22 +1,7 @@
 {
   "competition": "Junior C Hurling Championship",
-  "updated_at": "2025-08-27T12:32:32Z",
+  "updated_at": "2025-08-27T13:35:04Z",
   "fixtures": [
-    {
-      "id": "2025-JCHC-G1-R4-PAT-BYE",
-      "round": "R 4",
-      "group": "Group 1",
-      "date": "2025-08-31",
-      "time_local": "18:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-31T18:00:00",
-      "home": "Patrickswell",
-      "away": "BYE",
-      "venue": "Patrickswell",
-      "referee": "TBC",
-      "status": "Bye",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
-    },
     {
       "id": "2025-JCHC-G1-R4-MON-NA-",
       "round": "R 4",
@@ -347,11 +332,7 @@
       "venue": "Boher",
       "referee": "TBC",
       "status": "Walkover",
-      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/"
     },
     {
       "id": "2025-JCHC-G1-R5-BAL-MUR",
@@ -366,11 +347,7 @@
       "venue": "BALLYBROWN GAA",
       "referee": "TBC",
       "status": "Walkover",
-      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/"
     },
     {
       "id": "2025-JCHC-G1-R4-MUR-GAR",
@@ -385,11 +362,7 @@
       "venue": "Boher",
       "referee": "TBC",
       "status": "Walkover",
-      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/"
     },
     {
       "id": "2025-JCHC-G2-R3-DRO-DOO",
@@ -404,30 +377,7 @@
       "venue": "Dromcollogher/ Broadford GAA",
       "referee": "Billy Philip",
       "status": "Walkover",
-      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "id": "2025-JCHC-G2-R3-HOS-EFF",
-      "round": "R 3",
-      "group": "Group 2",
-      "date": "2025-08-24",
-      "time_local": "11:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-24T11:00:00",
-      "home": "Hospital Herbertstown",
-      "away": "Effin",
-      "venue": "TBC",
-      "referee": "TBC",
-      "status": "Result",
-      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
-      "home_goals": 0,
-      "home_points": 10,
-      "away_goals": 3,
-      "away_points": 22
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/"
     },
     {
       "id": "2025-JCHC-G1-R3-NA--MUR",
@@ -442,11 +392,7 @@
       "venue": "Caherdavin",
       "referee": "TBC",
       "status": "Walkover",
-      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/"
     },
     {
       "id": "2025-JCHC-G1-R3-PAT-MON",
@@ -556,11 +502,7 @@
       "venue": "Boher",
       "referee": "TBC",
       "status": "Walkover",
-      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/"
     },
     {
       "id": "2025-JCHC-G1-R2-BAL-GAR",
@@ -651,11 +593,7 @@
       "venue": "Monagea",
       "referee": "TBC",
       "status": "Walkover",
-      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/"
     },
     {
       "id": "2025-JCHC-G2-R1-KIL-ADA",

@@ -1,6 +1,6 @@
 {
   "competition": "Junior A Hurling Championship",
-  "updated_at": "2025-08-27T12:32:32Z",
+  "updated_at": "2025-08-27T13:35:04Z",
   "fixtures": [
     {
       "id": "2025-JAHC-G2-R4-CAS-GAR",
@@ -354,25 +354,6 @@
       "home_points": 16,
       "away_goals": 1,
       "away_points": 19
-    },
-    {
-      "id": "2025-JAHC-G2-R2-EFF-GLE",
-      "round": "R 2",
-      "group": "Group 2",
-      "date": "2025-08-09",
-      "time_local": "19:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-09T19:00:00",
-      "home": "Effin",
-      "away": "Glenroe",
-      "venue": "TBC",
-      "referee": "TBC",
-      "status": "Result",
-      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
-      "home_goals": 0,
-      "home_points": 15,
-      "away_goals": 0,
-      "away_points": 18
     },
     {
       "id": "2025-JAHC-G1-R2-PAT-KIL",
