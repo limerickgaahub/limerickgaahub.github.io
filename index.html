@@ -442,13 +442,13 @@ thead th, tbody td{ padding:.55rem .55rem; }
   #g-table thead th:nth-child(2),  #g-table tbody td:nth-child(2),
   #team-table thead th:nth-child(2),#team-table tbody td:nth-child(2),
   #date-table thead th:nth-child(2),#date-table tbody td:nth-child(2){
-    width:5.0rem;
+    width:4.5rem;
   }
 
   #g-table thead th:nth-child(4),  #g-table tbody td:nth-child(4),
   #team-table thead th:nth-child(4),#team-table tbody td:nth-child(4),
   #date-table thead th:nth-child(4),#date-table tbody td:nth-child(4){
-    width:26%;
+    width:27%;
     text-align:center !important;
     vertical-align:middle !important;
   }
@@ -464,7 +464,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
   #g-table thead th:nth-child(4),  #g-table tbody td:nth-child(4),
   #team-table thead th:nth-child(4),#team-table tbody td:nth-child(4),
   #date-table thead th:nth-child(4),#date-table tbody td:nth-child(4){
-    width:27%;   /* was 26% above */
+    width:28%;   /* was 26% above */
   }
 
   /* Optional: if Venue text still clips on very long names,
@@ -476,6 +476,32 @@ thead th, tbody td{ padding:.55rem .55rem; }
 }
 /* === END PATCH === */
 
+/* Make table & controls span to card edges on mobile and remove inner side borders */
+@media (max-width: 880px){
+  /* match your mobile .card padding (you set it to 10px) */
+  #group-panel .table-wrap,
+  #by-team .table-wrap,
+  #by-date .table-wrap{
+    margin-left: -10px;
+    margin-right: -10px;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+  }
+
+  /* Optional: align the filter/club/date control box to the edges too */
+  #group-panel .controls.card,
+  #by-team .controls.card,
+  #by-date .controls.card{
+    margin-left: -10px;
+    margin-right: -10px;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+  }
+}
+
+  
 /* Social links in About */
 .social-list{ display:flex; flex-wrap:wrap; gap:10px; margin:8px 0 0; }
 .social-link{
