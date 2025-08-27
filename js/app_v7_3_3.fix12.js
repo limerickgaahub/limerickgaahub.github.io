@@ -922,28 +922,69 @@ function renderStandings(){
     });
   });
 
-  function renderByTeam(){
-    VIEW_MODE='team'; state.view='team';
-    const sel=el('team');
-    const teams=[...new Set(MATCHES.flatMap(r=>[r.home,r.away]).filter(Boolean))].sort();
-    sel.innerHTML='<option value="">Select club…</option>'+teams.map(t=>`<option>${esc(t)}</option>`).join('');
-    const draw=()=>{
-      const team=sel.value||''; state.team=team||null; syncURL();
-      const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
-      const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
-      if(!team){ tbody.innerHTML=''; return; }
-      const rows = MATCHES
-      .filter(r => r.home === team || r.away === team)
-      // Results (incl. Walkover) first, then normal round/date/time ordering
-      .sort((a,b) => resultRank(a) - resultRank(b) || sortRoundDate(a,b));
-      tbody.innerHTML=rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
-      LGH_ANALYTICS.viewTeam(team);
-    };
-    sel.oninput=draw; addEventListener('resize',draw);
-    const tbl=el('team-table'); const thead=tbl.tHead||tbl.createTHead(); buildHead(thead, matchMedia('(max-width:880px)').matches, matchMedia('(max-width:400px)').matches);
-    tbl.tBodies[0] ? (tbl.tBodies[0].innerHTML='') : tbl.createTBody();
-    if(params.team){ sel.value=params.team; sel.dispatchEvent(new Event('input')); }
-  }
+function renderByTeam(){
+  VIEW_MODE='team'; state.view='team';
+  const sel = el('team');
+
+  // --- Only additions: tiny helpers for cleaning + filtering ---
+  const cleanName = s => String(s || '')
+    .replace(/\(\s*W\/\s*O\s*\)/gi, '')  // remove "(W/O)"
+    .replace(/\bW\/\s*O\b/gi, '')        // remove bare "W/O"
+    .replace(/\s{2,}/g,' ')
+    .trim();
+
+  const looksLikeClub = s => {
+    const x = (s || '').trim();
+    if (!x) return false;
+    if (/\bgroup\b/i.test(x)) return false;                               // "Group 1", "1st Group"
+    if (/^(winner|winners|runner|runners-?up|loser|losers)\b/i.test(x)) return false;
+    if (/^(tbc|bye)$/i.test(x)) return false;
+    return true;
+  };
+  // --- end additions ---
+
+  // Build dropdown: unique, cleaned, club-only
+  const teams = [...new Set(
+    MATCHES.flatMap(r => [cleanName(r.home), cleanName(r.away)])
+           .filter(looksLikeClub)
+  )].sort();
+
+  sel.innerHTML = '<option value="">Select club…</option>' +
+                  teams.map(t => `<option>${esc(t)}</option>`).join('');
+
+  const draw = () => {
+    const team = sel.value || '';
+    state.team = team || null;
+    syncURL();
+
+    const tbl   = el('team-table');
+    const thead = tbl.tHead || tbl.createTHead();
+    const tbody = tbl.tBodies[0] || tbl.createTBody();
+    const isMobile = matchMedia('(max-width:880px)').matches;
+    const isTiny   = matchMedia('(max-width:400px)').matches;
+    buildHead(thead, isMobile, isTiny);
+
+    if (!team) { tbody.innerHTML=''; return; }
+
+    // Use cleaned names for matching (so KO placeholders / W/O tags don’t interfere)
+    const rows = MATCHES
+      .filter(r => cleanName(r.home) === team || cleanName(r.away) === team)
+      .sort((a,b) => resultRank(a) - resultRank(b) || sortRoundDate(a,b)); // same sort as before
+
+    tbody.innerHTML = rows.map(r => rowHTML(r, isMobile, isTiny)).join('');
+    LGH_ANALYTICS.viewTeam(team);
+  };
+
+  sel.oninput = draw;
+  addEventListener('resize', draw);
+
+  const tbl = el('team-table');
+  const thead = tbl.tHead || tbl.createTHead();
+  buildHead(thead, matchMedia('(max-width:880px)').matches, matchMedia('(max-width:400px)').matches);
+  tbl.tBodies[0] ? (tbl.tBodies[0].innerHTML='') : tbl.createTBody();
+
+  if (params.team) { sel.value = params.team; sel.dispatchEvent(new Event('input')); }
+}
 
   function renderByDate(){
     VIEW_MODE='date'; state.view='date';
