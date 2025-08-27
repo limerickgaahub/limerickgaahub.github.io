@@ -567,25 +567,39 @@ thead th, tbody td{ padding:.55rem .55rem; }
   .sharebar .spacer { display:none; }
 }
 
-/* === LGH PATCH — widen numeric columns in expanded standings (modal) === */
+/* Wider numeric columns (default desktop/tablet) */
+#g-standings-table th.right,
+#g-standings-table td.right,
 #modal-standings th.right,
 #modal-standings td.right {
-  min-width: 3.8em;   /* a touch wider than default */
+  min-width: 3.6em;
 }
 
-@media (max-width:600px){
-  #modal-standings th.right,
-  #modal-standings td.right {
-    min-width: 4.2em; /* even wider on small screens */
+/* Diff column: give extra space */
+#g-standings-table th:nth-child(8),
+#g-standings-table td:nth-child(8),
+#modal-standings th:nth-child(8),
+#modal-standings td:nth-child(8) {
+  min-width: 4.5em;
+}
+
+/* On very small screens, tighten Diff slightly to avoid overflow */
+@media (max-width: 420px) {
+  #g-standings-table th:nth-child(8),
+  #g-standings-table td:nth-child(8),
+  #modal-standings th:nth-child(8),
+  #modal-standings td:nth-child(8) {
+    min-width: 3.8em; /* compromise */
   }
 }
+
 
 /* === LGH PATCH — keep card tables inside the card border === */
 #group-panel .table-wrap > table,
 #by-team .table-wrap > table,
 #by-date .table-wrap > table,
 #g-standings-table {
-  width: 99.5%;   /* was 100% via the global table rule */
+  width: 99.0%;   /* was 100% via the global table rule */
   margin: 0 auto; /* centers so both vertical edges align cleanly */
 }
 
@@ -598,7 +612,26 @@ thead th, tbody td{ padding:.55rem .55rem; }
     width: 99%;
   }
 }
-    
+
+/* === LGH PATCH — widen numeric columns in standings === */
+#g-standings-table th.right,
+#g-standings-table td.right,
+#modal-standings th.right,
+#modal-standings td.right {
+  min-width: 4em; /* base for P, W, D, L, PF, PA, Pts */
+}
+
+/* Give Diff extra space */
+#g-standings-table th:nth-child(8),
+#g-standings-table td:nth-child(8),
+#modal-standings th:nth-child(8),
+#modal-standings td:nth-child(8) {
+  min-width: 4.5em;  /* much wider for Diff */
+  text-align: right;
+}
+
+
+
 </style>
 
 </head>
