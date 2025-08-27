@@ -214,12 +214,21 @@ async function load(){
 
       out.code = compCode(out.competition);
 
-      // Normalise group names: if group starts with the full competition name, strip it.
+     // Normalise group names to "Group 1", "Group 2", etc.
       if (out.group) {
         const g = String(out.group).trim();
-        const c = String(out.competition).trim();
-        out.group = g.startsWith(c) ? g.slice(c.length).trim() : g;
+      
+        // If it contains "... Group 1/2/3", keep just that bit
+        const m = g.match(/(Group\s*[A-Z0-9]+)\s*$/i);
+        if (m) {
+          out.group = m[1].replace(/\s+/g, ' ').trim(); // e.g., "Group 1"
+        } else {
+          // Fallback: try to strip the competition name anywhere in the string
+          const c = String(out.competition).trim();
+          out.group = g.replace(c, '').trim() || g;
+        }
       }
+
 
       return attachScores(out);
     });
