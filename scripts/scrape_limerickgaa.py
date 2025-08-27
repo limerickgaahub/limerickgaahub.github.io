@@ -118,12 +118,22 @@ BYE_RE = re.compile(r'^BYE$', re.I)
 
 CODE_WITH_DIGITS_RE = re.compile(r'^[A-Z]{2,}\d+[A-Z0-9]*$')  # e.g., SJBHCG1
 
+# Generic header-ish lines that should never be teams and should close buckets
+HEADLINE_BAD_RE = re.compile(
+    r'\b(championship|fixtures?|results?|final|semi[-\s]?finals?|quarter[-\s]?finals?|cup)\b',
+    re.I
+)
+REGION_RE = re.compile(r'\b(city|east|west|south)\b', re.I)
+
 def is_plausible_team(name: str) -> bool:
     t = (name or "").strip()
     if not t:
         return False
     # never treat these as teams
     if BYE_RE.match(t) or WO_RE.match(t) or LABEL_LIKE_RE.match(t):
+        return False
+    # reject lines that look like section/competition headers
+    if HEADLINE_BAD_RE.search(t):
         return False
     # reject short ALL-CAPS tokens with digits and no spaces (competition/stage codes)
     if " " not in t and t.upper() == t and CODE_WITH_DIGITS_RE.match(t):
@@ -238,6 +248,7 @@ def parse_blocks_from_page(url: str, comp_key: str, mode: str) -> List[Dict]:
     Fetch lines, detect exact group headings for the given comp, parse each block.
     Hard-stop on football headings or any other comp heading.
     """
+    # pick slug
     slug = ""
     for key, s in SLUGS.items():
         if URLS.get(key) == url:
@@ -261,11 +272,15 @@ def parse_blocks_from_page(url: str, comp_key: str, mode: str) -> List[Dict]:
     for ln in all_lines:
         n = norm(ln)
 
-        # If inside a bucket: end it on any other comp heading or football/league section
+        # If inside a bucket: end it on any other comp heading or football/league/other headers
         if current_group_heading:
             if "football" in n:
                 flush_bucket(); current_group_heading = None; continue
             if n in STRICT_ALL and n not in allowed_here:
+                flush_bucket(); current_group_heading = None; continue
+            if HEADLINE_BAD_RE.search(n) and n not in allowed_here:
+                flush_bucket(); current_group_heading = None; continue
+            if REGION_RE.search(n) and "hurling" in n:
                 flush_bucket(); current_group_heading = None; continue
             if re.search(r"\bleague\b", n, flags=re.I):
                 flush_bucket(); current_group_heading = None; continue
@@ -292,6 +307,10 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
       - recognises W/O (walkover) and BYE as statuses (not team names)
       - blocks code-like tokens (e.g. SJBHCG1) from becoming team names
     """
+    # absolute safety: only emit if heading is one of the allowed exact headings
+    if norm(group_heading) not in STRICT_ALLOWED.get(comp_key, set()):
+        return []
+
     FIELD_LABEL_RE = re.compile(r'^(venue|referee|throw[\s\-]*in|time|date|round|group)\s*:?\s*$', re.I)
 
     # --- Pre-stitch dates and metadata ---
@@ -431,6 +450,10 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
 
         # Never let '... league ...' lines become teams/metadata
         if "league" in low:
+            continue
+
+        # Skip any stray competition/section headers that slipped through
+        if HEADLINE_BAD_RE.search(low):
             continue
 
         # ignore standalone ordinal fragments
@@ -594,7 +617,7 @@ def write_combined_hurling(payloads: Dict[str, Dict], outdir: str):
                 "home": r.get("home") or "",
                 "away": r.get("away") or "",
                 "venue": r.get("venue") or "",
-                "status": r.get("status") or "",  # SCHEDULED typically empty in combined
+                "status": r.get("status") or "",
                 "home_goals": r.get("home_goals"),
                 "home_points": r.get("home_points"),
                 "away_goals": r.get("away_goals"),
