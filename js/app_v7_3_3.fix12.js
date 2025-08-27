@@ -217,6 +217,7 @@ async function load(){
     }
     const j = await res.json();
 
+    // Base dataset (from limerickgaa.ie or your file)
     MATCHES = (j.matches || j || []).map(r => {
       const out = {
         competition: r.competition || '',
@@ -234,15 +235,42 @@ async function load(){
         away_points: r.away_points,
       };
 
-              // ---- Merge manual Knockout overlay ----
-      try {
-        const r = await fetch(`${KO_URL}?t=${Date.now()}`, { cache:'no-store' });
-        if (r.ok) {
-          const ko = await r.json();
-      
-          const normalized = (ko.matches || ko || []).map(r => attachScores({
+      out.code = compCode(out.competition);
+
+      // Walkover detection
+      const WO_STATUS = /walkover/i;
+      const WO_TAG = /\bW\/\s*O\b/i;
+      if (WO_STATUS.test(out.status)) {
+        out.is_walkover = true;
+        if (WO_TAG.test(out.home))      out.walkover_winner = 'home';
+        else if (WO_TAG.test(out.away)) out.walkover_winner = 'away';
+        else                            out.walkover_winner = null;
+      }
+
+      // Normalise group names
+      if (out.group) {
+        const g = String(out.group).trim();
+        const m = g.match(/(Group\s*[A-Z0-9]+)\s*$/i);
+        if (m) out.group = m[1].replace(/\s+/g, ' ').trim();
+        else {
+          const c = String(out.competition).trim();
+          out.group = g.replace(c, '').trim() || g;
+        }
+      }
+
+      return attachScores(out);
+    });
+
+    // ---- Merge manual Knockout overlay (OUTSIDE the map) ----
+    try {
+      const r2 = await fetch(`${KO_URL}?t=${Date.now()}`, { cache:'no-store' });
+      if (r2.ok) {
+        const ko = await r2.json();
+        const normalized = (ko.matches || ko || []).map(r => {
+          const out = {
             competition: r.competition || '',
-            group:       'Knockout',                         // force Knockout group
+            group:       'Knockout',
+            stage:       'knockout',
             round:       r.round || '',
             date:        r.date || '',
             time:        r.time || '',
@@ -250,52 +278,21 @@ async function load(){
             away:        r.away || '',
             venue:       r.venue || '',
             status:      r.status || 'Provisional'
-          }));
-      
-          MATCHES = mergeById(MATCHES, normalized);
-        }
-      } catch(e){
-        console.warn('[LGH] KO overlay skipped:', e);
+          };
+          out.code = compCode(out.competition);
+          return attachScores(out);
+        });
+        MATCHES = mergeById(MATCHES, normalized);
       }
-
-      out.code = compCode(out.competition);
-
-      // ---- Walkover detection (winner side) ----
-      const WO_STATUS = /walkover/i;
-      const WO_TAG = /\bW\/\s*O\b/i;   // matches "W/O" (with or without a space)
-      
-      if (WO_STATUS.test(out.status)) {
-        out.is_walkover = true;
-        if (WO_TAG.test(out.home))      out.walkover_winner = 'home';
-        else if (WO_TAG.test(out.away)) out.walkover_winner = 'away';
-        else                            out.walkover_winner = null; // fallback if not tagged in names
-      }
-
-
-
-     // Normalise group names to "Group 1", "Group 2", etc.
-      if (out.group) {
-        const g = String(out.group).trim();
-      
-        // If it contains "... Group 1/2/3", keep just that bit
-        const m = g.match(/(Group\s*[A-Z0-9]+)\s*$/i);
-        if (m) {
-          out.group = m[1].replace(/\s+/g, ' ').trim(); // e.g., "Group 1"
-        } else {
-          // Fallback: try to strip the competition name anywhere in the string
-          const c = String(out.competition).trim();
-          out.group = g.replace(c, '').trim() || g;
-        }
-      }
-
-
-      return attachScores(out);
-    });
+    } catch(e){
+      console.warn('[LGH] KO overlay skipped:', e);
+    }
 
   } catch (err) {
     console.error('[LGH] Data load threw error:', err);
   }
 }
+
 
 
   const sortRoundDate=(a,b)=> (a._rnum-b._rnum) || (a.date||'').localeCompare(b.date||'') || (a.time||'').localeCompare(b.time||'');
@@ -541,27 +538,54 @@ function rebuildMatchesMenu(){
   const groups = getGroupsForComp(state.comp);
   mm.innerHTML = '';
 
-if (!groups.length){
-  // PIHC base item
-  const b = document.createElement('div');
-  b.className = 'item';
-  b.textContent = 'PIHC';
-  b.addEventListener('click', ()=>{ state.group = null; setMatchesLabel(); closeMatchesMenu(); renderGroupTable(); syncURL(); });
-  mm.appendChild(b);
+  if (!groups.length){
+    // PIHC base item
+    const b = document.createElement('div');
+    b.className = 'item';
+    b.textContent = 'PIHC';
+    b.addEventListener('click', ()=>{
+      state.group = null;
+      setMatchesLabel();
+      closeMatchesMenu();
+      renderGroupTable();
+      syncURL();
+    });
+    mm.appendChild(b);
 
-  // Optional Knockout for PIHC
-  if (MATCHES.some(m => m.competition === state.comp && isKO(m))) {
-    const k = document.createElement('div');
-    k.className = 'item';
-    k.textContent = 'Knockout';
-    k.addEventListener('click', ()=>{ state.group = 'Knockout'; setMatchesLabel(); closeMatchesMenu(); renderGroupTable(); syncURL(); });
-    mm.appendChild(k);
-  }
+    // Optional Knockout for PIHC
+    if (MATCHES.some(m => m.competition === state.comp && isKO(m))) {
+      const k = document.createElement('div');
+      k.className = 'item';
+      k.textContent = 'Knockout';
+      k.addEventListener('click', ()=>{
+        state.group = 'Knockout';
+        setMatchesLabel();
+        closeMatchesMenu();
+        renderGroupTable();
+        syncURL();
+      });
+      mm.appendChild(k);
+    }
 
-  state.group = state.group === 'Knockout' ? 'Knockout' : null;
-}
+    state.group = state.group === 'Knockout' ? 'Knockout' : null;
 
-    // Ensure default is first available option (works for both Group1/2 and City/East/West)
+  } else {
+    // Normal grouped/divisional competitions
+    groups.forEach(g=>{
+      const b = document.createElement('div');
+      b.className = 'item';
+      b.textContent = g;
+      b.addEventListener('click', ()=>{
+        state.group = g;
+        setMatchesLabel();
+        closeMatchesMenu();
+        renderGroupTable();
+        syncURL();
+        LGH_ANALYTICS.viewCompetition(state.comp, state.group, 'matches');
+      });
+      mm.appendChild(b);
+    });
+
     if (!state.group || !groups.includes(state.group)) state.group = groups[0];
   }
 
