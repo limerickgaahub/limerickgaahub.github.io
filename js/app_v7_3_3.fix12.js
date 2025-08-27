@@ -18,53 +18,62 @@ const COMP_CODES = {
   "Senior Hurling Championship": "SHC",
   "Premier Intermediate Hurling Championship": "PIHC",
   "Intermediate Hurling Championship": "IHC",
-
-  // NEW
   "Premier Junior A Hurling Championship": "PJAHC",
   "Junior A Hurling Championship": "JAHC",
+  "Junior B Hurling Championship": "JBHC",
   "Junior C Hurling Championship": "JCHC",
 };
 
 // Optional, if you have an explicit display/order list:
 const COMPETITION_ORDER = [
-  "Senior Hurling Championship",
-  "Premier Intermediate Hurling Championship",
-  "Intermediate Hurling Championship",
-  // NEW
-  "Premier Junior A Hurling Championship",
-  "Junior A Hurling Championship",
-  "Junior C Hurling Championship",
+  "Senior",
+  "Premier Intermediate",
+  "Intermediate",
+  "Premier Junior A",
+  "Junior A",
+  "Junior B",
+  "Junior C",
 ];
 
 // Display labels used for dropdown pills and expanded headers
 const DISPLAY_NAMES = {
   "Senior Hurling Championship": {
-    "Group 1": { short:"SHC – G1", long:"WhiteBox County Senior Hurling Championship - Group 1" },
-    "Group 2": { short:"SHC – G2", long:"WhiteBox County Senior Hurling Championship - Group 2" },
+    label: "Senior",
+    long:  "WhiteBox County Senior Hurling Championship",
+    groups: ["Group 1","Group 2"]          // used for Matches dropdown
   },
   "Premier Intermediate Hurling Championship": {
-    short:"PIHC",
-    long:"Lyons of Limerick County Premier Intermediate Hurling Championship"
+    label: "Premier Intermediate",
+    long:  "Lyons of Limerick County Premier Intermediate Hurling Championship",
+    pihc:  true                             // special case: Matches shows "PIHC" only
   },
   "Intermediate Hurling Championship": {
-    "Group 1": { short:"IHC – G1", long:"County Intermediate Hurling Championship - Group 1" },
-    "Group 2": { short:"IHC – G2", long:"County Intermediate Hurling Championship - Group 2" },
+    label: "Intermediate",
+    long:  "County Intermediate Hurling Championship",
+    groups:["Group 1","Group 2"]
   },
-
-  // NEW — Junior comps (match backend group strings)
   "Premier Junior A Hurling Championship": {
-    "Group 1": { short:"PJAHC – G1", long:"Woodlands House Hotel County Premier Junior A Hurling Championship - Group 1" },
-    "Group 2": { short:"PJAHC – G2", long:"Woodlands House Hotel County Premier Junior A Hurling Championship - Group 2" },
+    label: "Premier Junior A",
+    long:  "Woodlands House Hotel County Premier Junior A Hurling Championship",
+    groups:["Group 1","Group 2"]
   },
   "Junior A Hurling Championship": {
-    "Group 1": { short:"JAHC – G1", long:"Woodlands House Hotel County Junior A Hurling Championship - Group 1" },
-    "Group 2": { short:"JAHC – G2", long:"Woodlands House Hotel County Junior A Hurling Championship - Group 2" },
+    label: "Junior A",
+    long:  "Woodlands House Hotel County Junior A Hurling Championship",
+    groups:["Group 1","Group 2"]
+  },
+  "Junior B Hurling Championship": {
+    label: "Junior B",
+    long:  "Woodlands House Hotel Junior B Hurling Championship",
+    divisions:["City","East","West"]        // special case: City/East/West
   },
   "Junior C Hurling Championship": {
-    "Group 1": { short:"JCHC -G1", long:"Woodlands House Hotel County Junior C Hurling Championship - Group 1" },
-    "Group 2": { short:"JCHC – G2", long:"Woodlands House Hotel County Junior C Hurling Championship - Group 2" },
-  },
+    label: "Junior C",
+    long:  "Woodlands House Hotel County Junior C Hurling Championship",
+    groups:["Group 1","Group 2"]
+  }
 };
+
 
 
   const el=id=>document.getElementById(id), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -275,36 +284,45 @@ async function load(){
   } // /* LGH PATCH: close rowHTML cleanly */
 
 function buildCompetitionMenu(){
-  // Limit to your six comps (order preserved)
+  // Limit to the seven comps (order preserved)
   const ALL = [
     "Senior Hurling Championship",
     "Premier Intermediate Hurling Championship",
     "Intermediate Hurling Championship",
     "Premier Junior A Hurling Championship",
     "Junior A Hurling Championship",
+    "Junior B Hurling Championship",
     "Junior C Hurling Championship"
   ];
 
 
   // Build menu items (no groups here)
+    // Build menu items
   const menu = el('comp-menu');
   menu.innerHTML = ALL.map(c => {
     const dn = DISPLAY_NAMES[c];
-    // Prefer long name if present; otherwise use c
-    const label = (dn && dn.long) ? dn.long : c;
+    // Use short label (dn.label) for dropdown; fallback to c
+    const label = (dn && dn.label) ? dn.label : c;
     return `<div class="item" data-comp="${esc(c)}">${esc(label)}</div>`;
   }).join('');
+
 
   // Desired default: Senior -> Group 1
   function setCompetition(comp, push=false, suppressUrl=false){
     state.comp = comp || ALL[0];
 
     // Default group: Group 1 for all except PIHC (no groups)
-    if (state.comp === "Premier Intermediate Hurling Championship") {
-      state.group = null;
-    } else {
-      state.group = "Group 1";
-    }
+      const meta = DISPLAY_NAMES[state.comp] || {};
+      if (meta.pihc) {
+        state.group = null;                       // PIHC: no groups
+      } else if (meta.divisions?.length) {
+        state.group = meta.divisions[0];          // JBHC: default to "City"
+      } else if (meta.groups?.length) {
+        state.group = meta.groups[0];             // all others with groups: default "Group 1"
+      } else {
+        state.group = null;
+      }
+
 
     // Selected header
     const dn = DISPLAY_NAMES[state.comp];
@@ -366,22 +384,27 @@ function buildCompetitionMenu(){
 }
 
 function getGroupsForComp(comp){
-  // Infer from data; if nothing found and not PIHC, fallback to G1/G2
+  const meta = DISPLAY_NAMES[comp] || {};
+  if (meta.pihc) return [];                          // PIHC: show single "PIHC" item
+  if (meta.divisions?.length) return meta.divisions; // JBHC: City/East/West
+  if (meta.groups?.length) return meta.groups;       // Others: Group 1/2
+  // Fallback: infer from data
   const groupsRaw = MATCHES.filter(m=>m.competition===comp).map(m=>m.group||'').filter(Boolean);
   const uniq = [...new Set(groupsRaw)].sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
-  if (comp === "Premier Intermediate Hurling Championship") return []; // no groups
-  if (uniq.length) return uniq;
-  return ["Group 1","Group 2"]; // safe fallback
+  return uniq.length ? uniq : ["Group 1","Group 2"];
 }
+
 
 function setMatchesLabel(){
   const matchesLabel = el('matches-label');
   if (!matchesLabel) return;
-  if (state.comp === "Premier Intermediate Hurling Championship") {
-    matchesLabel.textContent = "PIHC";
+  const meta = DISPLAY_NAMES[state.comp] || {};
+  if (meta.pihc) {
+    matchesLabel.textContent = 'PIHC';
+  } else if (meta.divisions?.length) {
+    matchesLabel.textContent = state.group || meta.divisions[0];   // City/East/West
   } else {
-    const g = state.group || "Group 1";
-    matchesLabel.textContent = g;
+    matchesLabel.textContent = state.group || 'Group 1';
   }
 }
 
@@ -419,7 +442,7 @@ function rebuildMatchesMenu(){
     mm.appendChild(b);
     state.group = null;
   } else {
-    // Groups present
+    // Groups or Divisions (e.g., Group 1/2 or City/East/West)
     groups.forEach(g=>{
       const b = document.createElement('div');
       b.className = 'item';
@@ -435,12 +458,13 @@ function rebuildMatchesMenu(){
       mm.appendChild(b);
     });
 
-    // Ensure default is G1 on comp change
-    if (!state.group || !groups.includes(state.group)) state.group = 'Group 1';
+    // Ensure default is first available option (works for both Group1/2 and City/East/West)
+    if (!state.group || !groups.includes(state.group)) state.group = groups[0];
   }
 
   setMatchesLabel();
 }
+
 
 // Toggle/open the Matches dropdown only when Matches view is active
 (function(){
@@ -485,7 +509,14 @@ function rebuildMatchesMenu(){
   function pointsFromGoalsPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
 
   function renderStandings(){
-    const fixtures=MATCHES.filter(r=>r.competition===state.comp && (r.group||'')===(state.group||''));
+    // For PIHC (no groups) include all fixtures in the competition.
+  // For all others, filter by the currently selected group/division.
+  const meta = DISPLAY_NAMES[state.comp] || {};
+  const fixtures = MATCHES.filter(r =>
+    r.competition === state.comp &&
+    (meta.pihc ? true : (r.group||'') === (state.group||''))
+  );
+  
     const teams=new Map();
     for(const f of fixtures){
       if(!teams.has(f.home)) teams.set(f.home,{team:f.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
