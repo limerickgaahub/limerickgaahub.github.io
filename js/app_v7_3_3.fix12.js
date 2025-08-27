@@ -555,144 +555,104 @@ function rebuildMatchesMenu(){
 
   function pointsFromGoalsPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
 
-  function renderStandings(){
-    // For PIHC (no groups) include all fixtures in the competition.
+function renderStandings(){
+  // For PIHC (no groups) include all fixtures in the competition.
   // For all others, filter by the currently selected group/division.
   const meta = DISPLAY_NAMES[state.comp] || {};
   const fixtures = MATCHES.filter(r =>
     r.competition === state.comp &&
     (meta.pihc ? true : (r.group||'') === (state.group||''))
   );
-  
-    const teams=new Map();
-    for(const f of fixtures){
-      if(!teams.has(f.home)) teams.set(f.home,{team:f.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
-      if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
-    }
 
-const results = fixtures.filter(r => isResult(r.status));
-
-for (const m of results) {
-  const H = teams.get(m.home);
-  const A = teams.get(m.away);
-
-  // --- Walkover branch: count as played, 2 pts to W/O side, no PF/PA ---
-  if (String(m.status).toLowerCase() === 'walkover') {
-    H.p++; A.p++;
-
-    // Prefer explicit flag from load(); fall back to "W/O" tag in names.
-    let winnerSide = m.walkover_winner;
-    if (!winnerSide) {
-      const WO_TAG = /\bW\/\s*O\b/i;
-      if (WO_TAG.test(m.home)) winnerSide = 'home';
-      else if (WO_TAG.test(m.away)) winnerSide = 'away';
-    }
-
-    if (winnerSide === 'home') { H.w++; H.pts += 2; A.l++; }
-    else if (winnerSide === 'away') { A.w++; A.pts += 2; H.l++; }
-    else { console.warn('[LGH] Walkover without clear winner:', m); }
-
-    continue; // IMPORTANT: do not run normal score logic
+  const teams=new Map();
+  for(const f of fixtures){
+    if(!teams.has(f.home)) teams.set(f.home,{team:f.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
+    if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
   }
 
-  // --- Normal scored result path ---
-  const hs = pointsFromGoalsPoints(m.home_goals, m.home_points);
-  const as = pointsFromGoalsPoints(m.away_goals, m.away_points);
-  if (hs == null || as == null) continue;
+  const results = fixtures.filter(r => isResult(r.status));
 
-  H.p++; A.p++;
-  H.pf += hs; H.pa += as;
-  A.pf += as; A.pa += hs;
+  for (const m of results) {
+    const H = teams.get(m.home);
+    const A = teams.get(m.away);
 
-  if (hs > as) { H.w++; H.pts += 2; A.l++; }
-  else if (hs < as) { A.w++; A.pts += 2; H.l++; }
-  else { H.d++; A.d++; H.pts++; A.pts++; }
-}
+    // --- Walkover branch: count as played, 2 pts to W/O side, no PF/PA ---
+    if (String(m.status).toLowerCase() === 'walkover') {
+      H.p++; A.p++;
 
+      // Prefer explicit flag from load(); fall back to "W/O" tag in names.
+      let winnerSide = m.walkover_winner;
+      if (!winnerSide) {
+        const WO_TAG = /\bW\/\s*O\b/i;
+        if (WO_TAG.test(m.home)) winnerSide = 'home';
+        else if (WO_TAG.test(m.away)) winnerSide = 'away';
+      }
 
+      if (winnerSide === 'home') { H.w++; H.pts += 2; A.l++; }
+      else if (winnerSide === 'away') { A.w++; A.pts += 2; H.l++; }
+      else { console.warn('[LGH] Walkover without clear winner:', m); }
 
-  // --- Walkover branch: count as played, 2 pts to the W/O side, no PF/PA ---
-  if (String(m.status).toLowerCase() === 'walkover') {
-    H.p++; A.p++;
-
-    // Prefer explicit winner flag from load(); fall back to "W/O" tag in names
-    let winnerSide = m.walkover_winner;
-    if (!winnerSide) {
-      const WO_TAG = /\bW\/\s*O\b/i;
-      if (WO_TAG.test(m.home)) winnerSide = 'home';
-      else if (WO_TAG.test(m.away)) winnerSide = 'away';
+      continue; // IMPORTANT: do not run normal score logic
     }
-
-    if (winnerSide === 'home') {
-      H.w++; H.pts += 2;
-      A.l++;
-    } else if (winnerSide === 'away') {
-      A.w++; A.pts += 2;
-      H.l++;
-    } else {
-      // If we can't determine winner, treat as admin-only result: don't award points
-      // (Still counted as played so the table rows align with your data reality)
-      console.warn('[LGH] Walkover without clear winner:', m);
-    }
-    continue; // IMPORTANT: skip normal score logic
-  }
 
     // --- Normal scored result path ---
     const hs = pointsFromGoalsPoints(m.home_goals, m.home_points);
     const as = pointsFromGoalsPoints(m.away_goals, m.away_points);
     if (hs == null || as == null) continue;
-  
+
     H.p++; A.p++;
     H.pf += hs; H.pa += as;
     A.pf += as; A.pa += hs;
-  
+
     if (hs > as) { H.w++; H.pts += 2; A.l++; }
     else if (hs < as) { A.w++; A.pts += 2; H.l++; }
     else { H.d++; A.d++; H.pts++; A.pts++; }
   }
 
-    for(const t of teams.values()){ t.diff=(t.pf||0)-(t.pa||0); }
+  for(const t of teams.values()){ t.diff=(t.pf||0)-(t.pa||0); }
 
-    const sorted=[...teams.values()].sort((a,b)=>
-      (b.pts||0)-(a.pts||0) || (b.diff||0)-(a.diff||0) || (b.pf||0)-(a.pf||0) || a.team.localeCompare(b.team)
-    );
- 
-    
-    // ensure visibility
-    el('g-standings').style.display='';
-    document.querySelector('.matches-wrap').style.display='none';
+  const sorted=[...teams.values()].sort((a,b)=>
+    (b.pts||0)-(a.pts||0) || (b.diff||0)-(a.diff||0) || (b.pf||0)-(a.pf||0) || a.team.localeCompare(b.team)
+  );
 
-    const tbody=document.querySelector('#g-standings-table tbody');
-    tbody.innerHTML=sorted.map(r=>`
+  // ensure visibility
+  el('g-standings').style.display='';
+  document.querySelector('.matches-wrap').style.display='none';
+
+  const tbody=document.querySelector('#g-standings-table tbody');
+  tbody.innerHTML=sorted.map(r=>`
+    <tr>
+      <td>${esc(r.team)}</td>
+      <td class="right">${r.p||0}</td>
+      <td class="right">${r.w||0}</td>
+      <td class="right">${r.d||0}</td>
+      <td class="right">${r.l||0}</td>
+      <td class="right"><strong>${r.pts||0}</strong></td>
+    </tr>`).join('');
+
+  const mt=el('modal-standings');
+  if(mt){
+    if(!mt.tHead||!mt.tHead.rows.length){
+      mt.createTHead().innerHTML=`<tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>`;
+    }
+    const mb=mt.tBodies[0]||mt.createTBody();
+    mb.innerHTML=sorted.map(r=>`
       <tr>
         <td>${esc(r.team)}</td>
         <td class="right">${r.p||0}</td>
         <td class="right">${r.w||0}</td>
         <td class="right">${r.d||0}</td>
         <td class="right">${r.l||0}</td>
+        <td class="right">${r.pf||0}</td>
+        <td class="right">${r.pa||0}</td>
+        <td class="right">${r.diff||0}</td>
         <td class="right"><strong>${r.pts||0}</strong></td>
       </tr>`).join('');
-
-    const mt=el('modal-standings');
-    if(mt){
-      if(!mt.tHead||!mt.tHead.rows.length){
-        mt.createTHead().innerHTML=`<tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>`;
-      }
-      const mb=mt.tBodies[0]||mt.createTBody();
-      mb.innerHTML=sorted.map(r=>`
-        <tr>
-          <td>${esc(r.team)}</td>
-          <td class="right">${r.p||0}</td>
-          <td class="right">${r.w||0}</td>
-          <td class="right">${r.d||0}</td>
-          <td class="right">${r.l||0}</td>
-          <td class="right">${r.pf||0}</td>
-          <td class="right">${r.pa||0}</td>
-          <td class="right">${r.diff||0}</td>
-          <td class="right"><strong>${r.pts||0}</strong></td>
-        </tr>`).join('');
-    }
   }
+}
+
+
+
  
   function syncURL(push=false){
     const sp = new URLSearchParams();
@@ -913,7 +873,9 @@ for (const m of results) {
 })();
 
 
-  el('status').addEventListener('input',()=>{ renderGroupTable(); syncURL(); });
+ const statusEl = el('status');
+  if (statusEl) statusEl.addEventListener('input', ()=>{ renderGroupTable(); syncURL(); });
+
 
    (async function(){
     await load();
