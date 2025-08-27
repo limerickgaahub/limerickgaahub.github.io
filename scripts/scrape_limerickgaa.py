@@ -65,75 +65,39 @@ COMP_NAMES = {
     "JCHC":  "Junior C Hurling Championship",
 }
 
-# -------- Group heading matching (SPONSOR-PROOF) --------
-# We strip sponsor tokens from headings and then match against scoped regexes per competition.
-SPONSOR_TOKENS = [
-    r"white\s*box",
-    r"lyons\s+of\s+limerick",
-    r"woodlands\s+house\s+hotel",
-    r"county",        # often inserted before the competition name
-]
-
-# Group patterns: only the stable, competition-specific words.
-GROUP_PATTERNS: Dict[str, List[re.Pattern]] = {
+# ---- STRICT GROUP HEADINGS (exact as on site; normalized for case/spacing) ----
+GROUPS_STRICT = {
     "SHC": [
-        re.compile(r"senior hurling championship\s+group\s*1$", re.I),
-        re.compile(r"senior hurling championship\s+group\s*2$", re.I),
+        "White BOX County Senior Hurling Championship Group 1",
+        "White BOX County Senior Hurling Championship Group 2",
     ],
     "PIHC": [
-        re.compile(r"premier intermediate hurling championship$", re.I),  # site presents as a single block (no explicit group N)
+        "Lyons of Limerick County Premier Intermediate Hurling Championship",
     ],
     "IHC": [
-        re.compile(r"intermediate hurling championship\s+group\s*1$", re.I),
-        re.compile(r"intermediate hurling championship\s+group\s*2$", re.I),
+        "County Intermediate Hurling Championship Group 1",
+        "County Intermediate Hurling Championship Group 2",
     ],
     "PJAHC": [
-        re.compile(r"premier junior a hurling championship\s+group\s*1$", re.I),
-        re.compile(r"premier junior a hurling championship\s+group\s*2$", re.I),
+        "Woodlands House Hotel County Premier Junior A Hurling Championship Group 1",
+        "Woodlands House Hotel County Premier Junior A Hurling Championship Group 2",
     ],
     "JAHC": [
-        re.compile(r"junior a hurling championship\s+group\s*1$", re.I),
-        re.compile(r"junior a hurling championship\s+group\s*2$", re.I),
+        "Woodlands House Hotel County Junior A Hurling Championship Group 1",
+        "Woodlands House Hotel County Junior A Hurling Championship Group 2",
     ],
     "JCHC": [
-        re.compile(r"junior c hurling championship\s+group\s*1$", re.I),
-        re.compile(r"junior c hurling championship\s+group\s*2$", re.I),
+        "Woodlands House Hotel County Junior C Hurling Championship Group 1",
+        "Woodlands House Hotel County Junior C Hurling Championship Group 2",
     ],
 }
 
-def normalize(s: str) -> str:
-    s = (s or "").lower()
-    s = re.sub(r'[^a-z0-9]+', ' ', s)
-    return re.sub(r'\s+', ' ', s).strip()
+def norm(s: str) -> str:
+    return re.sub(r"\s+", " ", (s or "").lower().strip())
 
-def strip_sponsors(s: str) -> str:
-    t = normalize(s)
-    for tok in SPONSOR_TOKENS:
-        t = re.sub(rf"\b{tok}\b", "", t, flags=re.I)
-    t = re.sub(r"\s+", " ", t).strip()
-    return t
-
-def is_group_heading_for_comp(line: str, comp_key: str) -> bool:
-    core = strip_sponsors(line)
-    for pat in GROUP_PATTERNS.get(comp_key, []):
-        if pat.search(core):
-            return True
-    return False
-
-def tidy_group_for_output(comp: str, raw_heading: str) -> str:
-    """
-    Turn a long heading into the short label used by the UI.
-    - SHC/IHC/Juniors: "Group 1"/"Group 2"
-    - PIHC: "Premier Intermediate"
-    """
-    core = strip_sponsors(raw_heading)
-    if comp == "PIHC":
-        return "Premier Intermediate"
-    # Try to extract group number
-    m = re.search(r"group\s*(\d)", core, flags=re.I)
-    if m:
-        return f"Group {m.group(1)}"
-    return raw_heading.strip() or raw_heading  # fallback
+# Normalized sets for strict detection
+STRICT_ALLOWED = {k: {norm(x) for x in v} for k, v in GROUPS_STRICT.items()}
+STRICT_ALL = set().union(*STRICT_ALLOWED.values())
 
 # ---------- Helpers (dates/times/regex) ----------
 ORD_RE = re.compile(r'(\d+)(?:\^\{)?(st|nd|rd|th)(?:\})?', re.I)
@@ -165,9 +129,6 @@ def is_plausible_team(name: str) -> bool:
     if " " not in t and t.upper() == t and CODE_WITH_DIGITS_RE.match(t):
         return False
     return True
-
-
-
 
 def ensure_parent(path: str):
     d = os.path.dirname(path)
@@ -259,12 +220,24 @@ def lines_from_rest_or_html(url: str, slug_hint: str) -> List[str]:
     return flatten_to_lines(html)
 
 # ---------- Parsing ----------
+def tidy_group_for_output(comp: str, raw_heading: str) -> str:
+    """
+    Turn a long heading into the short label used by the UI.
+    - SHC/IHC/Juniors: "Group 1"/"Group 2"
+    - PIHC: "Premier Intermediate"
+    """
+    if comp == "PIHC":
+        return "Premier Intermediate"
+    m = re.search(r"Group\s*(\d)", raw_heading or "", flags=re.I)
+    if m:
+        return f"Group {m.group(1)}"
+    return raw_heading.strip() if raw_heading else ""
+
 def parse_blocks_from_page(url: str, comp_key: str, mode: str) -> List[Dict]:
     """
-    Fetch lines (REST-first), detect competition-scoped group headings using sponsor-stripped regex,
-    and parse each block into match records. 'League' headings end any open bucket.
+    Fetch lines, detect exact group headings for the given comp, parse each block.
+    Hard-stop on football headings or any other comp heading.
     """
-    # choose slug
     slug = ""
     for key, s in SLUGS.items():
         if URLS.get(key) == url:
@@ -273,7 +246,6 @@ def parse_blocks_from_page(url: str, comp_key: str, mode: str) -> List[Dict]:
 
     all_lines = lines_from_rest_or_html(url, slug)
 
-    # Bucket by detected group headings
     out: List[Dict] = []
     current_group_heading: Optional[str] = None
     bucket: List[str] = []
@@ -284,34 +256,25 @@ def parse_blocks_from_page(url: str, comp_key: str, mode: str) -> List[Dict]:
             out.extend(parse_group_lines(bucket, mode, comp_key, current_group_heading, url))
         bucket = []
 
+    allowed_here = STRICT_ALLOWED.get(comp_key, set())
+
     for ln in all_lines:
-        n = normalize(ln)
+        n = norm(ln)
 
-        # End any open bucket on a 'league' heading (safest guard)
-        if current_group_heading and re.search(r'\bleague\b', n, flags=re.I):
-            flush_bucket()
-            current_group_heading = None
-            continue
-
-        # Start a group when this line matches comp-scoped pattern (after sponsor stripping)
-        if is_group_heading_for_comp(ln, comp_key):
-            flush_bucket()
-            current_group_heading = ln  # keep the original for provenance
-            continue
-
-        # If inside a group and we hit a different competition heading, end the group
-        # (i.e., matches any other competition's pattern)
+        # If inside a bucket: end it on any other comp heading or football/league section
         if current_group_heading:
-            # If this line looks like *another* competition heading, stop.
-            other_comp_hit = False
-            for other_comp in GROUP_PATTERNS.keys():
-                if other_comp != comp_key and is_group_heading_for_comp(ln, other_comp):
-                    other_comp_hit = True
-                    break
-            if other_comp_hit:
-                flush_bucket()
-                current_group_heading = None
-                continue
+            if "football" in n:
+                flush_bucket(); current_group_heading = None; continue
+            if n in STRICT_ALL and n not in allowed_here:
+                flush_bucket(); current_group_heading = None; continue
+            if re.search(r"\bleague\b", n, flags=re.I):
+                flush_bucket(); current_group_heading = None; continue
+
+        # Start a bucket only if exact match for this comp
+        if n in allowed_here:
+            flush_bucket()
+            current_group_heading = ln  # keep original for provenance
+            continue
 
         if current_group_heading:
             bucket.append(ln)
@@ -545,7 +508,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
             cur["is_bye"] = True
             continue
 
-        # Skip stage labels & codes so they don't become teams
+        # Skip stage labels so they don't become teams
         if LABEL_LIKE_RE.match(s):
             continue
 
@@ -573,7 +536,6 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
         flush(cur)
 
     return results
-
 
 # ---------- De-duplication (within each grade) ----------
 def _mk_key(rec):
@@ -632,7 +594,7 @@ def write_combined_hurling(payloads: Dict[str, Dict], outdir: str):
                 "home": r.get("home") or "",
                 "away": r.get("away") or "",
                 "venue": r.get("venue") or "",
-                "status": r.get("status") or "",  # SCHEDULED typically
+                "status": r.get("status") or "",  # SCHEDULED typically empty in combined
                 "home_goals": r.get("home_goals"),
                 "home_points": r.get("home_points"),
                 "away_goals": r.get("away_goals"),
