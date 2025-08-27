@@ -1,22 +1,7 @@
 {
   "competition": "Junior A Hurling Championship",
-  "updated_at": "2025-08-27T17:39:31Z",
+  "updated_at": "2025-08-27T20:39:45Z",
   "fixtures": [
-    {
-      "id": "2025-JAHC-G2-R4-CAS-GAR",
-      "round": "R 4",
-      "group": "Group 2",
-      "date": "2025-08-27",
-      "time_local": "18:45",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-27T18:45:00",
-      "home": "Castletown Ballyagran",
-      "away": "Garryspillane",
-      "venue": "KIlfinane",
-      "referee": "John O Donnell",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
-    },
     {
       "id": "2025-JAHC-G2-R4-RAT-TEM",
       "round": "R 4",
@@ -184,6 +169,25 @@
     }
   ],
   "results": [
+    {
+      "id": "2025-JAHC-G2-R4-CAS-GAR",
+      "round": "R 4",
+      "group": "Group 2",
+      "date": "2025-08-27",
+      "time_local": "18:45",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-27T18:45:00",
+      "home": "Castletown Ballyagran",
+      "away": "Garryspillane",
+      "venue": "KIlfinane",
+      "referee": "John O Donnell",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
+      "home_goals": 1,
+      "home_points": 20,
+      "away_goals": 2,
+      "away_points": 4
+    },
     {
       "id": "2025-JAHC-G1-R3-BAL-OLD",
       "round": "R 3",

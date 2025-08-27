@@ -1,7 +1,22 @@
 {
   "competition": "Intermediate Hurling Championship",
-  "updated_at": "2025-08-27T17:39:31Z",
+  "updated_at": "2025-08-27T20:39:45Z",
   "fixtures": [
+    {
+      "id": "2025-IHC-G1-R4-CAP-FEE",
+      "round": "R 4",
+      "group": "Group 1",
+      "date": "2025-08-28",
+      "time_local": "18:15",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-28T18:15:00",
+      "home": "Cappamore",
+      "away": "Feenagh Kilmeedy",
+      "venue": "Fedamore",
+      "referee": "TBC",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
+    },
     {
       "id": "2025-IHC-G2-R4-KNO-MUR",
       "round": "R 4",
@@ -29,21 +44,6 @@
       "away": "Croom",
       "venue": "Knocklong",
       "referee": "John O Donnell",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    },
-    {
-      "id": "2025-IHC-G1-R4-CAP-FEE",
-      "round": "R 4",
-      "group": "Group 1",
-      "date": "2025-08-28",
-      "time_local": "18:45",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-28T18:45:00",
-      "home": "Cappamore",
-      "away": "Feenagh Kilmeedy",
-      "venue": "Fedamore",
-      "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
     },
