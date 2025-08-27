@@ -1,6 +1,6 @@
 {
   "competition": "Junior C Hurling Championship",
-  "updated_at": "2025-08-26T17:40:09Z",
+  "updated_at": "2025-08-27T00:13:04Z",
   "fixtures": [
     {
       "id": "2025-JCHC-G1-R4-PAT-BYE",
@@ -48,21 +48,6 @@
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },
     {
-      "id": "2025-JCHC-G2-R4-CRE-DRO",
-      "round": "R 4",
-      "group": "Woodlands House Hotel County Junior C Hurling Championship Group 2",
-      "date": "2025-08-31",
-      "time_local": "18:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-31T18:00:00",
-      "home": "Crecora Manister",
-      "away": "Dromcollogher Broadford",
-      "venue": "Crecora Manister GAA",
-      "referee": "Kieran Flaherty",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
-    },
-    {
       "id": "2025-JCHC-G2-R4-ADA-ASK",
       "round": "R 4",
       "group": "Woodlands House Hotel County Junior C Hurling Championship Group 2",
@@ -74,6 +59,21 @@
       "away": "Askeaton Ballysteen Kilcornan",
       "venue": "Adare",
       "referee": "David Burke",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
+    {
+      "id": "2025-JCHC-G2-R4-CRE-DRO",
+      "round": "R 4",
+      "group": "Woodlands House Hotel County Junior C Hurling Championship Group 2",
+      "date": "2025-08-31",
+      "time_local": "18:30",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-31T18:30:00",
+      "home": "Crecora Manister",
+      "away": "Dromcollogher Broadford",
+      "venue": "Crecora Manister GAA",
+      "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },

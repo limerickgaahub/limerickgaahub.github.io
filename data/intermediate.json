@@ -1,6 +1,6 @@
 {
   "competition": "Intermediate Hurling Championship",
-  "updated_at": "2025-08-26T17:40:09Z",
+  "updated_at": "2025-08-27T00:13:04Z",
   "fixtures": [
     {
       "id": "2025-IHC-G2-R4-KNO-MUR",
@@ -22,9 +22,9 @@
       "round": "R 4",
       "group": "Group 1",
       "date": "2025-08-28",
-      "time_local": "18:15",
+      "time_local": "18:30",
       "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-28T18:15:00",
+      "datetime_iso": "2025-08-28T18:30:00",
       "home": "Hospital Herbertstown",
       "away": "Croom",
       "venue": "Knocklong",
@@ -37,9 +37,9 @@
       "round": "R 4",
       "group": "Group 1",
       "date": "2025-08-28",
-      "time_local": "18:15",
+      "time_local": "18:45",
       "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-28T18:15:00",
+      "datetime_iso": "2025-08-28T18:45:00",
       "home": "Cappamore",
       "away": "Feenagh Kilmeedy",
       "venue": "Fedamore",

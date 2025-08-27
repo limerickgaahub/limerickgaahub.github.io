@@ -1,6 +1,6 @@
 {
   "competition": "Premier Junior A Hurling Championship",
-  "updated_at": "2025-08-26T17:40:09Z",
+  "updated_at": "2025-08-27T00:13:04Z",
   "fixtures": [
     {
       "id": "2025-PJAHC-G1-R4-CRE-ASK",
@@ -33,21 +33,6 @@
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },
     {
-      "id": "2025-PJAHC-G2-R4-DRO-KNO",
-      "round": "R 4",
-      "group": "Woodlands House Hotel County Premier Junior A Hurling Championship Group 2",
-      "date": "2025-08-29",
-      "time_local": "18:15",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-29T18:15:00",
-      "home": "Dromcollogher Broadford",
-      "away": "Knockaderry",
-      "venue": "Newcastle West",
-      "referee": "Donnacha O Callaghan",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
-    },
-    {
       "id": "2025-PJAHC-G2-R4-CAH-KIL",
       "round": "R 4",
       "group": "Woodlands House Hotel County Premier Junior A Hurling Championship Group 2",
@@ -59,6 +44,21 @@
       "away": "Kilteely Dromkeen",
       "venue": "Cappamore",
       "referee": "Eamonn Stapleton",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
+    {
+      "id": "2025-PJAHC-G2-R4-DRO-KNO",
+      "round": "R 4",
+      "group": "Woodlands House Hotel County Premier Junior A Hurling Championship Group 2",
+      "date": "2025-08-29",
+      "time_local": "18:30",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-29T18:30:00",
+      "home": "Dromcollogher Broadford",
+      "away": "Knockaderry",
+      "venue": "Newcastle West",
+      "referee": "Donnacha O Callaghan",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },
