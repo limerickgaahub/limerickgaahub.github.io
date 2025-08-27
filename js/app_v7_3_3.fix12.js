@@ -91,6 +91,27 @@ const DISPLAY_NAMES = {
   }
 };
 
+// ---- Sort helpers (date-first + stable comp order) ----
+const COMP_RANK = (() => {
+  // Order we want in "By Date" when dates are equal
+  const ORDER = [
+    "Senior", "Premier Intermediate", "Intermediate",
+    "Premier Junior A", "Junior A", "Junior B", "Junior C"
+  ];
+  const rank = {};
+  // Map full competition name -> rank using DISPLAY_NAMES.label
+  for (const [full, meta] of Object.entries(DISPLAY_NAMES)) {
+    const lbl = meta?.label || full;
+    const idx = ORDER.indexOf(lbl);
+    rank[full] = idx >= 0 ? idx + 1 : 99;
+  }
+  return rank;
+})();
+
+// date + time only (strict chronological)
+const sortDateOnly = (a, b) =>
+  (a.date || '').localeCompare(b.date || '') ||
+  (a.time || '').localeCompare(b.time || '');
 
 
   const el=id=>document.getElementById(id), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -299,7 +320,15 @@ async function load(){
 }
 
   const sortRoundDate=(a,b)=> (a._rnum-b._rnum) || (a.date||'').localeCompare(b.date||'') || (a.time||'').localeCompare(b.time||'');
-  const sortDateComp=(a,b)=>{ const da=a.date||'', db=b.date||''; if(da!==db) return da.localeCompare(db); const ca=a.competition||'', cb=b.competition||''; if(ca!==cb) return ca.localeCompare(cb); return (a.time||'').localeCompare(b.time||''); };
+  const sortDateComp = (a, b) => {
+  const da = a.date || '', db = b.date || '';
+  if (da !== db) return da.localeCompare(db);         // date asc
+  const ra = COMP_RANK[a.competition] ?? 99;
+  const rb = COMP_RANK[b.competition] ?? 99;
+  if (ra !== rb) return ra - rb;                       // Senior → … → Junior C
+  return (a.time || '').localeCompare(b.time || '');   // time asc
+};
+
 
   function buildHead(thead,isMobile,isTiny){
   if(isMobile){
@@ -617,39 +646,47 @@ function rebuildMatchesMenu(){
 
   
   function renderGroupTable(){
-    VIEW_MODE='competition';
-    const tbl=el('g-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
-    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
-    const status=el('status').value;
+  VIEW_MODE='competition';
+  const tbl=el('g-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
+  const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; 
+  buildHead(thead,isMobile,isTiny);
+  const status=el('status').value;
 
-// ensure visibility
-el('g-standings').style.display='none';
-document.querySelector('.matches-wrap').style.display='';
+  // ensure visibility
+  el('g-standings').style.display='none';
+  document.querySelector('.matches-wrap').style.display='';
 
-// NEW: KO-aware filtering
-const meta = DISPLAY_NAMES[state.comp] || {};
-const rows = MATCHES.filter(r=>{
-  if (state.comp && r.competition !== state.comp) return false;
+  // KO-aware filtering
+  const meta = DISPLAY_NAMES[state.comp] || {};
+  let rows = MATCHES.filter(r=>{
+    if (state.comp && r.competition !== state.comp) return false;
 
-  if (state.group === 'Knockout') {
-    // Show ONLY knockout games when Knockout is selected
-    if (!isKO(r)) return false;
-  } else {
-    // Hide knockout games from the league phase
-    if (isKO(r)) return false;
+    if (state.group === 'Knockout') {
+      // Show ONLY knockout games when Knockout is selected
+      if (!isKO(r)) return false;
+    } else {
+      // Hide knockout games from the league phase
+      if (isKO(r)) return false;
 
-    // For grouped comps, keep current group only
-    if (!meta.pihc && state.group && (r.group || '') !== (state.group || '')) return false;
-    // For PIHC (no groups): include all non-KO fixtures
-  }
+      // For grouped comps, keep current group only
+      if (!meta.pihc && state.group && (r.group || '') !== (state.group || '')) return false;
+      // For PIHC (no groups): include all non-KO fixtures
+    }
 
-  if (status === 'Result')  return isResult(r.status);
-  if (status === 'Fixture') return isFixture(r.status);
-  return true;
-}).sort(sortRoundDate);
+    if (status === 'Result')  return isResult(r.status);
+    if (status === 'Fixture') return isFixture(r.status);
+    return true;
+  });
 
-tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
-  }
+  // Sorting:
+  // - Knockout: strict by date/time
+  // - League phase: round → date → time (existing rule)
+  rows = (state.group === 'Knockout')
+    ? rows.sort(sortDateOnly)
+    : rows.sort(sortRoundDate);
+
+  tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+}
 
   function pointsFromGoalsPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
 
@@ -896,8 +933,8 @@ function renderStandings(){
     const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
 
     const rows = [...MATCHES]
-    // Results (incl. Walkover) first, then your existing date/comp/time ordering
-    .sort((a,b) => resultRank(a) - resultRank(b) || sortDateComp(a,b));
+      // Strictly: date → competition rank (Senior..Junior C) → time
+      .sort(sortDateComp);
     tbody.innerHTML=rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
 
     const candidates=Array.from(tbody.querySelectorAll('tr[data-date]'));
