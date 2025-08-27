@@ -246,15 +246,14 @@ def tidy_group_for_output(comp: str, raw_heading: str) -> str:
 def parse_blocks_from_page(url: str, comp_key: str, mode: str) -> List[Dict]:
     """
     Fetch lines (REST-first), detect ONLY the exact group headings for the given
-    competition, and parse each block. While inside a block, we hard-stop when we
-    hit:
+    competition, and parse each block. While inside a block, we hard-stop when we hit:
       - any other known competition heading,
       - football sections,
       - generic section headers (fixtures/results/final/etc),
       - regional comps (City/East/West/South ... Hurling ...),
       - 'league' headings,
-      - ALL-CAPS+digits code banners (e.g. SJBHCG1) **unless** they are
-        explicitly whitelisted in GROUPS_STRICT (future-proof).
+      - ALL-CAPS+digits code banners (e.g. SJBHCG1) — unless that token is explicitly
+        whitelisted in GROUPS_STRICT (future-proof).
     """
     # pick slug for REST
     slug = ""
@@ -291,7 +290,6 @@ def parse_blocks_from_page(url: str, comp_key: str, mode: str) -> List[Dict]:
             # 2) another known comp heading (strict match), or generic header not ours
             if n in STRICT_ALL and n not in allowed_here:
                 flush_bucket(); current_group_heading = None; continue
-
             if HEADLINE_BAD_RE.search(n) and n not in allowed_here:
                 flush_bucket(); current_group_heading = None; continue
 
@@ -324,13 +322,14 @@ def parse_blocks_from_page(url: str, comp_key: str, mode: str) -> List[Dict]:
     return out
 
 
+
 def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading: str, source_url: str) -> List[Dict]:
     """
     Handles:
       - split dates: 'Saturday 23' + 'rd' + 'August, 2025'
       - robust metadata: 'Venue:' / 'Referee:' inline or next-line, default TBC
       - results: team lines 'Team 1 - 20' or separate score lines
-      - skips 'league' lines and stage labels
+      - skips 'league' lines and section/stage labels
       - recognises W/O (walkover) and BYE as statuses (not team names)
       - blocks code-like tokens (e.g. SJBHCG1) from becoming team names
     """
@@ -417,77 +416,34 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
         return c["round"] and c["date_line"] and c["team_a"] and c["team_b"]
 
     def flush(c):
-    nonlocal results
-    if not ready(c):
-        return {
-            "round": c["round"], "date_line": None, "team_a": None, "team_b": None,
-            "time_line": None, "venue": "TBC", "referee": "TBC",
-            "home_goals": None, "home_points": None, "away_goals": None, "away_points": None,
-            "wo_winner": None, "is_bye": False,
-        }
+        nonlocal results
+        # Discard incomplete
+        if not ready(c):
+            return {
+                "round": c["round"], "date_line": None, "team_a": None, "team_b": None,
+                "time_line": None, "venue": "TBC", "referee": "TBC",
+                "home_goals": None, "home_points": None, "away_goals": None, "away_points": None,
+                "wo_winner": None, "is_bye": False,
+            }
+        # Discard BYE fixtures/results outright
+        if (
+            c["is_bye"] or
+            (c["team_a"] and c["team_a"].strip().lower() == "bye") or
+            (c["team_b"] and c["team_b"].strip().lower() == "bye")
+        ):
+            return {
+                "round": c["round"], "date_line": None, "team_a": None, "team_b": None,
+                "time_line": None, "venue": "TBC", "referee": "TBC",
+                "home_goals": None, "home_points": None, "away_goals": None, "away_points": None,
+                "wo_winner": None, "is_bye": False,
+            }
 
-    # DISCARD any BYE fixture/result outright (prevents BYE from entering tables)
-    if (
-        c["is_bye"] or
-        (c["team_a"] and c["team_a"].strip().lower() == "bye") or
-        (c["team_b"] and c["team_b"].strip().lower() == "bye")
-    ):
-        return {
-            "round": c["round"], "date_line": None, "team_a": None, "team_b": None,
-            "time_line": None, "venue": "TBC", "referee": "TBC",
-            "home_goals": None, "home_points": None, "away_goals": None, "away_points": None,
-            "wo_winner": None, "is_bye": False,
-        }
-
-    d = parse_date(c["date_line"])
-    date_iso = d.strftime("%Y-%m-%d") if d else None
-    time_local, dt_iso = parse_time(c["time_line"], d)
-    rid = make_id(comp_key, date_iso or "0000-00-00", c["round"], group_heading, c["team_a"], c["team_b"])
-
-    status = "SCHEDULED" if mode == "fixtures" else "Result"
-    if c["wo_winner"] in ("home", "away"):
-        status = "Walkover"
-
-    rec = {
-        "id": rid,
-        "round": c["round"].replace("Round", "R").strip() if c["round"] else "",
-        "group": tidy_group_for_output(comp_key, group_heading),
-        "date": date_iso,
-        "time_local": time_local,
-        "tz": "Europe/Dublin",
-        "datetime_iso": dt_iso,
-        "home": c["team_a"],
-        "away": c["team_b"],
-        "venue": c["venue"] or "TBC",
-        "referee": c["referee"] or "TBC",
-        "status": status,
-        "source_url": source_url
-    }
-
-    if mode == "results" and c["wo_winner"] not in ("home", "away"):
-        if c["home_goals"] is not None and c["home_points"] is not None:
-            rec["home_goals"] = c["home_goals"]; rec["home_points"] = c["home_points"]
-        if c["away_goals"] is not None and c["away_points"] is not None:
-            rec["away_goals"] = c["away_goals"]; rec["away_points"] = c["away_points"]
-
-    results.append(rec)
-    return {
-        "round": c["round"], "date_line": None, "team_a": None, "team_b": None,
-        "time_line": None, "venue": "TBC", "referee": "TBC",
-        "home_goals": None, "home_points": None, "away_goals": None, "away_points": None,
-        "wo_winner": None, "is_bye": False,
-    }
-
-
-      
         d = parse_date(c["date_line"])
         date_iso = d.strftime("%Y-%m-%d") if d else None
         time_local, dt_iso = parse_time(c["time_line"], d)
         rid = make_id(comp_key, date_iso or "0000-00-00", c["round"], group_heading, c["team_a"], c["team_b"])
 
         status = status_default
-        if c["is_bye"]:
-            status = "Bye"
         if c["wo_winner"] in ("home", "away"):
             status = "Walkover"
 
@@ -507,16 +463,11 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
             "source_url": source_url
         }
 
-        if mode == "results":
-            if c["wo_winner"] in ("home", "away"):
-                # Leave scores blank for walkovers; UI can render "W/O"
-                rec["home_goals"] = None; rec["home_points"] = None
-                rec["away_goals"] = None; rec["away_points"] = None
-            else:
-                if c["home_goals"] is not None and c["home_points"] is not None:
-                    rec["home_goals"] = c["home_goals"]; rec["home_points"] = c["home_points"]
-                if c["away_goals"] is not None and c["away_points"] is not None:
-                    rec["away_goals"] = c["away_goals"]; rec["away_points"] = c["away_points"]
+        if mode == "results" and c["wo_winner"] not in ("home", "away"):
+            if c["home_goals"] is not None and c["home_points"] is not None:
+                rec["home_goals"] = c["home_goals"]; rec["home_points"] = c["home_points"]
+            if c["away_goals"] is not None and c["away_points"] is not None:
+                rec["away_goals"] = c["away_goals"]; rec["away_points"] = c["away_points"]
 
         results.append(rec)
         return {
@@ -532,10 +483,6 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
 
         # Never let '... league ...' lines become teams/metadata
         if "league" in low:
-            continue
-
-        # Skip any stray competition/section headers that slipped through
-        if HEADLINE_BAD_RE.search(low):
             continue
 
         # ignore standalone ordinal fragments
@@ -604,7 +551,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
             if cur["team_a"] and cur["team_b"]:
                 cur["wo_winner"] = "away";  continue
 
-        # BYE marker as special status
+        # BYE marker as special status (we'll discard on flush)
         if BYE_RE.match(s.strip()):
             if not cur["team_a"]:
                 cur["team_a"] = "BYE"
@@ -613,8 +560,8 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
             cur["is_bye"] = True
             continue
 
-        # Skip stage labels so they don't become teams
-        if LABEL_LIKE_RE.match(s):
+        # Skip stage/section labels so they don't become teams
+        if LABEL_LIKE_RE.match(s) or HEADLINE_BAD_RE.search(s):
             continue
 
         # Divider tokens already handled above; skip
@@ -641,6 +588,7 @@ def parse_group_lines(lines: List[str], mode: str, comp_key: str, group_heading:
         flush(cur)
 
     return results
+
 
 # ---------- De-duplication (within each grade) ----------
 def _mk_key(rec):
