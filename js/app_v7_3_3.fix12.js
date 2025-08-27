@@ -13,6 +13,23 @@ console.log("[LGH] flags now:",
 
   const DATA_URL = 'data/hurling_2025.json';
 
+  const KO_URL = 'data/knockout_2025.json'; // NEW
+
+  function isKO(m){
+    return (m.stage === 'knockout') || ((m.group || '').toLowerCase() === 'knockout');
+  }
+  
+  // simple dedupe by id or by composite key
+  function _key(m){
+    return m.id || [m.competition,m.round,m.date,m.time,m.venue,m.home,m.away].join('|');
+  }
+  function mergeById(base, extra){
+    const map = new Map(base.map(m => [_key(m), m]));
+    for (const m of extra) map.set(_key(m), { ...map.get(_key(m)), ...m });
+    return [...map.values()];
+  }
+
+
 // Codes used internally (must match combined JSON "competition" strings)
 const COMP_CODES = {
   "Senior Hurling Championship": "SHC",
@@ -216,6 +233,30 @@ async function load(){
         away_goals:  r.away_goals,
         away_points: r.away_points,
       };
+
+              // ---- Merge manual Knockout overlay ----
+      try {
+        const r = await fetch(`${KO_URL}?t=${Date.now()}`, { cache:'no-store' });
+        if (r.ok) {
+          const ko = await r.json();
+      
+          const normalized = (ko.matches || ko || []).map(r => attachScores({
+            competition: r.competition || '',
+            group:       'Knockout',                         // force Knockout group
+            round:       r.round || '',
+            date:        r.date || '',
+            time:        r.time || '',
+            home:        r.home || '',
+            away:        r.away || '',
+            venue:       r.venue || '',
+            status:      r.status || 'Provisional'
+          }));
+      
+          MATCHES = mergeById(MATCHES, normalized);
+        }
+      } catch(e){
+        console.warn('[LGH] KO overlay skipped:', e);
+      }
 
       out.code = compCode(out.competition);
 
@@ -432,28 +473,48 @@ function buildCompetitionMenu(){
 
 function getGroupsForComp(comp){
   const meta = DISPLAY_NAMES[comp] || {};
-  if (meta.pihc) return [];                          // PIHC: show single "PIHC" item
-  if (meta.divisions?.length) return meta.divisions; // JBHC: City/East/West
-  if (meta.groups?.length) return meta.groups;       // Others: Group 1/2
-  // Fallback: infer from data
-  const groupsRaw = MATCHES.filter(m=>m.competition===comp).map(m=>m.group||'').filter(Boolean);
-  const uniq = [...new Set(groupsRaw)].sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
-  return uniq.length ? uniq : ["Group 1","Group 2"];
+  let groups = [];
+
+  if (meta.pihc) {
+    // PIHC has no groups in league phase
+    groups = [];
+  } else if (meta.divisions?.length) {
+    groups = [...meta.divisions]; // City/East/West
+  } else if (meta.groups?.length) {
+    groups = [...meta.groups];    // Group 1/2
+  } else {
+    // Fallback: infer non-KO groups from data
+    const groupsRaw = MATCHES
+      .filter(m => m.competition === comp && !isKO(m))
+      .map(m => m.group || '')
+      .filter(Boolean);
+    groups = [...new Set(groupsRaw)].sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
+  }
+
+  // Append "Knockout" if KO games exist for this competition
+  if (MATCHES.some(m => m.competition === comp && isKO(m))) groups.push('Knockout');
+
+  return groups;
 }
+
 
 
 function setMatchesLabel(){
   const matchesLabel = el('matches-label');
   if (!matchesLabel) return;
   const meta = DISPLAY_NAMES[state.comp] || {};
-  if (meta.pihc) {
+
+  if (state.group === 'Knockout') {
+    matchesLabel.textContent = 'Knockout';
+  } else if (meta.pihc) {
     matchesLabel.textContent = 'PIHC';
   } else if (meta.divisions?.length) {
-    matchesLabel.textContent = state.group || meta.divisions[0];   // City/East/West
+    matchesLabel.textContent = state.group || meta.divisions[0];
   } else {
     matchesLabel.textContent = state.group || 'Group 1';
   }
 }
+
 
 function closeMatchesMenu(){
   const mm = el('matches-menu');
@@ -480,30 +541,25 @@ function rebuildMatchesMenu(){
   const groups = getGroupsForComp(state.comp);
   mm.innerHTML = '';
 
-  if (!groups.length){
-    // PIHC: single static item
-    const b = document.createElement('div');
-    b.className = 'item';
-    b.textContent = 'PIHC';
-    b.addEventListener('click', ()=> closeMatchesMenu());
-    mm.appendChild(b);
-    state.group = null;
-  } else {
-    // Groups or Divisions (e.g., Group 1/2 or City/East/West)
-    groups.forEach(g=>{
-      const b = document.createElement('div');
-      b.className = 'item';
-      b.textContent = g;
-      b.addEventListener('click', ()=>{
-        state.group = g;
-        setMatchesLabel();
-        closeMatchesMenu();
-        renderGroupTable();
-        syncURL();
-        LGH_ANALYTICS.viewCompetition(state.comp, state.group, 'matches');
-      });
-      mm.appendChild(b);
-    });
+if (!groups.length){
+  // PIHC base item
+  const b = document.createElement('div');
+  b.className = 'item';
+  b.textContent = 'PIHC';
+  b.addEventListener('click', ()=>{ state.group = null; setMatchesLabel(); closeMatchesMenu(); renderGroupTable(); syncURL(); });
+  mm.appendChild(b);
+
+  // Optional Knockout for PIHC
+  if (MATCHES.some(m => m.competition === state.comp && isKO(m))) {
+    const k = document.createElement('div');
+    k.className = 'item';
+    k.textContent = 'Knockout';
+    k.addEventListener('click', ()=>{ state.group = 'Knockout'; setMatchesLabel(); closeMatchesMenu(); renderGroupTable(); syncURL(); });
+    mm.appendChild(k);
+  }
+
+  state.group = state.group === 'Knockout' ? 'Knockout' : null;
+}
 
     // Ensure default is first available option (works for both Group1/2 and City/East/West)
     if (!state.group || !groups.includes(state.group)) state.group = groups[0];
@@ -539,18 +595,33 @@ function rebuildMatchesMenu(){
     const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
     const status=el('status').value;
 
-    // ensure visibility
-    el('g-standings').style.display='none';
-    document.querySelector('.matches-wrap').style.display='';
+// ensure visibility
+el('g-standings').style.display='none';
+document.querySelector('.matches-wrap').style.display='';
 
-    const rows=MATCHES.filter(r=>{
-      if(state.comp && r.competition!==state.comp) return false;
-      if(state.group && (r.group||'')!==(state.group||'')) return false;
-      if(status==='Result') return isResult(r.status);
-      if(status==='Fixture') return isFixture(r.status);
-      return true;
-    }).sort(sortRoundDate);
-    tbody.innerHTML=rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+// NEW: KO-aware filtering
+const meta = DISPLAY_NAMES[state.comp] || {};
+const rows = MATCHES.filter(r=>{
+  if (state.comp && r.competition !== state.comp) return false;
+
+  if (state.group === 'Knockout') {
+    // Show ONLY knockout games when Knockout is selected
+    if (!isKO(r)) return false;
+  } else {
+    // Hide knockout games from the league phase
+    if (isKO(r)) return false;
+
+    // For grouped comps, keep current group only
+    if (!meta.pihc && state.group && (r.group || '') !== (state.group || '')) return false;
+    // For PIHC (no groups): include all non-KO fixtures
+  }
+
+  if (status === 'Result')  return isResult(r.status);
+  if (status === 'Fixture') return isFixture(r.status);
+  return true;
+}).sort(sortRoundDate);
+
+tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
   }
 
   function pointsFromGoalsPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
@@ -561,8 +632,10 @@ function renderStandings(){
   const meta = DISPLAY_NAMES[state.comp] || {};
   const fixtures = MATCHES.filter(r =>
     r.competition === state.comp &&
-    (meta.pihc ? true : (r.group||'') === (state.group||''))
+    !isKO(r) &&
+    ( meta.pihc ? true : (r.group || '') === (state.group || '') )
   );
+
 
   const teams=new Map();
   for(const f of fixtures){
