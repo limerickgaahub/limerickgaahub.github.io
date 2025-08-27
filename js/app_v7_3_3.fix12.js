@@ -223,7 +223,6 @@ async function load(){
         <th class="dcol">Date/Time</th>
         <th class="match">Match</th>
         <th class="vcol">Venue</th>
-        <th class="stcol">S</th>
       </tr>`;
   } else {
     thead.innerHTML =
