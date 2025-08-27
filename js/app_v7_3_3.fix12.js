@@ -217,7 +217,7 @@ async function load(){
     }
     const j = await res.json();
 
-    // Base dataset (from limerickgaa.ie or your file)
+    // 1) Base dataset
     MATCHES = (j.matches || j || []).map(r => {
       const out = {
         competition: r.competition || '',
@@ -261,7 +261,9 @@ async function load(){
       return attachScores(out);
     });
 
-    // ---- Merge manual Knockout overlay (OUTSIDE the map) ----
+    const baseCount = MATCHES.length;
+
+    // 2) Manual Knockout overlay (OUTSIDE the map)
     try {
       const r2 = await fetch(`${KO_URL}?t=${Date.now()}`, { cache:'no-store' });
       if (r2.ok) {
@@ -283,6 +285,9 @@ async function load(){
           return attachScores(out);
         });
         MATCHES = mergeById(MATCHES, normalized);
+        console.log('[LGH] load(): base=%d, knockout=%d, total=%d', baseCount, normalized.length, MATCHES.length);
+      } else {
+        console.warn('[LGH] KO overlay fetch not OK:', r2.status, r2.statusText);
       }
     } catch(e){
       console.warn('[LGH] KO overlay skipped:', e);
@@ -292,8 +297,6 @@ async function load(){
     console.error('[LGH] Data load threw error:', err);
   }
 }
-
-
 
   const sortRoundDate=(a,b)=> (a._rnum-b._rnum) || (a.date||'').localeCompare(b.date||'') || (a.time||'').localeCompare(b.time||'');
   const sortDateComp=(a,b)=>{ const da=a.date||'', db=b.date||''; if(da!==db) return da.localeCompare(db); const ca=a.competition||'', cb=b.competition||''; if(ca!==cb) return ca.localeCompare(cb); return (a.time||'').localeCompare(b.time||''); };
