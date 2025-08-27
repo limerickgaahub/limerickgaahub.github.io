@@ -3,7 +3,7 @@ name: Update fixtures/results (Limerick GAA Hub)
 on:
   workflow_dispatch:
   schedule:
-    - cron: "15 7,17 * * *"   # 07:15 & 17:15 Europe/Dublin
+    - cron: "15 7,17 * * *"   # NOTE: GitHub Actions cron is UTC (07:15 & 17:15 UTC)
 
 permissions:
   contents: write
@@ -31,6 +31,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 lxml python-dateutil pyyaml
 
+      - name: Clean tmp dir
+        run: rm -rf tmp_data
+
       - name: Run scraper to tmp
         run: python scripts/scrape_limerickgaa.py --outdir tmp_data
 
@@ -41,9 +44,9 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-            name: debug-lines-tmp
-            path: tmp_data/_debug/**
-            if-no-files-found: ignore
+          name: debug-lines-tmp
+          path: tmp_data/_debug/**
+          if-no-files-found: ignore
 
       - name: Replace data on success
         run: |
@@ -55,9 +58,9 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-            name: debug-lines
-            path: data/_debug/**
-            if-no-files-found: ignore
+          name: debug-lines
+          path: data/_debug/**
+          if-no-files-found: ignore
 
       - name: Commit data changes
         run: |
@@ -67,19 +70,9 @@ jobs:
             git config user.email "gha-bot@example.com"
             git add -A data
             git commit -m "Auto-update fixtures/results"
-            # Rebase onto latest main; --autostash handles any local diffs safely
             git fetch origin main
             git pull --rebase --autostash origin main
             git push
           else
             echo "No changes to commit."
           fi
-
-      - name: Upload debug artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: debug-lines
-          path: tmp_data/_debug/**  # or data/_debug/** after move
-          if-no-files-found: ignore
-
