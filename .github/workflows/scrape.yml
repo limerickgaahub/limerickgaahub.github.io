@@ -25,6 +25,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: Install dependencies
         run: |
@@ -37,14 +38,27 @@ jobs:
       - name: Validate scraped data
         run: python scripts/validate_data.py --indir tmp_data
 
+      - name: Upload debug artifacts (pre-promote)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+            name: debug-lines-tmp
+            path: tmp_data/_debug/**
+            if-no-files-found: ignore
+
       - name: Replace data on success
         run: |
           rm -rf data_old || true
           mv data data_old || true
           mv tmp_data data
 
-      - name: Run scraper
-        run: python scripts/scrape_limerickgaa.py
+      - name: Upload debug artifacts (promoted)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+            name: debug-lines
+            path: data/_debug/**
+            if-no-files-found: ignore
 
       - name: Commit data changes
         run: |
@@ -61,4 +75,12 @@ jobs:
           else
             echo "No changes to commit."
           fi
+
+      - name: Upload debug artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-lines
+          path: tmp_data/_debug/**  # or data/_debug/** after move
+          if-no-files-found: ignore
 
