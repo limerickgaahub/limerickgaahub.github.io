@@ -194,23 +194,37 @@ async function load(){
       return;
     }
     const j = await res.json();
-    (async function()
-      const out={
-        competition:r.competition||'', group:r.group||'', round:r.round||'',
-        date:r.date||'', time:r.time||'', home:r.home||'', away:r.away||'',
-        venue:r.venue||'', status:r.status||'',
-        home_goals:r.home_goals, home_points:r.home_points,
-        away_goals:r.away_goals, away_points:r.away_points,
+
+    MATCHES = (j.matches || j || []).map(r => {
+      const out = {
+        competition: r.competition || '',
+        group:       r.group || '',
+        round:       r.round || '',
+        date:        r.date || '',
+        time:        r.time || '',
+        home:        r.home || '',
+        away:        r.away || '',
+        venue:       r.venue || '',
+        status:      r.status || '',
+        home_goals:  r.home_goals,
+        home_points: r.home_points,
+        away_goals:  r.away_goals,
+        away_points: r.away_points,
       };
-      out.code=compCode(out.competition);
-     // Normalise group names (strip competition prefix)
+
+      out.code = compCode(out.competition);
+
+      // Normalise group names: if group starts with the full competition name, strip it.
       if (out.group) {
-        out.group = out.group.replace(out.competition, '').trim();
+        const g = String(out.group).trim();
+        const c = String(out.competition).trim();
+        out.group = g.startsWith(c) ? g.slice(c.length).trim() : g;
       }
-      
+
       return attachScores(out);
     });
-  } catch(err) {
+
+  } catch (err) {
     console.error('[LGH] Data load threw error:', err);
   }
 }
@@ -798,14 +812,6 @@ function rebuildMatchesMenu(){
 
    (async function(){
     await load();
-
-console.groupCollapsed('[LGH] Data groups by competition');
-const comps = [...new Set(MATCHES.map(m => m.competition))];
-for (const c of comps) {
-  const gs = [...new Set(MATCHES.filter(m => m.competition===c).map(m => (m.group||'').trim() || '(none)'))];
-  console.log(c, '→', gs);
-}
-console.groupEnd();
 
      
     buildCompetitionMenu();
