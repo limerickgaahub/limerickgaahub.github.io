@@ -120,6 +120,15 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 /* Selected label */
 .comp-selected{ margin:8px 0 10px; font-weight:800; font-size:15px; color:#1f2937; }
 
+/* Always reserve ~two lines for the competition header text */
+#comp-selected{
+  display:block;
+  white-space:normal;   /* allow wrapping */
+  line-height:1.2em;
+  min-height:2.4em;     /* 2 × line-height */
+  overflow:hidden;      /* prevents layout jump if very long */
+}
+  
 /* Share bar */
 .sharebar{ display:flex; align-items:center; gap:8px; margin:12px 0 0; }
 .sharebar .spacer{ flex:1; }
@@ -224,8 +233,6 @@ td.match, th.match{ text-align:center; }
   .card{ padding:12px; }
   thead th, tbody td{ padding:10px 7px; font-size:13px; }
   .match-score{ font-size:13px; }
-  /* Hide the S column on mobile */
-  th.stcol, td.stcol { display: none; }
 
   /* LGH PATCH — mobile polish for all match tables */
 #g-table, #team-table, #date-table{ table-layout:fixed; width:100%; }
@@ -499,7 +506,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
     <div class="menu" id="comp-menu" role="menu" aria-hidden="true"></div>
 
     <div class="panel card" id="group-panel" style="margin-top:6px;">
-      <div class="comp-selected" id="comp-selected"></div>
+        <div class="comp-selected" id="comp-selected" aria-live="polite"></div>
 
     <div class="section-tabs">
       <div class="seg active" data-view="matches" id="matches-seg">
