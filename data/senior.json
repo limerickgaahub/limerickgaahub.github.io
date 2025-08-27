@@ -1,6 +1,6 @@
 {
   "competition": "Senior Hurling Championship",
-  "updated_at": "2025-08-27T13:35:04Z",
+  "updated_at": "2025-08-27T17:39:31Z",
   "fixtures": [
     {
       "id": "2025-SHC-G2-R4-MON-NEW",
@@ -82,9 +82,9 @@
       "round": "R 4",
       "group": "Group 1",
       "date": "2025-08-30",
-      "time_local": "18:30",
+      "time_local": "18:00",
       "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-30T18:30:00",
+      "datetime_iso": "2025-08-30T18:00:00",
       "home": "Kilmallock",
       "away": "Na Piarsaigh",
       "venue": "Mick Neville Park",
