@@ -704,6 +704,54 @@ thead th, tbody td{ padding:.55rem .55rem; }
 .sharecard{
   box-sizing:border-box; background:#0A3D1F; color:#fff; padding:48px; border-radius:24px;
 }
+
+/* --- Share Card: subtle vignette, table depth, corner ribbon --- */
+.sharecard{ position:relative; overflow:hidden; }
+
+/* soft vignette + top highlight */
+.sharecard::before{
+  content:"";
+  position:absolute; inset:-10%;
+  background:
+    radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,0.06), transparent 60%),
+    radial-gradient(120% 100% at 50% 120%, rgba(0,0,0,0.24), transparent 55%);
+  pointer-events:none;
+}
+.sharecard::after{
+  content:"";
+  position:absolute; inset:0;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,0.04);
+  border-radius:24px;
+  pointer-events:none;
+}
+
+/* a touch of depth so the table “sits” on the card */
+.sharecard .sc-table{ filter: drop-shadow(0 10px 24px rgba(0,0,0,.12)); }
+
+/* corner ribbon (Fixtures / Results / Table • Today/Tomorrow) */
+.sc-ribbon{
+  position:absolute; top:14px; right:14px;
+  padding:8px 12px;
+  background:#0f5132;           /* dark green */
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+  font-weight:800; font-size:24px; line-height:1;
+  color:#EAF6EE;
+  letter-spacing:.2px;
+  backdrop-filter: saturate(120%) blur(2px);
+  pointer-events:none;
+}
+
+/* optional: mini crests beside team names */
+.sc-team{ display:flex; align-items:center; gap:10px; justify-content:center; }
+.sc-team-crest{ width:36px; height:36px; border-radius:8px; object-fit:contain; background:#fff; }
+.sc-team-dot{
+  width:28px; height:28px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-weight:800; background:#ffffff; color:#0A3D1F;
+}
+.sc-team-name{ line-height:1.1; }
+  
 .sc-size-ig-portrait{ width:1080px; height:1350px; }  /* IG portrait */
 .sc-size-ig-square{ width:1080px; height:1080px; }    /* IG square */
 .sc-size-x-landscape{ width:1200px; height:675px; }   /* X/Twitter 16:9 */
@@ -1317,6 +1365,7 @@ function updateSharebars(){
 
     <!-- Live preview (this is what becomes the PNG) -->
     <div id="share-card" class="sharecard sc-size-ig-portrait" hidden>
+      <div class="sc-ribbon" id="sc-ribbon" hidden>Fixtures</div>
       <div class="sc-header">
         <!-- Use your crest — you can swap src to /img/crest.svg if you prefer -->
         <img src="/android-chrome-512x512.png" alt="" class="sc-crest">
