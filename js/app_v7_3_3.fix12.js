@@ -41,6 +41,17 @@ const COMP_CODES = {
   "Junior C Hurling Championship": "JCHC",
 };
 
+const INV_COMP_CODES = {
+  SHC:  'Senior Hurling Championship',
+  PIHC: 'Premier Intermediate Hurling Championship',
+  IHC:  'Intermediate Hurling Championship',
+  PJAHC:'Premier Junior A Hurling Championship',
+  JAHC: 'Junior A Hurling Championship',
+  JBHC: 'Junior B Hurling Championship',
+  JCHC: 'Junior C Hurling Championship'
+};
+
+
 // Optional, if you have an explicit display/order list:
 const COMPETITION_ORDER = [
   "Senior",
