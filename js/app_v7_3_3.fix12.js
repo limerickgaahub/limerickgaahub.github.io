@@ -1252,4 +1252,35 @@ function renderByDate(){
   });
   window.LGH.isResult = (s) => /^(res|final|walkover)/i.test(String(s||''));
   window.LGH.isKO = (m) => String(m.group||'').toLowerCase()==='knockout' || String(m.stage||'').toLowerCase()==='knockout';
+
+  window.LGH.isResult = (s) => /^(res|final|walkover)/i.test(String(s||''));
+  window.LGH.isKO = (m) => String(m.group||'').toLowerCase()==='knockout' || String(m.stage||'').toLowerCase()==='knockout';
+
+// --- Keep "All / Fixtures / Results" visible only on Matches, and restore when returning ---
+function updateMatchFilterVisibility() {
+  const mc = document.getElementById('controls-matches');
+  if (!mc) return;
+
+  const groupPanel = document.getElementById('group-panel');
+  const standingsPanel = document.getElementById('g-standings'); // table container
+
+  const isHidden = (el) => !el || el.hidden || getComputedStyle(el).display === 'none';
+
+  // Show control when Matches list is visible (group panel shown & standings hidden)
+  const show = groupPanel && !isHidden(groupPanel) && isHidden(standingsPanel);
+
+  mc.hidden = !show;
+  mc.style.display = show ? '' : 'none';
+}
+
+// Re-evaluate whenever a view/tab button with data-target or data-view is clicked
+document.addEventListener('click', (e) => {
+  if (e.target.closest('[data-target]') || e.target.closest('[data-view]')) {
+    setTimeout(updateMatchFilterVisibility, 0);
+  }
+});
+
+// Also recompute on hash changes (deep links) and once at load end
+window.addEventListener('hashchange', updateMatchFilterVisibility);
+updateMatchFilterVisibility();
 })();
