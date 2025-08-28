@@ -13,7 +13,7 @@ console.log("[LGH] flags now:",
 
   const DATA_URL = 'data/hurling_2025.json';
 
-  const KO_URL = 'knockout/knockout_2025.json';
+  const KO_URL = 'datastatic/knockout_2025.json';
 
   function isKO(m){
     return (m.stage === 'knockout') || ((m.group || '').toLowerCase() === 'knockout');
