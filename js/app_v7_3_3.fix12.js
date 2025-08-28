@@ -466,28 +466,6 @@ function buildCompetitionMenu(){
     rebuildMatchesMenu();
     updateTableTabVisibility();
 
-    // --- KO footnote helper (append under the Matches table) ---
-    function toggleKOFootnote(show){
-      const gp   = document.getElementById('group-panel');
-      if (!gp) return;
-    
-      // We'll place the footnote immediately after the table wrapper for matches
-      const matchesWrap = gp.querySelector('.matches-wrap');
-      if (!matchesWrap) return;
-    
-      let note = document.getElementById('ko-footnote');
-      if (!note) {
-        note = document.createElement('div');
-        note.id = 'ko-footnote';
-        note.className = 'footnote';
-        note.textContent = 'Provisional dates are weekend of, except for final.';
-        // insert directly after the matches table block
-        matchesWrap.insertAdjacentElement('afterend', note);
-      }
-      note.style.display = show ? '' : 'none';
-    }
-
-
     
     // Render matches (ensure Matches view visible)
     el('g-standings').style.display = 'none';
@@ -622,6 +600,27 @@ function openMatchesMenu(){
   mm.classList.add('open');
   mm.setAttribute('aria-hidden','false');
 }
+
+// --- KO footnote helper (append under the Matches table) ---
+function toggleKOFootnote(show){
+  const gp = document.getElementById('group-panel');
+  if (!gp) return;
+
+  // Place the footnote immediately after the matches table wrapper
+  const matchesWrap = gp.querySelector('.matches-wrap');
+  if (!matchesWrap) return;
+
+  let note = document.getElementById('ko-footnote');
+  if (!note) {
+    note = document.createElement('div');
+    note.id = 'ko-footnote';
+    note.className = 'footnote';
+    note.textContent = 'Provisional dates are weekend of, except for final.';
+    matchesWrap.insertAdjacentElement('afterend', note);
+  }
+  note.style.display = show ? '' : 'none';
+}
+
 
 function rebuildMatchesMenu(){
   const mm = el('matches-menu');
