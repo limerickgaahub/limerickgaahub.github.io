@@ -768,6 +768,50 @@ thead th, tbody td{ padding:.55rem .55rem; }
   color:#006B3C;
 }
 
+/* Align numerals neatly in standings on the card */
+.sc-table-standings th, .sc-table-standings td { font-variant-numeric: tabular-nums; }
+
+/* Base: use the whole canvas vertically */
+.sharecard{ display:flex; flex-direction:column; justify-content:space-between; }
+
+/* Tighten for bigger tables (card-wide) */
+.sc-tight-7 .sc-table-standings thead th{ font-size:30px; padding:16px 18px; }
+.sc-tight-7 .sc-table-standings tbody td{ font-size:30px; padding:16px 18px; }
+
+.sc-tight-8 .sc-table-standings thead th{ font-size:28px; padding:14px 16px; }
+.sc-tight-8 .sc-table-standings tbody td{ font-size:28px; padding:14px 16px; }
+
+/* Extra-tight specifically for X landscape (short canvas) */
+.sc-size-x-landscape.sc-tight-7 { padding:36px 32px 24px; }
+.sc-size-x-landscape.sc-tight-7 .sc-title{ font-size:50px; }
+.sc-size-x-landscape.sc-tight-7 .sc-table-standings thead th{ font-size:24px; padding:12px 12px; }
+.sc-size-x-landscape.sc-tight-7 .sc-table-standings tbody td{ font-size:24px; padding:12px 12px; }
+
+.sc-size-x-landscape.sc-tight-8 { padding:32px 28px 20px; }
+.sc-size-x-landscape.sc-tight-8 .sc-title{ font-size:46px; }
+.sc-size-x-landscape.sc-tight-8 .sc-table-standings thead th{ font-size:22px; padding:10px 10px; }
+.sc-size-x-landscape.sc-tight-8 .sc-table-standings tbody td{ font-size:22px; padding:10px 10px; }
+
+/* Centre the Date/Time and Match headers on the card */
+.sc-fixtures thead th:nth-child(1),
+.sc-fixtures thead th:nth-child(2),
+.sc-fixtures thead th:nth-child(3){ text-align:center; }
+.sc-fixtures tbody td:first-child{ text-align:center; }
+
+/* Stacked teams in the card table */
+.sc-fixtures .teams{ display:grid; row-gap:6px; justify-items:center; line-height:1.05; }
+.sc-fixtures .teams .mid{ font-weight:800; }
+  
+/* Hero look for very short lists so the card doesn't feel empty */
+.sc-hero .sc-title{ font-size:68px; }
+.sc-hero .sc-table thead th{ font-size:34px; padding:20px 22px; }
+.sc-hero .sc-table tbody td{ font-size:36px; padding:22px 22px; }
+
+/* Slightly tighter rows site-wide without hurting readability */
+.table-wrap tbody td { padding: 12px 12px; }   /* was 14px */
+.sc-fixtures thead th:nth-child(3){ text-align:center; }
+  
+  
 </style>
 
 </head>
@@ -1302,7 +1346,7 @@ function updateSharebars(){
         <tbody id="sc-standings-body"></tbody>
       </table>
 
-      <div class="sc-footer">Tables & more at limerickgaahub.ie</div>
+      <div class="sc-footer">Limerick club fixtures, results, and tables at limerickgaahub.ie</div>
     </div>
   </div>
 </div>
@@ -1320,6 +1364,15 @@ function updateSharebars(){
   // Helpers
   const q = sel => document.querySelector(sel);
   const qa = sel => Array.from(document.querySelectorAll(sel));
+
+  
+  // Share Card footer copy
+  const SC_FOOTER_TEXT = 'Limerick club fixtures, results, and tables at limerickgaahub.ie';
+  function setShareFooterText(){
+    const el = q('.sc-footer');
+    if (el) el.textContent = SC_FOOTER_TEXT;
+}
+
 
   // --- stacked Date/Time formatting (match site mobile) ---
   const day3 = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -1371,91 +1424,134 @@ function updateSharebars(){
     return (window.REVERSE_CODES && window.REVERSE_CODES[code]) || code || '';
   }
 
-  // Minimal standings calc to mirror your compact table
-function pointsFromGP(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3 + (Number(p)||0); }
+
+// String "1-18" → {g:1, p:18}
+function gpFromScoreStr(s){
+  const m = String(s||'').match(/^\s*(\d+)\s*-\s*(\d+)\s*$/);
+  return m ? { g: +m[1], p: +m[2] } : { g: null, p: null };
+}
+function pointsFromGP(g,p){
+  if (g==null || p==null) return null;
+  return (Number(g)||0)*3 + (Number(p)||0);
+}
 
 function computeStandings(rows){
+  const isRes = (window.LGH?.isResult) || isResult; // <- fallback to our local isResult
+
+  // Seed teams
   const teams = new Map();
   for (const r of rows){
     if(!teams.has(r.home)) teams.set(r.home,{team:r.home,p:0,w:0,d:0,l:0,pts:0});
     if(!teams.has(r.away)) teams.set(r.away,{team:r.away,p:0,w:0,d:0,l:0,pts:0});
   }
 
-  const results = rows.filter(r => window.LGH.isResult(r.status));
+  for (const m of rows){
+    if (!isRes(m.status)) continue;
 
-  for (const m of results){
+    // Try split fields first; fall back to "1-18" style
+    let hg = m.home_goals, hp = m.home_points, ag = m.away_goals, ap = m.away_points;
+    if (hg==null || hp==null){
+      const a = gpFromScoreStr(m.home_score || m.home || '');
+      hg = a.g; hp = a.p;
+    }
+    if (ag==null || ap==null){
+      const b = gpFromScoreStr(m.away_score || m.away || '');
+      ag = b.g; ap = b.p;
+    }
+
+    const hs = pointsFromGP(hg, hp);
+    const as = pointsFromGP(ag, ap);
+
     const H = teams.get(m.home), A = teams.get(m.away);
 
-    // Walkover: played, 2 pts to winner, no PF/PA math on the card table
-    if (String(m.status).toLowerCase() === 'walkover') {
+    // Walkover quick-path
+    if (String(m.status).toLowerCase() === 'walkover'){
       H.p++; A.p++;
-      const WO_TAG = /\bW\/\s*O\b/i;
-      let win = m.walkover_winner || (WO_TAG.test(m.home)?'home' : (WO_TAG.test(m.away)?'away':null));
-      if (win==='home'){ H.w++; H.pts+=2; A.l++; }
-      else if (win==='away'){ A.w++; A.pts+=2; H.l++; }
+      const w = (m.walkover_winner||'').toLowerCase();
+      if (w==='home'){ H.w++; H.pts+=2; A.l++; }
+      else if (w==='away'){ A.w++; A.pts+=2; H.l++; }
       continue;
     }
 
-    const hs = pointsFromGP(m.home_goals, m.home_points);
-    const as = pointsFromGP(m.away_goals, m.away_points);
     if (hs==null || as==null) continue;
-
     H.p++; A.p++;
     if (hs>as){ H.w++; H.pts+=2; A.l++; }
     else if (hs<as){ A.w++; A.pts+=2; H.l++; }
     else { H.d++; A.d++; H.pts++; A.pts++; }
   }
 
+  // Sort by Pts, then W, then fewer L, then alpha
   return Array.from(teams.values()).sort((a,b)=>
     b.pts-a.pts || b.w-a.w || a.l-b.l || a.team.localeCompare(b.team)
   );
 }
 
 
+
 function buildPayload({mode,preset,team,rowsRange,size,title}){
   const comp  = window.LGH?.state?.comp  || '';
   const group = window.LGH?.state?.group || '';
   const meta  = (window.LGH?.DISPLAY_NAMES || {})[comp] || {};
+  const isRes = (window.LGH?.isResult || isResult);
 
+  // Start with matches for this competition
   let rows = (window.LGH?.matches || []).filter(r => r.competition === comp);
 
+  // League vs Knockout
   if (group === 'Knockout') {
-    rows = rows.filter(isKOrow);                          // KO view: only KO
+    rows = rows.filter(isKOrow);
   } else {
-    rows = rows.filter(r => !isKOrow(r));                 // league view: hide KO
+    rows = rows.filter(r => !isKOrow(r));
     if (!meta.pihc && group) rows = rows.filter(r => (r.group||'') === group);
-    // PIHC: no group filter (same as your site)
   }
 
+  // Club filter
   if (team) rows = rows.filter(r => r.home===team || r.away===team);
-  if (mode==='fixtures') rows = rows.filter(r => !window.LGH.isResult(r.status));
-  if (mode==='results')  rows = rows.filter(r =>  window.LGH.isResult(r.status));
 
-  if (preset && preset!=='all'){
+  // Fixtures vs Results (exactly once)
+  if (mode === 'fixtures') rows = rows.filter(r => !isRes(r.status));
+  if (mode === 'results')  rows = rows.filter(r =>  isRes(r.status));
+
+  // Date preset
+  if (preset && preset !== 'all'){
     rows = rows.filter(r => inPreset(parseMatchDate(r), preset));
   }
 
+  // Slice
   if (rowsRange){
     const m = /^\s*(\d+)\s*-\s*(\d+)\s*$/.exec(rowsRange);
-    if(m){ const a=+m[1], b=+m[2]; rows = rows.slice(a-1, b); }
+    if (m){ const a=+m[1], b=+m[2]; rows = rows.slice(a-1, b); }
   }
 
+  // Title
   const bits = [labelOf(comp)];
   if (group && !meta.pihc) bits.push(group);
   if (team) bits.push(team);
-  if (preset==='today') bits.push('Today');
+  if (preset==='today')    bits.push('Today');
   if (preset==='tomorrow') bits.push('Tomorrow');
 
   return { mode, size, title: (title?.trim() || bits.filter(Boolean).join(' • ')), rows };
 }
 
+
 function scoreMid(m){
   const s = String(m.status||'').toLowerCase();
   if (s === 'walkover') return 'W/O';
-  const hg = m.home_goals, hp = m.home_points, ag = m.away_goals, ap = m.away_points;
-  if ([hg,hp,ag,ap].some(v => v == null || v === '')) return '—';
-  return `${hg}-${hp} - ${ag}-${ap}`;
+
+  // Accept split fields OR "1-18" strings
+  const asPair = str => {
+    const mm = String(str||'').match(/^\s*(\d+)\s*-\s*(\d+)\s*$/);
+    return mm ? {g:+mm[1], p:+mm[2]} : {g:null, p:null};
+  };
+
+  let hg = m.home_goals, hp = m.home_points, ag = m.away_goals, ap = m.away_points;
+  if (hg==null || hp==null){ const a = asPair(m.home_score); hg = a.g; hp = a.p; }
+  if (ag==null || ap==null){ const b = asPair(m.away_score); ag = b.g; ap = b.p; }
+
+  if ([hg,hp,ag,ap].some(v => v==null || v==='')) return '—';
+  return `${hg}-${hp} – ${ag}-${ap}`;
 }
+
 
 function matchCellHTML(m, mode){
   const mid   = (mode === 'results') ? scoreMid(m) : 'v';
@@ -1469,53 +1565,79 @@ function matchCellHTML(m, mode){
 }
 
 
-  function renderCard(payload){
-    const card = q('#share-card');
-    card.classList.remove('sc-size-ig-portrait','sc-size-ig-square','sc-size-x-landscape');
-    card.classList.add(
-      payload.size==='ig-square' ? 'sc-size-ig-square' :
-      payload.size==='x-landscape' ? 'sc-size-x-landscape' : 'sc-size-ig-portrait'
-    );
-    q('#sc-title').textContent = payload.title || '';
+function renderCard(payload){
+  const card = q('#share-card');
 
-    const tb = q('#sc-tbody'); const st = q('#sc-table-standings');
-    const tf = q('#sc-table-fixtures'); const sb = q('#sc-standings-body');
+  // Reset size + density classes
+  card.classList.remove(
+    'sc-size-ig-portrait','sc-size-ig-square','sc-size-x-landscape',
+    'sc-tight-7','sc-tight-8','sc-hero'
+  );
+  card.classList.add(
+    payload.size === 'ig-square'    ? 'sc-size-ig-square' :
+    payload.size === 'x-landscape'  ? 'sc-size-x-landscape' :
+                                      'sc-size-ig-portrait'
+  );
+  q('#sc-title').textContent = payload.title || '';
 
-    if(payload.mode==='table'){
-      tf.hidden = true; st.hidden = false;
-      sb.innerHTML = '';
-      const standings = computeStandings(payload.rows);
-      sb.innerHTML = standings.map(t => `
+  const tb = q('#sc-tbody');
+  const tf = q('#sc-table-fixtures');
+  const st = q('#sc-table-standings');
+  const sb = q('#sc-standings-body');
+
+  if (payload.mode === 'table') {
+    // Standings view
+    tf.hidden = true;
+    st.hidden = false;
+
+    const standings = computeStandings(payload.rows);
+    sb.innerHTML = standings.map(t => `
+      <tr>
+        <td>${t.team}</td><td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.pts}</td>
+      </tr>
+    `).join('');
+
+    // Apply density based on actual count
+    const rowCount = standings.length;
+    if (rowCount === 7) card.classList.add('sc-tight-7');
+    if (rowCount >= 8)  card.classList.add('sc-tight-8');
+
+  } else {
+    // Fixtures / Results view
+    st.hidden = true;
+    tf.hidden = false;
+
+    tb.innerHTML = payload.rows.map(m => {
+      const dt = parseMatchDate(m) || (m.date ? new Date(m.date + 'T00:00:00') : null);
+      const p  = fmtDateParts(dt);
+      const t  = fmtTimeShort(m.time || '');
+      const mid = matchCellHTML(m, payload.mode);   // Team A / mid / Team B
+      return `
         <tr>
-          <td>${t.team}</td><td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.pts}</td>
-        </tr>`).join('');
-      } else {
-        st.hidden = true; tf.hidden = false;
-        tb.innerHTML = payload.rows.map(m => {
-          const dt = parseMatchDate(m) || (m.date ? new Date(m.date + 'T00:00:00') : null);
-          const p  = fmtDateParts(dt);
-          const t  = fmtTimeShort(m.time || '');
-          const mid = matchCellHTML(m, payload.mode);   // <-- stacked A / mid / B
-          return `
-            <tr>
-              <td>
-                <div class="dt3">
-                  <div class="dt-day">${p.day}</div>
-                  <div class="dt-date">${p.dmy}</div>
-                  <div class="dt-time">${t}</div>
-                </div>
-              </td>
-              <td>${mid}</td>
-              <td>${m.venue || '—'}</td>
-            </tr>`;
-        }).join('');
-      }
+          <td>
+            <div class="dt3">
+              <div class="dt-day">${p.day}</div>
+              <div class="dt-date">${p.dmy}</div>
+              <div class="dt-time">${t}</div>
+            </div>
+          </td>
+          <td>${mid}</td>
+          <td>${m.venue || '—'}</td>
+        </tr>`;
+    }).join('');
 
-
-    card.hidden = false;
-    q('#sc-download').disabled = false;
-    q('#sc-copycap').disabled = false;
+    const rowCount = payload.rows.length;
+    if (rowCount <= 2) card.classList.add('sc-hero');   // make 1–2 matches feel less bare
   }
+
+  card.hidden = false;
+  q('#sc-download').disabled = false;
+  q('#sc-copycap').disabled = false;
+
+  // Ensure footer text matches your constant
+  setShareFooterText();
+}
+
 
   async function downloadPNG(){
     const src = q('#share-card');
@@ -1607,10 +1729,13 @@ function matchCellHTML(m, mode){
     }
   }
 
-  window.addEventListener('load', ()=>{
-    // Wait a moment for your main app to render selections/sharebars
-    setTimeout(()=>{ injectButtons(); wireOverlay(); }, 250);
-  });
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{
+    injectButtons();
+    wireOverlay();
+    setShareFooterText(); // set footer once on load
+  }, 250);
+});
 })();
 </script>
 </body>
