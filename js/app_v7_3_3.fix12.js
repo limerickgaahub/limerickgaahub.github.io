@@ -978,31 +978,31 @@ function renderStandings(){
     });
   });
 
+// Pseudo-team placeholders to exclude from the Club dropdown
+const TEAM_EXCLUDE_RE = /^(?:QF\s*Winner|SF\d*\s*Winner)$/i;
+
 function renderByTeam(){
   VIEW_MODE='team'; state.view='team';
   const sel = el('team');
 
-  // --- Only additions: tiny helpers for cleaning + filtering ---
   const cleanName = s => String(s || '')
-    .replace(/\(\s*W\/\s*O\s*\)/gi, '')  // remove "(W/O)"
-    .replace(/\bW\/\s*O\b/gi, '')        // remove bare "W/O"
+    .replace(/\(\s*W\/\s*O\s*\)/gi, '')
+    .replace(/\bW\/\s*O\b/gi, '')
     .replace(/\s{2,}/g,' ')
     .trim();
 
   const looksLikeClub = s => {
     const x = (s || '').trim();
     if (!x) return false;
-    if (/\bgroup\b/i.test(x)) return false;                               // "Group 1", "1st Group"
+    if (/\bgroup\b/i.test(x)) return false;                                
     if (/^(winner|winners|runner|runners-?up|loser|losers)\b/i.test(x)) return false;
+    if (TEAM_EXCLUDE_RE.test(x)) return false;   // NEW: hide QF/SF placeholders
     if (/^(tbc|bye)$/i.test(x)) return false;
     return true;
   };
-  // --- end additions ---
 
-  // Build dropdown: unique, cleaned, club-only
   const teams = [...new Set(
-    MATCHES.flatMap(r => [cleanName(r.home), cleanName(r.away)])
-           .filter(looksLikeClub)
+    MATCHES.flatMap(r => [cleanName(r.home), cleanName(r.away)]).filter(looksLikeClub)
   )].sort();
 
   sel.innerHTML = '<option value="">Select club…</option>' +
@@ -1022,10 +1022,9 @@ function renderByTeam(){
 
     if (!team) { tbody.innerHTML=''; return; }
 
-    // Use cleaned names for matching (so KO placeholders / W/O tags don’t interfere)
     const rows = MATCHES
       .filter(r => cleanName(r.home) === team || cleanName(r.away) === team)
-      .sort((a,b) => resultRank(a) - resultRank(b) || sortRoundDate(a,b)); // same sort as before
+      .sort((a,b) => resultRank(a) - resultRank(b) || sortRoundDate(a,b));
 
     tbody.innerHTML = rows.map(r => rowHTML(r, isMobile, isTiny)).join('');
     LGH_ANALYTICS.viewTeam(team);
@@ -1042,41 +1041,75 @@ function renderByTeam(){
   if (params.team) { sel.value = params.team; sel.dispatchEvent(new Event('input')); }
 }
 
-  function renderByDate(){
-    VIEW_MODE='date'; state.view='date';
-    const tbl=el('date-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
-    const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; buildHead(thead,isMobile,isTiny);
 
-    const rows = [...MATCHES]
-      // Strictly: date → competition rank (Senior..Junior C) → time
-      .sort(sortDateComp);
-    tbody.innerHTML=rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+function renderByDate(){
+  VIEW_MODE='date'; state.view='date';
 
-    const candidates=Array.from(tbody.querySelectorAll('tr[data-date]'));
-    const jump=el('date-jump');
-    if(jump){
-      const allDates=rows.map(r=>r.date).filter(Boolean).sort();
-      const minD=allDates[0]||''; const maxD=allDates[allDates.length-1]||'';
-      if(minD) jump.min=minD; if(maxD) jump.max=maxD;
+  const tbl   = el('date-table');
+  const thead = tbl.tHead || tbl.createTHead();
+  const tbody = tbl.tBodies[0] || tbl.createTBody();
 
-      jump.onchange=()=>{
-        const ymd=jump.value; state.date=ymd||null; syncURL();
-        if(!ymd||candidates.length===0) return;
-        let target=tbody.querySelector(`tr[data-date="${ymd}"]`);
-        if(!target){
-          let chosen=null;
-          for(const tr of candidates){ const d=tr.getAttribute('data-date')||''; if(d<=ymd) chosen=tr; else break; }
-          target=chosen||candidates[candidates.length-1]||candidates[0]||null;
-          if(target){ const td=target.getAttribute('data-date')||''; if(td){ const firstOfDate=tbody.querySelector(`tr[data-date="${td}"]`); if(firstOfDate) target=firstOfDate; } }
+  const isMobile = matchMedia('(max-width:880px)').matches;
+  const isTiny   = matchMedia('(max-width:400px)').matches;
+  buildHead(thead, isMobile, isTiny);
+
+  // Strict sort: date → competition rank → time
+  const rows = [...MATCHES].sort(sortDateComp);
+  tbody.innerHTML = rows.map(r => rowHTML(r, isMobile, isTiny)).join('');
+
+  // Build the date <select id="date"> (chevron comes from .pretty-select in HTML)
+  const sel = el('date');
+  if (sel) {
+    const uniqueDates = [...new Set(rows.map(r => r.date).filter(Boolean))].sort();
+    sel.innerHTML =
+      '<option value="">Select date…</option>' +
+      uniqueDates.map(d => `<option value="${esc(d)}">${esc(fmtDateShort(d))}</option>`).join('');
+
+    sel.onchange = () => {
+      const ymd = sel.value;
+      state.date = ymd || null;
+      syncURL();
+
+      if (!ymd) return;
+
+      const candidates = Array.from(tbody.querySelectorAll('tr[data-date]'));
+      if (candidates.length === 0) return;
+
+      let target = tbody.querySelector(`tr[data-date="${ymd}"]`);
+      if (!target) {
+        let chosen = null;
+        for (const tr of candidates) {
+          const d = tr.getAttribute('data-date') || '';
+          if (d <= ymd) chosen = tr; else break;
         }
-        if(target){ target.scrollIntoView({behavior:'smooth',block:'start'}); target.style.outline='2px solid var(--accent)'; setTimeout(()=>{ target.style.outline=''; },1500); }
-        LGH_ANALYTICS.viewDate(ymd);
-      };
+        target = chosen || candidates[candidates.length-1] || candidates[0] || null;
+        if (target) {
+          const td = target.getAttribute('data-date') || '';
+          if (td) {
+            const firstOfDate = tbody.querySelector(`tr[data-date="${td}"]`);
+            if (firstOfDate) target = firstOfDate;
+          }
+        }
+      }
 
-      if(params.date){ jump.value=params.date; jump.dispatchEvent(new Event('change')); }
+      if (target) {
+        target.scrollIntoView({ behavior:'smooth', block:'start' });
+        target.style.outline = '2px solid var(--accent)';
+        setTimeout(() => { target.style.outline = ''; }, 1500);
+      }
+
+      LGH_ANALYTICS.viewDate(ymd);
+    };
+
+    // Deep-link: ?date=YYYY-MM-DD
+    if (params.date) {
+      sel.value = params.date;
+      sel.dispatchEvent(new Event('change'));
     }
   }
+}
 
+  
   (function(){
   const btn   = el('btn-expand');
   const modal = el('standings-modal');
