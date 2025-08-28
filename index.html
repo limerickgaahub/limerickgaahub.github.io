@@ -274,14 +274,26 @@ td.match, th.match{ text-align:center; }
 #modal-standings td:not(:first-child), #modal-standings th:not(:first-child){ text-align:right; }
 #modal-standings tbody td:not(:first-child){ font-variant-numeric:tabular-nums; }
 
+/* Only allow horizontal scroll on very narrow screens */
+@media (max-width: 480px){
+  .modal .table-wrap{ overflow-x:auto; }
+}
+  
 /* Controls lighter */
 .controls.card{ box-shadow:none; border-radius:12px; border:1px solid var(--line); }
 
 /* Give Team more space in both compact and expanded tables */
-#g-standings-table, #modal-standings{ table-layout:fixed; width:100%; }
-#g-standings-table th:first-child, #g-standings-table td:first-child,
-#modal-standings th:first-child, #modal-standings td:first-child{
+#g-standings-table{ table-layout:fixed; width:100%; }
+#modal-standings{ table-layout:auto;  width:100%; }
+/* compact table (keep as-is) */
+#g-standings-table th:first-child, #g-standings-table td:first-child{
   width:52%;
+  white-space:normal; word-break:normal; overflow-wrap:anywhere;
+}
+
+/* expanded modal table (a bit narrower for Team to free space for numbers) */
+#modal-standings th:first-child, #modal-standings td:first-child{
+  width:46%;
   white-space:normal; word-break:normal; overflow-wrap:anywhere;
 }
 #g-standings-table th:not(:first-child), #g-standings-table td:not(:first-child),
