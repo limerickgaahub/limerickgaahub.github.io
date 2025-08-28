@@ -471,6 +471,10 @@ function buildCompetitionMenu(){
     el('g-standings').style.display = 'none';
     document.querySelector('.matches-wrap').style.display = '';
 
+    // Show Matches-only controls in Matches view
+    const mc = document.getElementById('controls-matches');
+    if (mc) mc.style.display = '';
+
     const onTable = document.querySelector('#group-panel .section-tabs .seg[data-view="table"].active');
     if (onTable) renderStandings(); else renderGroupTable();
 
@@ -766,6 +770,9 @@ function renderStandings(){
     ( meta.pihc ? true : (r.group || '') === (state.group || '') )
   );
 
+  // Hide Matches-only controls when Table view is active
+  const mc = document.getElementById('controls-matches');
+  if (mc) mc.style.display = 'none';
 
   const teams=new Map();
   for(const f of fixtures){
