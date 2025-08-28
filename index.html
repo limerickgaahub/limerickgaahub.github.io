@@ -1138,7 +1138,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
         const dateVisible = getComputedStyle(document.getElementById('by-date')).display !== 'none';
 
         if (teamVisible && teamText) return { msg: `Limerick GAA Hub — ${teamText} (${statusText})` };
-       + if (dateVisible) {
+        if (dateVisible) {
          const niceDate = dateText
            ? new Date(dateText + 'T00:00:00').toLocaleDateString(undefined, { weekday:'short', year:'numeric', month:'short', day:'numeric' })
            : 'Selected date';
