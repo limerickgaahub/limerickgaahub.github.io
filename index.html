@@ -938,11 +938,15 @@ thead th, tbody td{ padding:.55rem .55rem; }
             <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
               <h2>By Date</h2>
               <div class="controls card" id="controls-date">
-                <label for="date-jump" class="sr-only">Go to date</label>
-                <div class="pretty-input">
-                  <input id="date-jump" type="date" />
+                <label for="date" class="sr-only">Select date</label>
+                <div class="pretty-select">
+                  <select id="date">
+                    <option value="">Select date…</option>
+                    <!-- JS will inject the rest of the dates -->
+                  </select>
                 </div>
               </div>
+
 
             
               <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
