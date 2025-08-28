@@ -736,7 +736,38 @@ thead th, tbody td{ padding:.55rem .55rem; }
 .sharecard{ display:flex; flex-direction:column; }
 .sharecard .sc-footer{ margin-top:24px; }
 
-  
+/* Share Card — centre Date/Time + Match headers & cells */
+.sc-fixtures thead th:nth-child(1),
+.sc-fixtures thead th:nth-child(2),
+.sc-fixtures tbody td:nth-child(1),
+.sc-fixtures tbody td:nth-child(2){
+  text-align:center;
+  vertical-align:middle;
+}
+
+/* Stacked match cell: Team A / mid / Team B */
+.sc-match{
+  display:grid;
+  grid-template-rows:auto auto auto;
+  row-gap:6px;                 /* tidy vertical spacing */
+  justify-items:center;
+  line-height:1.05;
+}
+.sc-match-team{ line-height:1.1; }
+
+/* “v” or scoreline in the middle */
+.sc-match-mid{
+  font-weight:800;
+  font-variant-numeric:tabular-nums;
+}
+.sc-match-mid.sc-score{
+  display:inline-block;
+  padding:3px 14px;
+  border-radius:999px;
+  background:#E6F4EA;          /* same green pill look as site */
+  color:#006B3C;
+}
+
 </style>
 
 </head>
@@ -1418,6 +1449,25 @@ function buildPayload({mode,preset,team,rowsRange,size,title}){
   return { mode, size, title: (title?.trim() || bits.filter(Boolean).join(' • ')), rows };
 }
 
+function scoreMid(m){
+  const s = String(m.status||'').toLowerCase();
+  if (s === 'walkover') return 'W/O';
+  const hg = m.home_goals, hp = m.home_points, ag = m.away_goals, ap = m.away_points;
+  if ([hg,hp,ag,ap].some(v => v == null || v === '')) return '—';
+  return `${hg}-${hp} - ${ag}-${ap}`;
+}
+
+function matchCellHTML(m, mode){
+  const mid   = (mode === 'results') ? scoreMid(m) : 'v';
+  const mCls  = (mode === 'results') ? 'sc-match-mid sc-score' : 'sc-match-mid';
+  return `
+    <div class="sc-match">
+      <div class="sc-match-team">${m.home}</div>
+      <div class="${mCls}">${mid}</div>
+      <div class="sc-match-team">${m.away}</div>
+    </div>`;
+}
+
 
   function renderCard(payload){
     const card = q('#share-card');
@@ -1445,6 +1495,7 @@ function buildPayload({mode,preset,team,rowsRange,size,title}){
           const dt = parseMatchDate(m) || (m.date ? new Date(m.date + 'T00:00:00') : null);
           const p  = fmtDateParts(dt);
           const t  = fmtTimeShort(m.time || '');
+          const mid = matchCellHTML(m, payload.mode);   // <-- stacked A / mid / B
           return `
             <tr>
               <td>
@@ -1454,11 +1505,12 @@ function buildPayload({mode,preset,team,rowsRange,size,title}){
                   <div class="dt-time">${t}</div>
                 </div>
               </td>
-              <td>${m.home} v ${m.away}</td>
+              <td>${mid}</td>
               <td>${m.venue || '—'}</td>
             </tr>`;
         }).join('');
       }
+
 
     card.hidden = false;
     q('#sc-download').disabled = false;
