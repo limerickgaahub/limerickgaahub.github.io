@@ -3,7 +3,12 @@ name: Update fixtures/results (Limerick GAA Hub)
 on:
   workflow_dispatch:
   schedule:
-    - cron: "15 7,17 * * *"   # NOTE: GitHub Actions cron is UTC (07:15 & 17:15 UTC)
+    - cron: "0 8 * * *"   # 08:00 Irish (08:00 UTC)
+    - cron: "0 16 * * *"   # 16:00 Irish (08:00 UTC)
+    - cron: "0 18 * * *"   # 18:00 Irish (08:00 UTC)
+    - cron: "0 20 * * *"   # 20:00 Irish (08:00 UTC)
+    - cron: "0 21 * * *"   # 21:00 Irish (08:00 UTC)
+    - cron: "0 22 * * *"   # 22:00 Irish (08:00 UTC)   
 
 permissions:
   contents: write
@@ -40,25 +45,25 @@ jobs:
       - name: Validate scraped data
         run: python scripts/validate_data.py --indir tmp_data
 
-       - name: Upload debug artifacts (pre-promote)
-         if: always()
-          uses: actions/upload-artifact@v4
-          with:
-           name: debug-lines-tmp
-            path: tmp_data/_debug/**
-            if-no-files-found: ignore
+      - name: Upload debug artifacts (pre-promote)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-lines-tmp
+          path: tmp_data/_debug/**
+          if-no-files-found: ignore
 
-        - name: Replace data on success
-          run: |
-            rm -rf data_old || true
-            if [ -d data ]; then mv data data_old; fi
-            mv tmp_data data
-            # Restore knockout file if it existed previously
-            if [ -f data_old/knockout_2025.json ]; then
-              cp -a data_old/knockout_2025.json data/knockout_2025.json
-            fi
-        
-        - name: Upload debug artifacts (promoted)
+      - name: Replace data on success
+        run: |
+          rm -rf data_old || true
+          if [ -d data ]; then mv data data_old; fi
+          mv tmp_data data
+          # Restore knockout file if it existed previously
+          if [ -f data_old/knockout_2025.json ]; then
+            cp -a data_old/knockout_2025.json data/knockout_2025.json
+          fi
+
+      - name: Upload debug artifacts (promoted)
         if: success()
         uses: actions/upload-artifact@v4
         with:
