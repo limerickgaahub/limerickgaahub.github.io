@@ -520,29 +520,32 @@ function buildCompetitionMenu(){
 
 function getGroupsForComp(comp){
   const meta = DISPLAY_NAMES[comp] || {};
-  let groups = [];
 
-  if (meta.pihc) {
-    // PIHC has no groups in league phase
-    groups = [];
-  } else if (meta.divisions?.length) {
-    groups = [...meta.divisions]; // City/East/West
-  } else if (meta.groups?.length) {
-    groups = [...meta.groups];    // Group 1/2
-  } else {
-    // Fallback: infer non-KO groups from data
-    const groupsRaw = MATCHES
-      .filter(m => m.competition === comp && !isKO(m))
-      .map(m => m.group || '')
-      .filter(Boolean);
-    groups = [...new Set(groupsRaw)].sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
-  }
+  // --- PIHC special case: no league groups ---
+  // Return [] so rebuildMatchesMenu will build:
+  //   - a "PIHC" item (league phase)
+  //   - and add a "Knockout" item if KO fixtures exist
+  if (meta.pihc) return [];
 
-  // Append "Knockout" if KO games exist for this competition
+  // --- Normal comps: real groups/divisions ---
+  if (meta.divisions?.length) return [...meta.divisions];     // City/East/West (JBHC etc.)
+  if (meta.groups?.length)    return [...meta.groups];        // Group 1/Group 2 etc.
+
+  // Fallback: infer non-KO groups from data
+  const groupsRaw = MATCHES
+    .filter(m => m.competition === comp && !isKO(m))
+    .map(m => m.group || '')
+    .filter(Boolean);
+
+  const groups = [...new Set(groupsRaw)]
+    .sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
+
+  // For non-PIHC comps we DO let the dropdown include Knockout if present
   if (MATCHES.some(m => m.competition === comp && isKO(m))) groups.push('Knockout');
 
   return groups;
 }
+
 
 
 
