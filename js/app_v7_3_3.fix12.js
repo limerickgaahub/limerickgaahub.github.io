@@ -266,6 +266,9 @@ async function load(){
         away_points: r.away_points,
       };
 
+      // ↓ normalize short codes (e.g. "PIHC") to full names once, in memory
+      out.competition = INV_COMP_CODES[out.competition] || out.competition;
+      
       out.code = compCode(out.competition);
 
       // Walkover detection
@@ -312,6 +315,10 @@ async function load(){
             venue:       r.venue || '',
             status:      r.status || 'Provisional'
           };
+
+          // ↓ normalize here too, to keep everything consistent
+          out.competition = INV_COMP_CODES[out.competition] || out.competition;
+          
           out.code = compCode(out.competition);
           return attachScores(out);
         });
