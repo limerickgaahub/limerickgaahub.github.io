@@ -560,6 +560,14 @@ thead th, tbody td{ padding:.55rem .55rem; }
   border-color: var(--accent-2);
 }
 
+/* Footnote (subtle) */
+.footnote{
+  margin-top:8px;
+  font-size:12px;       /* small */
+  color:#6b7280;        /* muted */
+  font-style:italic;    /* gentle emphasis */
+}
+
 /* Give bottom sharebars a little space and tidy alignment */
 .sharebar { margin-top: 14px; }
 @media (max-width:880px){
@@ -629,7 +637,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
   min-width: 4.5em;  /* much wider for Diff */
   text-align: right;
 }
-
 
 
 </style>
@@ -718,6 +725,13 @@ thead th, tbody td{ padding:.55rem .55rem; }
         </div>
       </div>
 
+      <!-- Table footnote -->
+      <div id="table-footnote" class="footnote" style="display:none;">
+        Tables do not yet incorporate head to head.
+      </div>
+
+
+      
       <!-- Share (Competition) -->
       <div class="sharebar" id="sharebar-comp">
         <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
@@ -885,7 +899,11 @@ thead th, tbody td{ padding:.55rem .55rem; }
       // Toggle Matches vs Table content
       document.getElementById('g-standings').style.display = showTable ? '' : 'none';
       document.querySelector('.matches-wrap').style.display = showTable ? 'none' : '';
-  
+
+      // Toggle the Table footnote
+      const tblFoot = document.getElementById('table-footnote');
+      if (tblFoot) tblFoot.style.display = showTable ? '' : 'none';
+      
       // Hide/show the Matches-only filter controls
       const matchesControls = document.getElementById('controls-matches');
       if (matchesControls) matchesControls.style.display = showTable ? 'none' : '';
