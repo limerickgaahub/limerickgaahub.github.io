@@ -1622,6 +1622,22 @@ function renderCard(payload){
                                       'sc-size-ig-portrait'
   );
   q('#sc-title').textContent = payload.title || '';
+  // --- Corner ribbon text & show ---
+(function(){
+  const rib = q('#sc-ribbon');
+  if (!rib) return;
+
+  const modeWord =
+    payload.mode === 'results' ? 'Results' :
+    payload.mode === 'table'   ? 'Table'   : 'Fixtures';
+
+  // Try to surface "Today" / "Tomorrow" if present in the title
+  const m = /\b(Today|Tomorrow)\b/i.exec(payload.title || '');
+  const when = m ? m[1] : '';
+
+  rib.textContent = when ? `${modeWord} • ${when}` : modeWord;
+  rib.hidden = false;
+})();
 
   const tb = q('#sc-tbody');
   const tf = q('#sc-table-fixtures');
