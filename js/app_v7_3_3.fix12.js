@@ -843,7 +843,7 @@ function renderStandings(){
   const mt=el('modal-standings');
   if(mt){
     if(!mt.tHead||!mt.tHead.rows.length){
-      mt.createTHead().innerHTML=`<tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">Diff</th><th class="right">Pts</th></tr>`;
+      mt.createTHead().innerHTML=`<tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">PD</th><th class="right">Pts</th></tr>`;
     }
     const mb=mt.tBodies[0]||mt.createTBody();
     mb.innerHTML=sorted.map(r=>`
