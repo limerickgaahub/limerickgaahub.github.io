@@ -49,10 +49,15 @@ jobs:
           if-no-files-found: ignore
 
       - name: Replace data on success
-        run: |
-          rm -rf data_old || true
-          mv data data_old || true
-          mv tmp_data data
+          run: |
+            rm -rf data_old || true
+            if [ -d data ]; then mv data data_old; fi
+            mv tmp_data data
+            # Restore static assets (e.g., knockout file) if they existed
+            if [ -d data_old/static ]; then
+              mkdir -p data/static
+              cp -a data_old/static/. data/static/
+            fi
 
       - name: Upload debug artifacts (promoted)
         if: success()
