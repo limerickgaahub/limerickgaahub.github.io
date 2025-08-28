@@ -7,7 +7,7 @@
     "time": "TBC",
     "venue": "TBC",
     "home": "3rd Group 1",
-    "away": "1st Group 2",
+    "away": "2nd Group 2",
     "status": "Provisional",
     "note": "Date is 'weekend of'."
   },
@@ -19,7 +19,7 @@
     "time": "TBC",
     "venue": "TBC",
     "home": "4th Group 1",
-    "away": "2nd Group 2",
+    "away": "1st Group 2",
     "status": "Provisional",
     "note": "Date is 'weekend of'."
   },
@@ -78,7 +78,7 @@
     "date": "2025-10-04",
     "time": "TBC",
     "venue": "TBC",
-    "home": "2nd Group 1",
+    "home": "2nd Group",
     "away": "3rd Group",
     "status": "Provisional",
     "note": "Date is 'weekend of'."
