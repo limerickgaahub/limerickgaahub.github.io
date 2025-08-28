@@ -466,6 +466,29 @@ function buildCompetitionMenu(){
     rebuildMatchesMenu();
     updateTableTabVisibility();
 
+    // --- KO footnote helper (append under the Matches table) ---
+    function toggleKOFootnote(show){
+      const gp   = document.getElementById('group-panel');
+      if (!gp) return;
+    
+      // We'll place the footnote immediately after the table wrapper for matches
+      const matchesWrap = gp.querySelector('.matches-wrap');
+      if (!matchesWrap) return;
+    
+      let note = document.getElementById('ko-footnote');
+      if (!note) {
+        note = document.createElement('div');
+        note.id = 'ko-footnote';
+        note.className = 'footnote';
+        note.textContent = 'Provisional dates are weekend of, except for final.';
+        // insert directly after the matches table block
+        matchesWrap.insertAdjacentElement('afterend', note);
+      }
+      note.style.display = show ? '' : 'none';
+    }
+
+
+    
     // Render matches (ensure Matches view visible)
     el('g-standings').style.display = 'none';
     document.querySelector('.matches-wrap').style.display = '';
@@ -727,6 +750,9 @@ function rebuildMatchesMenu(){
     : rows.sort(sortRoundDate);
 
   tbody.innerHTML = rows.map(r=>rowHTML(r,isMobile,isTiny)).join('');
+
+  // Show KO footnote only for Knockout selection (in Matches view)
+  toggleKOFootnote(state.group === 'Knockout');
 }
 
   function pointsFromGoalsPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
@@ -896,6 +922,10 @@ function renderStandings(){
       el('g-standings').style.display=showTable?'':'none';
       document.querySelector('.matches-wrap').style.display=showTable?'none':'';
 
+      // Keep KO footnote only when Matches is visible and Knockout selected
+      toggleKOFootnote(!showTable && state.group === 'Knockout');
+
+      
       if(showTable) renderStandings(); else renderGroupTable();
       // Only push a new URL if we’re NOT on the default (matches) view,
       // or if there were already query params in the URL.
@@ -941,6 +971,10 @@ function renderStandings(){
       if(target==='group-panel'){ state.view='matches'; VIEW_MODE='competition'; renderGroupTable(); LGH_ANALYTICS.viewCompetition(state.comp, state.group, 'matches'); }
       if(target==='by-team'){ VIEW_MODE='team'; renderByTeam(); LGH_ANALYTICS.viewTeam(state.team||'(none)'); }
       if(target==='by-date'){ VIEW_MODE='date'; renderByDate(); LGH_ANALYTICS.viewDate(state.date||'(none)'); }
+
+      // Hide KO footnote when not on Competition view; show it again only if Knockout and Matches
+      toggleKOFootnote(target==='group-panel' && state.group==='Knockout');
+      
       syncURL(true);
     });
   });
