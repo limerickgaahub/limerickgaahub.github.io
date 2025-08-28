@@ -646,6 +646,46 @@ thead th, tbody td{ padding:.55rem .55rem; }
     width: calc(100% + 8px); /* keep overall width neat */
   }
 }
+
+/* === LGH Share Card — overlay + card === */
+#sharecard-overlay[hidden]{ display:none !important; }
+#sharecard-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.45);
+  display:flex; align-items:center; justify-content:center; z-index:9999;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+}
+.sc-modal{ background:#fff; width:min(960px, 92vw); max-height:92vh; overflow:auto; border-radius:16px; padding:16px 16px 24px; }
+.sc-modal-hd{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.sc-modal h3{ font-size:20px; margin:0; }
+.sc-x{ border:0; background:#000; color:#fff; width:28px; height:28px; border-radius:50%; cursor:pointer; }
+
+#sc-form{ display:grid; grid-template-columns: 1fr 1fr; gap:12px 16px; margin-bottom:12px; }
+#sc-form .sc-row{ display:flex; flex-direction:column; gap:6px; }
+#sc-form label{ font-size:13px; color:#333; }
+#sc-form input, #sc-form select{ padding:8px 10px; border-radius:8px; border:1px solid #DDD; font-size:14px; }
+.sc-actions{ grid-column:1/-1; display:flex; gap:8px; padding-top:4px; }
+.sc-actions button{ padding:8px 12px; border-radius:10px; border:1px solid #DDD; background:#f6f6f6; cursor:pointer; }
+.sc-actions button:disabled{ opacity:.5; cursor:not-allowed; }
+
+/* Card sizes (platform presets) */
+.sharecard{
+  box-sizing:border-box; background:#0A3D1F; color:#fff; padding:48px; border-radius:24px;
+}
+.sc-size-ig-portrait{ width:1080px; height:1350px; }  /* IG portrait */
+.sc-size-ig-square{ width:1080px; height:1080px; }    /* IG square */
+.sc-size-x-landscape{ width:1200px; height:675px; }   /* X/Twitter 16:9 */
+
+.sc-header{ display:flex; align-items:center; gap:24px; margin-bottom:24px; }
+.sc-crest{ width:96px; height:96px; object-fit:contain; }
+.sc-title{ font-size:56px; font-weight:700; line-height:1.05; word-break:break-word; }
+
+.sc-table{ width:100%; border-collapse:collapse; background:#fff; color:#111; border-radius:20px; overflow:hidden; }
+.sc-table thead th{ font-size:34px; text-align:left; padding:18px 20px; background:#F2F5F0; }
+.sc-table tbody td{ font-size:34px; padding:18px 20px; border-top:1px solid #E6EAE3; }
+.sc-footer{ margin-top:24px; text-align:center; font-size:36px; opacity:0.9; }
+
+/* Injected button beside your existing sharebars */
+.lgh-sc-btn{ margin-left:8px; padding:6px 10px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; font-weight:700; }
   
 </style>
 
@@ -1097,6 +1137,294 @@ function updateSharebars(){
       
     })();
 
-  </script> 
+  </script>
+  <!-- LGH Share Card Overlay (hidden; shown only with ?share=1) -->
+<div id="sharecard-overlay" hidden>
+  <div class="sc-modal">
+    <div class="sc-modal-hd">
+      <h3>Create Share Image</h3>
+      <button type="button" class="sc-x" aria-label="Close">×</button>
+    </div>
+
+    <form id="sc-form">
+      <div class="sc-row">
+        <label>What</label>
+        <select name="mode">
+          <option value="fixtures">Fixtures</option>
+          <option value="results">Results</option>
+          <option value="table">Table / Standings</option>
+        </select>
+      </div>
+
+      <div class="sc-row">
+        <label>Date</label>
+        <select name="preset">
+          <option value="all">All</option>
+          <option value="today">Today</option>
+          <option value="tomorrow">Tomorrow</option>
+        </select>
+      </div>
+
+      <div class="sc-row">
+        <label>Club (optional)</label>
+        <input type="text" name="team" placeholder="e.g., Na Piarsaigh" />
+      </div>
+
+      <div class="sc-row">
+        <label>Rows (optional)</label>
+        <input type="text" name="rows" placeholder="e.g., 3-7 for a mid-list slice" />
+      </div>
+
+      <div class="sc-row">
+        <label>Size</label>
+        <select name="size">
+          <option value="ig-portrait">Instagram Portrait (1080×1350)</option>
+          <option value="ig-square">Instagram Square (1080×1080)</option>
+          <option value="x-landscape">X / Twitter (1200×675)</option>
+        </select>
+      </div>
+
+      <div class="sc-row">
+        <label>Title (optional)</label>
+        <input type="text" name="title" placeholder="Auto-filled from your selection" />
+      </div>
+
+      <div class="sc-actions">
+        <button type="button" id="sc-preview">Preview</button>
+        <button type="button" id="sc-download" disabled>Download PNG</button>
+        <button type="button" id="sc-copycap" disabled>Copy caption</button>
+      </div>
+    </form>
+
+    <!-- Live preview (this is what becomes the PNG) -->
+    <div id="share-card" class="sharecard sc-size-ig-portrait" hidden>
+      <div class="sc-header">
+        <!-- Use your crest — you can swap src to /img/crest.svg if you prefer -->
+        <img src="/android-chrome-512x512.png" alt="" class="sc-crest">
+        <div class="sc-title" id="sc-title">Senior • Group 1</div>
+      </div>
+
+      <!-- Fixtures/Results table -->
+      <table class="sc-table sc-fixtures" id="sc-table-fixtures">
+        <thead>
+          <tr><th>Date</th><th>Match</th><th>Venue</th></tr>
+        </thead>
+        <tbody id="sc-tbody"></tbody>
+      </table>
+
+      <!-- Standings table (mirrors your compact Table: Team P W D L Pts) -->
+      <table class="sc-table sc-table-standings" id="sc-table-standings" hidden>
+        <thead>
+          <tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr>
+        </thead>
+        <tbody id="sc-standings-body"></tbody>
+      </table>
+
+      <div class="sc-footer">Tables & more at limerickgaahub.ie</div>
+    </div>
+  </div>
+</div>
+
+<!-- html2canvas for PNG export -->
+<script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<!-- LGH Share Card logic (self-contained; runs only when ?share=1) -->
+<script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const SHARE_ENABLED = params.get('share') === '1';
+  if(!SHARE_ENABLED) return;
+
+  // Helpers
+  const q = sel => document.querySelector(sel);
+  const qa = sel => Array.from(document.querySelectorAll(sel));
+  const isResult = (s) => ['Result','Full Time','FT','AET','Walkover','W/O','Abandoned','Final'].includes(String(s||'').trim());
+
+  function parseMatchDate(m){
+    const s = m.date_iso || m.iso || m.datetime_iso || null;
+    if (s) { const d = new Date(s); if (!isNaN(d)) return d; }
+    const m2 = /(\d{1,2})\/(\d{1,2})\/(\d{2,4})/.exec(m.date||'');
+    if (m2){ const dd=+m2[1], mm=+m2[2], yy=(m2[3].length===2? +('20'+m2[3]) : +m2[3]); return new Date(yy, mm-1, dd); }
+    return null;
+  }
+  function inPreset(dt, preset){
+    if(!dt) return true;
+    const z = d=>{const x=new Date(d); x.setHours(0,0,0,0); return x;};
+    const today = z(new Date());
+    if (preset==='today')    return dt >= today && dt < new Date(+today + 86400000);
+    if (preset==='tomorrow'){ const t=new Date(+today + 86400000); return dt >= t && dt < new Date(+t + 86400000); }
+    return true; // 'all'
+  }
+
+  function compName(code){
+    return (window.REVERSE_CODES && window.REVERSE_CODES[code]) || code || '';
+  }
+
+  // Minimal standings calc to mirror your compact table
+  function computeStandings(rows){
+    const teams = new Map();
+    for(const r of rows){
+      if(!teams.has(r.home)) teams.set(r.home,{team:r.home,p:0,w:0,d:0,l:0,pts:0});
+      if(!teams.has(r.away)) teams.set(r.away,{team:r.away,p:0,w:0,d:0,l:0,pts:0});
+    }
+    const results = rows.filter(r => isResult(r.status));
+    for(const m of results){
+      const H = teams.get(m.home), A = teams.get(m.away);
+      const hs = +m.home_score || +m.hs || 0;
+      const as = +m.away_score || +m.as || 0;
+      H.p++; A.p++;
+      if(hs>as){ H.w++; A.l++; H.pts+=2; }
+      else if(hs<as){ A.w++; H.l++; A.pts+=2; }
+      else { H.d++; A.d++; H.pts+=1; A.pts+=1; }
+    }
+    return Array.from(teams.values()).sort((a,b)=> b.pts-a.pts || b.w-a.w || a.l-b.l || a.team.localeCompare(b.team));
+  }
+
+  function buildPayload({mode,preset,team,rowsRange,size,title}){
+    const comp = window.state?.comp || '';
+    const group = window.state?.group || '';
+    const meta = (window.DISPLAY_NAMES||{})[comp] || {};
+    let rows = (window.MATCHES||[]).filter(r => r.competition === comp);
+
+    if(group && !meta.pihc) rows = rows.filter(r => (r.group||'') === group);
+    if(team) rows = rows.filter(r => r.home===team || r.away===team);
+
+    if(mode==='fixtures') rows = rows.filter(r => !isResult(r.status));
+    if(mode==='results')  rows = rows.filter(r => isResult(r.status));
+
+    if(preset && preset!=='all'){
+      rows = rows.filter(r => inPreset(parseMatchDate(r), preset));
+    }
+
+    if(rowsRange){
+      const m = /^\s*(\d+)\s*-\s*(\d+)\s*$/.exec(rowsRange);
+      if(m){ const a=+m[1], b=+m[2]; rows = rows.slice(a-1, b); }
+    }
+
+    const bits = [compName(comp)];
+    if(group && !meta.pihc) bits.push(group);
+    if(team) bits.push(team);
+    if(preset==='today') bits.push('Today');
+    if(preset==='tomorrow') bits.push('Tomorrow');
+
+    return {
+      mode,
+      size,
+      title: (title && title.trim()) ? title.trim() : bits.filter(Boolean).join(' • '),
+      rows
+    };
+  }
+
+  function renderCard(payload){
+    const card = q('#share-card');
+    card.classList.remove('sc-size-ig-portrait','sc-size-ig-square','sc-size-x-landscape');
+    card.classList.add(
+      payload.size==='ig-square' ? 'sc-size-ig-square' :
+      payload.size==='x-landscape' ? 'sc-size-x-landscape' : 'sc-size-ig-portrait'
+    );
+    q('#sc-title').textContent = payload.title || '';
+
+    const tb = q('#sc-tbody'); const st = q('#sc-table-standings');
+    const tf = q('#sc-table-fixtures'); const sb = q('#sc-standings-body');
+
+    if(payload.mode==='table'){
+      tf.hidden = true; st.hidden = false;
+      sb.innerHTML = '';
+      const standings = computeStandings(payload.rows);
+      sb.innerHTML = standings.map(t => `
+        <tr>
+          <td>${t.team}</td><td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.pts}</td>
+        </tr>`).join('');
+    } else {
+      st.hidden = true; tf.hidden = false;
+      tb.innerHTML = payload.rows.map(m => `
+        <tr>
+          <td>${[m.day,m.date,m.time].filter(Boolean).join(' ')}</td>
+          <td>${m.home} v ${m.away}</td>
+          <td>${m.venue||'—'}</td>
+        </tr>`).join('');
+    }
+
+    card.hidden = false;
+    q('#sc-download').disabled = false;
+    q('#sc-copycap').disabled = false;
+  }
+
+  async function downloadPNG(){
+    const node = q('#share-card');
+    const canvas = await html2canvas(node, { scale: 2, backgroundColor: null, useCORS:true });
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'lgh-card.png';
+    a.click();
+  }
+
+  function makeCaption(payload){
+    const modeWord = payload.mode==='fixtures' ? 'fixtures' :
+                     payload.mode==='results' ? 'results' : 'table';
+    return `${payload.title} ${modeWord}. More: limerickgaahub.ie`;
+  }
+
+  function injectButtons(){
+    qa('.sharebar').forEach(bar=>{
+      if(bar.querySelector('.lgh-sc-btn')) return;
+      const btn = document.createElement('button');
+      btn.className = 'lgh-sc-btn';
+      btn.type = 'button';
+      btn.textContent = 'Create Share Image';
+      btn.addEventListener('click', openOverlay);
+      bar.appendChild(btn);
+    });
+  }
+
+  function openOverlay(){ q('#sharecard-overlay').hidden = false; }
+  function closeOverlay(){ q('#sharecard-overlay').hidden = true; }
+
+  function wireOverlay(){
+    const overlay = q('#sharecard-overlay');
+    const form = q('#sc-form');
+    q('.sc-x').addEventListener('click', closeOverlay);
+    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
+
+    q('#sc-preview').addEventListener('click', ()=>{
+      const payload = buildPayload({
+        mode: form.mode.value,
+        preset: form.preset.value,
+        team: (form.team.value||'').trim() || null,
+        rowsRange: (form.rows.value||'').trim() || null,
+        size: form.size.value,
+        title: form.title.value
+      });
+      renderCard(payload);
+      overlay._lastPayload = payload;
+    });
+
+    q('#sc-download').addEventListener('click', downloadPNG);
+
+    q('#sc-copycap').addEventListener('click', ()=>{
+      const payload = overlay._lastPayload || {title:'', mode:'fixtures'};
+      const text = makeCaption(payload);
+      navigator.clipboard.writeText(text).catch(()=>{});
+    });
+
+    // Deep-link presets ?sc=1&mode=fixtures&preset=tomorrow&team=...&size=ig-portrait
+    if(params.get('sc') === '1'){
+      openOverlay();
+      if(params.get('mode')) form.mode.value = params.get('mode');
+      if(params.get('preset')) form.preset.value = params.get('preset');
+      if(params.get('team')) form.team.value = params.get('team');
+      if(params.get('rows')) form.rows.value = params.get('rows');
+      if(params.get('size')) form.size.value = params.get('size');
+      if(params.get('title')) form.title.value = params.get('title');
+      q('#sc-preview').click();
+    }
+  }
+
+  window.addEventListener('load', ()=>{
+    // Wait a moment for your main app to render selections/sharebars
+    setTimeout(()=>{ injectButtons(); wireOverlay(); }, 250);
+  });
+})();
+</script>
 </body>
 </html>
