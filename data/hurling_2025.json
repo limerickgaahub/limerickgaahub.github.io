@@ -1,5 +1,5 @@
 {
-  "updated": "2025-08-28T16:48:53Z",
+  "updated": "2025-08-28T18:52:04Z",
   "matches": [
     {
       "competition": "Senior Hurling Championship",
@@ -456,21 +456,6 @@
       "group": "Premier Intermediate",
       "round": "R 5",
       "date": "2025-08-28",
-      "time": "18:15",
-      "home": "Effin",
-      "away": "Garryspillane",
-      "venue": "Killmallock",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Intermediate Hurling Championship",
-      "group": "Premier Intermediate",
-      "round": "R 5",
-      "date": "2025-08-28",
       "time": "18:30",
       "home": "South Liberties",
       "away": "Bruff",
@@ -630,6 +615,21 @@
       "home_points": null,
       "away_goals": null,
       "away_points": null
+    },
+    {
+      "competition": "Premier Intermediate Hurling Championship",
+      "group": "Premier Intermediate",
+      "round": "R 5",
+      "date": "2025-08-28",
+      "time": "18:15",
+      "home": "Effin",
+      "away": "Garryspillane",
+      "venue": "Killmallock",
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 23,
+      "away_goals": 0,
+      "away_points": 24
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -888,21 +888,6 @@
     },
     {
       "competition": "Intermediate Hurling Championship",
-      "group": "Group 2",
-      "round": "R 4",
-      "date": "2025-08-28",
-      "time": "18:15",
-      "home": "Knockainey",
-      "away": "Murroe Boher",
-      "venue": "Cappamore",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Intermediate Hurling Championship",
       "group": "Group 1",
       "round": "R 4",
       "date": "2025-08-28",
@@ -1050,6 +1035,21 @@
       "home_points": null,
       "away_goals": null,
       "away_points": null
+    },
+    {
+      "competition": "Intermediate Hurling Championship",
+      "group": "Group 2",
+      "round": "R 4",
+      "date": "2025-08-28",
+      "time": "18:15",
+      "home": "Knockainey",
+      "away": "Murroe Boher",
+      "venue": "Cappamore",
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 18,
+      "away_goals": 3,
+      "away_points": 21
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -1773,21 +1773,6 @@
     },
     {
       "competition": "Junior A Hurling Championship",
-      "group": "Group 2",
-      "round": "R 4",
-      "date": "2025-08-28",
-      "time": "18:30",
-      "home": "Rathkeale",
-      "away": "Templeglantine",
-      "venue": "Newcastle West",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior A Hurling Championship",
       "group": "Group 1",
       "round": "R 4",
       "date": "2025-08-31",
@@ -1935,6 +1920,21 @@
       "home_points": null,
       "away_goals": null,
       "away_points": null
+    },
+    {
+      "competition": "Junior A Hurling Championship",
+      "group": "Group 2",
+      "round": "R 4",
+      "date": "2025-08-28",
+      "time": "18:30",
+      "home": "Rathkeale",
+      "away": "Templeglantine",
+      "venue": "Newcastle West",
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 16,
+      "away_goals": 6,
+      "away_points": 14
     },
     {
       "competition": "Junior A Hurling Championship",

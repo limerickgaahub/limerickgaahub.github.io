@@ -1,22 +1,7 @@
 {
   "competition": "Junior A Hurling Championship",
-  "updated_at": "2025-08-28T16:48:53Z",
+  "updated_at": "2025-08-28T18:52:04Z",
   "fixtures": [
-    {
-      "id": "2025-JAHC-G2-R4-RAT-TEM",
-      "round": "R 4",
-      "group": "Group 2",
-      "date": "2025-08-28",
-      "time_local": "18:30",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-28T18:30:00",
-      "home": "Rathkeale",
-      "away": "Templeglantine",
-      "venue": "Newcastle West",
-      "referee": "Michael Browne",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
-    },
     {
       "id": "2025-JAHC-G1-R4-KIL-CLA",
       "round": "R 4",
@@ -169,6 +154,25 @@
     }
   ],
   "results": [
+    {
+      "id": "2025-JAHC-G2-R4-RAT-TEM",
+      "round": "R 4",
+      "group": "Group 2",
+      "date": "2025-08-28",
+      "time_local": "18:30",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-28T18:30:00",
+      "home": "Rathkeale",
+      "away": "Templeglantine",
+      "venue": "Newcastle West",
+      "referee": "Michael Browne",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
+      "home_goals": 1,
+      "home_points": 16,
+      "away_goals": 6,
+      "away_points": 14
+    },
     {
       "id": "2025-JAHC-G2-R4-CAS-GAR",
       "round": "R 4",

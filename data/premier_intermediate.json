@@ -1,22 +1,7 @@
 {
   "competition": "Premier Intermediate Hurling Championship",
-  "updated_at": "2025-08-28T16:48:53Z",
+  "updated_at": "2025-08-28T18:52:04Z",
   "fixtures": [
-    {
-      "id": "2025-PIHC-GX-R5-EFF-GAR",
-      "round": "R 5",
-      "group": "Premier Intermediate",
-      "date": "2025-08-28",
-      "time_local": "18:15",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-28T18:15:00",
-      "home": "Effin",
-      "away": "Garryspillane",
-      "venue": "Killmallock",
-      "referee": "Donnacha O Callaghan",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    },
     {
       "id": "2025-PIHC-GX-R5-SOU-BRU",
       "round": "R 5",
@@ -184,6 +169,25 @@
     }
   ],
   "results": [
+    {
+      "id": "2025-PIHC-GX-R5-EFF-GAR",
+      "round": "R 5",
+      "group": "Premier Intermediate",
+      "date": "2025-08-28",
+      "time_local": "18:15",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-28T18:15:00",
+      "home": "Effin",
+      "away": "Garryspillane",
+      "venue": "Killmallock",
+      "referee": "Donnacha O Callaghan",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 1,
+      "home_points": 23,
+      "away_goals": 0,
+      "away_points": 24
+    },
     {
       "id": "2025-PIHC-GX-R4-BLA-GAR",
       "round": "R 4",

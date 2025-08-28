@@ -1,6 +1,6 @@
 {
   "competition": "Intermediate Hurling Championship",
-  "updated_at": "2025-08-28T16:48:53Z",
+  "updated_at": "2025-08-28T18:52:04Z",
   "fixtures": [
     {
       "id": "2025-IHC-G1-R4-CAP-FEE",
@@ -14,21 +14,6 @@
       "away": "Feenagh Kilmeedy",
       "venue": "Fedamore",
       "referee": "Liam Berkery",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    },
-    {
-      "id": "2025-IHC-G2-R4-KNO-MUR",
-      "round": "R 4",
-      "group": "Group 2",
-      "date": "2025-08-28",
-      "time_local": "18:15",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-28T18:15:00",
-      "home": "Knockainey",
-      "away": "Murroe Boher",
-      "venue": "Cappamore",
-      "referee": "Jonathon Hayes",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
     },
@@ -184,6 +169,25 @@
     }
   ],
   "results": [
+    {
+      "id": "2025-IHC-G2-R4-KNO-MUR",
+      "round": "R 4",
+      "group": "Group 2",
+      "date": "2025-08-28",
+      "time_local": "18:15",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-28T18:15:00",
+      "home": "Knockainey",
+      "away": "Murroe Boher",
+      "venue": "Cappamore",
+      "referee": "Jonathon Hayes",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 3,
+      "home_points": 18,
+      "away_goals": 3,
+      "away_points": 21
+    },
     {
       "id": "2025-IHC-G2-R3-PAL-ST-",
       "round": "R 3",
