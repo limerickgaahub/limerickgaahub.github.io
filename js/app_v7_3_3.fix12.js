@@ -907,6 +907,11 @@ function renderStandings(){
 
       const showTable=seg.getAttribute('data-view')==='table';
             // 2c: keep Matches dropdown state correct when switching views
+
+      const tblFoot = document.getElementById('table-footnote');
+        if (tblFoot) tblFoot.style.display = showTable ? '' : 'none';
+
+      
       if (showTable) {
         // Close the Matches dropdown if it’s open
         const mm = document.getElementById('matches-menu');
@@ -957,26 +962,45 @@ function renderStandings(){
     });
   });
 
-  // View tabs (Competition/Team/Date)
-  $$('.view-tabs .vt').forEach(seg=>{
-    seg.addEventListener('click',()=>{
-      seg.parentElement.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
-      seg.classList.add('active');
-      const target=seg.getAttribute('data-target');
+// View tabs (Competition/Team/Date)
+$$('.view-tabs .vt').forEach(seg=>{
+  seg.addEventListener('click',()=>{
+    seg.parentElement.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
+    seg.classList.add('active');
+    const target = seg.getAttribute('data-target');
 
-      $$('#panel-hurling .panel').forEach(p=>p.style.display='none');
-      el(target).style.display='';
+    // Switch visible panel
+    $$('#panel-hurling .panel').forEach(p=>p.style.display='none');
+    el(target).style.display='';
 
-      if(target==='group-panel'){ state.view='matches'; VIEW_MODE='competition'; renderGroupTable(); LGH_ANALYTICS.viewCompetition(state.comp, state.group, 'matches'); }
-      if(target==='by-team'){ VIEW_MODE='team'; renderByTeam(); LGH_ANALYTICS.viewTeam(state.team||'(none)'); }
-      if(target==='by-date'){ VIEW_MODE='date'; renderByDate(); LGH_ANALYTICS.viewDate(state.date||'(none)'); }
+    // Render target view
+    if (target==='group-panel'){ 
+      state.view='matches'; VIEW_MODE='competition'; 
+      renderGroupTable(); 
+      LGH_ANALYTICS.viewCompetition(state.comp, state.group, 'matches'); 
+    }
+    if (target==='by-team'){ 
+      VIEW_MODE='team'; 
+      renderByTeam(); 
+      LGH_ANALYTICS.viewTeam(state.team||'(none)'); 
+    }
+    if (target==='by-date'){ 
+      VIEW_MODE='date'; 
+      renderByDate(); 
+      LGH_ANALYTICS.viewDate(state.date||'(none)'); 
+    }
 
-      // Hide KO footnote when not on Competition view; show it again only if Knockout and Matches
-      toggleKOFootnote(target==='group-panel' && state.group==='Knockout');
-      
-      syncURL(true);
-    });
+    // KO footnote only on Competition view (and only when Knockout + Matches)
+    toggleKOFootnote(target==='group-panel' && state.group==='Knockout');
+
+    // 🔼 Back-to-top button: show only on Date panel
+    const btnTop = el('scroll-top-btn');
+    if (btnTop) btnTop.style.display = (target === 'by-date') ? 'inline-flex' : 'none';
+
+    syncURL(true);
   });
+});
+
 
 // Pseudo-team placeholders to exclude from the Club dropdown
 const TEAM_EXCLUDE_RE = /^(?:QF\s*Winner|SF\d*\s*Winner)$/i;
@@ -1160,6 +1184,32 @@ function renderByDate(){
 
  const statusEl = el('status');
   if (statusEl) statusEl.addEventListener('input', ()=>{ renderGroupTable(); syncURL(); });
+
+  // Back to top (Date view) — wire click + set initial visibility
+(function(){
+  const btn = el('scroll-top-btn');
+  if (!btn) return;
+
+  // Smooth scroll
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+// Android/narrow UI: blur selects on change so pickers close
+(function(){
+  ['team','status','date'].forEach(id=>{
+    const s = el(id);
+    if (s) s.addEventListener('change', () => s.blur());
+  });
+})();
+
+  
+  // Initial visibility based on current panel
+  const datePanel = el('by-date');
+  const visible = datePanel && getComputedStyle(datePanel).display !== 'none';
+  btn.style.display = visible ? 'inline-flex' : 'none';
+})();
+
 
 
    (async function(){
