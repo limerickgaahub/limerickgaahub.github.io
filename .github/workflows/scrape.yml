@@ -48,17 +48,16 @@ jobs:
           path: tmp_data/_debug/**
           if-no-files-found: ignore
 
-      - name: Replace data on success
+        - name: Replace data on success
           run: |
             rm -rf data_old || true
             if [ -d data ]; then mv data data_old; fi
             mv tmp_data data
-            # Restore static assets (e.g., knockout file) if they existed
-            if [ -d data_old/static ]; then
-              mkdir -p data/static
-              cp -a data_old/static/. data/static/
+            # Restore knockout file if it existed previously
+            if [ -f data_old/knockout_2025.json ]; then
+              cp -a data_old/knockout_2025.json data/knockout_2025.json
             fi
-
+        
       - name: Upload debug artifacts (promoted)
         if: success()
         uses: actions/upload-artifact@v4
