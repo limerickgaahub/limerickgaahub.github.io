@@ -575,20 +575,36 @@ thead th, tbody td{ padding:.55rem .55rem; }
   .sharebar .spacer { display:none; }
 }
 
-/* Wider numeric columns (default desktop/tablet) */
-#g-standings-table th.right,
-#g-standings-table td.right,
-#modal-standings th.right,
-#modal-standings td.right {
-  min-width: 3.6em;
+/* Desktop/tablet only: give numerics more room */
+@media (min-width: 881px) {
+  #g-standings-table th.right,
+  #g-standings-table td.right,
+  #modal-standings th.right,
+  #modal-standings td.right {
+    min-width: 3.4em;   /* roomy but not excessive */
+  }
+  #g-standings-table th:nth-child(8),
+  #g-standings-table td:nth-child(8),
+  #modal-standings th:nth-child(8),
+  #modal-standings td:nth-child(8) {
+    min-width: 4.2em;   /* Diff */
+  }
 }
 
-/* Diff column: give extra space */
-#g-standings-table th:nth-child(8),
-#g-standings-table td:nth-child(8),
-#modal-standings th:nth-child(8),
-#modal-standings td:nth-child(8) {
-  min-width: 4.5em;
+/* Mobile: keep numerics tight so Team gets space */
+@media (max-width: 880px) {
+  #g-standings-table th.right,
+  #g-standings-table td.right,
+  #modal-standings th.right,
+  #modal-standings td.right { 
+    min-width: 2.4em; 
+  }
+  #g-standings-table th:nth-child(8),
+  #g-standings-table td:nth-child(8),
+  #modal-standings th:nth-child(8),
+  #modal-standings td:nth-child(8) { 
+    min-width: 3.2em; 
+  }
 }
 
 /* On very small screens, tighten Diff slightly to avoid overflow */
@@ -686,6 +702,40 @@ thead th, tbody td{ padding:.55rem .55rem; }
 
 /* Injected button beside your existing sharebars */
 .lgh-sc-btn{ margin-left:8px; padding:6px 10px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; font-weight:700; }
+
+/* === Share Card fine-tuning === */
+
+/* Slightly smaller cell font → more room, same readability */
+.sharecard .sc-table thead th{ font-size:32px; }
+.sharecard .sc-table tbody td{ font-size:32px; }
+
+/* Fixtures/Results: match site’s stacked Date/Time (day / dd/mm / hh:mm) */
+.sc-fixtures tbody td:first-child{ text-align:center; vertical-align:middle; }
+.sc-fixtures .dt3{
+  display:grid; grid-auto-rows:min-content; row-gap:4px; justify-items:center; line-height:1.05;
+}
+.sc-fixtures .dt3 .dt-day{ font-weight:700; }
+.sc-fixtures .dt3 .dt-date, .sc-fixtures .dt3 .dt-time{ font-variant-numeric:tabular-nums; }
+
+/* Column balance to prevent crowding */
+.sc-fixtures thead th:nth-child(1){ width:28%; }
+.sc-fixtures thead th:nth-child(2){ width:auto; }       /* Match expands */
+.sc-fixtures thead th:nth-child(3){ width:26%; text-align:center; }
+.sc-fixtures tbody td:nth-child(2){ white-space:normal; word-break:normal; overflow-wrap:anywhere; }
+.sc-fixtures tbody td:nth-child(3){ text-align:center; }
+
+/* Standings: give Team the space, keep numbers tidy and narrow */
+#sc-table-standings th:first-child, #sc-table-standings td:first-child{
+  width:52%; white-space:normal; word-break:normal; overflow-wrap:anywhere;
+}
+#sc-table-standings th:not(:first-child), #sc-table-standings td:not(:first-child){
+  text-align:right; min-width:2.8em; font-variant-numeric:tabular-nums;
+}
+
+/* Make sure the footer never gets clipped inside the card */
+.sharecard{ display:flex; flex-direction:column; }
+.sharecard .sc-footer{ margin-top:24px; }
+
   
 </style>
 
@@ -1207,10 +1257,11 @@ function updateSharebars(){
       <!-- Fixtures/Results table -->
       <table class="sc-table sc-fixtures" id="sc-table-fixtures">
         <thead>
-          <tr><th>Date</th><th>Match</th><th>Venue</th></tr>
+          <tr><th>Date/Time</th><th>Match</th><th>Venue</th></tr>
         </thead>
         <tbody id="sc-tbody"></tbody>
       </table>
+
 
       <!-- Standings table (mirrors your compact Table: Team P W D L Pts) -->
       <table class="sc-table sc-table-standings" id="sc-table-standings" hidden>
@@ -1238,6 +1289,25 @@ function updateSharebars(){
   // Helpers
   const q = sel => document.querySelector(sel);
   const qa = sel => Array.from(document.querySelectorAll(sel));
+
+  // --- stacked Date/Time formatting (match site mobile) ---
+  const day3 = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const pad2 = n => String(n).padStart(2,'0');
+  function fmtDateParts(dt){
+    if(!dt || isNaN(+dt)) return {day:'', dmy:'', time:''};
+    return {
+      day:  day3[dt.getDay()],
+      dmy:  `${pad2(dt.getDate())}/${pad2(dt.getMonth()+1)}`,
+      time: '' // we'll keep time from raw string below
+    };
+  }
+  function fmtTimeShort(t){
+    if(!t) return '';
+    const m = String(t).match(/^(\d{1,2}):(\d{2})/);
+    return m ? `${pad2(m[1])}:${m[2]}` : t;
+  }
+
+  
   const isResult = (s) => ['Result','Full Time','FT','AET','Walkover','W/O','Abandoned','Final'].includes(String(s||'').trim());
 
     function labelOf(full){
@@ -1369,15 +1439,26 @@ function buildPayload({mode,preset,team,rowsRange,size,title}){
         <tr>
           <td>${t.team}</td><td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.pts}</td>
         </tr>`).join('');
-    } else {
-      st.hidden = true; tf.hidden = false;
-      tb.innerHTML = payload.rows.map(m => `
-        <tr>
-          <td>${[m.day,m.date,m.time].filter(Boolean).join(' ')}</td>
-          <td>${m.home} v ${m.away}</td>
-          <td>${m.venue||'—'}</td>
-        </tr>`).join('');
-    }
+      } else {
+        st.hidden = true; tf.hidden = false;
+        tb.innerHTML = payload.rows.map(m => {
+          const dt = parseMatchDate(m) || (m.date ? new Date(m.date + 'T00:00:00') : null);
+          const p  = fmtDateParts(dt);
+          const t  = fmtTimeShort(m.time || '');
+          return `
+            <tr>
+              <td>
+                <div class="dt3">
+                  <div class="dt-day">${p.day}</div>
+                  <div class="dt-date">${p.dmy}</div>
+                  <div class="dt-time">${t}</div>
+                </div>
+              </td>
+              <td>${m.home} v ${m.away}</td>
+              <td>${m.venue || '—'}</td>
+            </tr>`;
+        }).join('');
+      }
 
     card.hidden = false;
     q('#sc-download').disabled = false;
@@ -1385,13 +1466,33 @@ function buildPayload({mode,preset,team,rowsRange,size,title}){
   }
 
   async function downloadPNG(){
-    const node = q('#share-card');
-    const canvas = await html2canvas(node, { scale: 2, backgroundColor: null, useCORS:true });
-    const a = document.createElement('a');
-    a.href = canvas.toDataURL('image/png');
-    a.download = 'lgh-card.png';
-    a.click();
+    const src = q('#share-card');
+  
+    // Clone outside the scrollable modal so nothing is clipped
+    const clone = src.cloneNode(true);
+    clone.id = 'share-card-clone';
+    clone.hidden = false;
+    clone.style.position = 'fixed';
+    clone.style.left = '-10000px';
+    clone.style.top  = '0';
+    document.body.appendChild(clone);
+  
+    try{
+      const canvas = await html2canvas(clone, {
+        scale: 2,
+        backgroundColor: null,
+        useCORS: true,
+        removeContainer: true
+      });
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'lgh-card.png';
+      a.click();
+    } finally {
+      document.body.removeChild(clone);
+    }
   }
+
 
   function makeCaption(payload){
     const modeWord = payload.mode==='fixtures' ? 'fixtures' :
