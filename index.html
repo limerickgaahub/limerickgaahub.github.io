@@ -1240,6 +1240,16 @@ function updateSharebars(){
   const qa = sel => Array.from(document.querySelectorAll(sel));
   const isResult = (s) => ['Result','Full Time','FT','AET','Walkover','W/O','Abandoned','Final'].includes(String(s||'').trim());
 
+    function labelOf(full){
+      const dn = (window.LGH?.DISPLAY_NAMES || {})[full] || null;
+      return dn?.label || full || '';
+    }
+
+    function isKOrow(r){
+      return String(r.group||'').toLowerCase()==='knockout' || String(r.stage||'').toLowerCase()==='knockout';
+    }
+
+  
   function parseMatchDate(m){
     const s = m.date_iso || m.iso || m.datetime_iso || null;
     if (s) { const d = new Date(s); if (!isNaN(d)) return d; }
@@ -1261,59 +1271,83 @@ function updateSharebars(){
   }
 
   // Minimal standings calc to mirror your compact table
-  function computeStandings(rows){
-    const teams = new Map();
-    for(const r of rows){
-      if(!teams.has(r.home)) teams.set(r.home,{team:r.home,p:0,w:0,d:0,l:0,pts:0});
-      if(!teams.has(r.away)) teams.set(r.away,{team:r.away,p:0,w:0,d:0,l:0,pts:0});
-    }
-    const results = rows.filter(r => isResult(r.status));
-    for(const m of results){
-      const H = teams.get(m.home), A = teams.get(m.away);
-      const hs = +m.home_score || +m.hs || 0;
-      const as = +m.away_score || +m.as || 0;
+function pointsFromGP(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3 + (Number(p)||0); }
+
+function computeStandings(rows){
+  const teams = new Map();
+  for (const r of rows){
+    if(!teams.has(r.home)) teams.set(r.home,{team:r.home,p:0,w:0,d:0,l:0,pts:0});
+    if(!teams.has(r.away)) teams.set(r.away,{team:r.away,p:0,w:0,d:0,l:0,pts:0});
+  }
+
+  const results = rows.filter(r => window.LGH.isResult(r.status));
+
+  for (const m of results){
+    const H = teams.get(m.home), A = teams.get(m.away);
+
+    // Walkover: played, 2 pts to winner, no PF/PA math on the card table
+    if (String(m.status).toLowerCase() === 'walkover') {
       H.p++; A.p++;
-      if(hs>as){ H.w++; A.l++; H.pts+=2; }
-      else if(hs<as){ A.w++; H.l++; A.pts+=2; }
-      else { H.d++; A.d++; H.pts+=1; A.pts+=1; }
+      const WO_TAG = /\bW\/\s*O\b/i;
+      let win = m.walkover_winner || (WO_TAG.test(m.home)?'home' : (WO_TAG.test(m.away)?'away':null));
+      if (win==='home'){ H.w++; H.pts+=2; A.l++; }
+      else if (win==='away'){ A.w++; A.pts+=2; H.l++; }
+      continue;
     }
-    return Array.from(teams.values()).sort((a,b)=> b.pts-a.pts || b.w-a.w || a.l-b.l || a.team.localeCompare(b.team));
+
+    const hs = pointsFromGP(m.home_goals, m.home_points);
+    const as = pointsFromGP(m.away_goals, m.away_points);
+    if (hs==null || as==null) continue;
+
+    H.p++; A.p++;
+    if (hs>as){ H.w++; H.pts+=2; A.l++; }
+    else if (hs<as){ A.w++; A.pts+=2; H.l++; }
+    else { H.d++; A.d++; H.pts++; A.pts++; }
   }
 
-  function buildPayload({mode,preset,team,rowsRange,size,title}){
-    const comp = window.state?.comp || '';
-    const group = window.state?.group || '';
-    const meta = (window.DISPLAY_NAMES||{})[comp] || {};
-    let rows = (window.MATCHES||[]).filter(r => r.competition === comp);
+  return Array.from(teams.values()).sort((a,b)=>
+    b.pts-a.pts || b.w-a.w || a.l-b.l || a.team.localeCompare(b.team)
+  );
+}
 
-    if(group && !meta.pihc) rows = rows.filter(r => (r.group||'') === group);
-    if(team) rows = rows.filter(r => r.home===team || r.away===team);
 
-    if(mode==='fixtures') rows = rows.filter(r => !isResult(r.status));
-    if(mode==='results')  rows = rows.filter(r => isResult(r.status));
+function buildPayload({mode,preset,team,rowsRange,size,title}){
+  const comp  = window.LGH?.state?.comp  || '';
+  const group = window.LGH?.state?.group || '';
+  const meta  = (window.LGH?.DISPLAY_NAMES || {})[comp] || {};
 
-    if(preset && preset!=='all'){
-      rows = rows.filter(r => inPreset(parseMatchDate(r), preset));
-    }
+  let rows = (window.LGH?.matches || []).filter(r => r.competition === comp);
 
-    if(rowsRange){
-      const m = /^\s*(\d+)\s*-\s*(\d+)\s*$/.exec(rowsRange);
-      if(m){ const a=+m[1], b=+m[2]; rows = rows.slice(a-1, b); }
-    }
-
-    const bits = [compName(comp)];
-    if(group && !meta.pihc) bits.push(group);
-    if(team) bits.push(team);
-    if(preset==='today') bits.push('Today');
-    if(preset==='tomorrow') bits.push('Tomorrow');
-
-    return {
-      mode,
-      size,
-      title: (title && title.trim()) ? title.trim() : bits.filter(Boolean).join(' • '),
-      rows
-    };
+  if (group === 'Knockout') {
+    rows = rows.filter(isKOrow);                          // KO view: only KO
+  } else {
+    rows = rows.filter(r => !isKOrow(r));                 // league view: hide KO
+    if (!meta.pihc && group) rows = rows.filter(r => (r.group||'') === group);
+    // PIHC: no group filter (same as your site)
   }
+
+  if (team) rows = rows.filter(r => r.home===team || r.away===team);
+  if (mode==='fixtures') rows = rows.filter(r => !window.LGH.isResult(r.status));
+  if (mode==='results')  rows = rows.filter(r =>  window.LGH.isResult(r.status));
+
+  if (preset && preset!=='all'){
+    rows = rows.filter(r => inPreset(parseMatchDate(r), preset));
+  }
+
+  if (rowsRange){
+    const m = /^\s*(\d+)\s*-\s*(\d+)\s*$/.exec(rowsRange);
+    if(m){ const a=+m[1], b=+m[2]; rows = rows.slice(a-1, b); }
+  }
+
+  const bits = [labelOf(comp)];
+  if (group && !meta.pihc) bits.push(group);
+  if (team) bits.push(team);
+  if (preset==='today') bits.push('Today');
+  if (preset==='tomorrow') bits.push('Tomorrow');
+
+  return { mode, size, title: (title?.trim() || bits.filter(Boolean).join(' • ')), rows };
+}
+
 
   function renderCard(payload){
     const card = q('#share-card');
