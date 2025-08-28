@@ -1,22 +1,7 @@
 {
   "competition": "Senior Hurling Championship",
-  "updated_at": "2025-08-28T18:52:04Z",
+  "updated_at": "2025-08-28T19:49:35Z",
   "fixtures": [
-    {
-      "id": "2025-SHC-G2-R4-MON-NEW",
-      "round": "R 4",
-      "group": "Group 2",
-      "date": "2025-08-28",
-      "time_local": "18:30",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-28T18:30:00",
-      "home": "Monaleen",
-      "away": "Newcastle West",
-      "venue": "Sean Finn Park, Rathkeale",
-      "referee": "Eamonn Stapleton",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
-    },
     {
       "id": "2025-SHC-G1-R4-BAL-DOO",
       "round": "R 4",
@@ -184,6 +169,25 @@
     }
   ],
   "results": [
+    {
+      "id": "2025-SHC-G2-R4-MON-NEW",
+      "round": "R 4",
+      "group": "Group 2",
+      "date": "2025-08-28",
+      "time_local": "18:30",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-28T18:30:00",
+      "home": "Monaleen",
+      "away": "Newcastle West",
+      "venue": "Sean Finn Park, Rathkeale",
+      "referee": "Eamonn Stapleton",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 1,
+      "home_points": 18,
+      "away_goals": 0,
+      "away_points": 19
+    },
     {
       "id": "2025-SHC-G1-R3-NA--AHA",
       "round": "R 3",

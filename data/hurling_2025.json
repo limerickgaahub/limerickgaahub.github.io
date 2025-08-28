@@ -1,21 +1,6 @@
 {
-  "updated": "2025-08-28T18:52:04Z",
+  "updated": "2025-08-28T19:49:35Z",
   "matches": [
-    {
-      "competition": "Senior Hurling Championship",
-      "group": "Group 2",
-      "round": "R 4",
-      "date": "2025-08-28",
-      "time": "18:30",
-      "home": "Monaleen",
-      "away": "Newcastle West",
-      "venue": "Sean Finn Park, Rathkeale",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
     {
       "competition": "Senior Hurling Championship",
       "group": "Group 1",
@@ -180,6 +165,21 @@
       "home_points": null,
       "away_goals": null,
       "away_points": null
+    },
+    {
+      "competition": "Senior Hurling Championship",
+      "group": "Group 2",
+      "round": "R 4",
+      "date": "2025-08-28",
+      "time": "18:30",
+      "home": "Monaleen",
+      "away": "Newcastle West",
+      "venue": "Sean Finn Park, Rathkeale",
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 18,
+      "away_goals": 0,
+      "away_points": 19
     },
     {
       "competition": "Senior Hurling Championship",
@@ -455,21 +455,6 @@
       "competition": "Premier Intermediate Hurling Championship",
       "group": "Premier Intermediate",
       "round": "R 5",
-      "date": "2025-08-28",
-      "time": "18:30",
-      "home": "South Liberties",
-      "away": "Bruff",
-      "venue": "Ballybrown",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Intermediate Hurling Championship",
-      "group": "Premier Intermediate",
-      "round": "R 5",
       "date": "2025-08-29",
       "time": "18:15",
       "home": "Glenroe",
@@ -630,6 +615,21 @@
       "home_points": 23,
       "away_goals": 0,
       "away_points": 24
+    },
+    {
+      "competition": "Premier Intermediate Hurling Championship",
+      "group": "Premier Intermediate",
+      "round": "R 5",
+      "date": "2025-08-28",
+      "time": "18:30",
+      "home": "South Liberties",
+      "away": "Bruff",
+      "venue": "Ballybrown",
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 14,
+      "away_goals": 1,
+      "away_points": 23
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -873,36 +873,6 @@
     },
     {
       "competition": "Intermediate Hurling Championship",
-      "group": "Group 1",
-      "round": "R 4",
-      "date": "2025-08-28",
-      "time": "18:15",
-      "home": "Cappamore",
-      "away": "Feenagh Kilmeedy",
-      "venue": "Fedamore",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Intermediate Hurling Championship",
-      "group": "Group 1",
-      "round": "R 4",
-      "date": "2025-08-28",
-      "time": "18:30",
-      "home": "Hospital Herbertstown",
-      "away": "Croom",
-      "venue": "Knocklong",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Intermediate Hurling Championship",
       "group": "Group 2",
       "round": "R 4",
       "date": "2025-08-29",
@@ -1038,6 +1008,21 @@
     },
     {
       "competition": "Intermediate Hurling Championship",
+      "group": "Group 1",
+      "round": "R 4",
+      "date": "2025-08-28",
+      "time": "18:15",
+      "home": "Cappamore",
+      "away": "Feenagh Kilmeedy",
+      "venue": "Fedamore",
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 17,
+      "away_goals": 1,
+      "away_points": 13
+    },
+    {
+      "competition": "Intermediate Hurling Championship",
       "group": "Group 2",
       "round": "R 4",
       "date": "2025-08-28",
@@ -1050,6 +1035,21 @@
       "home_points": 18,
       "away_goals": 3,
       "away_points": 21
+    },
+    {
+      "competition": "Intermediate Hurling Championship",
+      "group": "Group 1",
+      "round": "R 4",
+      "date": "2025-08-28",
+      "time": "18:30",
+      "home": "Hospital Herbertstown",
+      "away": "Croom",
+      "venue": "Knocklong",
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 23,
+      "away_goals": 1,
+      "away_points": 16
     },
     {
       "competition": "Intermediate Hurling Championship",
