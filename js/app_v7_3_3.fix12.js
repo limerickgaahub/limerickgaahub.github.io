@@ -1153,4 +1153,13 @@ function renderByTeam(){
     }
   })();
 
+  // --- LGH Share Card: tiny public, read-only API ---
+  window.LGH = window.LGH || {};
+  Object.defineProperties(window.LGH, {
+    state:         { get: () => state },
+    matches:       { get: () => MATCHES },
+    DISPLAY_NAMES: { get: () => DISPLAY_NAMES }
+  });
+  window.LGH.isResult = (s) => /^(res|final|walkover)/i.test(String(s||''));
+  window.LGH.isKO = (m) => String(m.group||'').toLowerCase()==='knockout' || String(m.stage||'').toLowerCase()==='knockout';
 })();
