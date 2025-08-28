@@ -638,6 +638,37 @@ thead th, tbody td{ padding:.55rem .55rem; }
   text-align: right;
 }
 
+/* === LGH PATCH — Mobile left “rail” inside panels === */
+@media (max-width:880px){
+  :root{
+    --rail-w: 10px;        /* thickness of the vertical line (adjust 8–12px) */
+    --rail-inset: 8px;     /* gap from the panel edge (matches your card padding) */
+    --rail-cap: 12px;      /* roundness of the ends */
+    --rail-fill: #eef1f4;  /* fill colour of the line */
+    --rail-edge: #e4e7eb;  /* subtle inner edge for crispness */
+  }
+
+  .panel.rail{
+    position: relative; /* anchor the pseudo-element */
+  }
+
+  .panel.rail::before{
+    content: "";
+    position: absolute;
+    left: var(--rail-inset);
+    top: var(--rail-inset);
+    bottom: var(--rail-inset);
+    width: var(--rail-w);
+    background: var(--rail-fill);
+    border-radius: var(--rail-cap);
+    box-shadow: inset 0 0 0 1px var(--rail-edge); /* crisp edge so it looks “part of” the panel */
+    pointer-events: none;
+  }
+}
+/* === END PATCH === */
+
+
+  
 
 </style>
 
@@ -682,7 +713,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
     </div>
     <div class="menu" id="comp-menu" role="menu" aria-hidden="true"></div>
 
-    <div class="panel card" id="group-panel" style="margin-top:6px;">
+    <div class="panel card rail" id="group-panel" style="margin-top:6px;">
         <div class="comp-selected" id="comp-selected" aria-live="polite"></div>
 
     <div class="section-tabs">
@@ -740,7 +771,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
       </div> 
     </div>
 
-      <div class="panel card" id="by-team" style="display:none; margin-top:6px;">
+      <div class="panel card rail" id="by-team" style="display:none; margin-top:6px;">
         <h2>By Club</h2>
         <div class="controls card" id="controls-team">
           <label for="team" class="sr-only">Select club</label>
@@ -762,7 +793,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
 
 
         <!-- Share (Date) — inside the panel -->
-            <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
+            <div class="panel card rail" id="by-date" style="display:none; margin-top:6px;">
               <h2>By Date</h2>
               <div class="controls card" id="controls-date">
                 <label for="date-jump" class="sr-only">Go to date</label>
