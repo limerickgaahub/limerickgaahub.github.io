@@ -1208,7 +1208,7 @@ if (di) {
   if (statusEl) statusEl.addEventListener('input', ()=>{ renderGroupTable(); syncURL(); });
 
 // Back to top (Date view) — wire click + set initial visibility
-(function(){
+(function () {
   const btn = el('scroll-top-btn');
   if (!btn) return;
 
@@ -1217,19 +1217,19 @@ if (di) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-// Android/narrow UI: blur selects on change so pickers close
-(function(){
-  ['team','status','date','date-input'].forEach(id=>{
-    const s = el(id);
-    if (s) s.addEventListener('change', () => s.blur());
-  });
-  
-  // Initial visibility based on current panel (now back in the outer scope so `btn` exists)
+  // Android/narrow UI: blur selects on change so pickers close
+  (function () {
+    ['team', 'status', 'date', 'date-input'].forEach(id => {
+      const s = el(id);
+      if (s) s.addEventListener('change', () => s.blur());
+    });
+  })();
+
+  // Initial visibility based on current panel
   const datePanel = el('by-date');
   const visible = datePanel && getComputedStyle(datePanel).display !== 'none';
   btn.style.display = visible ? 'inline-flex' : 'none';
 })();
-)();
 
    (async function(){
     await load();
