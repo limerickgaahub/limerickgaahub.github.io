@@ -971,6 +971,9 @@ function renderStandings(){
     if (state.group)  sp.set('group', state.group);
     if (state.team)   sp.set('team',  state.team);
     if (state.date)   sp.set('date',  state.date);
+      // Preserve the share gate if it was enabled when the page loaded
+    if (window.__LGH_SHARE_ENABLED === true) sp.set('share', '1');
+
   
     const q   = sp.toString();
     const url = q ? `${location.pathname}?${q}` : location.pathname;
