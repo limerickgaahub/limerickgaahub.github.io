@@ -1417,11 +1417,17 @@ function updateSharebars(){
 <!-- LGH Share Card logic (self-contained; runs only when ?share=1) -->
 <script>
 (function(){
-  const SHARE_ENABLED = (window.__LGH_SHARE_ENABLED === true);
+  // Robust gate: honor either ?share=1 or ?sc=1, OR the early-captured flag
+  const urlParams = new URLSearchParams(location.search);
+  const SHARE_ENABLED =
+    (window.__LGH_SHARE_ENABLED === true) ||
+    (urlParams.get('share') === '1') ||
+    (urlParams.get('sc') === '1');
+
   if (!SHARE_ENABLED) return;
 
-  // Needed by the deep-link code later in this block
-  const params = new URLSearchParams(location.search);
+  // Use the same params instance below
+  const params = urlParams;
 
   
   // Helpers
