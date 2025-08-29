@@ -237,6 +237,28 @@ const LGH_ANALYTICS = (function(){
 })();
 document.addEventListener('DOMContentLoaded', ()=> LGH_ANALYTICS.autoBind());
 
+document.addEventListener('DOMContentLoaded', ()=> LGH_ANALYTICS.autoBind());
+
+/* === Date input: default to today + re-render on change === */
+document.addEventListener('DOMContentLoaded', () => {
+  const di = document.getElementById('date-input');
+  if (!di) return;
+
+  // Default to today if empty
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const dd = String(today.getDate()).padStart(2,'0');
+  if (!di.value) di.value = `${yyyy}-${mm}-${dd}`;
+
+  // Re-render Date view when changed
+  di.addEventListener('change', () => {
+    if (window.state) state.date = di.value;
+    if (typeof renderByDate === 'function') renderByDate();
+    if (window.LGH_ANALYTICS) LGH_ANALYTICS.viewDate(di.value);
+  });
+});
+
 
   
 async function load(){
@@ -1204,11 +1226,11 @@ function renderByDate(){
 
 // Android/narrow UI: blur selects on change so pickers close
 (function(){
-  ['team','status','date'].forEach(id=>{
+  ['team','status','date','date-input'].forEach(id=>{
     const s = el(id);
     if (s) s.addEventListener('change', () => s.blur());
   });
-})();
+
 
   
   // Initial visibility based on current panel
