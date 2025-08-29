@@ -803,7 +803,7 @@ function _winnerOf(m){
 function _h2hCompare(a, b, allResults){
   const games = allResults.filter(m =>
     ((m.home === a.team && m.away === b.team) || (m.home === b.team && m.away === a.team)) &&
-    /^(res|final)$/i.test(String(m.status||'')) // exclude walkover from H2H
+    && isResult(m.status)
   );
   if (games.length === 1){
     const w = _winnerOf(games[0]);
