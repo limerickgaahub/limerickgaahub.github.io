@@ -235,7 +235,6 @@ const LGH_ANALYTICS = (function(){
 
   return { page, viewAbout, viewPrivacy, viewCompetition, viewTeam, viewDate, clickSocial, clickOutbound, clickShare, autoBind };
 })();
-document.addEventListener('DOMContentLoaded', ()=> LGH_ANALYTICS.autoBind());
 
 document.addEventListener('DOMContentLoaded', ()=> LGH_ANALYTICS.autoBind());
 
@@ -1110,55 +1109,49 @@ function renderByDate(){
   const rows = [...MATCHES].sort(sortDateComp);
   tbody.innerHTML = rows.map(r => rowHTML(r, isMobile, isTiny)).join('');
 
-  // Build the date <select id="date"> (chevron comes from .pretty-select in HTML)
-  const sel = el('date');
-  if (sel) {
-    const uniqueDates = [...new Set(rows.map(r => r.date).filter(Boolean))].sort();
-    sel.innerHTML =
-      '<option value="">Select date…</option>' +
-      uniqueDates.map(d => `<option value="${esc(d)}">${esc(fmtDateShort(d))}</option>`).join('');
+// Hook up the <input type="date" id="date-input">
+const di = el('date-input');
+if (di) {
+  const scrollToDate = (ymd) => {
+    state.date = ymd || null;
+    syncURL();
 
-    sel.onchange = () => {
-      const ymd = sel.value;
-      state.date = ymd || null;
-      syncURL();
+    if (!ymd) return;
+    const candidates = Array.from(tbody.querySelectorAll('tr[data-date]'));
+    if (!candidates.length) return;
 
-      if (!ymd) return;
-
-      const candidates = Array.from(tbody.querySelectorAll('tr[data-date]'));
-      if (candidates.length === 0) return;
-
-      let target = tbody.querySelector(`tr[data-date="${ymd}"]`);
-      if (!target) {
-        let chosen = null;
-        for (const tr of candidates) {
-          const d = tr.getAttribute('data-date') || '';
-          if (d <= ymd) chosen = tr; else break;
-        }
-        target = chosen || candidates[candidates.length-1] || candidates[0] || null;
-        if (target) {
-          const td = target.getAttribute('data-date') || '';
-          if (td) {
-            const firstOfDate = tbody.querySelector(`tr[data-date="${td}"]`);
-            if (firstOfDate) target = firstOfDate;
-          }
-        }
+    let target = tbody.querySelector(`tr[data-date="${ymd}"]`);
+    if (!target) {
+      let chosen = null;
+      for (const tr of candidates) {
+        const d = tr.getAttribute('data-date') || '';
+        if (d <= ymd) chosen = tr; else break;
       }
-
+      target = chosen || candidates[candidates.length-1] || candidates[0] || null;
       if (target) {
-        target.scrollIntoView({ behavior:'smooth', block:'start' });
-        target.style.outline = '2px solid var(--accent)';
-        setTimeout(() => { target.style.outline = ''; }, 1500);
+        const td = target.getAttribute('data-date') || '';
+        if (td) {
+          const firstOfDate = tbody.querySelector(`tr[data-date="${td}"]`);
+          if (firstOfDate) target = firstOfDate;
+        }
       }
-
-      LGH_ANALYTICS.viewDate(ymd);
-    };
-
-    // Deep-link: ?date=YYYY-MM-DD
-    if (params.date) {
-      sel.value = params.date;
-      sel.dispatchEvent(new Event('change'));
     }
+
+    if (target) {
+      target.scrollIntoView({ behavior:'smooth', block:'start' });
+      target.style.outline = '2px solid var(--accent)';
+      setTimeout(() => { target.style.outline = ''; }, 1500);
+    }
+
+    LGH_ANALYTICS.viewDate(ymd);
+  };
+
+  di.addEventListener('change', () => scrollToDate(di.value));
+
+  // Deep-link: ?date=YYYY-MM-DD
+  if (params.date) {
+    di.value = params.date;
+    di.dispatchEvent(new Event('change'));
   }
 }
 
@@ -1214,7 +1207,7 @@ function renderByDate(){
  const statusEl = el('status');
   if (statusEl) statusEl.addEventListener('input', ()=>{ renderGroupTable(); syncURL(); });
 
-  // Back to top (Date view) — wire click + set initial visibility
+// Back to top (Date view) — wire click + set initial visibility
 (function(){
   const btn = el('scroll-top-btn');
   if (!btn) return;
@@ -1224,16 +1217,15 @@ function renderByDate(){
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-// Android/narrow UI: blur selects on change so pickers close
-(function(){
-  ['team','status','date','date-input'].forEach(id=>{
-    const s = el(id);
-    if (s) s.addEventListener('change', () => s.blur());
-  });
+  // Android/narrow UI: blur selects on change so pickers close
+  (function(){
+    ['team','status','date','date-input'].forEach(id=>{
+      const s = el(id);
+      if (s) s.addEventListener('change', () => s.blur());
+    });
+  })();
 
-
-  
-  // Initial visibility based on current panel
+  // Initial visibility based on current panel (now back in the outer scope so `btn` exists)
   const datePanel = el('by-date');
   const visible = datePanel && getComputedStyle(datePanel).display !== 'none';
   btn.style.display = visible ? 'inline-flex' : 'none';
