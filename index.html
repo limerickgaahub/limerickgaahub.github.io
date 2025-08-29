@@ -1209,7 +1209,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
         const teamSel = document.getElementById('team');
         const teamText = teamSel ? teamSel.options[teamSel.selectedIndex]?.text || '' : '';
 
-        const dateSel  = document.getElementById('date');
+        const dateSel  = document.getElementById('date-input');
         const dateText = dateSel && dateSel.value ? dateSel.value : '';
 
         const teamVisible = getComputedStyle(document.getElementById('by-team')).display !== 'none';
@@ -1423,8 +1423,6 @@ function updateSharebars(){
   // Needed by the deep-link code later in this block
   const params = new URLSearchParams(location.search);
 
-
-  const params = new URLSearchParams(location.search);
   
   // Helpers
   const q = sel => document.querySelector(sel);
