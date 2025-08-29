@@ -2,7 +2,7 @@ name: Update fixtures/results (Limerick GAA Hub)
 
 on:
   workflow_dispatch:
-  schedule:
+  schedule: []
 
 
 permissions:
