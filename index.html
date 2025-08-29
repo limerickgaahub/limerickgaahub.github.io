@@ -893,6 +893,12 @@ thead th, tbody td{ padding:.55rem .55rem; }
 
 </style>
 
+<script>
+  // Capture ?share=1 early before syncURL() strips it
+  window.__LGH_SHARE_ENABLED =
+    (new URLSearchParams(location.search).get('share') === '1');
+</script>
+
 </head>
 <body>
   <!-- Header -->
@@ -1416,9 +1422,9 @@ function updateSharebars(){
 <!-- LGH Share Card logic (self-contained; runs only when ?share=1) -->
 <script>
 (function(){
-  const params = new URLSearchParams(location.search);
-  const SHARE_ENABLED = params.get('share') === '1';
-  if(!SHARE_ENABLED) return;
+  const SHARE_ENABLED = (window.__LGH_SHARE_ENABLED === true);
+  if (!SHARE_ENABLED) return;
+
 
   // Helpers
   const q = sel => document.querySelector(sel);
