@@ -880,11 +880,11 @@
       "home": "St Kieran's",
       "away": "Feohanagh",
       "venue": "Dromcollogher",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 15,
+      "away_goals": 2,
+      "away_points": 16
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -1330,11 +1330,11 @@
       "home": "Crecora Manister",
       "away": "Askeaton Ballysteen Kilcornan",
       "venue": "Sean Finn Park, Rathkeale",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 14,
+      "away_goals": 1,
+      "away_points": 17
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1345,11 +1345,11 @@
       "home": "Dromcollogher Broadford",
       "away": "Knockaderry",
       "venue": "Newcastle West",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 14'
+      "away_goals": 3,
+      "away_points": 25
     },
     {
       "competition": "Premier Junior A Hurling Championship",
