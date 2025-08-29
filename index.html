@@ -1578,7 +1578,7 @@ function _h2hCompareShare(a, b, results){
   // Single prior scored meeting in this comp/group (exclude walkovers)
   const games = results.filter(m =>
     ((m.home===a.team && m.away===b.team) || (m.home===b.team && m.away===a.team)) &&
-    && isResult(m.status)   // only proper scored results
+    isResult(m.status)   // only proper scored results
   );
   if (games.length === 1){
     const w = _winnerOfRow(games[0]);
