@@ -1420,6 +1420,10 @@ function updateSharebars(){
   const SHARE_ENABLED = (window.__LGH_SHARE_ENABLED === true);
   if (!SHARE_ENABLED) return;
 
+  // Needed by the deep-link code later in this block
+  const params = new URLSearchParams(location.search);
+
+
   const params = new URLSearchParams(location.search);
   
   // Helpers
