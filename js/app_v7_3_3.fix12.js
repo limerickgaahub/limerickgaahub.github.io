@@ -1217,14 +1217,13 @@ if (di) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // Android/narrow UI: blur selects on change so pickers close
-  (function(){
-    ['team','status','date','date-input'].forEach(id=>{
-      const s = el(id);
-      if (s) s.addEventListener('change', () => s.blur());
-    });
-  })();
-
+// Android/narrow UI: blur selects on change so pickers close
+(function(){
+  ['team','status','date','date-input'].forEach(id=>{
+    const s = el(id);
+    if (s) s.addEventListener('change', () => s.blur());
+  });
+  
   // Initial visibility based on current panel (now back in the outer scope so `btn` exists)
   const datePanel = el('by-date');
   const visible = datePanel && getComputedStyle(datePanel).display !== 'none';
