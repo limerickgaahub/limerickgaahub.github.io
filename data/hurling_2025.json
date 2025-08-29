@@ -11,10 +11,10 @@
       "away": "Doon",
       "venue": "Killmallock",
       "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "home_goals": 2,
+      "home_points": 19,
+      "away_goals": 3,
+      "away_points": 17
     },
     {
       "competition": "Senior Hurling Championship",
@@ -26,10 +26,10 @@
       "away": "Patrickswell",
       "venue": "Claughaun GAA, Childers Rd",
       "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "home_goals": 1,
+      "home_points": 21,
+      "away_goals": 2,
+      "away_points": 14
     },
     {
       "competition": "Senior Hurling Championship",
@@ -41,10 +41,10 @@
       "away": "Mungret St Pauls",
       "venue": "Ballybrown",
       "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "home_goals": 0,
+      "home_points": 10,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "competition": "Senior Hurling Championship",
@@ -461,10 +461,10 @@
       "away": "Croagh Kilfinny",
       "venue": "Bruff",
       "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "home_goals": 1,
+      "home_points": 13,
+      "away_goals": 1,
+      "away_points": 16
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
