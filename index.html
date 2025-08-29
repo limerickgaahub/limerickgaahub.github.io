@@ -1002,15 +1002,13 @@ thead th, tbody td{ padding:.55rem .55rem; }
         <!-- Share (Date) — inside the panel -->
             <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
               <h2>By Date</h2>
-              <div class="controls card" id="controls-date">
-                <label for="date" class="sr-only">Select date</label>
-                <div class="pretty-select">
-                  <select id="date">
-                    <option value="">Select date…</option>
-                    <!-- JS will inject the rest of the dates -->
-                  </select>
+              <div id="controls-date" class="controls card">
+                <label class="sr-only" for="date-input">Select date</label>
+                <div class="pretty-input">
+                  <input id="date-input" type="date" />
                 </div>
               </div>
+
 
 
             
