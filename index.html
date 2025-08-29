@@ -797,6 +797,25 @@ thead th, tbody td{ padding:.55rem .55rem; }
   text-align:right; min-width:2.8em; font-variant-numeric:tabular-nums;
 }
 
+/* Tighter space between D and L on the card (keeps PD roomy) */
+.sharecard .sc-table-standings th:nth-child(4),
+.sharecard .sc-table-standings td:nth-child(4), /* D */
+.sharecard .sc-table-standings th:nth-child(5),
+.sharecard .sc-table-standings td:nth-child(5)  /* L */
+{ 
+  padding-left: 10px; 
+  padding-right: 10px; 
+  min-width: 2.4em;
+}
+
+/* Leave PD slightly wider so it breathes */
+.sharecard .sc-table-standings th:nth-child(6),
+.sharecard .sc-table-standings td:nth-child(6)  /* PD */
+{
+  min-width: 3.2em;
+}
+
+  
 /* Make sure the footer never gets clipped inside the card */
 .sharecard{ display:flex; flex-direction:column; }
 .sharecard .sc-footer{ margin-top:24px; }
@@ -856,6 +875,17 @@ thead th, tbody td{ padding:.55rem .55rem; }
 .sc-size-x-landscape.sc-tight-8 .sc-title{ font-size:46px; }
 .sc-size-x-landscape.sc-tight-8 .sc-table-standings thead th{ font-size:22px; padding:10px 10px; }
 .sc-size-x-landscape.sc-tight-8 .sc-table-standings tbody td{ font-size:22px; padding:10px 10px; }
+
+/* New: slightly tight for 6 rows */
+.sc-tight-6 .sc-table-standings thead th{ font-size:31px; padding:17px 18px; }
+.sc-tight-6 .sc-table-standings tbody td{ font-size:31px; padding:17px 18px; }
+
+/* X/Twitter landscape needs extra squeeze vertically */
+.sc-size-x-landscape.sc-tight-6 { padding:36px 30px 24px; }
+.sc-size-x-landscape.sc-tight-6 .sc-title{ font-size:48px; }
+.sc-size-x-landscape.sc-tight-6 .sc-table-standings thead th{ font-size:24px; padding:12px 12px; }
+.sc-size-x-landscape.sc-tight-6 .sc-table-standings tbody td{ font-size:24px; padding:12px 12px; }
+
 
 /* Centre the Date/Time and Match headers on the card */
 .sc-fixtures thead th:nth-child(1),
@@ -1745,8 +1775,10 @@ sb.innerHTML = standings.map(t => `
 
 // Apply density based on actual count
 const rowCount = standings.length;
+if (rowCount === 6) card.classList.add('sc-tight-6');
 if (rowCount === 7) card.classList.add('sc-tight-7');
 if (rowCount >= 8)  card.classList.add('sc-tight-8');
+
 
 // Show footnote for table mode
 q('#sc-footnote').hidden = false;
@@ -1803,12 +1835,14 @@ q('#sc-footnote').hidden = false;
     document.body.appendChild(clone);
   
     try{
+      const SCALE = Math.min(Math.max(window.devicePixelRatio || 2, 2), 3);
       const canvas = await html2canvas(clone, {
-        scale: 2,
+        scale: SCALE,
         backgroundColor: null,
         useCORS: true,
         removeContainer: true
       });
+      
       const a = document.createElement('a');
       a.href = canvas.toDataURL('image/png');
       a.download = 'lgh-card.png';
