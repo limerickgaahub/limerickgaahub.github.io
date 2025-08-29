@@ -781,6 +781,49 @@ function rebuildMatchesMenu(){
 
   function pointsFromGoalsPoints(g,p){ return (g==null||p==null)?null:(Number(g)||0)*3+(Number(p)||0); }
 
+// Read a team’s numeric total (pointsFor) and goals from a match row
+function _readScoreFromRow(m, side /* 'home' | 'away' */){
+  const g = (side==='home') ? m.home_goals : m.away_goals;
+  const p = (side==='home') ? m.home_points : m.away_points;
+  const total = pointsFromGoalsPoints(g, p);
+  return { total: Number(total||0), goals: Number(g||0) };
+}
+
+// Return the winner’s team name for a scored match (null for draw/unknown)
+function _winnerOf(m){
+  // handle walkover earlier in renderStandings; here assume scored
+  const hs = _readScoreFromRow(m,'home');
+  const as = _readScoreFromRow(m,'away');
+  if (hs.total > as.total) return m.home;
+  if (as.total > hs.total) return m.away;
+  return null;
+}
+
+// Head-to-head compare ONLY when exactly two teams are tied on points
+function _h2hCompare(a, b, allResults){
+  const games = allResults.filter(m =>
+    ((m.home === a.team && m.away === b.team) || (m.home === b.team && m.away === a.team)) &&
+    /^(res|final)$/i.test(String(m.status||'')) // exclude walkover from H2H
+  );
+  if (games.length === 1){
+    const w = _winnerOf(games[0]);
+    if (w === a.team) return -1;
+    if (w === b.team) return  1;
+  }
+  return 0; // no decision (draw/no game)
+}
+
+// Stable compare used AFTER deciding points buckets
+function _compareByPD_PF_GF(a, b){
+  const pdA = (a.pf||0) - (a.pa||0);
+  const pdB = (b.pf||0) - (b.pa||0);
+  if (pdA !== pdB) return pdB - pdA;      // PD
+  if ((a.pf||0) !== (b.pf||0)) return (b.pf||0) - (a.pf||0);  // Points For
+  if ((a.gf||0) !== (b.gf||0)) return (b.gf||0) - (a.gf||0);  // Goals For
+  return a.team.localeCompare(b.team);
+}
+
+  
 function renderStandings(){
   // For PIHC (no groups) include all fixtures in the competition.
   // For all others, filter by the currently selected group/division.
@@ -795,60 +838,93 @@ function renderStandings(){
   const mc = document.getElementById('controls-matches');
   if (mc) mc.style.display = 'none';
 
+  // Seed teams
   const teams=new Map();
   for(const f of fixtures){
-    if(!teams.has(f.home)) teams.set(f.home,{team:f.home,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
-    if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,l:0,pf:0,pa:0,diff:0,pts:0});
+    if(!teams.has(f.home)) teams.set(f.home,{team:f.home,p:0,w:0,d:0,l:0,pf:0,pa:0,gf:0,ga:0,pts:0});
+    if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,l:0,pf:0,pa:0,gf:0,ga:0,pts:0});
   }
 
+  // Results only
   const results = fixtures.filter(r => isResult(r.status));
 
   for (const m of results) {
     const H = teams.get(m.home);
     const A = teams.get(m.away);
 
-    // --- Walkover branch: count as played, 2 pts to W/O side, no PF/PA ---
-    if (String(m.status).toLowerCase() === 'walkover') {
+    // --- Walkover: played + 2 pts to winner; no PF/PA counted ---
+    if (/^walkover$/i.test(String(m.status||''))) {
       H.p++; A.p++;
-
-      // Prefer explicit flag from load(); fall back to "W/O" tag in names.
       let winnerSide = m.walkover_winner;
       if (!winnerSide) {
         const WO_TAG = /\bW\/\s*O\b/i;
         if (WO_TAG.test(m.home)) winnerSide = 'home';
         else if (WO_TAG.test(m.away)) winnerSide = 'away';
       }
-
       if (winnerSide === 'home') { H.w++; H.pts += 2; A.l++; }
       else if (winnerSide === 'away') { A.w++; A.pts += 2; H.l++; }
       else { console.warn('[LGH] Walkover without clear winner:', m); }
-
-      continue; // IMPORTANT: do not run normal score logic
+      continue;
     }
 
-    // --- Normal scored result path ---
-    const hs = pointsFromGoalsPoints(m.home_goals, m.home_points);
-    const as = pointsFromGoalsPoints(m.away_goals, m.away_points);
-    if (hs == null || as == null) continue;
+    // --- Scored result path ---
+    const hs = _readScoreFromRow(m,'home'); // {total, goals}
+    const as = _readScoreFromRow(m,'away');
+
+    // If no numeric scores, skip tally to avoid NaN
+    if (hs.total == null || as.total == null) continue;
 
     H.p++; A.p++;
-    H.pf += hs; H.pa += as;
-    A.pf += as; A.pa += hs;
+    H.pf += hs.total; H.pa += as.total; H.gf += hs.goals; H.ga += as.goals;
+    A.pf += as.total; A.pa += hs.total; A.gf += as.goals; A.ga += hs.goals;
 
-    if (hs > as) { H.w++; H.pts += 2; A.l++; }
-    else if (hs < as) { A.w++; A.pts += 2; H.l++; }
+    if (hs.total > as.total) { H.w++; H.pts += 2; A.l++; }
+    else if (as.total > hs.total) { A.w++; A.pts += 2; H.l++; }
     else { H.d++; A.d++; H.pts++; A.pts++; }
   }
 
-  for(const t of teams.values()){ t.diff=(t.pf||0)-(t.pa||0); }
+  // ---- Sort with Head-to-Head rule (two-team ties only) ----
+  const all = [...teams.values()];
+  // 1) Group by league points
+  const byPts = new Map();
+  for (const t of all){
+    if (!byPts.has(t.pts)) byPts.set(t.pts, []);
+    byPts.get(t.pts).push(t);
+  }
 
-  const sorted=[...teams.values()].sort((a,b)=>
-    (b.pts||0)-(a.pts||0) || (b.diff||0)-(a.diff||0) || (b.pf||0)-(a.pf||0) || a.team.localeCompare(b.team)
-  );
+  // 2) Sort points buckets high→low, then resolve inside each bucket
+  const sorted = []
+    .concat(...[...byPts.keys()].sort((a,b)=>b-a).map(pts=>{
+      const bucket = byPts.get(pts);
+      if (bucket.length === 2){
+        // Try H2H first
+        bucket.sort((a,b)=>{
+          const h2h = _h2hCompare(a, b, results);
+          if (h2h !== 0) return h2h;
+          return _compareByPD_PF_GF(a,b);
+        });
+        return bucket;
+      }
+      // 3+ teams tied → PD, PF, Goals For (no H2H)
+      bucket.sort(_compareByPD_PF_GF);
+      return bucket;
+    }));
 
   // ensure visibility
   el('g-standings').style.display='';
   document.querySelector('.matches-wrap').style.display='none';
+
+  // Ensure the in-page standings header shows PD (the modal already has it)
+  const gt = el('g-standings-table');
+  if (gt) {
+    const th = gt.tHead || gt.createTHead();
+    // Always (re)write the header so it matches the body
+    th.innerHTML = `<tr>
+      <th>Team</th><th class="right">P</th><th class="right">W</th>
+      <th class="right">D</th><th class="right">L</th>
+      <th class="right">PD</th><th class="right">Pts</th>
+    </tr>`;
+  }
 
   const tbody=document.querySelector('#g-standings-table tbody');
   tbody.innerHTML=sorted.map(r=>`
@@ -858,9 +934,11 @@ function renderStandings(){
       <td class="right">${r.w||0}</td>
       <td class="right">${r.d||0}</td>
       <td class="right">${r.l||0}</td>
+      <td class="right">${(r.pf||0)-(r.pa||0)}</td>
       <td class="right"><strong>${r.pts||0}</strong></td>
     </tr>`).join('');
 
+  // Modal (already includes PF/PA/PD; keep your existing head)
   const mt=el('modal-standings');
   if(mt){
     if(!mt.tHead||!mt.tHead.rows.length){
@@ -876,13 +954,11 @@ function renderStandings(){
         <td class="right">${r.l||0}</td>
         <td class="right">${r.pf||0}</td>
         <td class="right">${r.pa||0}</td>
-        <td class="right">${r.diff||0}</td>
+        <td class="right">${(r.pf||0)-(r.pa||0)}</td>
         <td class="right"><strong>${r.pts||0}</strong></td>
       </tr>`).join('');
   }
 }
-
-
 
  
   function syncURL(push=false){
