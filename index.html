@@ -875,8 +875,22 @@ thead th, tbody td{ padding:.55rem .55rem; }
 /* Slightly tighter rows site-wide without hurting readability */
 .table-wrap tbody td { padding: 12px 12px; }   /* was 14px */
 .sc-fixtures thead th:nth-child(3){ text-align:center; }
-  
-  
+
+
+.sharecard .sc-table-standings + .sc-footnote {
+  margin-top: 16px;
+}
+
+.sc-footnote {
+  margin-top: 10px;
+  font-size: 14px;                /* small compared to table text */
+  font-style: italic;
+  color: rgba(255,255,255,0.65);  /* lighter / more muted */
+  text-align: center;
+  line-height: 1.3;
+}
+
+
 </style>
 
 </head>
@@ -965,7 +979,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
 
       <!-- Table footnote -->
       <div id="table-footnote" class="footnote" style="display:none;">
-        Tables do not yet incorporate head to head.
+        Tie-breaks: Head-to-Head (two teams only), then Points Difference, Points For, Goals For.
       </div>
 
 
@@ -1379,13 +1393,17 @@ function updateSharebars(){
       </table>
 
 
-      <!-- Standings table (mirrors your compact Table: Team P W D L Pts) -->
-      <table class="sc-table sc-table-standings" id="sc-table-standings" hidden>
-        <thead>
-          <tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr>
-        </thead>
-        <tbody id="sc-standings-body"></tbody>
-      </table>
+    <!-- Standings table (PD included for share cards) -->
+    <table class="sc-table sc-table-standings" id="sc-table-standings" hidden>
+      <thead>
+        <tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PD</th><th>Pts</th></tr>
+      </thead>
+      <tbody id="sc-standings-body"></tbody>
+    </table>
+
+      <div class="sc-footnote" id="sc-footnote" hidden>
+        Tie-breaks: Head-to-Head (two-team), then Points Difference, Points For, Goals For.
+      </div>
 
       <div class="sc-footer">Limerick club fixtures, results, and tables at limerickgaahub.ie</div>
     </div>
@@ -1476,37 +1494,68 @@ function pointsFromGP(g,p){
   return (Number(g)||0)*3 + (Number(p)||0);
 }
 
+// --- H2H + PD helpers (share-card scope) ---
+function _readTotals(m, side){ // returns {total, goals}
+  // Prefer split fields, else parse "1-18" strings in home_score/away_score
+  let g = (side==='home') ? m.home_goals : m.away_goals;
+  let p = (side==='home') ? m.home_points : m.away_points;
+  if (g==null || p==null){
+    const src = (side==='home') ? (m.home_score || m.home || '') : (m.away_score || m.away || '');
+    const mm = String(src||'').match(/^\s*(\d+)\s*-\s*(\d+)\s*$/);
+    if (mm){ g = +mm[1]; p = +mm[2]; }
+  }
+  const total = pointsFromGP(g, p);
+  return { total: Number(total||0), goals: Number(g||0) };
+}
+
+function _winnerOfRow(m){
+  const hs = _readTotals(m,'home'), as = _readTotals(m,'away');
+  if (hs.total > as.total) return m.home;
+  if (as.total > hs.total) return m.away;
+  return null;
+}
+
+function _h2hCompareShare(a, b, results){
+  // Single prior scored meeting in this comp/group (exclude walkovers)
+  const games = results.filter(m =>
+    ((m.home===a.team && m.away===b.team) || (m.home===b.team && m.away===a.team)) &&
+    /^(res|final)$/i.test(String(m.status||''))   // only proper scored results
+  );
+  if (games.length === 1){
+    const w = _winnerOfRow(games[0]);
+    if (w === a.team) return -1;
+    if (w === b.team) return  1;
+  }
+  return 0;
+}
+
+function _comparePD_PF_GF(a, b){
+  const pdA = (a.pf||0) - (a.pa||0);
+  const pdB = (b.pf||0) - (b.pa||0);
+  if (pdA !== pdB) return pdB - pdA;               // PD
+  if ((a.pf||0) !== (b.pf||0)) return b.pf - a.pf;  // Points For
+  if ((a.gf||0) !== (b.gf||0)) return b.gf - a.gf;  // Goals For
+  return a.team.localeCompare(b.team);
+}
+
 function computeStandings(rows){
-  const isRes = (window.LGH?.isResult) || isResult; // <- fallback to our local isResult
+  const isRes = (window.LGH?.isResult) || isResult;
 
   // Seed teams
   const teams = new Map();
   for (const r of rows){
-    if(!teams.has(r.home)) teams.set(r.home,{team:r.home,p:0,w:0,d:0,l:0,pts:0});
-    if(!teams.has(r.away)) teams.set(r.away,{team:r.away,p:0,w:0,d:0,l:0,pts:0});
+    if (!teams.has(r.home)) teams.set(r.home,{team:r.home,p:0,w:0,d:0,l:0,pf:0,pa:0,gf:0,ga:0,pts:0});
+    if (!teams.has(r.away)) teams.set(r.away,{team:r.away,p:0,w:0,d:0,l:0,pf:0,pa:0,gf:0,ga:0,pts:0});
   }
 
-  for (const m of rows){
-    if (!isRes(m.status)) continue;
+  // Results only (incl. walkover handling)
+  const results = rows.filter(r => isRes(r.status));
 
-    // Try split fields first; fall back to "1-18" style
-    let hg = m.home_goals, hp = m.home_points, ag = m.away_goals, ap = m.away_points;
-    if (hg==null || hp==null){
-      const a = gpFromScoreStr(m.home_score || m.home || '');
-      hg = a.g; hp = a.p;
-    }
-    if (ag==null || ap==null){
-      const b = gpFromScoreStr(m.away_score || m.away || '');
-      ag = b.g; ap = b.p;
-    }
-
-    const hs = pointsFromGP(hg, hp);
-    const as = pointsFromGP(ag, ap);
-
+  for (const m of results){
     const H = teams.get(m.home), A = teams.get(m.away);
 
-    // Walkover quick-path
-    if (String(m.status).toLowerCase() === 'walkover'){
+    // Walkover: played + 2 pts to winner; no PF/PA
+    if (/^walkover$/i.test(String(m.status||''))){
       H.p++; A.p++;
       const w = (m.walkover_winner||'').toLowerCase();
       if (w==='home'){ H.w++; H.pts+=2; A.l++; }
@@ -1514,18 +1563,44 @@ function computeStandings(rows){
       continue;
     }
 
-    if (hs==null || as==null) continue;
+    const hs = _readTotals(m,'home');
+    const as = _readTotals(m,'away');
+
     H.p++; A.p++;
-    if (hs>as){ H.w++; H.pts+=2; A.l++; }
-    else if (hs<as){ A.w++; A.pts+=2; H.l++; }
+    H.pf += hs.total; H.pa += as.total; H.gf += hs.goals; H.ga += as.goals;
+    A.pf += as.total; A.pa += hs.total; A.gf += as.goals; A.ga += hs.goals;
+
+    if (hs.total > as.total){ H.w++; H.pts+=2; A.l++; }
+    else if (as.total > hs.total){ A.w++; A.pts+=2; H.l++; }
     else { H.d++; A.d++; H.pts++; A.pts++; }
   }
 
-  // Sort by Pts, then W, then fewer L, then alpha
-  return Array.from(teams.values()).sort((a,b)=>
-    b.pts-a.pts || b.w-a.w || a.l-b.l || a.team.localeCompare(b.team)
-  );
+  // Group by points to apply H2H when EXACTLY two are tied
+  const all = Array.from(teams.values());
+  const byPts = new Map();
+  for (const t of all){
+    if (!byPts.has(t.pts)) byPts.set(t.pts, []);
+    byPts.get(t.pts).push(t);
+  }
+
+  const sorted = []
+    .concat(...[...byPts.keys()].sort((a,b)=>b-a).map(pts=>{
+      const bucket = byPts.get(pts);
+      if (bucket.length === 2){
+        bucket.sort((a,b)=>{
+          const h2h = _h2hCompareShare(a, b, results);
+          if (h2h !== 0) return h2h;
+          return _comparePD_PF_GF(a,b);
+        });
+        return bucket;
+      }
+      bucket.sort(_comparePD_PF_GF);
+      return bucket;
+    }));
+
+  return sorted;
 }
+
 
 
 
@@ -1647,17 +1722,29 @@ function renderCard(payload){
     tf.hidden = true;
     st.hidden = false;
 
-    const standings = computeStandings(payload.rows);
-    sb.innerHTML = standings.map(t => `
-      <tr>
-        <td>${t.team}</td><td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.pts}</td>
-      </tr>
-    `).join('');
+const standings = computeStandings(payload.rows);
+sb.innerHTML = standings.map(t => `
+  <tr>
+    <td>${t.team}</td>
+    <td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td>
+    <td>${(t.pf||0)-(t.pa||0)}</td>
+    <td>${t.pts}</td>
+  </tr>
+`).join('');
+
 
     // Apply density based on actual count
     const rowCount = standings.length;
     if (rowCount === 7) card.classList.add('sc-tight-7');
     if (rowCount >= 8)  card.classList.add('sc-tight-8');
+
+    // Show footnote for table mode
+      q('#sc-footnote').hidden = false;
+    } else {
+      // Hide footnote for fixtures/results
+      q('#sc-footnote').hidden = true;
+
+    
 
   } else {
     // Fixtures / Results view
