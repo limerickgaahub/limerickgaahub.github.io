@@ -1867,7 +1867,7 @@ sb.innerHTML = standings.map(t => `
     });
 
     // Deep-link presets ?sc=1&mode=fixtures&preset=tomorrow&team=...&size=ig-portrait
-    if(params.get('sc') === '1'){
+    if(params.get('share') === '1'){
       openOverlay();
       if(params.get('mode')) form.mode.value = params.get('mode');
       if(params.get('preset')) form.preset.value = params.get('preset');
