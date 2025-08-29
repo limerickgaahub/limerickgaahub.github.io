@@ -1,6 +1,6 @@
 {
   "competition": "Premier Junior A Hurling Championship",
-  "updated_at": "2025-08-29T16:48:07Z",
+  "updated_at": "2025-08-29T18:46:14Z",
   "fixtures": [
     {
       "id": "2025-PJAHC-G1-R4-CRE-ASK",
@@ -14,36 +14,6 @@
       "away": "Askeaton Ballysteen Kilcornan",
       "venue": "Sean Finn Park, Rathkeale",
       "referee": "David Burke",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
-    },
-    {
-      "id": "2025-PJAHC-G1-R4-ST--TOU",
-      "round": "R 4",
-      "group": "Group 1",
-      "date": "2025-08-29",
-      "time_local": "18:15",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-29T18:15:00",
-      "home": "St Patrick's",
-      "away": "Tournafulla",
-      "venue": "Ballingarry",
-      "referee": "Johnny Murphy",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
-    },
-    {
-      "id": "2025-PJAHC-G2-R4-CAH-KIL",
-      "round": "R 4",
-      "group": "Group 2",
-      "date": "2025-08-29",
-      "time_local": "18:15",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-29T18:15:00",
-      "home": "Caherline",
-      "away": "Kilteely Dromkeen",
-      "venue": "Cappamore",
-      "referee": "Eamonn Stapleton",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },
@@ -184,6 +154,44 @@
     }
   ],
   "results": [
+    {
+      "id": "2025-PJAHC-G1-R4-ST--TOU",
+      "round": "R 4",
+      "group": "Group 1",
+      "date": "2025-08-29",
+      "time_local": "18:15",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-29T18:15:00",
+      "home": "St Patrick's",
+      "away": "Tournafulla",
+      "venue": "Ballingarry",
+      "referee": "Johnny Murphy",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
+      "home_goals": 3,
+      "home_points": 14,
+      "away_goals": 2,
+      "away_points": 17
+    },
+    {
+      "id": "2025-PJAHC-G2-R4-CAH-KIL",
+      "round": "R 4",
+      "group": "Group 2",
+      "date": "2025-08-29",
+      "time_local": "18:15",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-29T18:15:00",
+      "home": "Caherline",
+      "away": "Kilteely Dromkeen",
+      "venue": "Cappamore",
+      "referee": "Eamonn Stapleton",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
+      "home_goals": 1,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 18
+    },
     {
       "id": "2025-PJAHC-G1-R3-TOU-MON",
       "round": "R 3",

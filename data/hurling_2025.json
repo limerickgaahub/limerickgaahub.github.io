@@ -1,5 +1,5 @@
 {
-  "updated": "2025-08-29T16:48:07Z",
+  "updated": "2025-08-29T18:46:14Z",
   "matches": [
     {
       "competition": "Senior Hurling Championship",
@@ -1338,36 +1338,6 @@
     },
     {
       "competition": "Premier Junior A Hurling Championship",
-      "group": "Group 1",
-      "round": "R 4",
-      "date": "2025-08-29",
-      "time": "18:15",
-      "home": "St Patrick's",
-      "away": "Tournafulla",
-      "venue": "Ballingarry",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Junior A Hurling Championship",
-      "group": "Group 2",
-      "round": "R 4",
-      "date": "2025-08-29",
-      "time": "18:15",
-      "home": "Caherline",
-      "away": "Kilteely Dromkeen",
-      "venue": "Cappamore",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Junior A Hurling Championship",
       "group": "Group 2",
       "round": "R 4",
       "date": "2025-08-29",
@@ -1500,6 +1470,36 @@
       "home_points": null,
       "away_goals": null,
       "away_points": null
+    },
+    {
+      "competition": "Premier Junior A Hurling Championship",
+      "group": "Group 1",
+      "round": "R 4",
+      "date": "2025-08-29",
+      "time": "18:15",
+      "home": "St Patrick's",
+      "away": "Tournafulla",
+      "venue": "Ballingarry",
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 14,
+      "away_goals": 2,
+      "away_points": 17
+    },
+    {
+      "competition": "Premier Junior A Hurling Championship",
+      "group": "Group 2",
+      "round": "R 4",
+      "date": "2025-08-29",
+      "time": "18:15",
+      "home": "Caherline",
+      "away": "Kilteely Dromkeen",
+      "venue": "Cappamore",
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "competition": "Premier Junior A Hurling Championship",
