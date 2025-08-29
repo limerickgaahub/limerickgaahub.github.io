@@ -1743,43 +1743,39 @@ sb.innerHTML = standings.map(t => `
   </tr>
 `).join('');
 
+// Apply density based on actual count
+const rowCount = standings.length;
+if (rowCount === 7) card.classList.add('sc-tight-7');
+if (rowCount >= 8)  card.classList.add('sc-tight-8');
 
-    // Apply density based on actual count
-    const rowCount = standings.length;
-    if (rowCount === 7) card.classList.add('sc-tight-7');
-    if (rowCount >= 8)  card.classList.add('sc-tight-8');
+// Show footnote for table mode
+q('#sc-footnote').hidden = false;
 
-    // Show footnote for table mode
-      q('#sc-footnote').hidden = false;
-    } else {
-      // Hide footnote for fixtures/results
-      q('#sc-footnote').hidden = true;
+} else {
+  // Fixtures / Results view
+  q('#sc-footnote').hidden = true;  // hide footnote on fixtures/results
+  st.hidden = true;
+  tf.hidden = false;
 
-    
+  tb.innerHTML = payload.rows.map(m => {
+    const dt = parseMatchDate(m) || (m.date ? new Date(m.date + 'T00:00:00') : null);
+    const p  = fmtDateParts(dt);
+    const t  = fmtTimeShort(m.time || '');
+    const mid = matchCellHTML(m, payload.mode);   // Team A / mid / Team B
+    return `
+      <tr>
+        <td>
+          <div class="dt3">
+            <div class="dt-day">${p.day}</div>
+            <div class="dt-date">${p.dmy}</div>
+            <div class="dt-time">${t}</div>
+          </div>
+        </td>
+        <td>${mid}</td>
+        <td>${m.venue || '—'}</td>
+      </tr>`;
+  }).join('');
 
-  } else {
-    // Fixtures / Results view
-    st.hidden = true;
-    tf.hidden = false;
-
-    tb.innerHTML = payload.rows.map(m => {
-      const dt = parseMatchDate(m) || (m.date ? new Date(m.date + 'T00:00:00') : null);
-      const p  = fmtDateParts(dt);
-      const t  = fmtTimeShort(m.time || '');
-      const mid = matchCellHTML(m, payload.mode);   // Team A / mid / Team B
-      return `
-        <tr>
-          <td>
-            <div class="dt3">
-              <div class="dt-day">${p.day}</div>
-              <div class="dt-date">${p.dmy}</div>
-              <div class="dt-time">${t}</div>
-            </div>
-          </td>
-          <td>${mid}</td>
-          <td>${m.venue || '—'}</td>
-        </tr>`;
-    }).join('');
 
     const rowCount = payload.rows.length;
     if (rowCount <= 2) card.classList.add('sc-hero');   // make 1–2 matches feel less bare
