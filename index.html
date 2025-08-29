@@ -1429,7 +1429,8 @@ function updateSharebars(){
   // Use the same params instance below
   const params = urlParams;
 
-  
+ console.log('[LGH] Share Card enabled:', SHARE_ENABLED, location.search);
+ 
   // Helpers
   const q = sel => document.querySelector(sel);
   const qa = sel => Array.from(document.querySelectorAll(sel));
