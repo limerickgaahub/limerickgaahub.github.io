@@ -116,7 +116,7 @@
   font-size:1rem; line-height:1.2;
 }
 
-/* If you use a darker toolbar somewhere, you can add a .toolbar-dark parent and mirror colors:
+/* If I use a darker toolbar, I can add a .toolbar-dark parent and mirror colors:
 .toolbar-dark .pretty-select, .toolbar-dark .pretty-input { background:#111; border-color:#222; }
 .toolbar-dark .pretty-select select, .toolbar-dark .pretty-input input { color:#fff; }
 .toolbar-dark .pretty-select::after { border-color:#bbb; }
@@ -127,11 +127,11 @@ body {                 /* was margin: 70px 20px 20px; */
   margin:70px 12px 20px;
 }
 @media (max-width:880px){
-  body {               /* was 60px 10px 10px; you already had this block; override slightly */
+  body {               /* was 60px 10px 10px; override slightly */
     margin:60px 8px 10px;
   }
   .card {              /* a touch tighter on mobile */
-    padding:10px;      /* you already apply 10px below; keep it consistent */
+    padding:10px;      /* already apply 10px below; keep it consistent */
   }
 }
 /* Optional: make the main cards slightly rounder/tighter to reduce the “double-outline” feel */
@@ -485,7 +485,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
   }
 
   /* Optional: if Venue text still clips on very long names,
-     you can hide the R column entirely on XS */
+     I can hide the R column entirely on XS */
   #team-table thead th:nth-child(1), #team-table tbody td:nth-child(1),
   #date-table thead th:nth-child(1), #date-table tbody td:nth-child(1){
     display:none;
@@ -725,7 +725,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
   pointer-events:none;
 }
 
-/* a touch of depth so the table “sits” on the card */
+/* some depth so the table “sits” on the card */
 .sharecard .sc-table{ filter: drop-shadow(0 10px 24px rgba(0,0,0,.12)); }
 
 /* corner ribbon (Fixtures / Results / Table • Today/Tomorrow) */
@@ -988,8 +988,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
         Tie-breaks: Head-to-Head (two teams only), then Points Difference, Points For, Goals For.
       </div>
 
-
-      
       <!-- Share (Competition) -->
       <div class="sharebar" id="sharebar-comp">
         <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
@@ -1028,9 +1026,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
                   <input id="date-input" type="date" />
                 </div>
               </div>
-
-
-
             
               <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
 
@@ -1062,7 +1057,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
   <!-- About -->
   <div id="panel-about" class="card" style="display:none;">
       <p>Limerick GAA Hub is designed to provide a clear overview of fixtures and results, easily filterable by competition, club, or date.</p>
-      <p>Over time, the aim is to additionally build an archive of historical results.</p>
+      <p>The aim is to additionally build an archive of historical results over time.</p>
       <p>This site is not associated with Limerick GAA. Official fixtures and results can still be found at 
         <a href="https://limerickgaa.ie" target="_blank" rel="noopener noreferrer">limerickgaa.ie</a>.
       </p>
@@ -1425,7 +1420,8 @@ function updateSharebars(){
   const SHARE_ENABLED = (window.__LGH_SHARE_ENABLED === true);
   if (!SHARE_ENABLED) return;
 
-
+  const params = new URLSearchParams(location.search);
+  
   // Helpers
   const q = sel => document.querySelector(sel);
   const qa = sel => Array.from(document.querySelectorAll(sel));
