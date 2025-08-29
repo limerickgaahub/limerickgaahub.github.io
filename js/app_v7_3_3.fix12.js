@@ -1153,8 +1153,8 @@ if (di) {
     di.value = params.date;
     di.dispatchEvent(new Event('change'));
   }
+ }
 }
-
   
   (function(){
   const btn   = el('btn-expand');
@@ -1229,8 +1229,7 @@ if (di) {
   const visible = datePanel && getComputedStyle(datePanel).display !== 'none';
   btn.style.display = visible ? 'inline-flex' : 'none';
 })();
-
-
+)();
 
    (async function(){
     await load();
@@ -1263,9 +1262,6 @@ if (di) {
     matches:       { get: () => MATCHES },
     DISPLAY_NAMES: { get: () => DISPLAY_NAMES }
   });
-  window.LGH.isResult = (s) => /^(res|final|walkover)/i.test(String(s||''));
-  window.LGH.isKO = (m) => String(m.group||'').toLowerCase()==='knockout' || String(m.stage||'').toLowerCase()==='knockout';
-
   window.LGH.isResult = (s) => /^(res|final|walkover)/i.test(String(s||''));
   window.LGH.isKO = (m) => String(m.group||'').toLowerCase()==='knockout' || String(m.stage||'').toLowerCase()==='knockout';
 
