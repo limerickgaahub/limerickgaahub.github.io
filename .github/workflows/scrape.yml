@@ -2,7 +2,8 @@ name: Update fixtures/results (Limerick GAA Hub)
 
 on:
   workflow_dispatch:
-  schedule: []
+  schedule:
+    - cron: "15 18 * * FRI"  # runs 18:15 UTC every Friday
 
 
 permissions:
