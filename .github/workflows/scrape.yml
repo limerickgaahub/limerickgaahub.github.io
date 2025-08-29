@@ -3,12 +3,7 @@ name: Update fixtures/results (Limerick GAA Hub)
 on:
   workflow_dispatch:
   schedule:
-    #- cron: "0 8 * * *"   # 08:00 Irish (08:00 UTC)
-    #- cron: "0 16 * * *"   # 16:00 Irish (08:00 UTC)
-    #- cron: "0 18 * * *"   # 18:00 Irish (08:00 UTC)
-    #- cron: "0 20 * * *"   # 20:00 Irish (08:00 UTC)
-    #- cron: "0 21 * * *"   # 21:00 Irish (08:00 UTC)
-    #- cron: "0 22 * * *"   # 22:00 Irish (08:00 UTC)   
+
 
 permissions:
   contents: write
