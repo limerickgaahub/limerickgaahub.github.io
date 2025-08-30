@@ -1240,6 +1240,7 @@ if (di) {
     // Prescroll to the currently selected date (usually today)
     scrollToDate(di.value);
   }
+  }
   
   (function(){
   const btn   = el('btn-expand');
