@@ -258,6 +258,23 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// === Make the big chevron button open the native date picker ===
+document.addEventListener('DOMContentLoaded', () => {
+  const di = document.getElementById('date-input');
+  const btn = document.querySelector('.pretty-input .date-open');
+  if (!di || !btn) return;
+
+  const openPicker = () => {
+    if (typeof di.showPicker === 'function') {
+      di.showPicker();   // Modern Chrome/Android, some Safari
+    } else {
+      di.focus();        // Fallback (opens native picker on mobile)
+      di.click?.();      // iOS Safari needs click
+    }
+  };
+
+  btn.addEventListener('click', openPicker);
+});
 
   
 async function load(){
