@@ -112,9 +112,18 @@
 .pretty-input input[type="date"] {
   border:0; outline:0; background:transparent;
   width:100%;
-  padding:.65rem .9rem;
+  padding:.65rem 2.2rem .65rem .9rem;
   font-size:1rem; line-height:1.2;
 }
+
+/* Chevron to match the Club dropdown */
+.pretty-input::after {
+  content:"";
+  position:absolute; right:.8rem; top:50%; transform:translateY(-50%) rotate(45deg);
+  width:.55rem; height:.55rem; border-right:2px solid #666; border-bottom:2px solid #666;
+  pointer-events:none;
+}
+
 
 /* Improve font rendering sharpness */
 .sharecard, .sc-table-standings td, .sc-table-standings th {
