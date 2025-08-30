@@ -116,6 +116,15 @@
   font-size:1rem; line-height:1.2;
 }
 
+/* Hide the native date icon so our chevron is the only arrow (keeps click target) */
+.pretty-input input[type="date"]::-webkit-calendar-picker-indicator{
+  opacity:0;                 /* visually hidden */
+  position:absolute;
+  right:.4rem;               /* keeps it under our chevron */
+  width:1.6rem; height:100%; /* big, easy click target */
+  cursor:pointer;
+}
+
 /* Chevron to match the Club dropdown */
 .pretty-input::after {
   content:"";
