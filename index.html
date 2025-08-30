@@ -1008,6 +1008,23 @@ thead th, tbody td{ padding:.55rem .55rem; }
   margin-top:18px;                  /* was 24px */
 }
 
+/* --- Tighten footnote spacing under the standings (sharecards only) --- */
+
+/* 1) Remove any large gap after the table */
+.sharecard .sc-table-standings{
+  margin-bottom: 6px;            /* was larger via defaults */
+}
+
+/* 2) Make the footnote sit very close to the table */
+.sharecard .sc-table-standings + .sc-footnote{
+  margin-top: 6px;               /* override any earlier 10–16px */
+}
+
+/* 3) Keep the footnote padding but don’t add extra vertical space */
+.sharecard .sc-footnote{
+  padding: 8px 12px;             /* was 10px 12px; slightly tighter */
+}
+
   
 </style>
 
