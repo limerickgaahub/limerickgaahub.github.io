@@ -1232,10 +1232,14 @@ if (di) {
     di.value = params.date;
     di.dispatchEvent(new Event('change'));
   } else {
+    // Ensure the picker has a value (fallback to today) before pre-scroll
+    if (!di.value) {
+      const now = new Date();
+      di.value = `${now.getFullYear()}-${pad2(now.getMonth()+1)}-${pad2(now.getDate())}`;
+    }
     // Prescroll to the currently selected date (usually today)
     scrollToDate(di.value);
   }
-}
   
   (function(){
   const btn   = el('btn-expand');
