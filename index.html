@@ -1257,7 +1257,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
 
     // Blur selects on Android to close pickers
     (function(){
-      ['team','status','date'].forEach(id=>{
+      ['team','status','date-input'].forEach(id=>{
         const el=document.getElementById(id);
         if(el){ el.addEventListener('change',()=>el.blur()); }
       });
