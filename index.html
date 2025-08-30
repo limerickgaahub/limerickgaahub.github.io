@@ -845,6 +845,17 @@ thead th, tbody td{ padding:.55rem .55rem; }
 .sharecard{ display:flex; flex-direction:column; }
 .sharecard .sc-footer{ margin-top:24px; }
 
+/* Trim bottom space for fixtures/results so content sits more central */
+.sharecard.sc-mode-fixtures,
+.sharecard.sc-mode-results{
+  padding-bottom:32px;        /* base is 48px */
+}
+.sharecard.sc-mode-fixtures .sc-footer,
+.sharecard.sc-mode-results .sc-footer{
+  margin-top:18px;            /* was 24px */
+}
+
+  
 /* Share Card — centre Date/Time + Match headers & cells */
 .sc-fixtures thead th:nth-child(1),
 .sc-fixtures thead th:nth-child(2),
@@ -1812,6 +1823,15 @@ function renderCard(payload){
     payload.size === 'x-landscape'  ? 'sc-size-x-landscape' :
                                       'sc-size-ig-portrait'
   );
+
+  // Mode class for spacing tweaks (fixtures/results vs table)
+  card.classList.remove('sc-mode-fixtures','sc-mode-results','sc-mode-table');
+  card.classList.add(
+    payload.mode === 'results' ? 'sc-mode-results' :
+    payload.mode === 'table'   ? 'sc-mode-table'   : 'sc-mode-fixtures'
+  );
+
+  
   q('#sc-title').textContent = payload.title || '';
   // --- Corner ribbon text & show ---
 (function(){
