@@ -56,10 +56,10 @@
       "away": "Adare",
       "venue": "Ballingarry",
       "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "home_goals": 1,
+      "home_points": 15,
+      "away_goals": 4,
+      "away_points": 17
     },
     {
       "competition": "Senior Hurling Championship",
@@ -1360,11 +1360,11 @@
       "home": "Monaleen",
       "away": "Monagea",
       "venue": "Croagh",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 22,
+      "away_goals": 3,
+      "away_points": 20
     },
     {
       "competition": "Premier Junior A Hurling Championship",
