@@ -1034,6 +1034,36 @@ thead th, tbody td{ padding:.55rem .55rem; }
   padding: 8px 12px;             /* was 10px 12px; slightly tighter */
 }
 
+/* --- Mobile-only chevron fix for By Date --- */
+@media (max-width: 880px){
+  /* Remove the tiny native chevron/calendar icon */
+  .pretty-input input[type="date"]::-webkit-calendar-picker-indicator{
+    display: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+  }
+
+  /* Keep your big chevron (from .pretty-input::after) */
+  .pretty-input{ position: relative; }
+  .pretty-input::after{
+    /* your existing big chevron styles already here; ensure it stays visible */
+    z-index: 2;
+  }
+
+  /* Make the big chevron area a tappable button that sits on top (right side) */
+  .pretty-input .date-open{
+    position: absolute;
+    top: 0; right: 0;
+    width: 3rem;               /* hit-area width around the big chevron */
+    height: 100%;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    z-index: 3;                /* above ::after chevron so taps register */
+    cursor: pointer;
+  }
+}
+
   
 </style>
 
@@ -1168,8 +1198,11 @@ thead th, tbody td{ padding:.55rem .55rem; }
                 <label class="sr-only" for="date-input">Select date</label>
                 <div class="pretty-input">
                   <input id="date-input" type="date" />
+                  <!-- Mobile chevron tap target -->
+                  <button type="button" class="date-open" aria-label="Open calendar"></button>
                 </div>
               </div>
+
             
               <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
 
