@@ -116,12 +116,16 @@
   font-size:1rem; line-height:1.2;
 }
 
-/* Hide the native date icon so our chevron is the only arrow (keeps click target) */
-.pretty-input input[type="date"]::-webkit-calendar-picker-indicator{
-  opacity:0;                 /* visually hidden */
+/* Hide the browser's small date chevron completely,
+   so only our big .pretty-input::after arrow is visible */
+.pretty-input input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity:0 !important;
+  -webkit-appearance:none;
+  appearance:none;
   position:absolute;
-  right:.4rem;               /* keeps it under our chevron */
-  width:1.6rem; height:100%; /* big, easy click target */
+  right:0;
+  width:100%;
+  height:100%;
   cursor:pointer;
 }
 
