@@ -1241,6 +1241,7 @@ if (di) {
     scrollToDate(di.value);
   }
   }
+}
   
   (function(){
   const btn   = el('btn-expand');
