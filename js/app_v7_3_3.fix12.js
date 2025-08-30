@@ -1231,8 +1231,10 @@ if (di) {
   if (params.date) {
     di.value = params.date;
     di.dispatchEvent(new Event('change'));
+  } else {
+    // Prescroll to the currently selected date (usually today)
+    scrollToDate(di.value);
   }
- }
 }
   
   (function(){
