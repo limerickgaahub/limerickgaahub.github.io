@@ -877,6 +877,22 @@ thead th, tbody td{ padding:.55rem .55rem; }
   color:#006B3C;
 }
 
+/* Emphasise club names, keep 'v' visually secondary */
+.sharecard .sc-match-team{ 
+  font-weight:800; 
+  font-size:36px;           /* up from cell’s 32px */
+  line-height:1.1;
+}
+
+/* Only shrink the 'v' (do not affect result pills) */
+.sharecard .sc-match-mid:not(.sc-score){
+  font-size:26px;           /* smaller than teams */
+  letter-spacing:.5px;
+  opacity:.9;
+}
+
+
+  
 /* Align numerals neatly in standings on the card */
 .sc-table-standings th, .sc-table-standings td { font-variant-numeric: tabular-nums; }
 
@@ -913,8 +929,12 @@ thead th, tbody td{ padding:.55rem .55rem; }
 .sc-size-x-landscape.sc-tight-8 .sc-table-standings tbody td{ font-size:22px; padding:10px 10px; }
 
 /* New: slightly tight for 6 rows */
-.sc-tight-6 .sc-table-standings thead th{ font-size:31px; padding:17px 18px; }
-.sc-tight-6 .sc-table-standings tbody td{ font-size:31px; padding:17px 18px; }
+.sc-tight-6 .sc-table-standings thead th{ font-size:34px; padding:16px 18px; }
+.sc-tight-6 .sc-table-standings tbody td{ font-size:34px; padding:16px 18px; }
+
+/* Give the table more breathing room in square + landscape */
+.sc-size-ig-square.sc-tight-6    { padding:40px 40px 28px; }  /* was 48 all sides */
+.sc-size-x-landscape.sc-tight-6  { padding:32px 28px 22px; }  /* slightly tighter than default */
 
 /* X/Twitter landscape needs extra squeeze vertically */
 .sc-size-x-landscape.sc-tight-6 { padding:36px 30px 24px; }
@@ -947,13 +967,34 @@ thead th, tbody td{ padding:.55rem .55rem; }
   margin-top: 16px;
 }
 
-/* Footnote under sharecards */
-.sc-footnote {
-  margin-top: 8px;     /* slightly higher */
-  font-size: 16px;     /* slightly larger */
-  color: #666;
-  text-align: left;    /* left aligned */
-  line-height: 1.3;
+/* Footnote under sharecards (clearer + slightly emphasized) */
+.sc-footnote{
+  margin-top:10px;           /* a touch closer to the table */
+  font-size:18px;            /* +2px from your current 16px */
+  font-style:italic;         /* subtle emphasis */
+  color:#374151;
+  background:#F4F6F4;        /* light grey highlight */
+  padding:10px 12px;
+  border-radius:10px;
+  text-align:left;
+  line-height:1.35;
+}
+
+/* Colour hierarchy for Points (Pts) column on sharecards only */
+.sharecard .sc-table-standings thead th:nth-child(7),
+.sharecard .sc-table-standings tbody td:nth-child(7){
+  color:#0B7D3B;        /* richer green */
+  font-weight:800;      /* pop a little more */
+}
+
+/* Fixtures/Results: reduce bottom dead space so content sits more central */
+.sharecard.sc-mode-fixtures,
+.sharecard.sc-mode-results{
+  padding-bottom:32px;              /* was 48px */
+}
+.sharecard.sc-mode-fixtures .sc-footer,
+.sharecard.sc-mode-results .sc-footer{
+  margin-top:18px;                  /* was 24px */
 }
 
   
