@@ -1375,11 +1375,11 @@
       "home": "Kilmallock",
       "away": "Doon",
       "venue": "Kilteely",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 9,
+      "away_goals": 3,
+      "away_points": 24
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1795,11 +1795,11 @@
       "home": "Killeedy",
       "away": "Ballybricken Bohermore",
       "venue": "Staker Wallace",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 15,
+      "away_goals": 0,
+      "away_points": 14
     },
     {
       "competition": "Junior A Hurling Championship",
