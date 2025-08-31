@@ -1780,11 +1780,11 @@
       "home": "Kildimo Pallaskenry",
       "away": "Claughaun",
       "venue": "St Patrick's",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 12,
+      "away_goals": 0,
+      "away_points": 17
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -2230,11 +2230,11 @@
       "home": "Monagea",
       "away": "Na Piarsaigh",
       "venue": "Monagea",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 11,
+      "away_goals": 1,
+      "away_points": 8
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -2245,11 +2245,11 @@
       "home": "Doon",
       "away": "St Kieran's",
       "venue": "Doon",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 12,
+      "away_goals": 1,
+      "away_points": 17
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -2260,11 +2260,11 @@
       "home": "Adare",
       "away": "Askeaton Ballysteen Kilcornan",
       "venue": "Adare",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 13,
+      "away_goals": 0,
+      "away_points": 12
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -2275,11 +2275,11 @@
       "home": "Crecora Manister",
       "away": "Dromcollogher Broadford",
       "venue": "Crecora Manister GAA",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 11,
+      "away_goals": 0,
+      "away_points": 15
     },
     {
       "competition": "Junior C Hurling Championship",
