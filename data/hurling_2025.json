@@ -895,11 +895,11 @@
       "home": "Bruree",
       "away": "Mungret St Pauls",
       "venue": "Claughaun GAA, Childers Rd",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 19,
+      "away_goals": 1,
+      "away_points": 9
     },
     {
       "competition": "Intermediate Hurling Championship",
