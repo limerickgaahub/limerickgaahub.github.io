@@ -1,37 +1,7 @@
 {
   "competition": "Premier Intermediate Hurling Championship",
-  "updated_at": "2025-08-29T18:46:14Z",
+  "updated_at": "2025-09-01T09:51:01Z",
   "fixtures": [
-    {
-      "id": "2025-PIHC-GX-R5-GLE-CRO",
-      "round": "R 5",
-      "group": "Premier Intermediate",
-      "date": "2025-08-29",
-      "time_local": "18:15",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-29T18:15:00",
-      "home": "Glenroe",
-      "away": "Croagh Kilfinny",
-      "venue": "Bruff",
-      "referee": "Liam O Sullivan",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    },
-    {
-      "id": "2025-PIHC-GX-R5-GRA-BLA",
-      "round": "R 5",
-      "group": "Premier Intermediate",
-      "date": "2025-08-30",
-      "time_local": "15:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-08-30T15:00:00",
-      "home": "Granagh Ballingarry",
-      "away": "Blackrock",
-      "venue": "Ballyagran",
-      "referee": "Timmy Mc Grath",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    },
     {
       "id": "2025-PIHC-GX-R6-GAR-GRA",
       "round": "R 6",
@@ -154,6 +124,44 @@
     }
   ],
   "results": [
+    {
+      "id": "2025-PIHC-GX-R5-GRA-BLA",
+      "round": "R 5",
+      "group": "Premier Intermediate",
+      "date": "2025-08-30",
+      "time_local": "15:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-30T15:00:00",
+      "home": "Granagh Ballingarry",
+      "away": "Blackrock",
+      "venue": "Ballyagran",
+      "referee": "Timmy Mc Grath",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 1,
+      "home_points": 21,
+      "away_goals": 1,
+      "away_points": 18
+    },
+    {
+      "id": "2025-PIHC-GX-R5-GLE-CRO",
+      "round": "R 5",
+      "group": "Premier Intermediate",
+      "date": "2025-08-29",
+      "time_local": "18:15",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-08-29T18:15:00",
+      "home": "Glenroe",
+      "away": "Croagh Kilfinny",
+      "venue": "Bruff",
+      "referee": "Liam O Sullivan",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 1,
+      "home_points": 13,
+      "away_goals": 1,
+      "away_points": 16
+    },
     {
       "id": "2025-PIHC-GX-R5-EFF-GAR",
       "round": "R 5",
