@@ -6,6 +6,18 @@ console.log("[LGH] flags now:",
   "LGH_V7_3_3_READY =", window.LGH_V7_3_3_READY
 );
 
+function showWarn(msg){
+  let n = document.querySelector('#js-warning');
+  if (!n) {
+    n = document.createElement('p');
+    n.id = 'js-warning';
+    n.className = 'notice';
+    document.querySelector('main')?.prepend(n);
+  }
+  n.textContent = msg;
+  n.style.display = 'block';
+}
+
 // app_v7_3_3.js — stable markup, naming, views
 (function(){
   window.LGH_V7_3_READY = true;
