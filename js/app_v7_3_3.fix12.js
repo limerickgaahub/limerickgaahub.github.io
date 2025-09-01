@@ -1,10 +1,18 @@
-console.log("[LGH] app js evaluating");
+const __PROD__ = !/^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+const log  = (...a) => { if (!__PROD__) console.log(...a); };
+const warn = (...a) => { if (!__PROD__) console.warn(...a); };
+const err  = (...a) => console.error(...a);
+
+
+
+log("[LGH] app js evaluating");
 window.LGH_V7_3_READY = true;
 window.LGH_V7_3_3_READY = true;
-console.log("[LGH] flags now:",
+log("[LGH] flags now:",
   "LGH_V7_3_READY =", window.LGH_V7_3_READY,
   "LGH_V7_3_3_READY =", window.LGH_V7_3_3_READY
 );
+
 
 function showWarn(msg){
   let n = document.querySelector('#js-warning');
@@ -291,13 +299,21 @@ document.addEventListener('DOMContentLoaded', () => {
   
 async function load(){
   try {
-    const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache:'no-store' });
-    if (!res.ok) {
-      console.error('[LGH] Data fetch failed', res.status, res.statusText);
-      return;
-    }
-    const j = await res.json();
+    let j = null;
+    let stale = false;
+      const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache:'no-store' });
+      if (res.ok) {
+        j = await res.json();
+      } else {
+        stale = true;
+        warn('[LGH] Data fetch not OK:', res.status, res.statusText);
+      }
 
+        if (stale) {
+      showWarn('Live data is slow — showing last verified snapshot.');
+      j = window.__LGH_BOOTSTRAP__ || {};
+    }
+    
     // 1) Base dataset
     MATCHES = (j.matches || j || []).map(r => {
       const out = {
@@ -373,16 +389,26 @@ async function load(){
           return attachScores(out);
         });
         MATCHES = mergeById(MATCHES, normalized);
-        console.log('[LGH] load(): base=%d, knockout=%d, total=%d', baseCount, normalized.length, MATCHES.length);
+        log('[LGH] load(): base=%d, knockout=%d, total=%d', baseCount, normalized.length, MATCHES.length);
       } else {
-        console.warn('[LGH] KO overlay fetch not OK:', r2.status, r2.statusText);
+        warn('[LGH] KO overlay fetch not OK:', r2.status, r2.statusText);
       }
     } catch(e){
-      console.warn('[LGH] KO overlay skipped:', e);
+      warn('[LGH] KO overlay skipped:', e);
     }
 
-  } catch (err) {
-    console.error('[LGH] Data load threw error:', err);
+} catch (e) {
+err('[LGH] Data load threw error:', e);
+// Optional but recommended fail-soft if the outer try trips:
+showWarn('Live data is slow — showing last verified snapshot.');
+const j = window.__LGH_BOOTSTRAP__ || {};
+MATCHES = (j.matches || j || []).map(r => attachScores({
+competition: r.competition, group: r.group, round: r.round,
+date: r.date, time: r.time, home: r.home, away: r.away,
+venue: r.venue, status: r.status,
+home_goals: r.home_goals, home_points: r.home_points,
+away_goals: r.away_goals, away_points: r.away_points
+}));    
   }
 }
 
@@ -892,7 +918,7 @@ function renderStandings(){
       }
       if (winnerSide === 'home') { H.w++; H.pts += 2; A.l++; }
       else if (winnerSide === 'away') { A.w++; A.pts += 2; H.l++; }
-      else { console.warn('[LGH] Walkover without clear winner:', m); }
+      else { warn('[LGH] Walkover without clear winner:', m); }
       continue;
     }
 
