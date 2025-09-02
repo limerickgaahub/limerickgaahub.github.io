@@ -954,7 +954,7 @@ function renderStandings(){
   }
 
   // Results only
-  const results = fixtures.filter(r => isResult(r.status));
+  const results = fixtures.filter(r => isResult(r.status) || isWalkover(r));
 
       function miniLeagueStats(tiedTeams, results){
       const set = new Set(tiedTeams.map(t => t.team));
