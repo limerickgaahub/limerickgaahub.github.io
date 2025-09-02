@@ -342,14 +342,19 @@ const WO_STATUS = /walkover/i;
 // accept "W/O", "W / O", etc. if ever present in the team name
 const WO_TAG = /\bW\s*\/\s*O\b/i;
 
-if (WO_STATUS.test(out.status)) {
+// Trigger on either: status says Walkover OR the team name has "W/O"
+const isWO = WO_STATUS.test(out.status) || WO_TAG.test(out.home) || WO_TAG.test(out.away);
+
+if (isWO) {
   out.is_walkover = true;
 
-  // First: explicit tag beside team name, if present
-  if (WO_TAG.test(out.home))      out.walkover_winner = 'home';
-  else if (WO_TAG.test(out.away)) out.walkover_winner = 'away';
-  else {
-    // Fallback: parse status like "Walkover – Murroe Boher" (giver named in status)
+  // 1) Prefer the explicit tag beside the team name: that side RECEIVED the W/O
+  if (WO_TAG.test(String(out.home))) {
+    out.walkover_winner = 'home';
+  } else if (WO_TAG.test(String(out.away))) {
+    out.walkover_winner = 'away';
+  } else {
+    // 2) Fallback: parse status like "Walkover – Murroe Boher" (giver named in status)
     const s = String(out.status).toLowerCase();
     const homeName = String(out.home).toLowerCase();
     const awayName = String(out.away).toLowerCase();
