@@ -981,31 +981,28 @@ function renderStandings(){
     const H = teams.get(m.home);
     const A = teams.get(m.away);
 
-// --- Walkover: played + 2 pts; use winner decided at load(); no PF/PA/GF/GA ---
+// --- Walkover: both played; award 2 pts to the pre-decided side; no PF/PA/GF/GA ---
 if (isWalkover(m)) {
-  H.p++;
+  H.p++; 
   A.p++;
 
-  const winnerSide = m.walkover_winner; // set in load() from the W/O tag
+  const winnerSide = m.walkover_winner; // must be set at load()
 
   if (winnerSide === 'home') {
-    H.w++; H.pts += 2;
-    A.l++;
+    H.w++; H.pts += 2; A.l++;
   } else if (winnerSide === 'away') {
-    A.w++; A.pts += 2;
-    H.l++;
+    A.w++; A.pts += 2; H.l++;
   } else {
-    // If this ever happens, the feed didn’t have a W/O tag beside either team.
-    warn('[LGH] Walkover with unknown winnerSide (no points awarded):', m);
+    // Visible in prod so we can catch missing decisions
+    err('[LGH] Walkover with unknown winnerSide (no points awarded):', m);
   }
 
-  // Optional: track walkovers GIVEN for tiebreaks
+  // Optional tiebreak stat: walkovers GIVEN by conceder
   if (winnerSide) {
     const giverName = (winnerSide === 'home') ? m.away : m.home;
     const G = teams.get(giverName);
     if (G) G.wo_given = (G.wo_given || 0) + 1;
   }
-
   continue;
 }
 
