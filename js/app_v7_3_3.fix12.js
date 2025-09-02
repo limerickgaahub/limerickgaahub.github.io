@@ -977,34 +977,33 @@ function renderStandings(){
     const A = teams.get(m.away);
 
   
-// --- Walkover: played + 2 pts to winner; no PF/PA/GF/GA counted ---
-// Also: increment 'wo_given' for the conceding (giver) team
+// --- Walkover: played + 2 pts to the side with "W/O"; no PF/PA/GF/GA counted ---
 if (isWalkover(m)) {
-  // mark as played for both teams
+  // Count the game as played for both
   H.p++; 
   A.p++;
 
-  // determine winner side; prefilled at load, else fall back
+  // Winner side:
+  // 1) trust m.walkover_winner from load()
+  // 2) else, "W/O" beside home/away name means that side WON
+  // 3) else, parse status text for conceder name and give win to the OTHER side
   let winnerSide = m.walkover_winner;
   if (!winnerSide) {
     const WO_TAG = /\bW\s*\/\s*O\b/i;
-    if (WO_TAG.test(m.home)) {
+    if (WO_TAG.test(String(m.home))) {
       winnerSide = 'home';
-    } else if (WO_TAG.test(m.away)) {
+    } else if (WO_TAG.test(String(m.away))) {
       winnerSide = 'away';
     } else {
       const s = String(m.status || '').toLowerCase();
       const homeName = String(m.home || '').toLowerCase();
       const awayName = String(m.away || '').toLowerCase();
-      if (s.includes(homeName)) {
-        winnerSide = 'away';
-      } else if (s.includes(awayName)) {
-        winnerSide = 'home';
-      }
+      if (s.includes(homeName)) winnerSide = 'away';
+      else if (s.includes(awayName)) winnerSide = 'home';
     }
   }
 
-  // --- AWARD the result (this was missing before) ---
+  // >>> THIS was missing: actually allocate the points <<<
   if (winnerSide === 'home') {
     H.w++; H.pts += 2;
     A.l++;
@@ -1015,14 +1014,14 @@ if (isWalkover(m)) {
     warn('[LGH] Walkover without clear winner:', m);
   }
 
-  // ensure downstream helpers can infer the giver
-  m.walkover_winner = winnerSide || m.walkover_winner;
+  // Keep the inferred side for consistency
+  if (!m.walkover_winner && winnerSide) m.walkover_winner = winnerSide;
 
-  // increment walkovers GIVEN for the conceding team
-  let giverName = null;
-  if (winnerSide === 'home') giverName = m.away;
-  else if (winnerSide === 'away') giverName = m.home;
-  else giverName = walkoverGiver(m);
+  // Track walkovers GIVEN by the conceding team (used in tie-breaks)
+  const giverName =
+    winnerSide === 'home' ? m.away :
+    winnerSide === 'away' ? m.home :
+    null;
 
   if (giverName) {
     const G = teams.get(giverName);
@@ -1032,10 +1031,9 @@ if (isWalkover(m)) {
     warn('[LGH] Could not infer walkover giver from match row:', m);
   }
 
-  
-  // Done handling this result
-  continue;
+  continue; // done with this result
 }
+
 
     // --- Scored result path ---
     const hs = _readScoreFromRow(m,'home'); // {total, goals}
