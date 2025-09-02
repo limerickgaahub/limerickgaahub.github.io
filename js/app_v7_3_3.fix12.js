@@ -792,7 +792,8 @@ function rebuildMatchesMenu(){
   const tbl=el('g-table'); const thead=tbl.tHead||tbl.createTHead(); const tbody=tbl.tBodies[0]||tbl.createTBody();
   const isMobile=matchMedia('(max-width:880px)').matches; const isTiny=matchMedia('(max-width:400px)').matches; 
   buildHead(thead,isMobile,isTiny);
-  const status=el('status').value;
+  const statusEl = el('status');
+  const status = statusEl ? statusEl.value : 'All';
   updateTableTabVisibility();
 
   // ensure visibility
@@ -844,6 +845,23 @@ function _readScoreFromRow(m, side /* 'home' | 'away' */){
   return { total: Number(total||0), goals: Number(g||0) };
 }
 
+// --- Walkover helpers ---
+const isWalkover = (m) => /^walkover$/i.test(String(m?.status||''));
+function walkoverWinner(m){
+  // winner side was inferred earlier into m.walkover_winner ('home'|'away'|null)
+  if (!isWalkover(m)) return null;
+  if (m.walkover_winner === 'home') return m.home;
+  if (m.walkover_winner === 'away') return m.away;
+  return null;
+}
+function walkoverGiver(m){
+  if (!isWalkover(m)) return null;
+  if (m.walkover_winner === 'home') return m.away;  // away conceded
+  if (m.walkover_winner === 'away') return m.home;  // home conceded
+  return null;
+}
+
+  
 // Return the winner’s team name for a scored match (null for draw/unknown)
 function _winnerOf(m){
   // handle walkover earlier in renderStandings; here assume scored
@@ -856,17 +874,31 @@ function _winnerOf(m){
 
 // Head-to-head compare ONLY when exactly two teams are tied on points
 function _h2hCompare(a, b, allResults){
-  const games = allResults.filter(m =>
-    ((m.home === a.team && m.away === b.team) || (m.home === b.team && m.away === a.team)) &&
-    isResult(m.status)
-  );
-  if (games.length === 1){
-    const w = _winnerOf(games[0]);
+  // league phase only (exclude KO), any round; pick the most recent meeting
+  const games = allResults
+    .filter(m =>
+      ((m.home === a.team && m.away === b.team) || (m.home === b.team && m.away === a.team))
+    )
+    .sort((x,y) => (x.date||'').localeCompare(y.date||'') || (x.time||'').localeCompare(y.time||''));
+  if (!games.length) return 0;
+
+  const last = games[games.length - 1];
+
+  // Walkover counts as a win for the receiver per competition rules
+  if (isWalkover(last)) {
+    const w = walkoverWinner(last);
     if (w === a.team) return -1;
     if (w === b.team) return  1;
+    return 0;
   }
-  return 0; // no decision (draw/no game)
+
+  // Scored meeting
+  const w = _winnerOf(last);
+  if (w === a.team) return -1;
+  if (w === b.team) return  1;
+  return 0;
 }
+
 
 // Stable compare used AFTER deciding points buckets
 function _compareByPD_PF_GF(a, b){
@@ -896,31 +928,78 @@ function renderStandings(){
   // Seed teams
   const teams=new Map();
   for(const f of fixtures){
-    if(!teams.has(f.home)) teams.set(f.home,{team:f.home,p:0,w:0,d:0,l:0,pf:0,pa:0,gf:0,ga:0,pts:0});
-    if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,l:0,pf:0,pa:0,gf:0,ga:0,pts:0});
+    if(!teams.has(f.home)) teams.set(f.home,{team:f.home,p:0,w:0,d:0,l:0,pf:0,pa:0,gf:0,ga:0,pts:0,wo_given:0});
+    if(!teams.has(f.away)) teams.set(f.away,{team:f.away,p:0,w:0,d:0,l:0,pf:0,pa:0,gf:0,ga:0,pts:0,wo_given:0});
   }
 
   // Results only
   const results = fixtures.filter(r => isResult(r.status));
 
+      function miniLeagueStats(tiedTeams, results){
+      const set = new Set(tiedTeams.map(t => t.team));
+      // Only games between tied teams; exclude walkovers for PF/PA/GF purposes
+      const games = results.filter(m => set.has(m.home) && set.has(m.away));
+    
+      const acc = new Map();
+      for (const t of set) acc.set(t, { pf:0, pa:0, gf:0 });
+      for (const m of games) {
+        if (isWalkover(m)) continue; // do not inflate PF/PA/GF with W/O
+        const hs = _readScoreFromRow(m,'home');
+        const as = _readScoreFromRow(m,'away');
+        if (hs.total == null || as.total == null) continue;
+    
+        const H = acc.get(m.home), A = acc.get(m.away);
+        H.pf += hs.total; H.pa += as.total; H.gf += hs.goals;
+        A.pf += as.total; A.pa += hs.total; A.gf += as.goals;
+      }
+      return (teamName) => acc.get(teamName) || { pf:0, pa:0, gf:0 };
+    }
+  
+
   for (const m of results) {
     const H = teams.get(m.home);
     const A = teams.get(m.away);
 
-    // --- Walkover: played + 2 pts to winner; no PF/PA counted ---
-    if (/^walkover$/i.test(String(m.status||''))) {
-      H.p++; A.p++;
-      let winnerSide = m.walkover_winner;
-      if (!winnerSide) {
-        const WO_TAG = /\bW\/\s*O\b/i;
-        if (WO_TAG.test(m.home)) winnerSide = 'home';
-        else if (WO_TAG.test(m.away)) winnerSide = 'away';
-      }
-      if (winnerSide === 'home') { H.w++; H.pts += 2; A.l++; }
-      else if (winnerSide === 'away') { A.w++; A.pts += 2; H.l++; }
-      else { warn('[LGH] Walkover without clear winner:', m); }
-      continue;
-    }
+  
+// --- Walkover: played + 2 pts to winner; no PF/PA/GF/GA counted ---
+// Also: increment 'wo_given' for the conceding (giver) team
+if (isWalkover(m)) {
+  // mark as played for both teams
+  H.p++; 
+  A.p++;
+
+  // determine winner side; fall back to W/O tag if needed
+  let winnerSide = m.walkover_winner;
+  if (!winnerSide) {
+    const WO_TAG = /\bW\/\s*O\b/i;
+    if (WO_TAG.test(m.home))      winnerSide = 'home';
+    else if (WO_TAG.test(m.away)) winnerSide = 'away';
+  }
+
+  if (winnerSide === 'home') { 
+    H.w++; H.pts += 2; 
+    A.l++; 
+  } else if (winnerSide === 'away') { 
+    A.w++; A.pts += 2; 
+    H.l++; 
+  } else {
+    warn('[LGH] Walkover without clear winner:', m);
+  }
+
+  // increment walkovers GIVEN for the conceding team
+  const giverName = walkoverGiver(m);   // returns the team name that conceded
+  if (giverName) {
+    const G = teams.get(giverName);
+    if (G) G.wo_given = (G.wo_given || 0) + 1;
+    else warn('[LGH] Walkover giver not found in teams map:', giverName, m);
+  } else {
+    // If we still couldn't infer a giver, do NOT guess — just log
+    warn('[LGH] Could not infer walkover giver from match row:', m);
+  }
+
+  // Done handling this result
+  continue;
+}
 
     // --- Scored result path ---
     const hs = _readScoreFromRow(m,'home'); // {total, goals}
@@ -947,23 +1026,55 @@ function renderStandings(){
     byPts.get(t.pts).push(t);
   }
 
-  // 2) Sort points buckets high→low, then resolve inside each bucket
-  const sorted = []
-    .concat(...[...byPts.keys()].sort((a,b)=>b-a).map(pts=>{
-      const bucket = byPts.get(pts);
-      if (bucket.length === 2){
-        // Try H2H first
-        bucket.sort((a,b)=>{
-          const h2h = _h2hCompare(a, b, results);
-          if (h2h !== 0) return h2h;
-          return _compareByPD_PF_GF(a,b);
-        });
-        return bucket;
-      }
-      // 3+ teams tied → PD, PF, Goals For (no H2H)
-      bucket.sort(_compareByPD_PF_GF);
+  // ---- Sorting ----
+const sorted = []
+  .concat(...[...byPts.keys()].sort((a,b)=>b-a).map(pts=>{
+    const bucket = byPts.get(pts);
+
+    // If any of these teams has been *affected* by a walkover in league games,
+    // we switch to the walkover pathway. "Affected" := any W/O involving them (given or received).
+    const names = new Set(bucket.map(t => t.team));
+    const woAffected = results.some(m => isWalkover(m) && (names.has(m.home) || names.has(m.away)));
+
+    if (woAffected) {
+      const mini = miniLeagueStats(bucket, results);
+      bucket.sort((x,y)=>{
+        // 1) Least walkovers given
+        const wg = (x.wo_given||0) - (y.wo_given||0);
+        if (wg !== 0) return wg;
+
+        // 2) Mini-league PD (desc)
+        const mx = mini(x.team), my = mini(y.team);
+        const pdx = (mx.pf - mx.pa), pdy = (my.pf - my.pa);
+        if (pdx !== pdy) return pdy - pdx;
+
+        // 3) Mini-league PF (desc)
+        if (mx.pf !== my.pf) return my.pf - mx.pf;
+
+        // 4) Mini-league GF (desc)
+        if (mx.gf !== my.gf) return my.gf - mx.gf;
+
+        // 5) Still tied → leave alphabetical (play-off required)
+        return x.team.localeCompare(y.team);
+      });
       return bucket;
-    }));
+    }
+
+    // --- Standard pathway ---
+    if (bucket.length === 2){
+      bucket.sort((a,b)=>{
+        const h2h = _h2hCompare(a, b, results);
+        if (h2h !== 0) return h2h;
+        return _compareByPD_PF_GF(a,b);    // PD → PF → GF → name
+      });
+      return bucket;
+    }
+
+    // 3+ teams → PD → PF → GF → name
+    bucket.sort(_compareByPD_PF_GF);
+    return bucket;
+  }));
+
 
   // ensure visibility
   el('g-standings').style.display='';
