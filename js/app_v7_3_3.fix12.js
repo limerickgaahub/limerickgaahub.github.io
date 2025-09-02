@@ -339,7 +339,7 @@ async function load(){
 
       // Walkover detection
       const WO_STATUS = /walkover/i;
-      const WO_TAG = /\bW\/\s*O\b/i;
+      const WO_TAG = /\bW\s*\/\s*O\b/i;
       if (WO_STATUS.test(out.status)) {
         out.is_walkover = true;
         if (WO_TAG.test(out.home))      out.walkover_winner = 'home';
@@ -972,7 +972,7 @@ if (isWalkover(m)) {
   // determine winner side; fall back to W/O tag if needed
   let winnerSide = m.walkover_winner;
   if (!winnerSide) {
-    const WO_TAG = /\bW\/\s*O\b/i;
+    const WO_TAG = /\bW\s*\/\s*O\b/i;
     if (WO_TAG.test(m.home))      winnerSide = 'home';
     else if (WO_TAG.test(m.away)) winnerSide = 'away';
   }
