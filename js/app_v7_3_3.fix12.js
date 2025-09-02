@@ -846,7 +846,8 @@ function _readScoreFromRow(m, side /* 'home' | 'away' */){
 }
 
 // --- Walkover helpers ---
-const isWalkover = (m) => /^walkover$/i.test(String(m?.status||''));
+const isWalkover = (m) =>
+m?.is_walkover === true || /walkover/i.test(String(m?.status || ''));
 function walkoverWinner(m){
   // winner side was inferred earlier into m.walkover_winner ('home'|'away'|null)
   if (!isWalkover(m)) return null;
