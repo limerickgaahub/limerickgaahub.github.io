@@ -337,15 +337,30 @@ async function load(){
       
       out.code = compCode(out.competition);
 
-      // Walkover detection
-      const WO_STATUS = /walkover/i;
-      const WO_TAG = /\bW\s*\/\s*O\b/i;
-      if (WO_STATUS.test(out.status)) {
-        out.is_walkover = true;
-        if (WO_TAG.test(out.home))      out.walkover_winner = 'home';
-        else if (WO_TAG.test(out.away)) out.walkover_winner = 'away';
-        else                            out.walkover_winner = null;
-      }
+// Walkover detection
+const WO_STATUS = /walkover/i;
+// accept "W/O", "W / O", etc. if ever present in the team name
+const WO_TAG = /\bW\s*\/\s*O\b/i;
+
+if (WO_STATUS.test(out.status)) {
+  out.is_walkover = true;
+
+  // First: explicit tag beside team name, if present
+  if (WO_TAG.test(out.home))      out.walkover_winner = 'home';
+  else if (WO_TAG.test(out.away)) out.walkover_winner = 'away';
+  else {
+    // Fallback: parse status like "Walkover – Murroe Boher" (giver named in status)
+    const s = String(out.status).toLowerCase();
+    const homeName = String(out.home).toLowerCase();
+    const awayName = String(out.away).toLowerCase();
+
+    // If status mentions the HOME club, they conceded → AWAY wins.
+    if (s.includes(homeName))      out.walkover_winner = 'away';
+    else if (s.includes(awayName)) out.walkover_winner = 'home';
+    else                           out.walkover_winner = null; // unknown
+  }
+}
+
 
       // Normalise group names
       if (out.group) {
@@ -969,35 +984,55 @@ if (isWalkover(m)) {
   H.p++; 
   A.p++;
 
-  // determine winner side; fall back to W/O tag if needed
+  // determine winner side; prefilled at load, else fall back
   let winnerSide = m.walkover_winner;
   if (!winnerSide) {
     const WO_TAG = /\bW\s*\/\s*O\b/i;
-    if (WO_TAG.test(m.home))      winnerSide = 'home';
-    else if (WO_TAG.test(m.away)) winnerSide = 'away';
+    if (WO_TAG.test(m.home)) {
+      winnerSide = 'home';
+    } else if (WO_TAG.test(m.away)) {
+      winnerSide = 'away';
+    } else {
+      const s = String(m.status || '').toLowerCase();
+      const homeName = String(m.home || '').toLowerCase();
+      const awayName = String(m.away || '').toLowerCase();
+      if (s.includes(homeName)) {
+        winnerSide = 'away';
+      } else if (s.includes(awayName)) {
+        winnerSide = 'home';
+      }
+    }
   }
 
-  if (winnerSide === 'home') { 
-    H.w++; H.pts += 2; 
-    A.l++; 
-  } else if (winnerSide === 'away') { 
-    A.w++; A.pts += 2; 
-    H.l++; 
+  // --- AWARD the result (this was missing before) ---
+  if (winnerSide === 'home') {
+    H.w++; H.pts += 2;
+    A.l++;
+  } else if (winnerSide === 'away') {
+    A.w++; A.pts += 2;
+    H.l++;
   } else {
     warn('[LGH] Walkover without clear winner:', m);
   }
 
+  // ensure downstream helpers can infer the giver
+  m.walkover_winner = winnerSide || m.walkover_winner;
+
   // increment walkovers GIVEN for the conceding team
-  const giverName = walkoverGiver(m);   // returns the team name that conceded
+  let giverName = null;
+  if (winnerSide === 'home') giverName = m.away;
+  else if (winnerSide === 'away') giverName = m.home;
+  else giverName = walkoverGiver(m);
+
   if (giverName) {
     const G = teams.get(giverName);
     if (G) G.wo_given = (G.wo_given || 0) + 1;
     else warn('[LGH] Walkover giver not found in teams map:', giverName, m);
   } else {
-    // If we still couldn't infer a giver, do NOT guess — just log
     warn('[LGH] Could not infer walkover giver from match row:', m);
   }
 
+  
   // Done handling this result
   continue;
 }
