@@ -1,7 +1,22 @@
 {
   "competition": "Junior C Hurling Championship",
-  "updated_at": "2025-09-03T09:09:11Z",
+  "updated_at": "2025-09-05T18:48:14Z",
   "fixtures": [
+    {
+      "id": "2025-JCHC-G2-R5-ST--CRE",
+      "round": "R 5",
+      "group": "Group 2",
+      "date": "2025-09-13",
+      "time_local": "17:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-09-13T17:00:00",
+      "home": "St Kieran's",
+      "away": "Crecora Manister",
+      "venue": "St Kieran's G.A.A",
+      "referee": "Billy Philip",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
     {
       "id": "2025-JCHC-G1-R4-KIL-BAL",
       "round": "R 4",
@@ -63,21 +78,6 @@
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },
     {
-      "id": "2025-JCHC-G2-R5-ST--CRE",
-      "round": "R 5",
-      "group": "Group 2",
-      "date": "2025-09-14",
-      "time_local": "18:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-09-14T18:00:00",
-      "home": "St Kieran's",
-      "away": "Crecora Manister",
-      "venue": "St Kieran's G.A.A",
-      "referee": "Billy Philip",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
-    },
-    {
       "id": "2025-JCHC-G2-R5-ASK-DOO",
       "round": "R 5",
       "group": "Group 2",
@@ -88,7 +88,7 @@
       "home": "Askeaton Ballysteen Kilcornan",
       "away": "Doon",
       "venue": "Round 5 Winners",
-      "referee": "TBC",
+      "referee": "Michael Mann",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },
