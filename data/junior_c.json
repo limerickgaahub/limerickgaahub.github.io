@@ -1,6 +1,6 @@
 {
   "competition": "Junior C Hurling Championship",
-  "updated_at": "2025-09-05T18:48:14Z",
+  "updated_at": "2025-09-09T15:33:47Z",
   "fixtures": [
     {
       "id": "2025-JCHC-G2-R5-ST--CRE",
@@ -14,6 +14,21 @@
       "away": "Crecora Manister",
       "venue": "St Kieran's G.A.A",
       "referee": "Billy Philip",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
+    {
+      "id": "2025-JCHC-G2-R5-DRO-KIL",
+      "round": "R 5",
+      "group": "Group 2",
+      "date": "2025-09-13",
+      "time_local": "18:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-09-13T18:00:00",
+      "home": "Dromcollogher Broadford",
+      "away": "Kildimo Pallaskenry",
+      "venue": "Dromcollogher/ Broadford GAA",
+      "referee": "John Mc Grath",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },
@@ -59,21 +74,6 @@
       "away": "Monagea",
       "venue": "Knocklong",
       "referee": "Tg Ryan",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
-    },
-    {
-      "id": "2025-JCHC-G2-R5-DRO-KIL",
-      "round": "R 5",
-      "group": "Group 2",
-      "date": "2025-09-14",
-      "time_local": "18:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-09-14T18:00:00",
-      "home": "Dromcollogher Broadford",
-      "away": "Kildimo Pallaskenry",
-      "venue": "Dromcollogher/ Broadford GAA",
-      "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },
