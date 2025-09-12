@@ -2230,11 +2230,11 @@
       "home": "Kilteely Dromkeen",
       "away": "Ballybrown",
       "venue": "Kilteely",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 8,
+      "away_goals": 3,
+      "away_points": 16
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -2245,11 +2245,11 @@
       "home": "Na Piarsaigh",
       "away": "Patrickswell",
       "venue": "Caherdavin",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 13,
+      "away_goals": 0,
+      "away_points": 4
     },
     {
       "competition": "Junior C Hurling Championship",
