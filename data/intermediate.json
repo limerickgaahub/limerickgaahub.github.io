@@ -1,22 +1,7 @@
 {
   "competition": "Intermediate Hurling Championship",
-  "updated_at": "2025-09-09T15:33:47Z",
+  "updated_at": "2025-09-12T18:46:11Z",
   "fixtures": [
-    {
-      "id": "2025-IHC-G1-R5-FEE-HOS",
-      "round": "R 5",
-      "group": "Group 1",
-      "date": "2025-09-13",
-      "time_local": "13:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-09-13T13:00:00",
-      "home": "Feenagh Kilmeedy",
-      "away": "Hospital Herbertstown",
-      "venue": "Ballingarry",
-      "referee": "TBC",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    },
     {
       "id": "2025-IHC-G1-R5-BRU-CAP",
       "round": "R 5",
@@ -29,6 +14,21 @@
       "away": "Cappamore",
       "venue": "Caherconlish",
       "referee": "Paddy Lyons",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
+    },
+    {
+      "id": "2025-IHC-G1-R5-FEE-HOS",
+      "round": "R 5",
+      "group": "Group 1",
+      "date": "2025-09-13",
+      "time_local": "15:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-09-13T15:00:00",
+      "home": "Feenagh Kilmeedy",
+      "away": "Hospital Herbertstown",
+      "venue": "Ballingarry",
+      "referee": "John O Donnell",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
     },
@@ -57,7 +57,7 @@
       "datetime_iso": "2025-09-14T13:00:00",
       "home": "Feohanagh",
       "away": "Pallasgreen",
-      "venue": "Killmallock",
+      "venue": "Ballyagran",
       "referee": "John O Halloran",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"

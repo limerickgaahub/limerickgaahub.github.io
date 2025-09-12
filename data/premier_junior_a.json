@@ -1,6 +1,6 @@
 {
   "competition": "Premier Junior A Hurling Championship",
-  "updated_at": "2025-09-09T15:33:47Z",
+  "updated_at": "2025-09-12T18:46:11Z",
   "fixtures": [
     {
       "id": "2025-PJAHC-G1-R5-MON-TOU",
@@ -27,7 +27,7 @@
       "datetime_iso": "2025-09-14T15:00:00",
       "home": "Askeaton Ballysteen Kilcornan",
       "away": "Monaleen",
-      "venue": "Ballingarry",
+      "venue": "Pallaskenry",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
@@ -57,8 +57,8 @@
       "datetime_iso": "2025-09-14T17:00:00",
       "home": "Knockaderry",
       "away": "Doon",
-      "venue": "Fedamore",
-      "referee": "Michael Sexton",
+      "venue": "Killmallock",
+      "referee": "Jonathon Hayes",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },

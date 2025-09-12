@@ -1,6 +1,6 @@
 {
   "competition": "Junior A Hurling Championship",
-  "updated_at": "2025-09-09T15:33:47Z",
+  "updated_at": "2025-09-12T18:46:11Z",
   "fixtures": [
     {
       "id": "2025-JAHC-G2-R5-AHA-TEM",
@@ -43,7 +43,7 @@
       "home": "Rathkeale",
       "away": "Castletown Ballyagran",
       "venue": "Feenagh",
-      "referee": "Alan Kehoe",
+      "referee": "Johnny Murphy",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },
@@ -73,7 +73,7 @@
       "home": "Ballybricken Bohermore",
       "away": "Kildimo Pallaskenry",
       "venue": "Pairc de Paor, Rathbane",
-      "referee": "David Burke",
+      "referee": "Kieran Flaherty",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
     },
@@ -87,7 +87,7 @@
       "datetime_iso": "2025-09-14T16:00:00",
       "home": "Old Christians",
       "away": "Killeedy",
-      "venue": "Croagh",
+      "venue": "Mick Neville Park",
       "referee": "Kieran Guina",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"

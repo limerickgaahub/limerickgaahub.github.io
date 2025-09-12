@@ -1,6 +1,6 @@
 {
   "competition": "Senior Hurling Championship",
-  "updated_at": "2025-09-09T15:33:47Z",
+  "updated_at": "2025-09-12T18:46:11Z",
   "fixtures": [
     {
       "id": "2025-SHC-G2-R5-ADA-NEW",
@@ -28,7 +28,7 @@
       "home": "Mungret St Pauls",
       "away": "Dromin Athlacca",
       "venue": "Bruff",
-      "referee": "TBC",
+      "referee": "Liam O Sullivan",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
     },
