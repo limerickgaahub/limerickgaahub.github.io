@@ -460,11 +460,11 @@
       "home": "Croagh Kilfinny",
       "away": "South Liberties",
       "venue": "Adare",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 14,
+      "away_goals": 2,
+      "away_points": 13
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
