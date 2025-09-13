@@ -895,11 +895,11 @@
       "home": "Feenagh Kilmeedy",
       "away": "Hospital Herbertstown",
       "venue": "Ballingarry",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 20,
+      "away_goals": 2,
+      "away_points": 15
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -1330,11 +1330,11 @@
       "home": "Monagea",
       "away": "Tournafulla",
       "venue": "Dromcollogher",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 19,
+      "away_goals": 5,
+      "away_points": 14
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -2260,11 +2260,11 @@
       "home": "St Kieran's",
       "away": "Crecora Manister",
       "venue": "St Kieran's G.A.A",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 9,
+      "away_goals": 2,
+      "away_points": 15
     },
     {
       "competition": "Junior C Hurling Championship",
