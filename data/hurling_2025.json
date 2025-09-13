@@ -10,11 +10,11 @@
       "home": "Adare",
       "away": "Newcastle West",
       "venue": "Mick Neville Park",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 17,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "competition": "Senior Hurling Championship",
@@ -25,11 +25,11 @@
       "home": "Mungret St Pauls",
       "away": "Dromin Athlacca",
       "venue": "Bruff",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 21,
+      "away_goals": 1,
+      "away_points": 15
     },
     {
       "competition": "Senior Hurling Championship",
@@ -40,11 +40,11 @@
       "home": "Monaleen",
       "away": "Kildimo Pallaskenry",
       "venue": "Ballybrown",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 21,
+      "away_goals": 0,
+      "away_points": 21
     },
     {
       "competition": "Senior Hurling Championship",
@@ -55,11 +55,11 @@
       "home": "Patrickswell",
       "away": "Na Piarsaigh",
       "venue": "Claughaun GAA, Childers Rd",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 14,
+      "away_goals": 2,
+      "away_points": 26
     },
     {
       "competition": "Senior Hurling Championship",
@@ -70,11 +70,11 @@
       "home": "Doon",
       "away": "Ahane",
       "venue": "Cappamore",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 23,
+      "away_goals": 0,
+      "away_points": 18
     },
     {
       "competition": "Senior Hurling Championship",
@@ -85,11 +85,11 @@
       "home": "Kilmallock",
       "away": "Ballybrown",
       "venue": "Newcastle West",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 19,
+      "away_goals": 4,
+      "away_points": 20
     },
     {
       "competition": "Senior Hurling Championship",
@@ -475,11 +475,11 @@
       "home": "Bruff",
       "away": "Effin",
       "venue": "Killmallock",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 14,
+      "away_goals": 3,
+      "away_points": 16
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -505,11 +505,11 @@
       "home": "Blackrock",
       "away": "Glenroe",
       "venue": "Knocklong",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 5,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 8
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
