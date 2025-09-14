@@ -145,17 +145,6 @@ const sortDateOnly = (a, b) =>
 
 
   const el=id=>document.getElementById(id), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-  // Adjust table footnote text depending on competition
-  const footnoteEl = document.getElementById("table-footnote");
-  if (footnoteEl) {
-    if (competition && competition.includes("Junior C")) {
-      footnoteEl.innerText =
-        "Tie-breaks: Qualification: Head-to-Head (two teams only), then Points Difference, Points For, Goals For.";
-    } else {
-      footnoteEl.innerText =
-        "Tie-breaks: Qualification: Head-to-Head (two teams only), then Points Difference, Points For, Goals For. Relegation: Playoff where two teams on equal points.";
-    }
-  }  
   const pad2=n=>String(n).padStart(2,'0'); const day3=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const fmtDateShort=iso=>{ if(!iso) return ''; const d=new Date(iso+'T00:00:00'); return `${day3[d.getDay()]} ${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`; };
   const fmtTimeShort=t=>{ if(!t) return ''; const m=t.match(/^(\d{1,2}):(\d{2})/); return m?`${pad2(m[1])}:${m[2]}`:t; }; // <-- add colon
