@@ -943,7 +943,7 @@
       "status": "Result",
       "home_goals": 1,
       "home_points": 23,
-      "away_goals": 0,
+      "away_goals": 1,
       "away_points": 12
     },
     {
@@ -1345,11 +1345,11 @@
       "home": "Askeaton Ballysteen Kilcornan",
       "away": "Monaleen",
       "venue": "Pallaskenry",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 18,
+      "away_goals": 1,
+      "away_points": 16
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1375,11 +1375,11 @@
       "home": "Knockaderry",
       "away": "Doon",
       "venue": "Killmallock",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 15,
+      "away_goals": 4,
+      "away_points": 15
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1390,11 +1390,11 @@
       "home": "Kilteely Dromkeen",
       "away": "Dromcollogher Broadford",
       "venue": "Staker Wallace GAA, Kilbreedy",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 18,
+      "away_goals": 1,
+      "away_points": 14
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1405,11 +1405,11 @@
       "home": "Kilmallock",
       "away": "Caherline",
       "venue": "Hospital",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 7,
+      "away_goals": 1,
+      "away_points": 26
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1780,11 +1780,11 @@
       "home": "Ahane",
       "away": "Templeglantine",
       "venue": "Sean Finn Park, Rathkeale",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 10,
+      "away_goals": 2,
+      "away_points": 21
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -1795,11 +1795,11 @@
       "home": "Garryspillane",
       "away": "Bruff",
       "venue": "KIlfinane",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 17
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -1810,11 +1810,11 @@
       "home": "Rathkeale",
       "away": "Castletown Ballyagran",
       "venue": "Feenagh",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 7,
+      "away_goals": 4,
+      "away_points": 20
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -1825,11 +1825,11 @@
       "home": "Claughaun",
       "away": "Patrickswell",
       "venue": "Drumgoole Park, Caherdavin",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 19,
+      "away_goals": 0,
+      "away_points": 11
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -1840,11 +1840,11 @@
       "home": "Ballybricken Bohermore",
       "away": "Kildimo Pallaskenry",
       "venue": "Pairc de Paor, Rathbane",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 17,
+      "away_goals": 2,
+      "away_points": 23
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -1855,11 +1855,11 @@
       "home": "Old Christians",
       "away": "Killeedy",
       "venue": "Mick Neville Park",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 14,
+      "away_goals": 1,
+      "away_points": 19
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -2290,11 +2290,11 @@
       "home": "Askeaton Ballysteen Kilcornan",
       "away": "Doon",
       "venue": "Ballysteen",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 12,
+      "away_goals": 1,
+      "away_points": 9
     },
     {
       "competition": "Junior C Hurling Championship",
