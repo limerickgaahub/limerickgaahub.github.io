@@ -925,11 +925,11 @@
       "home": "Feohanagh",
       "away": "Pallasgreen",
       "venue": "Ballyagran",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 14,
+      "away_goals": 0,
+      "away_points": 15
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -940,11 +940,11 @@
       "home": "Murroe Boher",
       "away": "St Kieran's",
       "venue": "Ballybrown",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 23,
+      "away_goals": 0,
+      "away_points": 12
     },
     {
       "competition": "Intermediate Hurling Championship",
