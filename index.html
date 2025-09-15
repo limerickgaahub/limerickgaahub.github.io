@@ -561,6 +561,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
   }
 }
 /* === END PATCH === */
+
   
 /* Social links in About */
 .social-list{ display:flex; flex-wrap:wrap; gap:10px; margin:8px 0 0; }
@@ -799,6 +800,10 @@ thead th, tbody td{ padding:.55rem .55rem; }
 .sc-table tbody td{ font-size:34px; padding:18px 20px; border-top:1px solid #E6EAE3; }
 .sc-footer{ margin-top:24px; text-align:center; font-size:36px; opacity:0.9; }
 
+/* Inline radios in overlay */
+.sc-seg{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+.sc-seg label{ display:flex; gap:6px; align-items:center; font-size:14px; }
+  
 /* Injected button beside your existing sharebars */
 .lgh-sc-btn{ margin-left:8px; padding:6px 10px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; font-weight:700; }
 
@@ -1533,25 +1538,26 @@ function updateSharebars(){
         </select>
       </div>
 
-      <!-- Only shown when mode = digest -->
-      <div class="sc-row" data-row="range">
-        <label>Range (From → To)</label>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-          <input type="date" name="from" placeholder="From (YYYY-MM-DD)" />
-          <input type="date" name="to"   placeholder="To (YYYY-MM-DD, optional)" />
-        </div>
-        <small class="sm-muted">Leave <em>To</em> empty for a single day.</small>
-      </div>
-      
-      <!-- Only shown when mode = digest -->
-      <div class="sc-row" data-row="digest-what">
-        <label>Include</label>
-        <div class="sc-seg">
-          <label><input type="radio" name="what" value="all" checked> Fixtures &amp; Results</label>
-          <label><input type="radio" name="what" value="fixtures"> Fixtures only</label>
-          <label><input type="radio" name="what" value="results"> Results only</label>
-        </div>
-      </div>
+  <!-- Only shown when mode = digest -->
+  <div class="sc-row" data-row="range">
+    <label>Range (From → To)</label>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+      <input type="date" name="from" placeholder="From (YYYY-MM-DD)" />
+      <input type="date" name="to"   placeholder="To (YYYY-MM-DD, optional)" />
+    </div>
+    <small class="sm-muted">Leave <em>To</em> empty for a single day.</small>
+  </div>
+  
+  <!-- Only shown when mode = digest -->
+  <div class="sc-row" data-row="digest-what">
+    <label>Include</label>
+    <div class="sc-seg">
+      <label><input type="radio" name="what" value="all" checked> Fixtures &amp; Results</label>
+      <label><input type="radio" name="what" value="fixtures"> Fixtures only</label>
+      <label><input type="radio" name="what" value="results"> Results only</label>
+    </div>
+  </div>
+
 
       
       <div class="sc-row">
@@ -1891,15 +1897,40 @@ if (mode !== 'digest'){
     if (m){ const a=+m[1], b=+m[2]; rows = rows.slice(a-1, b); }
   }
 
+
   // Title
+  let autoTitle = '';
+  if (mode === 'digest'){
+  const mkMid = (d) => { const x = new Date(d); x.setHours(0,0,0,0); return x; };
+  const parseISO = (iso) => { if(!iso) return null; const [Y,M,D]=String(iso).split('-').map(Number); return (Y? new Date(Y,(M||1)-1,(D||1)) : null); };
+  const A = mkMid(parseISO(from) || new Date());
+  const B = mkMid(parseISO(to || from) || A);
+  const same = (+A === +B);
+  const left  = A.toLocaleDateString('en-IE',{day:'2-digit',month:'short'});
+  const right = B.toLocaleDateString('en-IE',{day:'2-digit',month:'short',year:'numeric'});
+  const range = same ? A.toLocaleDateString('en-IE',{weekday:'short',day:'2-digit',month:'short',year:'numeric'}) : `${left}–${right}`;
+  const whatLabel = (what==='fixtures') ? 'Fixtures' : (what==='results') ? 'Results' : 'Fixtures & Results';
+  autoTitle = `${whatLabel} • ${range}`;
+  } else {
   const bits = [labelOf(comp)];
   if (group && !meta.pihc) bits.push(group);
   if (team) bits.push(team);
   if (preset==='today')    bits.push('Today');
   if (preset==='tomorrow') bits.push('Tomorrow');
+  autoTitle = bits.filter(Boolean).join(' • ');
+  }
 
-  return { mode, size, title: (title?.trim() || bits.filter(Boolean).join(' • ')), rows };
-}
+
+rows.sort((a,b) => {
+  const ad = parseMatchDate(a)?.getTime() ?? 0;
+  const bd = parseMatchDate(b)?.getTime() ?? 0;
+  if (ad !== bd) return ad - bd;
+  const at = (a.time || '').localeCompare(b.time || '');
+  if (at !== 0) return at;
+  return (a.competition || '').localeCompare(b.competition || '');
+});
+
+return { mode, size, title: (title?.trim() || autoTitle), rows };
 
 
 function scoreMid(m){
@@ -1922,11 +1953,10 @@ function scoreMid(m){
 
 
 function matchCellHTML(m, mode){
-  const isRes = (window.LGH?.isResult || isResult);
-  // In digest: choose mid per-row; otherwise follow mode
-  const midVal = (mode === 'digest') ? (isRes(m.status) ? scoreMid(m) : 'v')
+  const _isRes = (window.LGH?.isResult || isResult);
+  const midVal = (mode === 'digest') ? (_isRes(m.status) ? scoreMid(m) : 'v')
                                      : (mode === 'results' ? scoreMid(m) : 'v');
-  const mCls   = (mode === 'results' || (mode === 'digest' && isRes(m.status)))
+  const mCls   = (mode === 'results' || (mode === 'digest' && _isRes(m.status)))
                ? 'sc-match-mid sc-score' : 'sc-match-mid';
   const comp   = (mode === 'digest') ? `<div class="sc-comp">${m.competition || ''}</div>` : '';
   return `
@@ -2105,9 +2135,6 @@ q('#sc-footnote').hidden = false;
   function wireOverlay(){
     const overlay = q('#sharecard-overlay');
     const form = q('#sc-form');
-    q('.sc-x').addEventListener('click', closeOverlay);
-    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
-
     // Toggle Digest-only rows
     const modeSel  = form.querySelector('select[name="mode"]');
     const rangeRow = form.querySelector('[data-row="range"]');
@@ -2116,27 +2143,15 @@ q('#sc-footnote').hidden = false;
       const on = (modeSel && modeSel.value === 'digest');
       if (rangeRow) rangeRow.style.display = on ? '' : 'none';
       if (whatRow)  whatRow.style.display  = on ? '' : 'none';
-      if (on) {
-        const def = form.querySelector('input[name="what"][value="all"]');
-        if (def) def.checked = true;
-      }
+      if (on) { const def = form.querySelector('input[name="what"][value="all"]'); if (def) def.checked = true; }
     }
     if (modeSel) modeSel.addEventListener('change', updateDigestRows);
     updateDigestRows();
 
-    
-    q('#sc-preview').addEventListener('click', ()=>{
-      const payload = buildPayload({
-        mode: form.mode.value,
-        preset: form.preset.value,
-        team: (form.team.value||'').trim() || null,
-        rowsRange: (form.rows.value||'').trim() || null,
-        size: form.size.value,
-        title: form.title.value
-      });
-      renderCard(payload);
-      overlay._lastPayload = payload;
-    });
+ 
+    q('.sc-x').addEventListener('click', closeOverlay);
+    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
+
 
     q('#sc-preview').addEventListener('click', ()=>{
       const payload = buildPayload({
@@ -2174,6 +2189,9 @@ q('#sc-footnote').hidden = false;
       if(params.get('rows')) form.rows.value = params.get('rows');
       if(params.get('size')) form.size.value = params.get('size');
       if(params.get('title')) form.title.value = params.get('title');
+      if(params.get('from')) form.from.value = params.get('from');
+      if(params.get('to'))   form.to.value   = params.get('to');
+      if(params.get('what')) form.what.value = params.get('what');
       q('#sc-preview').click();
     }
   }
