@@ -897,10 +897,13 @@ const MANUAL_JC_POINTS = {
     "Patrickswell",
     "Kilteely Dromkeen"
   ],
-  "Group 2": []
+  "Group 2": [
+    "Crecora Manistir",
+    "Dromcollogher Broadford",#
+    "Dromcollogher Broadford"
+  ]
 };
 
-  
   
 // Return the winner’s team name for a scored match (null for draw/unknown)
 function _winnerOf(m){
