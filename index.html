@@ -1064,6 +1064,13 @@ thead th, tbody td{ padding:.55rem .55rem; }
   }
 }
 
+/* digest: compact competition tag shown above the teams */
+.sc-comp{
+  font-size:12px;
+  line-height:1;
+  opacity:.75;
+  font-weight:600;
+}
   
 </style>
 
@@ -1506,6 +1513,7 @@ function updateSharebars(){
           <option value="fixtures">Fixtures</option>
           <option value="results">Results</option>
           <option value="table">Table / Standings</option>
+          <option value="digest">Digest (by Date/Range)</option>
         </select>
       </div>
 
@@ -1518,6 +1526,26 @@ function updateSharebars(){
         </select>
       </div>
 
+      <div class="sc-row" data-row="range" style="display:none;">
+        <label>Range (From → To)</label>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <input type="date" name="from" placeholder="From (YYYY-MM-DD)" />
+          <input type="date" name="to"   placeholder="To (YYYY-MM-DD, optional)" />
+        </div>
+        <small class="sm-muted">Leave <em>To</em> empty to show a single day.</small>
+      </div>
+      
+      <div class="sc-row" data-row="digest-what" style="display:none;">
+        <label>Include</label>
+        <div class="sc-seg">
+          <label><input type="radio" name="what" value="all" checked> Fixtures &amp; Results</label>
+          <label><input type="radio" name="what" value="fixtures"> Fixtures only</label>
+          <label><input type="radio" name="what" value="results"> Results only</label>
+        </div>
+      </div>
+
+
+      
       <div class="sc-row">
         <label>Club (optional)</label>
         <input type="text" name="team" placeholder="e.g., Na Piarsaigh" />
@@ -1788,12 +1816,60 @@ function computeStandings(rows){
 
 
 
-function buildPayload({mode,preset,team,rowsRange,size,title}){
+function buildPayload({mode, preset, team, rowsRange, size, title, from, to, what}){
   const comp  = window.LGH?.state?.comp  || '';
   const group = window.LGH?.state?.group || '';
   const meta  = (window.LGH?.DISPLAY_NAMES || {})[comp] || {};
   const isRes = (window.LGH?.isResult || isResult);
 
+  // === New: DIGEST (across ALL competitions, by date/range) ===
+  if (mode === 'digest') {
+    const all = window.LGH?.matches || [];
+    const mkMid = d => { const x = new Date(d); x.setHours(0,0,0,0); return x; };
+    const parseISO = iso => {
+      if (!iso) return null;
+      const [Y,M,D] = String(iso).split('-').map(Number);
+      return (Y ? new Date(Y,(M||1)-1,(D||1)) : null);
+    };
+
+    const A = mkMid(parseISO(from) || new Date());
+    const B = mkMid(parseISO(to || from) || A);
+    const lo = Math.min(+A, +B), hi = Math.max(+A, +B);
+
+    let rows = all.filter(r => {
+      const dt = parseMatchDate(r);  // you already have this helper
+      if (!dt) return false;
+      const d0 = +mkMid(dt);
+      return d0 >= lo && d0 <= hi;
+    });
+
+    const w = String(what||'all').toLowerCase();
+    if (w === 'fixtures') rows = rows.filter(r => !isRes(r.status));
+    if (w === 'results')  rows = rows.filter(r =>  isRes(r.status));
+
+    // Sort by date → time → competition for stability
+    rows.sort((a,b)=>{
+      const ad = (parseMatchDate(a)?.getTime() ?? 0);
+      const bd = (parseMatchDate(b)?.getTime() ?? 0);
+      if (ad !== bd) return ad - bd;
+      const at = (a.time||'').localeCompare(b.time||'');
+      if (at !== 0) return at;
+      return (a.competition||'').localeCompare(b.competition||'');
+    });
+
+    // Auto title like: “Fixtures • 04–06 Apr 2025” or a single-day full date
+    const same = (+A === +B);
+    const left  = A.toLocaleDateString('en-IE',{day:'2-digit',month:'short'});
+    const right = B.toLocaleDateString('en-IE',{day:'2-digit',month:'short',year:'numeric'});
+    const range = same
+      ? A.toLocaleDateString('en-IE',{weekday:'short',day:'2-digit',month:'short',year:'numeric'})
+      : `${left}–${right}`;
+    const whatLabel = (w==='fixtures') ? 'Fixtures' : (w==='results') ? 'Results' : 'Fixtures & Results';
+
+    return { mode, size, title: (title?.trim() || `${whatLabel} • ${range}`), rows };
+  }
+
+  // === Existing behaviour (unchanged) ===
   // Start with matches for this competition
   let rows = (window.LGH?.matches || []).filter(r => r.competition === comp);
 
@@ -1808,7 +1884,7 @@ function buildPayload({mode,preset,team,rowsRange,size,title}){
   // Club filter
   if (team) rows = rows.filter(r => r.home===team || r.away===team);
 
-  // Fixtures vs Results (exactly once)
+  // Fixtures vs Results
   if (mode === 'fixtures') rows = rows.filter(r => !isRes(r.status));
   if (mode === 'results')  rows = rows.filter(r =>  isRes(r.status));
 
@@ -1823,7 +1899,7 @@ function buildPayload({mode,preset,team,rowsRange,size,title}){
     if (m){ const a=+m[1], b=+m[2]; rows = rows.slice(a-1, b); }
   }
 
-  // Title
+  // Title (same as before)
   const bits = [labelOf(comp)];
   if (group && !meta.pihc) bits.push(group);
   if (team) bits.push(team);
@@ -1833,7 +1909,60 @@ function buildPayload({mode,preset,team,rowsRange,size,title}){
   return { mode, size, title: (title?.trim() || bits.filter(Boolean).join(' • ')), rows };
 }
 
+// New: standalone builder for Digest (doesn't touch your existing buildPayload)
+function buildDigestPayload({size, title, from, to, what}) {
+  const rowsAll = (window.LGH?.matches || []);
+  const mkMid = (d) => { const x = new Date(d); x.setHours(0,0,0,0); return x; };
+  const parseISO = (iso) => {
+    if (!iso) return null;
+    const [Y,M,D] = String(iso).split('-').map(Number);
+    return (Y ? new Date(Y, (M||1)-1, (D||1)) : null);
+  };
+  const A = mkMid(parseISO(from) || new Date());
+  const B = mkMid(parseISO(to || from) || A);
+  const lo = Math.min(+A, +B), hi = Math.max(+A, +B);
 
+  // filter by date range
+  let rows = rowsAll.filter(r => {
+    const dt = parseMatchDate(r); if (!dt) return false;
+    const d0 = +mkMid(dt);
+    return d0 >= lo && d0 <= hi;
+  });
+
+  // fixtures / results / all
+  const w = String(what||'all').toLowerCase();
+  const isRes = (window.LGH?.isResult || function(s){
+    return ['Result','Full Time','FT','AET','Walkover','W/O','Abandoned','Final']
+      .includes(String(s||'').trim());
+  });
+  if (w === 'fixtures') rows = rows.filter(r => !isRes(r.status));
+  if (w === 'results')  rows = rows.filter(r =>  isRes(r.status));
+
+  // sort: date → time → competition
+  rows.sort((a,b) => {
+    const ad = parseMatchDate(a)?.getTime() ?? 0;
+    const bd = parseMatchDate(b)?.getTime() ?? 0;
+    if (ad !== bd) return ad - bd;
+    const at = (a.time || '').localeCompare(b.time || '');
+    if (at !== 0) return at;
+    return (a.competition || '').localeCompare(b.competition || '');
+  });
+
+  // auto title
+  const same = (+A === +B);
+  const left  = A.toLocaleDateString('en-IE',{day:'2-digit',month:'short'});
+  const right = B.toLocaleDateString('en-IE',{day:'2-digit',month:'short',year:'numeric'});
+  const range = same
+    ? A.toLocaleDateString('en-IE',{weekday:'short',day:'2-digit',month:'short',year:'numeric'})
+    : `${left}–${right}`;
+  const whatLabel = (w==='fixtures') ? 'Fixtures' : (w==='results') ? 'Results' : 'Fixtures & Results';
+
+  return { mode:'digest', size, title: (title?.trim() || `${whatLabel} • ${range}`), rows, what:w };
+}
+
+
+
+  
 function scoreMid(m){
   const s = String(m.status||'').toLowerCase();
   if (s === 'walkover') return 'W/O';
@@ -1854,10 +1983,12 @@ function scoreMid(m){
 
 
 function matchCellHTML(m, mode){
-  const mid   = (mode === 'results') ? scoreMid(m) : 'v';
-  const mCls  = (mode === 'results') ? 'sc-match-mid sc-score' : 'sc-match-mid';
+  const mid   = (mode === 'results' || (mode === 'digest' && isResult(m.status))) ? scoreMid(m) : 'v';
+  const mCls  = (mode === 'results' || (mode === 'digest' && isResult(m.status))) ? 'sc-match-mid sc-score' : 'sc-match-mid';
+  const comp  = (mode === 'digest') ? `<div class="sc-comp">${m.competition || ''}</div>` : '';
   return `
     <div class="sc-match">
+      ${comp}
       <div class="sc-match-team">${m.home}</div>
       <div class="${mCls}">${mid}</div>
       <div class="sc-match-team">${m.away}</div>
@@ -1893,9 +2024,10 @@ function renderCard(payload){
   const rib = q('#sc-ribbon');
   if (!rib) return;
 
-  const modeWord =
-    payload.mode === 'results' ? 'Results' :
-    payload.mode === 'table'   ? 'Table'   : 'Fixtures';
+const modeWord =
+  payload.mode === 'results' ? 'Results' :
+  payload.mode === 'table'   ? 'Table'   :
+  payload.mode === 'digest'  ? 'Digest'  : 'Fixtures';
 
   // Try to surface "Today" / "Tomorrow" if present in the title
   const m = /\b(Today|Tomorrow)\b/i.exec(payload.title || '');
@@ -2030,18 +2162,49 @@ q('#sc-footnote').hidden = false;
   function wireOverlay(){
     const overlay = q('#sharecard-overlay');
     const form = q('#sc-form');
+
+        // Toggle Digest-only rows
+    const modeSel  = form.querySelector('select[name="mode"]');
+    const rangeRow = form.querySelector('[data-row="range"]');
+    const whatRow  = form.querySelector('[data-row="digest-what"]');
+    function updateDigestRows(){
+      const on = (modeSel && modeSel.value === 'digest');
+      if (rangeRow) rangeRow.style.display = on ? '' : 'none';
+      if (whatRow)  whatRow.style.display  = on ? '' : 'none';
+      // Default radio when switching to digest
+      if (on) {
+        const def = form.querySelector('input[name="what"][value="all"]');
+        if (def) def.checked = true;
+      }
+    }
+    if (modeSel) modeSel.addEventListener('change', updateDigestRows);
+    updateDigestRows();
+
+
+
+    
     q('.sc-x').addEventListener('click', closeOverlay);
     overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
 
     q('#sc-preview').addEventListener('click', ()=>{
-      const payload = buildPayload({
-        mode: form.mode.value,
-        preset: form.preset.value,
-        team: (form.team.value||'').trim() || null,
-        rowsRange: (form.rows.value||'').trim() || null,
-        size: form.size.value,
-        title: form.title.value
-      });
+    const isDigest = (form.mode.value === 'digest');
+    const payload = isDigest
+      ? buildDigestPayload({
+          size: form.size.value,
+          title: form.title.value,
+          from: form.from ? form.from.value : null,
+          to:   form.to   ? form.to.value   : null,
+          what: form.what ? form.what.value : 'all'
+        })
+      : buildPayload({
+          mode: form.mode.value,
+          preset: form.preset.value,
+          team: (form.team.value||'').trim() || null,
+          rowsRange: (form.rows.value||'').trim() || null,
+          size: form.size.value,
+          title: form.title.value
+        });
+
       renderCard(payload);
       overlay._lastPayload = payload;
     });
