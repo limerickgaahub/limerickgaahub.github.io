@@ -1675,13 +1675,29 @@ function updateSharebars(){
     }
 
   
-  function parseMatchDate(m){
-    const s = m.date_iso || m.iso || m.datetime_iso || null;
-    if (s) { const d = new Date(s); if (!isNaN(d)) return d; }
-    const m2 = /(\d{1,2})\/(\d{1,2})\/(\d{2,4})/.exec(m.date||'');
-    if (m2){ const dd=+m2[1], mm=+m2[2], yy=(m2[3].length===2? +('20'+m2[3]) : +m2[3]); return new Date(yy, mm-1, dd); }
-    return null;
+function parseMatchDate(m){
+  // Prefer explicit ISO-like fields first
+  const s = m.date_iso || m.iso || m.datetime_iso || null;
+  if (s) {
+    const d = new Date(s);
+    if (!isNaN(d)) return d;
   }
+
+  // NEW: YYYY-MM-DD
+  const ymd = /^\s*(\d{4})-(\d{2})-(\d{2})\s*$/.exec(m.date || "");
+  if (ymd) return new Date(+ymd[1], +ymd[2]-1, +ymd[3]);
+
+  // Existing: DD/MM/YYYY or DD/MM/YY
+  const dmy = /^\s*(\d{1,2})\/(\d{1,2})\/(\d{2,4})\s*$/.exec(m.date || "");
+  if (dmy){
+    const dd = +dmy[1], mm = +dmy[2];
+    const yy = dmy[3].length === 2 ? +('20' + dmy[3]) : +dmy[3];
+    return new Date(yy, mm-1, dd);
+  }
+
+  return null;
+}
+
   function inPreset(dt, preset){
     if(!dt) return true;
     const z = d=>{const x=new Date(d); x.setHours(0,0,0,0); return x;};
@@ -2163,25 +2179,20 @@ q('#sc-footnote').hidden = false;
     const overlay = q('#sharecard-overlay');
     const form = q('#sc-form');
 
-        // Toggle Digest-only rows
-    const modeSel  = form.querySelector('select[name="mode"]');
-    const rangeRow = form.querySelector('[data-row="range"]');
-    const whatRow  = form.querySelector('[data-row="digest-what"]');
-    function updateDigestRows(){
-      const presetRow = form.querySelector('select[name="preset"]').closest('.sc-row');
-      if (presetRow) presetRow.style.display = on ? 'none' : '';
-      const on = (modeSel && modeSel.value === 'digest');
-      if (rangeRow) rangeRow.style.display = on ? '' : 'none';
-      if (whatRow)  whatRow.style.display  = on ? '' : 'none';
-      // Default radio when switching to digest
-      if (on) {
-        const def = form.querySelector('input[name="what"][value="all"]');
-        if (def) def.checked = true;
-      }
-    }
-    if (modeSel) modeSel.addEventListener('change', updateDigestRows);
-    updateDigestRows();
+const modeSel  = form.querySelector('select[name="mode"]');
+const rangeRow = form.querySelector('[data-row="range"]');
+const presetSel = form.querySelector('select[name="preset"]'); // you already have All/Today/Tomorrow
 
+function updateRangeRow(){
+  // Show range picker when:
+  // - mode === 'digest' (always uses date range), OR
+  // - non-digest but user chooses to use range by filling dates (we allow it to be visible via a toggle)
+  // Minimal: always show it for digest; keep it hidden otherwise unless you want it visible always.
+  const on = (modeSel && modeSel.value === 'digest');
+  if (rangeRow) rangeRow.style.display = on ? '' : 'none';
+}
+if (modeSel) modeSel.addEventListener('change', updateRangeRow);
+updateRangeRow();
 
     q('.sc-x').addEventListener('click', closeOverlay);
     overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
@@ -2217,21 +2228,28 @@ q('#sc-footnote').hidden = false;
       navigator.clipboard.writeText(text).catch(()=>{});
     });
 
-    // Deep-link presets ?sc=1&mode=fixtures&preset=tomorrow&team=...&size=ig-portrait
-    if(params.get('share') === '1'){
-      openOverlay();
-      if(params.get('mode')) form.mode.value = params.get('mode');
-      if(params.get('preset')) form.preset.value = params.get('preset');
-      if(params.get('team')) form.team.value = params.get('team');
-      if(params.get('rows')) form.rows.value = params.get('rows');
-      if(params.get('size')) form.size.value = params.get('size');
-      if(params.get('title')) form.title.value = params.get('title');
-      if (params.get('from'))  form.from.value  = params.get('from');
-      if (params.get('to'))    form.to.value    = params.get('to');
-      if (params.get('what'))  form.what.value  = params.get('what');
-      q('#sc-preview').click();
-    }
+if (params.get('share') === '1' || params.get('sc') === '1') {
+  openOverlay();
+  if(params.get('mode'))   form.mode.value   = params.get('mode');
+  if(params.get('preset')) form.preset.value = params.get('preset');
+  if(params.get('team'))   form.team.value   = params.get('team');
+  if(params.get('rows'))   form.rows.value   = params.get('rows');
+  if(params.get('size'))   form.size.value   = params.get('size');
+  if(params.get('title'))  form.title.value  = params.get('title');
+  if(params.get('from'))   form.from.value   = params.get('from');   // digest only
+  if(params.get('to'))     form.to.value     = params.get('to');     // digest only
+  if(params.get('what'))   form.what.value   = params.get('what');   // digest only
+  // specific-date prefill (non-digest)
+  if(params.get('presetDate')) {
+    const pd = form.querySelector('[name="presetDate"]');
+    if (pd) pd.value = params.get('presetDate');
   }
+  // ensure the right rows are visible before preview
+  (typeof updateDigestRows === 'function') && updateDigestRows();
+  (typeof updatePresetRow  === 'function') && updatePresetRow();
+  q('#sc-preview').click();
+}
+
 
 window.addEventListener('load', ()=>{
   setTimeout(()=>{
