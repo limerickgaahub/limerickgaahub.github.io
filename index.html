@@ -1370,11 +1370,14 @@ thead th, tbody td{ padding:.55rem .55rem; }
       setTimeout(() => {
         const ok = (window.LGH_V7_3_3_READY === true) || (window.LGH_V7_3_READY === true);
         if (!ok) {
-          document.getElementById('lgh-warning').style.display = 'block';
-          console.error("[LGH] Warning shown: READY flags not true at load.");
+          const warn = document.getElementById('lgh-warning');
+          if (warn) warn.style.display = 'block';
+          console.error("[LGH] Warning: READY flags not true at load.");
         } else {
           console.log("[LGH] App ready; warning suppressed.");
         }
+
+        
         // Ensure default view on first load
         document.getElementById('g-standings').style.display = 'none';
         document.querySelector('.matches-wrap').style.display = '';
@@ -1931,7 +1934,7 @@ rows.sort((a,b) => {
 });
 
 return { mode, size, title: (title?.trim() || autoTitle), rows };
-
+}
 
 function scoreMid(m){
   const s = String(m.status||'').toLowerCase();
@@ -1984,7 +1987,10 @@ function renderCard(payload){
   );
 
   // Mode class for spacing tweaks (fixtures/results vs table)
-  card.classList.remove('sc-mode-fixtures','sc-mode-results','sc-mode-table');
+  card.classList.remove(
+    'sc-size-ig-portrait','sc-size-ig-square','sc-size-x-landscape',
+    'sc-tight-6','sc-tight-7','sc-tight-8','sc-hero'
+  );
   card.classList.add(
     payload.mode === 'results' ? 'sc-mode-results' :
     payload.mode === 'table'   ? 'sc-mode-table'   : 'sc-mode-fixtures'
@@ -2112,8 +2118,13 @@ q('#sc-footnote').hidden = false;
 
 
   function makeCaption(payload){
-    const modeWord = payload.mode==='fixtures' ? 'fixtures' :
-                     payload.mode==='results' ? 'results' : 'table';
+    let modeWord = 'table';
+    if (payload.mode === 'fixtures') modeWord = 'fixtures';
+    else if (payload.mode === 'results') modeWord = 'results';
+    else if (payload.mode === 'digest') {
+      // payload.title already includes a nice label ("Fixtures", "Results", or "Fixtures & Results")
+      modeWord = 'fixtures/results';
+    }
     return `${payload.title} ${modeWord}. More: limerickgaahub.ie`;
   }
 
