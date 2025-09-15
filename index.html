@@ -884,6 +884,20 @@ thead th, tbody td{ padding:.55rem .55rem; }
 }
 .sc-match-team{ line-height:1.1; }
 
+/* Small competition tag above the teams (used for digest mode) */
+.sc-comp {
+  font-size: 12px;
+  line-height: 1.0;
+  opacity: .75;
+  font-weight: 600;
+}
+
+/* Radios row layout in the overlay */
+.sc-seg { display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+.sc-seg label { display:flex; gap:6px; align-items:center; font-size:14px; }
+
+
+  
 /* “v” or scoreline in the middle */
 .sc-match-mid{
   font-weight:800;
@@ -1506,6 +1520,7 @@ function updateSharebars(){
           <option value="fixtures">Fixtures</option>
           <option value="results">Results</option>
           <option value="table">Table / Standings</option>
+          <option value="digest">Digest (by Date/Range)</option>
         </select>
       </div>
 
@@ -1518,6 +1533,27 @@ function updateSharebars(){
         </select>
       </div>
 
+      <!-- Only shown when mode = digest -->
+      <div class="sc-row" data-row="range">
+        <label>Range (From → To)</label>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <input type="date" name="from" placeholder="From (YYYY-MM-DD)" />
+          <input type="date" name="to"   placeholder="To (YYYY-MM-DD, optional)" />
+        </div>
+        <small class="sm-muted">Leave <em>To</em> empty for a single day.</small>
+      </div>
+      
+      <!-- Only shown when mode = digest -->
+      <div class="sc-row" data-row="digest-what">
+        <label>Include</label>
+        <div class="sc-seg">
+          <label><input type="radio" name="what" value="all" checked> Fixtures &amp; Results</label>
+          <label><input type="radio" name="what" value="fixtures"> Fixtures only</label>
+          <label><input type="radio" name="what" value="results"> Results only</label>
+        </div>
+      </div>
+
+      
       <div class="sc-row">
         <label>Club (optional)</label>
         <input type="text" name="team" placeholder="e.g., Na Piarsaigh" />
@@ -1788,32 +1824,64 @@ function computeStandings(rows){
 
 
 
-function buildPayload({mode,preset,team,rowsRange,size,title}){
+function buildPayload({mode,preset,team,rowsRange,size,title, from, to, what}){
   const comp  = window.LGH?.state?.comp  || '';
   const group = window.LGH?.state?.group || '';
   const meta  = (window.LGH?.DISPLAY_NAMES || {})[comp] || {};
   const isRes = (window.LGH?.isResult || isResult);
 
-  // Start with matches for this competition
-  let rows = (window.LGH?.matches || []).filter(r => r.competition === comp);
+// Start with matches: for digest we want ALL competitions; otherwise current comp
+let rows = (mode === 'digest')
+  ? (window.LGH?.matches || [])
+  : (window.LGH?.matches || []).filter(r => r.competition === comp);
 
-  // League vs Knockout
+// League vs Knockout (skip for digest — spans all comps/groups)
+if (mode !== 'digest'){
   if (group === 'Knockout') {
     rows = rows.filter(isKOrow);
   } else {
     rows = rows.filter(r => !isKOrow(r));
     if (!meta.pihc && group) rows = rows.filter(r => (r.group||'') === group);
   }
+}
 
-  // Club filter
-  if (team) rows = rows.filter(r => r.home===team || r.away===team);
+  // Club filter (skip for digest)
+  if (mode !== 'digest' && team) rows = rows.filter(r => r.home===team || r.away===team);
 
-  // Fixtures vs Results (exactly once)
+// Digest: filter by date range and include (fixtures/results/all)
+if (mode === 'digest') {
+  // Build a midnight-normalised range
+  const mkMid = (d) => { const x = new Date(d); x.setHours(0,0,0,0); return x; };
+  const parseISO = (iso) => {
+    if (!iso) return null;
+    const [Y,M,D] = String(iso).split('-').map(Number);
+    return (Y ? new Date(Y, (M||1)-1, (D||1)) : null);
+  };
+  const A = mkMid(parseISO(from) || new Date());
+  const B = mkMid(parseISO(to || from) || A);
+  const lo = Math.min(+A, +B), hi = Math.max(+A, +B);
+
+  rows = rows.filter(r => {
+    const dt = parseMatchDate(r); if (!dt) return false;
+    const d0 = +mkMid(dt);
+    return d0 >= lo && d0 <= hi;
+  });
+
+  const isRes = (window.LGH?.isResult || isResult);
+  const w = String(what||'all').toLowerCase();
+  if (w === 'fixtures') rows = rows.filter(r => !isRes(r.status));
+  if (w === 'results')  rows = rows.filter(r =>  isRes(r.status));
+}
+
+
+// Fixtures vs Results (digest already handled via 'what')
+if (mode !== 'digest'){
   if (mode === 'fixtures') rows = rows.filter(r => !isRes(r.status));
   if (mode === 'results')  rows = rows.filter(r =>  isRes(r.status));
+}
 
-  // Date preset
-  if (preset && preset !== 'all'){
+  // Date preset (digest uses from/to instead)
+  if (mode !== 'digest' && preset && preset !== 'all'){
     rows = rows.filter(r => inPreset(parseMatchDate(r), preset));
   }
 
@@ -1854,12 +1922,18 @@ function scoreMid(m){
 
 
 function matchCellHTML(m, mode){
-  const mid   = (mode === 'results') ? scoreMid(m) : 'v';
-  const mCls  = (mode === 'results') ? 'sc-match-mid sc-score' : 'sc-match-mid';
+  const isRes = (window.LGH?.isResult || isResult);
+  // In digest: choose mid per-row; otherwise follow mode
+  const midVal = (mode === 'digest') ? (isRes(m.status) ? scoreMid(m) : 'v')
+                                     : (mode === 'results' ? scoreMid(m) : 'v');
+  const mCls   = (mode === 'results' || (mode === 'digest' && isRes(m.status)))
+               ? 'sc-match-mid sc-score' : 'sc-match-mid';
+  const comp   = (mode === 'digest') ? `<div class="sc-comp">${m.competition || ''}</div>` : '';
   return `
     <div class="sc-match">
+      ${comp}
       <div class="sc-match-team">${m.home}</div>
-      <div class="${mCls}">${mid}</div>
+      <div class="${mCls}">${midVal}</div>
       <div class="sc-match-team">${m.away}</div>
     </div>`;
 }
@@ -1893,9 +1967,10 @@ function renderCard(payload){
   const rib = q('#sc-ribbon');
   if (!rib) return;
 
-  const modeWord =
-    payload.mode === 'results' ? 'Results' :
-    payload.mode === 'table'   ? 'Table'   : 'Fixtures';
+const modeWord =
+  payload.mode === 'results' ? 'Results' :
+  payload.mode === 'table'   ? 'Table'   :
+  payload.mode === 'digest'  ? 'Digest'  : 'Fixtures';
 
   // Try to surface "Today" / "Tomorrow" if present in the title
   const m = /\b(Today|Tomorrow)\b/i.exec(payload.title || '');
@@ -2033,6 +2108,23 @@ q('#sc-footnote').hidden = false;
     q('.sc-x').addEventListener('click', closeOverlay);
     overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
 
+    // Toggle Digest-only rows
+    const modeSel  = form.querySelector('select[name="mode"]');
+    const rangeRow = form.querySelector('[data-row="range"]');
+    const whatRow  = form.querySelector('[data-row="digest-what"]');
+    function updateDigestRows(){
+      const on = (modeSel && modeSel.value === 'digest');
+      if (rangeRow) rangeRow.style.display = on ? '' : 'none';
+      if (whatRow)  whatRow.style.display  = on ? '' : 'none';
+      if (on) {
+        const def = form.querySelector('input[name="what"][value="all"]');
+        if (def) def.checked = true;
+      }
+    }
+    if (modeSel) modeSel.addEventListener('change', updateDigestRows);
+    updateDigestRows();
+
+    
     q('#sc-preview').addEventListener('click', ()=>{
       const payload = buildPayload({
         mode: form.mode.value,
@@ -2046,6 +2138,25 @@ q('#sc-footnote').hidden = false;
       overlay._lastPayload = payload;
     });
 
+    q('#sc-preview').addEventListener('click', ()=>{
+      const payload = buildPayload({
+        mode: form.mode.value,
+        preset: form.preset.value,
+        team: (form.team.value||'').trim() || null,
+        rowsRange: (form.rows.value||'').trim() || null,
+        size: form.size.value,
+        title: form.title.value,
+        from: form.from ? form.from.value : null,
+        to:   form.to   ? form.to.value   : null,
+        what: form.what ? form.what.value : 'all'
+      });
+      renderCard(payload);
+      overlay._lastPayload = payload;
+    });
+
+
+
+    
     q('#sc-download').addEventListener('click', downloadPNG);
 
     q('#sc-copycap').addEventListener('click', ()=>{
