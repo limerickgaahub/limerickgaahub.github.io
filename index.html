@@ -1071,6 +1071,11 @@ thead th, tbody td{ padding:.55rem .55rem; }
   }
 }
 
+.dt3 .dt-round{
+  font-weight:700;
+  color:#374151;   /* muted dark grey */
+}
+  
   
 </style>
 
@@ -1958,6 +1963,7 @@ q('#sc-footnote').hidden = false;
       <tr>
         <td>
           <div class="dt3">
+          ${m.round ? `<div class="dt-round">${m.round}</div>` : ''}
             <div class="dt-day">${p.day}</div>
             <div class="dt-date">${p.dmy}</div>
             <div class="dt-time">${t}</div>
