@@ -1833,6 +1833,7 @@ function buildPayload({mode,preset,team,rowsRange,size,title}){
   // Title
   const bits = [labelOf(comp)];
   if (group && !meta.pihc) bits.push(group);
+  if (rows.length && rows[0].round) bits.push(rows[0].round);
   if (team) bits.push(team);
   if (preset==='today')    bits.push('Today');
   if (preset==='tomorrow') bits.push('Tomorrow');
