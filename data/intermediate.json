@@ -1,37 +1,8 @@
 {
   "competition": "Intermediate Hurling Championship",
-  "updated_at": "2025-09-12T18:46:11Z",
-  "fixtures": [
-    {
-      "id": "2025-IHC-G1-R5-BRU-CAP",
-      "round": "R 5",
-      "group": "Group 1",
-      "date": "2025-09-13",
-      "time_local": "13:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-09-13T13:00:00",
-      "home": "Bruree",
-      "away": "Cappamore",
-      "venue": "Caherconlish",
-      "referee": "Paddy Lyons",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    },
-    {
-      "id": "2025-IHC-G1-R5-FEE-HOS",
-      "round": "R 5",
-      "group": "Group 1",
-      "date": "2025-09-13",
-      "time_local": "15:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-09-13T15:00:00",
-      "home": "Feenagh Kilmeedy",
-      "away": "Hospital Herbertstown",
-      "venue": "Ballingarry",
-      "referee": "John O Donnell",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    },
+  "updated_at": "2025-09-15T08:40:17Z",
+  "fixtures": [],
+  "results": [
     {
       "id": "2025-IHC-G1-R5-CRO-MUN",
       "round": "R 5",
@@ -44,8 +15,12 @@
       "away": "Mungret St Pauls",
       "venue": "Askeaton",
       "referee": "Tom Mc Glinchey",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 3,
+      "home_points": 12,
+      "away_goals": 3,
+      "away_points": 14
     },
     {
       "id": "2025-IHC-G2-R5-FEO-PAL",
@@ -59,8 +34,12 @@
       "away": "Pallasgreen",
       "venue": "Ballyagran",
       "referee": "John O Halloran",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 1,
+      "home_points": 14,
+      "away_goals": 0,
+      "away_points": 15
     },
     {
       "id": "2025-IHC-G2-R5-MUR-ST-",
@@ -72,10 +51,14 @@
       "datetime_iso": "2025-09-14T13:00:00",
       "home": "Murroe Boher",
       "away": "St Kieran's",
-      "venue": "Ballybrown",
+      "venue": "Mick Neville Park",
       "referee": "Liam O Sullivan",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 1,
+      "home_points": 23,
+      "away_goals": 0,
+      "away_points": 12
     },
     {
       "id": "2025-IHC-G2-R5-NA--KNO",
@@ -89,11 +72,51 @@
       "away": "Knockainey",
       "venue": "Bruff",
       "referee": "John O Donnell",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/intermediate-hurling-fixtures/"
-    }
-  ],
-  "results": [
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 1,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 14
+    },
+    {
+      "id": "2025-IHC-G1-R5-BRU-CAP",
+      "round": "R 5",
+      "group": "Group 1",
+      "date": "2025-09-13",
+      "time_local": "13:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-09-13T13:00:00",
+      "home": "Bruree",
+      "away": "Cappamore",
+      "venue": "Caherconlish",
+      "referee": "Paddy Lyons",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 2,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 12
+    },
+    {
+      "id": "2025-IHC-G1-R5-FEE-HOS",
+      "round": "R 5",
+      "group": "Group 1",
+      "date": "2025-09-13",
+      "time_local": "15:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-09-13T15:00:00",
+      "home": "Feenagh Kilmeedy",
+      "away": "Hospital Herbertstown",
+      "venue": "Ballingarry",
+      "referee": "John O Donnell",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/intermediate-hurling-results/",
+      "home_goals": 0,
+      "home_points": 20,
+      "away_goals": 2,
+      "away_points": 15
+    },
     {
       "id": "2025-IHC-G1-R4-BRU-MUN",
       "round": "R 4",

@@ -1,7 +1,8 @@
 {
   "competition": "Senior Hurling Championship",
-  "updated_at": "2025-09-12T18:46:11Z",
-  "fixtures": [
+  "updated_at": "2025-09-15T08:40:17Z",
+  "fixtures": [],
+  "results": [
     {
       "id": "2025-SHC-G2-R5-ADA-NEW",
       "round": "R 5",
@@ -14,8 +15,12 @@
       "away": "Newcastle West",
       "venue": "Mick Neville Park",
       "referee": "John O Halloran",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 2,
+      "home_points": 17,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "id": "2025-SHC-G2-R5-MUN-DRO",
@@ -29,8 +34,12 @@
       "away": "Dromin Athlacca",
       "venue": "Bruff",
       "referee": "Liam O Sullivan",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 1,
+      "home_points": 21,
+      "away_goals": 1,
+      "away_points": 15
     },
     {
       "id": "2025-SHC-G2-R5-MON-KIL",
@@ -44,8 +53,12 @@
       "away": "Kildimo Pallaskenry",
       "venue": "Ballybrown",
       "referee": "Timmy Mc Grath",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 0,
+      "home_points": 21,
+      "away_goals": 0,
+      "away_points": 21
     },
     {
       "id": "2025-SHC-G1-R5-PAT-NA-",
@@ -59,8 +72,12 @@
       "away": "Na Piarsaigh",
       "venue": "Claughaun GAA, Childers Rd",
       "referee": "Donnacha O Callaghan",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 2,
+      "home_points": 14,
+      "away_goals": 2,
+      "away_points": 26
     },
     {
       "id": "2025-SHC-G1-R5-DOO-AHA",
@@ -74,8 +91,12 @@
       "away": "Ahane",
       "venue": "Cappamore",
       "referee": "Kieran Guina",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 0,
+      "home_points": 23,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "id": "2025-SHC-G1-R5-KIL-BAL",
@@ -89,11 +110,13 @@
       "away": "Ballybrown",
       "venue": "Newcastle West",
       "referee": "Johnny Murphy",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
-    }
-  ],
-  "results": [
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 1,
+      "home_points": 19,
+      "away_goals": 4,
+      "away_points": 20
+    },
     {
       "id": "2025-SHC-G2-R4-DRO-ADA",
       "round": "R 4",

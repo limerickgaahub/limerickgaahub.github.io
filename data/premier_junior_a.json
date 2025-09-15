@@ -1,22 +1,8 @@
 {
   "competition": "Premier Junior A Hurling Championship",
-  "updated_at": "2025-09-12T18:46:11Z",
-  "fixtures": [
-    {
-      "id": "2025-PJAHC-G1-R5-MON-TOU",
-      "round": "R 5",
-      "group": "Group 1",
-      "date": "2025-09-13",
-      "time_local": "15:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2025-09-13T15:00:00",
-      "home": "Monagea",
-      "away": "Tournafulla",
-      "venue": "Dromcollogher",
-      "referee": "Alan Kehoe",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
-    },
+  "updated_at": "2025-09-15T08:40:17Z",
+  "fixtures": [],
+  "results": [
     {
       "id": "2025-PJAHC-G1-R5-ASK-MON",
       "round": "R 5",
@@ -28,9 +14,13 @@
       "home": "Askeaton Ballysteen Kilcornan",
       "away": "Monaleen",
       "venue": "Pallaskenry",
-      "referee": "TBC",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
+      "referee": "Michael Mann",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
+      "home_goals": 1,
+      "home_points": 18,
+      "away_goals": 1,
+      "away_points": 16
     },
     {
       "id": "2025-PJAHC-G1-R5-ST--CRE",
@@ -44,8 +34,12 @@
       "away": "Crecora Manister",
       "venue": "Mungret",
       "referee": "Liam Berkery",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
+      "home_goals": 1,
+      "home_points": 18,
+      "away_goals": 3,
+      "away_points": 20
     },
     {
       "id": "2025-PJAHC-G2-R5-KNO-DOO",
@@ -59,8 +53,12 @@
       "away": "Doon",
       "venue": "Killmallock",
       "referee": "Jonathon Hayes",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
+      "home_goals": 3,
+      "home_points": 15,
+      "away_goals": 4,
+      "away_points": 15
     },
     {
       "id": "2025-PJAHC-G2-R5-KIL-DRO",
@@ -74,8 +72,12 @@
       "away": "Dromcollogher Broadford",
       "venue": "Staker Wallace GAA, Kilbreedy",
       "referee": "Michael Meade",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
+      "home_goals": 3,
+      "home_points": 18,
+      "away_goals": 1,
+      "away_points": 14
     },
     {
       "id": "2025-PJAHC-G2-R5-KIL-CAH",
@@ -89,11 +91,32 @@
       "away": "Caherline",
       "venue": "Hospital",
       "referee": "Timmy Mc Grath",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
-    }
-  ],
-  "results": [
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
+      "home_goals": 0,
+      "home_points": 7,
+      "away_goals": 1,
+      "away_points": 26
+    },
+    {
+      "id": "2025-PJAHC-G1-R5-MON-TOU",
+      "round": "R 5",
+      "group": "Group 1",
+      "date": "2025-09-13",
+      "time_local": "15:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-09-13T15:00:00",
+      "home": "Monagea",
+      "away": "Tournafulla",
+      "venue": "Dromcollogher",
+      "referee": "Alan Kehoe",
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/junior-hurling-results/",
+      "home_goals": 0,
+      "home_points": 19,
+      "away_goals": 5,
+      "away_points": 14
+    },
     {
       "id": "2025-PJAHC-G2-R4-KIL-DOO",
       "round": "R 4",
