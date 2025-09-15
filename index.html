@@ -1353,11 +1353,15 @@ thead th, tbody td{ padding:.55rem .55rem; }
       document.querySelector('#view-tabs .vt[data-target="group-panel"]').click();
     });
 
-        // Ensure default view on first load
-        document.getElementById('g-standings').style.display = 'none';
-        document.querySelector('.matches-wrap').style.display = '';
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const gs = document.getElementById('g-standings');
+        if (gs) gs.style.display = 'none';
+        const mw = document.querySelector('.matches-wrap');
+        if (mw) mw.style.display = '';
       }, 50);
     });
+
 
     // Blur selects on Android to close pickers
     (function(){
@@ -1611,7 +1615,7 @@ function updateSharebars(){
   // Use the same params instance below
   const params = urlParams;
 
- console.log('[LGH] Share Card enabled:', SHARE_ENABLED, location.search);
+console.log('[LGH] Share Card auto-open:', AUTO_OPEN, location.search);
  
   // Helpers
   const q = sel => document.querySelector(sel);
@@ -2162,10 +2166,6 @@ q('#sc-footnote').hidden = false;
   modeSel.addEventListener('change', updateDigestUI);
   updateDigestUI();
 
-
-const modeSel  = form.querySelector('select[name="mode"]');
-const rangeRow = form.querySelector('[data-row="range"]');
-const presetSel = form.querySelector('select[name="preset"]'); // you already have All/Today/Tomorrow
 
 q('.sc-x').addEventListener('click', closeOverlay);
 overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
