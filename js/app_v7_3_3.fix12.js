@@ -348,6 +348,9 @@ const isWO = WO_STATUS.test(out.status) || WO_TAG.test(out.home) || WO_TAG.test(
 if (isWO) {
   out.is_walkover = true;
 
+  out.home = out.home.replace(/\s*\bW\s*\/\s*O\b/i, '').trim();
+  out.away = out.away.replace(/\s*\bW\s*\/\s*O\b/i, '').trim();
+
   // 1) Prefer the explicit tag beside the team name: that side RECEIVED the W/O
   if (WO_TAG.test(String(out.home))) {
     out.walkover_winner = 'home';
