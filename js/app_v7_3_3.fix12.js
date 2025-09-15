@@ -899,7 +899,7 @@ const MANUAL_JC_POINTS = {
   ],
   "Group 2": [
     "Crecora Manistir",
-    "Dromcollogher Broadford",#
+    "Dromcollogher Broadford",
     "Dromcollogher Broadford"
   ]
 };
