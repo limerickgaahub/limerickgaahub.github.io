@@ -1353,16 +1353,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
       document.querySelector('#view-tabs .vt[data-target="group-panel"]').click();
     });
 
-    // Warn if app didn't init (tolerant)
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const ok = (window.LGH_V7_3_3_READY === true) || (window.LGH_V7_3_READY === true);
-        if (!ok) {
-          document.getElementById('lgh-warning').style.display = 'block';
-          console.error("[LGH] Warning shown: READY flags not true at load.");
-        } else {
-          console.log("[LGH] App ready; warning suppressed.");
-        }
         // Ensure default view on first load
         document.getElementById('g-standings').style.display = 'none';
         document.querySelector('.matches-wrap').style.display = '';
@@ -1526,14 +1516,6 @@ function updateSharebars(){
         </select>
       </div>
 
-      <div class="sc-row" data-row="range" style="display:none;">
-        <label>Range (From → To)</label>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-          <input type="date" name="from" placeholder="From (YYYY-MM-DD)" />
-          <input type="date" name="to"   placeholder="To (YYYY-MM-DD, optional)" />
-        </div>
-        <small class="sm-muted">Leave <em>To</em> empty to show a single day.</small>
-      </div>
       
       <div class="sc-row" data-row="digest-what" style="display:none;">
         <label>Include</label>
@@ -1925,56 +1907,49 @@ function buildPayload({mode, preset, team, rowsRange, size, title, from, to, wha
   return { mode, size, title: (title?.trim() || bits.filter(Boolean).join(' • ')), rows };
 }
 
-// New: standalone builder for Digest (doesn't touch your existing buildPayload)
-function buildDigestPayload({size, title, from, to, what}) {
-  const rowsAll = (window.LGH?.matches || []);
-  const mkMid = (d) => { const x = new Date(d); x.setHours(0,0,0,0); return x; };
-  const parseISO = (iso) => {
-    if (!iso) return null;
-    const [Y,M,D] = String(iso).split('-').map(Number);
-    return (Y ? new Date(Y, (M||1)-1, (D||1)) : null);
-  };
-  const A = mkMid(parseISO(from) || new Date());
-  const B = mkMid(parseISO(to || from) || A);
-  const lo = Math.min(+A, +B), hi = Math.max(+A, +B);
+function buildDigestPayload({preset, size, title, team, rowsRange, what}){
+  const all = Array.isArray(window.LGH?.matches) ? window.LGH.matches.slice() : [];
+  const isRes = (window.LGH?.isResult) || isResult;
 
-  // filter by date range
-  let rows = rowsAll.filter(r => {
-    const dt = parseMatchDate(r); if (!dt) return false;
-    const d0 = +mkMid(dt);
-    return d0 >= lo && d0 <= hi;
-  });
+  // filter by preset (All / Today / Tomorrow)
+  let rows = all.filter(r => inPreset(parseMatchDate(r), preset || 'all'));
 
-  // fixtures / results / all
+  // optional team filter
+  if (team) rows = rows.filter(r => r.home===team || r.away===team);
+
+  // fixtures/results/all toggle
   const w = String(what||'all').toLowerCase();
-  const isRes = (window.LGH?.isResult || function(s){
-    return ['Result','Full Time','FT','AET','Walkover','W/O','Abandoned','Final']
-      .includes(String(s||'').trim());
-  });
   if (w === 'fixtures') rows = rows.filter(r => !isRes(r.status));
   if (w === 'results')  rows = rows.filter(r =>  isRes(r.status));
 
   // sort: date → time → competition
-  rows.sort((a,b) => {
+  rows.sort((a,b)=>{
     const ad = parseMatchDate(a)?.getTime() ?? 0;
     const bd = parseMatchDate(b)?.getTime() ?? 0;
     if (ad !== bd) return ad - bd;
-    const at = (a.time || '').localeCompare(b.time || '');
+    const at = (a.time||'').localeCompare(b.time||'');
     if (at !== 0) return at;
-    return (a.competition || '').localeCompare(b.competition || '');
+    return (a.competition||'').localeCompare(b.competition||'');
   });
 
-  // auto title
-  const same = (+A === +B);
-  const left  = A.toLocaleDateString('en-IE',{day:'2-digit',month:'short'});
-  const right = B.toLocaleDateString('en-IE',{day:'2-digit',month:'short',year:'numeric'});
-  const range = same
-    ? A.toLocaleDateString('en-IE',{weekday:'short',day:'2-digit',month:'short',year:'numeric'})
-    : `${left}–${right}`;
-  const whatLabel = (w==='fixtures') ? 'Fixtures' : (w==='results') ? 'Results' : 'Fixtures & Results';
+  // optional slice via "Rows" input (e.g. "3-7")
+  if (rowsRange){
+    const m = /^\s*(\d+)\s*-\s*(\d+)\s*$/.exec(rowsRange);
+    if (m){ const a=+m[1], b=+m[2]; rows = rows.slice(a-1, b); }
+  }
 
-  return { mode:'digest', size, title: (title?.trim() || `${whatLabel} • ${range}`), rows, what:w };
+  const when =
+    preset === 'today'    ? 'Today' :
+    preset === 'tomorrow' ? 'Tomorrow' : null;
+
+  const whatLabel = (w==='fixtures') ? 'Fixtures'
+                   : (w==='results') ? 'Results'
+                   : 'Fixtures & Results';
+
+  const autoTitle = [team, whatLabel, when].filter(Boolean).join(' • ');
+  return { mode:'digest', size, title: (title?.trim() || autoTitle || 'Digest'), rows };
 }
+
 
 
 
@@ -2178,47 +2153,50 @@ q('#sc-footnote').hidden = false;
   function wireOverlay(){
     const overlay = q('#sharecard-overlay');
     const form = q('#sc-form');
+    const modeSel     = q('#sc-form select[name="mode"]');
+    const includeRow  = q('#sc-form [data-row="digest-what"]');
+
+  function updateDigestUI(){
+    const isDigest = modeSel.value === 'digest';
+    if (includeRow) includeRow.style.display = isDigest ? '' : 'none';
+  }
+  modeSel.addEventListener('change', updateDigestUI);
+  updateDigestUI();
+
 
 const modeSel  = form.querySelector('select[name="mode"]');
 const rangeRow = form.querySelector('[data-row="range"]');
 const presetSel = form.querySelector('select[name="preset"]'); // you already have All/Today/Tomorrow
 
-function updateRangeRow(){
-  // Show range picker when:
-  // - mode === 'digest' (always uses date range), OR
-  // - non-digest but user chooses to use range by filling dates (we allow it to be visible via a toggle)
-  // Minimal: always show it for digest; keep it hidden otherwise unless you want it visible always.
-  const on = (modeSel && modeSel.value === 'digest');
-  if (rangeRow) rangeRow.style.display = on ? '' : 'none';
-}
-if (modeSel) modeSel.addEventListener('change', updateRangeRow);
-updateRangeRow();
+q('.sc-x').addEventListener('click', closeOverlay);
+overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
 
-    q('.sc-x').addEventListener('click', closeOverlay);
-    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
+q('#sc-preview').addEventListener('click', ()=>{
+  const form = q('#sc-form');
+  const isDigest = (form.mode.value === 'digest');
 
-    q('#sc-preview').addEventListener('click', ()=>{
-    const isDigest = (form.mode.value === 'digest');
-    const payload = isDigest
-      ? buildDigestPayload({
-          size: form.size.value,
-          title: form.title.value,
-          from: form.from ? form.from.value : null,
-          to:   form.to   ? form.to.value   : null,
-          what: form.what ? form.what.value : 'all'
-        })
-      : buildPayload({
-          mode: form.mode.value,
-          preset: form.preset.value,
-          team: (form.team.value||'').trim() || null,
-          rowsRange: (form.rows.value||'').trim() || null,
-          size: form.size.value,
-          title: form.title.value
-        });
+  const payload = isDigest
+    ? buildDigestPayload({
+        preset: form.preset.value,               // All / Today / Tomorrow
+        size:   form.size.value,
+        title:  form.title.value,
+        team:   (form.team.value||'').trim() || null,
+        rowsRange: (form.rows.value||'').trim() || null,
+        what:   form.what ? form.what.value : 'all'
+      })
+    : buildPayload({
+        mode:   form.mode.value,                 // fixtures/results/table (per comp)
+        preset: form.preset.value,
+        team:   (form.team.value||'').trim() || null,
+        rowsRange: (form.rows.value||'').trim() || null,
+        size:   form.size.value,
+        title:  form.title.value
+      });
 
-      renderCard(payload);
-      overlay._lastPayload = payload;
-    });
+  renderCard(payload);
+  q('#sharecard-overlay')._lastPayload = payload;
+});
+
 
     q('#sc-download').addEventListener('click', downloadPNG);
 
@@ -2236,9 +2214,7 @@ if (params.get('share') === '1' || params.get('sc') === '1') {
   if(params.get('rows'))   form.rows.value   = params.get('rows');
   if(params.get('size'))   form.size.value   = params.get('size');
   if(params.get('title'))  form.title.value  = params.get('title');
-  if(params.get('from'))   form.from.value   = params.get('from');   // digest only
-  if(params.get('to'))     form.to.value     = params.get('to');     // digest only
-  if(params.get('what'))   form.what.value   = params.get('what');   // digest only
+
   // specific-date prefill (non-digest)
   if(params.get('presetDate')) {
     const pd = form.querySelector('[name="presetDate"]');
