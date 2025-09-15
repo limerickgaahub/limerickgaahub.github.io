@@ -2002,7 +2002,7 @@ function renderCard(payload){
   // Reset size + density classes
   card.classList.remove(
     'sc-size-ig-portrait','sc-size-ig-square','sc-size-x-landscape',
-    'sc-tight-7','sc-tight-8','sc-hero'
+    'sc-tight-6','sc-tight-7','sc-tight-8','sc-hero'
   );
   card.classList.add(
     payload.size === 'ig-square'    ? 'sc-size-ig-square' :
@@ -2168,6 +2168,8 @@ q('#sc-footnote').hidden = false;
     const rangeRow = form.querySelector('[data-row="range"]');
     const whatRow  = form.querySelector('[data-row="digest-what"]');
     function updateDigestRows(){
+      const presetRow = form.querySelector('select[name="preset"]').closest('.sc-row');
+      if (presetRow) presetRow.style.display = on ? 'none' : '';
       const on = (modeSel && modeSel.value === 'digest');
       if (rangeRow) rangeRow.style.display = on ? '' : 'none';
       if (whatRow)  whatRow.style.display  = on ? '' : 'none';
@@ -2181,8 +2183,6 @@ q('#sc-footnote').hidden = false;
     updateDigestRows();
 
 
-
-    
     q('.sc-x').addEventListener('click', closeOverlay);
     overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
 
@@ -2226,6 +2226,9 @@ q('#sc-footnote').hidden = false;
       if(params.get('rows')) form.rows.value = params.get('rows');
       if(params.get('size')) form.size.value = params.get('size');
       if(params.get('title')) form.title.value = params.get('title');
+      if (params.get('from'))  form.from.value  = params.get('from');
+      if (params.get('to'))    form.to.value    = params.get('to');
+      if (params.get('what'))  form.what.value  = params.get('what');
       q('#sc-preview').click();
     }
   }
