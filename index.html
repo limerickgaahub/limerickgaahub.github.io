@@ -1083,7 +1083,26 @@ thead th, tbody td{ padding:.55rem .55rem; }
   }
 }
 
-  
+
+/* --- Share Card: absolutely fixed canvas size; never expand --- */
+.sharecard {
+  flex: none;                 /* do not grow/shrink in flex parent */
+  contain: layout paint size; /* isolate layout so children can't force resize */
+  min-width: 0; min-height: 0;
+}
+
+/* Defensive: allow children to shrink, stop min-content explosions */
+#share-card, #share-card * {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Tables inside the card should never force width/height growth */
+.sharecard .sc-table {
+  max-width: 100%;
+  overflow: hidden;   /* clip, do not reflow outside */
+}
+
 </style>
 
 <script>
@@ -1693,12 +1712,29 @@ function updateSharebars(){
 
   
   function parseMatchDate(m){
-    const s = m.date_iso || m.iso || m.datetime_iso || null;
-    if (s) { const d = new Date(s); if (!isNaN(d)) return d; }
-    const m2 = /(\d{1,2})\/(\d{1,2})\/(\d{2,4})/.exec(m.date||'');
-    if (m2){ const dd=+m2[1], mm=+m2[2], yy=(m2[3].length===2? +('20'+m2[3]) : +m2[3]); return new Date(yy, mm-1, dd); }
-    return null;
+    // prefer ISO-ish fields from your pipeline
+    const iso = m.date_iso || m.datetime_iso || m.iso || null;
+    if (iso) {
+      const d = new Date(iso);
+      if (!isNaN(+d)) return d;
+    }
+  
+    // YYYY-MM-DD
+    let mm = String(m.date || '').match(/^\s*(\d{4})-(\d{1,2})-(\d{1,2})\s*$/);
+    if (mm) return new Date(+mm[1], +mm[2]-1, +mm[3]);
+  
+    // dd/mm/yyyy
+    mm = String(m.date || '').match(/^\s*(\d{1,2})\/(\d{1,2})\/(\d{2,4})\s*$/);
+    if (mm){
+      const dd=+mm[1], MM=+mm[2], yy=(mm[3].length===2? +('20'+mm[3]) : +mm[3]);
+      return new Date(yy, MM-1, dd);
+    }
+  
+    // Fallback: Date() on raw string (last resort)
+    const d2 = m.date ? new Date(m.date) : null;
+    return (d2 && !isNaN(+d2)) ? d2 : null;
   }
+
   function inPreset(dt, preset){
     if(!dt) return true;
     const z = d=>{const x=new Date(d); x.setHours(0,0,0,0); return x;};
@@ -1996,6 +2032,44 @@ function renderCard(payload){
     payload.mode === 'table'   ? 'sc-mode-table'   : 'sc-mode-fixtures'
   );
 
+// Fixtures / Results view
+q('#sc-footnote').hidden = true;
+st.hidden = true;
+tf.hidden = false;
+
+// pick a safe, legible max row count for each size
+const MAX_ROWS =
+  payload.size === 'x-landscape' ? 5 :
+  payload.size === 'ig-square'   ? 7 :
+                                   9; // ig-portrait
+
+const rowsForRender = payload.rows.slice(0, MAX_ROWS);
+
+tb.innerHTML = rowsForRender.map(m => {
+  const dt  = parseMatchDate(m) || (m.date ? new Date(m.date + 'T00:00:00') : null);
+  const p   = fmtDateParts(dt);
+  const t   = fmtTimeShort(m.time || '');
+  const mid = matchCellHTML(m, payload.mode);
+  return `
+    <tr>
+      <td>
+        <div class="dt3">
+          <div class="dt-day">${p.day}</div>
+          <div class="dt-date">${p.dmy}</div>
+          <div class="dt-time">${t}</div>
+        </div>
+      </td>
+      <td>${mid}</td>
+      <td>${m.venue || '—'}</td>
+    </tr>`;
+}).join('');
+
+const rowCount = rowsForRender.length;
+if (rowCount <= 2) card.classList.add('sc-hero');
+
+
+
+  
   
   q('#sc-title').textContent = payload.title || '';
   // --- Corner ribbon text & show ---
@@ -2085,36 +2159,34 @@ q('#sc-footnote').hidden = false;
 }
 
 
-  async function downloadPNG(){
-    const src = q('#share-card');
-  
-    // Clone outside the scrollable modal so nothing is clipped
-    const clone = src.cloneNode(true);
-    clone.id = 'share-card-clone';
-    clone.hidden = false;
-    clone.style.position = 'fixed';
-    clone.style.left = '-10000px';
-    clone.style.top  = '0';
-    document.body.appendChild(clone);
-  
-    try{
-      const SCALE = Math.min(Math.max(window.devicePixelRatio || 2, 2), 3);
-      const canvas = await html2canvas(clone, {
-      scale: SCALE,
+async function downloadPNG(){
+  const src = q('#share-card');
+
+  const clone = src.cloneNode(true);
+  clone.id = 'share-card-clone';
+  clone.hidden = false;
+  clone.style.position = 'fixed';
+  clone.style.left = '-10000px';
+  clone.style.top  = '0';
+  document.body.appendChild(clone);
+
+  try{
+    const canvas = await html2canvas(clone, {
+      scale: 2,               // fixed crisp scale
       backgroundColor: null,
       useCORS: true,
       removeContainer: true
     });
 
-      
-      const a = document.createElement('a');
-      a.href = canvas.toDataURL('image/png');
-      a.download = 'lgh-card.png';
-      a.click();
-    } finally {
-      document.body.removeChild(clone);
-    }
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'lgh-card.png';
+    a.click();
+  } finally {
+    document.body.removeChild(clone);
   }
+}
+
 
 
   function makeCaption(payload){
@@ -2143,6 +2215,18 @@ q('#sc-footnote').hidden = false;
   function openOverlay(){ q('#sharecard-overlay').hidden = false; }
   function closeOverlay(){ q('#sharecard-overlay').hidden = true; }
 
+  // Wait until LGH.matches is there (or time out gracefully)
+  async function ensureLGHReady(maxWaitMs = 5000){
+    const step = 100;
+    const start = Date.now();
+    while (Date.now() - start < maxWaitMs) {
+      if (window.LGH && Array.isArray(window.LGH.matches) && window.LGH.matches.length) return true;
+      await new Promise(r=>setTimeout(r, step));
+    }
+    return false;
+}
+
+  
   function wireOverlay(){
     const overlay = q('#sharecard-overlay');
     const form = q('#sc-form');
@@ -2164,21 +2248,27 @@ q('#sc-footnote').hidden = false;
     overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
 
 
-    q('#sc-preview').addEventListener('click', ()=>{
-      const payload = buildPayload({
-        mode: form.mode.value,
-        preset: form.preset.value,
-        team: (form.team.value||'').trim() || null,
-        rowsRange: (form.rows.value||'').trim() || null,
-        size: form.size.value,
-        title: form.title.value,
-        from: form.from ? form.from.value : null,
-        to:   form.to   ? form.to.value   : null,
-        what: form.what ? form.what.value : 'all'
-      });
-      renderCard(payload);
-      overlay._lastPayload = payload;
+  q('#sc-preview').addEventListener('click', async ()=>{
+    const ready = await ensureLGHReady();
+    if (!ready) {
+      alert('Still loading fixtures/results… try again in a moment.');
+      return;
+    }
+    const payload = buildPayload({
+      mode: form.mode.value,
+      preset: form.preset.value,
+      team: (form.team.value||'').trim() || null,
+      rowsRange: (form.rows.value||'').trim() || null,
+      size: form.size.value,
+      title: form.title.value,
+      from: form.from ? form.from.value : null,
+      to:   form.to   ? form.to.value   : null,
+      what: form.what ? form.what.value : 'all'
     });
+    renderCard(payload);
+    overlay._lastPayload = payload;
+  });
+
 
 
 
