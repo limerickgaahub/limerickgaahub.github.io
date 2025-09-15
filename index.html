@@ -88,7 +88,9 @@
   overflow:hidden;
 }
 .pretty-select select {
-  appearance:none; -webkit-appearance:none; -moz-appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance:none;
+  appearance:none;
   border:0; outline:0; background:transparent;
   width:100%;
   padding:.65rem 2.2rem .65rem .9rem;
@@ -174,7 +176,11 @@ body {                 /* was margin: 70px 20px 20px; */
 
   
 *{ box-sizing:border-box; }
-html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+html{
+  -webkit-text-size-adjust:100%;
+  -moz-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
 body{
   /* keep your new margins */
   margin:70px 12px 20px;
@@ -772,6 +778,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
   font-weight:800; font-size:24px; line-height:1;
   color:#EAF6EE;
   letter-spacing:.2px;
+  -webkit-backdrop-filter: saturate(120%) blur(2px);
   backdrop-filter: saturate(120%) blur(2px);
   pointer-events:none;
 }
