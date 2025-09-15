@@ -885,6 +885,22 @@ function walkoverGiver(m){
   return null;
 }
 
+// --- TEMP: manual walkover credits for Junior C (2025 only) ---
+// Structure: Group -> [ "Team1", "Team2", ... ]
+const MANUAL_JC_POINTS = {
+  "Group 1": [
+    "Na Piarsaigh",
+    "Ballybrown",
+    "Monagea",
+    "Garryspillane",
+    "Garryspillane",
+    "Patrickswell",
+    "Kilteely Dromkeen"
+  ],
+  "Group 2": []
+};
+
+  
   
 // Return the winner’s team name for a scored match (null for draw/unknown)
 function _winnerOf(m){
@@ -1027,6 +1043,19 @@ if (isWalkover(m)) {
     else { H.d++; A.d++; H.pts++; A.pts++; }
   }
 
+    // ---- TEMP PATCH: add manual walkovers for Junior C ----
+  if (state.comp === "Junior C Hurling Championship") {
+    const groupFix = MANUAL_JC_POINTS[state.group] || [];
+    for (const teamName of groupFix) {
+      const row = teams.get(teamName);
+      if (row) {
+        row.pts += 2;  // each entry = +2 points
+        row.w   += 1;  // and +1 win
+      }
+    }
+  }
+
+  
   // ---- Sort with Head-to-Head rule (two-team ties only) ----
   const all = [...teams.values()];
   // 1) Group by league points
