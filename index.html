@@ -1602,12 +1602,11 @@ function updateSharebars(){
 (function(){
   // Robust gate: honor either ?share=1 or ?sc=1, OR the early-captured flag
   const urlParams = new URLSearchParams(location.search);
-  const SHARE_ENABLED =
+  const AUTO_OPEN =
     (window.__LGH_SHARE_ENABLED === true) ||
     (urlParams.get('share') === '1') ||
     (urlParams.get('sc') === '1');
 
-  if (!SHARE_ENABLED) return;
 
   // Use the same params instance below
   const params = urlParams;
@@ -2206,7 +2205,7 @@ q('#sc-preview').addEventListener('click', ()=>{
       navigator.clipboard.writeText(text).catch(()=>{});
     });
 
-if (params.get('share') === '1' || params.get('sc') === '1') {
+if (AUTO_OPEN) {
   openOverlay();
   if(params.get('mode'))   form.mode.value   = params.get('mode');
   if(params.get('preset')) form.preset.value = params.get('preset');
