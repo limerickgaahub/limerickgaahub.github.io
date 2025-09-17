@@ -1331,7 +1331,7 @@ const CLUB_EXCLUDE = new Set([
 "Monaleen / Kilmallock",
 "Old Christians / Garryspillane",
 "Templeglantine / Killeedy"
-+]);
+]);
 
 
 function renderByTeam(){
