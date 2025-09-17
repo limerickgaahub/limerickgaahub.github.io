@@ -1319,6 +1319,20 @@ $$('.view-tabs .vt').forEach(seg=>{
 
 // Pseudo-team placeholders to exclude from the Club dropdown
 const TEAM_EXCLUDE_RE = /^(?:QF\s*Winner|SF\d*\s*Winner)$/i;
+// Explicit club exclusions (exact matches only)
+const CLUB_EXCLUDE = new Set([
+"Adare/Ballybrown",
+"Cappamore / Na Piarsaigh",
+"Crecora Manister / Caherline",
+"Cup SF1 Winner",
+"Cup SF2 Winner",
+"Feohanagh/Hospital Herbertstown",
+"Knockaderry / Monaleen",
+"Monaleen / Kilmallock",
+"Old Christians / Garryspillane",
+"Templeglantine / Killeedy"
++]);
+
 
 function renderByTeam(){
   VIEW_MODE='team'; state.view='team';
@@ -1337,6 +1351,7 @@ function renderByTeam(){
     if (/^(winner|winners|runner|runners-?up|loser|losers)\b/i.test(x)) return false;
     if (TEAM_EXCLUDE_RE.test(x)) return false;   // NEW: hide QF/SF placeholders
     if (/^(tbc|bye)$/i.test(x)) return false;
+    if (CLUB_EXCLUDE.has(x)) return false;
     return true;
   };
 
