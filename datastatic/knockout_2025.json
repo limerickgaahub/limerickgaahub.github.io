@@ -50,7 +50,7 @@
   {
     "competition": "Senior Hurling Championship",
     "group": "Knockout",
-    "round": "Final",
+    "round": "F",
     "date": "2025-10-19",
     "time": "1530",
     "venue": "TUS Gaelic Grounds",
@@ -62,7 +62,7 @@
   {
     "competition": "Senior Hurling Championship",
     "group": "Knockout",
-    "round": "Cup SF1",
+    "round": "CSF",
     "date": "2025-09-20",
     "time": "1500",
     "venue": "Croagh",
@@ -74,19 +74,19 @@
     {
     "competition": "Senior Hurling Championship",
     "group": "Knockout",
-    "round": "Cup SF2",
+    "round": "CSF",
     "date": "2025-09-20",
     "time": "1500",
     "venue": "Sean Finn Park",
     "home": "Kildimo Palleskenry",
-    "away": "MMungret",
+    "away": "Mungret",
     "status": "SCHEDULED",
     "note": ""
   },
     {
     "competition": "Senior Hurling Championship",
     "group": "Knockout",
-    "round": "Cup Final",
+    "round": "CF",
     "date": "2025-10-04",
     "time": "TBC",
     "venue": "TBC",
@@ -122,7 +122,7 @@
   {
     "competition": "Premier Intermediate Hurling Championship",
     "group": "Knockout",
-    "round": "Final",
+    "round": "F",
     "date": "2025-10-19",
     "time": "1300",
     "venue": "TUS Gaelic Grounds",
@@ -194,7 +194,7 @@
    {
     "competition": "Intermediate Hurling Championship",
     "group": "Knockout",
-    "round": "Cup SF",
+    "round": "CSF",
     "date": "2025-09-20",
     "time": "14:00",
     "venue": "Caherconlish",
@@ -206,7 +206,7 @@
    {
     "competition": "Intermediate Hurling Championship",
     "group": "Knockout",
-    "round": "Cup SF",
+    "round": "CSF",
     "date": "2025-09-20",
     "time": "14:00",
     "venue": "Croagh",
@@ -218,7 +218,7 @@
    {
     "competition": "Intermediate Hurling Championship",
     "group": "Knockout",
-    "round": "Cup Final",
+    "round": "Cup F",
     "date": "2025-10-04",
     "time": "TBC",
     "venue": "TBC",
