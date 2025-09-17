@@ -718,7 +718,7 @@ function toggleKOFootnote(show){
     note = document.createElement('div');
     note.id = 'ko-footnote';
     note.className = 'footnote';
-    note.textContent = 'Dates are provisional and weekend of, except for the final.';
+    note.textContent = '';
     matchesWrap.insertAdjacentElement('afterend', note);
   }
   note.style.display = show ? '' : 'none';
