@@ -1321,7 +1321,7 @@ $$('.view-tabs .vt').forEach(seg=>{
 const TEAM_EXCLUDE_RE = /^(?:QF\s*Winner|SF\d*\s*Winner)$/i;
 // Explicit club exclusions (exact matches only)
 const CLUB_EXCLUDE = new Set([
-"Adare/Ballybrown",
+"Adare / Ballybrown",
 "Cappamore / Na Piarsaigh",
 "Crecora Manister / Caherline",
 "Cup SF1 Winner",
