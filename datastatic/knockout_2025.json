@@ -100,24 +100,24 @@
     "group": "Knockout",
     "round": "QF1",
     "date": "2025-09-20",
-    "time": "TBC",
-    "venue": "TBC",
-    "home": "2nd Group 1",
-    "away": "3rd Group 2",
-    "status": "Provisional",
-    "note": "Date is 'weekend of'."
+    "time": "14:00",
+    "venue": "Kilmallock",
+    "home": "Feohanagh Castlemahon",
+    "away": "Hospital Herbertstown",
+    "status": "SCHEDULED",
+    "note": ""
   },
   {
     "competition": "Intermediate Hurling Championship",
     "group": "Knockout",
     "round": "QF2",
     "date": "2025-09-20",
-    "time": "TBC",
-    "venue": "TBC",
-    "home": "3rd Group 1",
-    "away": "2nd Group 2",
-    "status": "Provisional",
-    "note": "Date is 'weekend of'."
+    "time": "13:00",
+    "venue": "Fedamore",
+    "home": "Cappamore",
+    "away": "Na Piarsaigh",
+    "status": "SCHEDULED",
+    "note": ""
   },
   {
     "competition": "Intermediate Hurling Championship",
@@ -126,7 +126,7 @@
     "date": "2025-10-04",
     "time": "TBC",
     "venue": "TBC",
-    "home": "1st Group 1",
+    "home": "Bruree",
     "away": "QF winner",
     "status": "Provisional",
     "note": "Date is 'weekend of'."
@@ -138,7 +138,7 @@
     "date": "2025-10-04",
     "time": "TBC",
     "venue": "TBC",
-    "home": "1st Group 2",
+    "home": "Murroe Boher",
     "away": "QF winner",
     "status": "Provisional",
     "note": "Date is 'weekend of'."
@@ -153,6 +153,42 @@
     "home": "SF1 Winner",
     "away": "SF2 Winner",
     "status": "Provisional",
+    "note": ""
+  },
+   {
+    "competition": "Intermediate Hurling Championship",
+    "group": "Knockout",
+    "round": "Cup SF",
+    "date": "2025-10-20",
+    "time": "TBC",
+    "venue": "TBC",
+    "home": "Knockainey",
+    "away": "Mungret St Pauls",
+    "status": "SCHEDULED",
+    "note": ""
+  }, 
+   {
+    "competition": "Intermediate Hurling Championship",
+    "group": "Knockout",
+    "round": "Cup SF",
+    "date": "TBC",
+    "time": "TBC",
+    "venue": "TBC",
+    "home": "Feenagh Kilmeedy",
+    "away": "St Kieran's",
+    "status": "SCHEDULED",
+    "note": ""
+  },
+   {
+    "competition": "Intermediate Hurling Championship",
+    "group": "Knockout",
+    "round": "Cup F",
+    "date": "TBC",
+    "time": "TBC",
+    "venue": "TBC",
+    "home": "TBC",
+    "away": "TBC",
+    "status": "SCHEDULED",
     "note": ""
   },
   {
