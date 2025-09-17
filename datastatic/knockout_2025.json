@@ -9,7 +9,7 @@
     "home": "Ballybrown",
     "away": "Adare",
     "status": "SCHEDULED",
-    "note": "Date is 'weekend of'."
+    "note": ""
   },
   {
     "competition": "Senior Hurling Championship",
@@ -21,7 +21,7 @@
     "home": "Kilmallock",
     "away": "Monaleen",
     "status": "SCHEDULED",
-    "note": "Date is 'weekend of'."
+    "note": ""
   },
   {
     "competition": "Senior Hurling Championship",
@@ -92,7 +92,7 @@
     "venue": "TBC",
     "home": "Cup SF1 Winner",
     "away": "Cup SF2 Winner",
-    "status": "SCHEDULED",
+    "status": "Provisional",
     "note": ""
   },
   {
@@ -128,7 +128,7 @@
     "venue": "TUS Gaelic Grounds",
     "home": "SF1 Winner",
     "away": "SF2 Winner",
-    "status": "Provisional",
+    "status": "SCHEDULED",
     "note": ""
   },
   {
@@ -160,24 +160,24 @@
     "group": "Knockout",
     "round": "SF1",
     "date": "2025-10-04",
-    "time": "TBC",
+    "time": "w/e of",
     "venue": "TBC",
     "home": "Bruree",
     "away": "Feohanagh/Hospital Herbertstown",
     "status": "Provisional",
-    "note": "Date is 'weekend of'."
+    "note": ""
   },
   {
     "competition": "Intermediate Hurling Championship",
     "group": "Knockout",
     "round": "SF2",
     "date": "2025-10-04",
-    "time": "TBC",
+    "time": "w/e of",
     "venue": "TBC",
     "home": "Murroe Boher",
     "away": "Cappamore / Na Piarsaigh",
     "status": "Provisional",
-    "note": "Date is 'weekend of'."
+    "note": ""
   },
   {
     "competition": "Intermediate Hurling Championship",
@@ -224,7 +224,7 @@
     "venue": "TBC",
     "home": "TBC",
     "away": "TBC",
-    "status": "SCHEDULED",
+    "status": "Provisional",
     "note": ""
   },
      {
@@ -249,19 +249,19 @@
     "home": "Crecora Manister",
     "away": "Caherline",
     "status": "SCHEDULED",
-    "note": "Date is 'weekend of'."
+    "note": ""
   },
   {
     "competition": "Premier Junior A Hurling Championship",
     "group": "Knockout",
     "round": "QF2",
     "date": "2025-09-20",
-    "time": "9:30",
+    "time": "19:30",
     "venue": "Mick Neville Park",
     "home": "Knockaderry",
     "away": "Monaleen",
     "status": "SCHEDULED",
-    "note": "Date is 'weekend of'."
+    "note": ""
   },
   {
     "competition": "Premier Junior A Hurling Championship",
@@ -284,7 +284,7 @@
     "venue": "TBC",
     "home": "Askeaton Ballysteen Kilcornan",
     "away": "Crecora Manister / Caherline",
-    "status": "SCHEDULED",
+    "status": "Provisional",
     "note": ""
   },
   {
@@ -320,20 +320,20 @@
     "venue": "Caherelly",
     "home": "Old Christians",
     "away": "Garryspillane",
-    "status": "Provisional",
-    "note": "Date is 'weekend of'."
+    "status": "SCHEDULED",
+    "note": ""
   },
   {
     "competition": "Junior A Hurling Championship",
     "group": "Knockout",
     "round": "QF2",
     "date": "2025-09-21",
-    "time": "1515",
+    "time": "15:15",
     "venue": "Tournafulla",
     "home": "Templeglantine",
     "away": "Killeedy",
     "status": "SCHEDULED",
-    "note": "Date is 'weekend of'."
+    "note": ""
   },
   {
     "competition": "Junior A Hurling Championship",
@@ -355,7 +355,7 @@
     "time": "w/e of",
     "venue": "TBC",
     "home": "Castletown Ballyagran",
-    "away": "Old Christians / Killeedy",
+    "away": "Templeglantine / Killeedy",
     "status": "Provisional",
     "note": "Date is 'weekend of'."
   },
@@ -380,7 +380,7 @@
     "venue": "Claughaun",
     "home": "Bruff",
     "away": "Patrickswell",
-    "status": "Provisional",
+    "status": "SCHEDULED",
     "note": ""
   },
   {
