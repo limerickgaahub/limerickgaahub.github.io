@@ -236,7 +236,11 @@
     "venue": "Knocklong",
     "home": "Croom",
     "away": "Pallasgreen",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": "0"
+    "home_points":11"
+    "away_goals": "5",
+    "away_points":"19",
     "note": ""
   },
   {
