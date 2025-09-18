@@ -402,7 +402,11 @@ if (isWO) {
             home:        r.home || '',
             away:        r.away || '',
             venue:       r.venue || '',
-            status:      r.status || 'Provisional'
+            status:      r.status || 'Provisional',
+            home_goals:  r.home_goals,
+            home_points: r.home_points,
+            away_goals:  r.away_goals,
+            away_points: r.away_points
           };
 
           // ↓ normalize here too, to keep everything consistent
