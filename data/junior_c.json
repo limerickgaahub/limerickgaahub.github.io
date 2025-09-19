@@ -1,7 +1,22 @@
 {
   "competition": "Junior C Hurling Championship",
-  "updated_at": "2025-09-15T08:40:17Z",
+  "updated_at": "2025-09-19T18:40:37Z",
   "fixtures": [
+    {
+      "id": "2025-JCHC-G2-R1-CRE-DOO",
+      "round": "R 1",
+      "group": "Group 2",
+      "date": "2025-09-21",
+      "time_local": "17:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2025-09-21T17:00:00",
+      "home": "Crecora Manister",
+      "away": "Doon",
+      "venue": "Crecora Manister GAA",
+      "referee": "Michael Mann",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/"
+    },
     {
       "id": "2025-JCHC-G1-R6-MON-BAL",
       "round": "R 6",

@@ -1,5 +1,5 @@
 {
-  "updated": "2025-09-15T08:40:17Z",
+  "updated": "2025-09-19T18:40:37Z",
   "matches": [
     {
       "competition": "Senior Hurling Championship",
@@ -459,7 +459,7 @@
       "time": "14:00",
       "home": "Glenroe",
       "away": "Garryspillane",
-      "venue": "Kilfinane",
+      "venue": "KIlfinane",
       "status": "SCHEDULED",
       "home_goals": null,
       "home_points": null,
@@ -504,7 +504,7 @@
       "time": "14:00",
       "home": "South Liberties",
       "away": "Blackrock",
-      "venue": "Bruff",
+      "venue": "Mick Neville Park",
       "status": "SCHEDULED",
       "home_goals": null,
       "home_points": null,
@@ -2223,19 +2223,19 @@
     },
     {
       "competition": "Junior C Hurling Championship",
-      "group": "Group 1",
+      "group": "Group 2",
       "round": "R 1",
       "date": "2025-09-21",
       "time": "17:00",
       "home": "Crecora Manister",
       "away": "Doon",
-      "venue": "Monagea",
+      "venue": "Crecora Manister GAA",
       "status": "SCHEDULED",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
       "away_points": null
-    },   
+    },
     {
       "competition": "Junior C Hurling Championship",
       "group": "Group 1",
@@ -2395,7 +2395,7 @@
       "home": "Askeaton Ballysteen Kilcornan",
       "away": "Kildimo Pallaskenry",
       "venue": "Round 5 Winners",
-      "status": "tbc",
+      "status": "SCHEDULED",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
