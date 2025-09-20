@@ -1075,7 +1075,25 @@ thead th, tbody td{ padding:.55rem .55rem; }
   font-weight:700;
   color:#374151;   /* muted dark grey */
 }
-  
+
+/* Center align numeric columns P → Pts in modal standings */
+#modal-standings th:nth-child(n+2):nth-child(-n+9),
+#modal-standings td:nth-child(n+2):nth-child(-n+9) {
+  text-align: center !important;
+  justify-content: center;
+}
+
+/* Vertical gridlines only between numeric columns (P → Pts) */
+#modal-standings th:nth-child(n+2):nth-child(-n+9),
+#modal-standings td:nth-child(n+2):nth-child(-n+9) {
+  border-right: 1px solid #e0e0e0;
+}
+
+#modal-standings th:nth-child(9),
+#modal-standings td:nth-child(9) {
+  border-right: none; /* remove after Pts */
+}
+
   
 </style>
 
