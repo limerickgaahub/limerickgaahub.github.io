@@ -159,43 +159,7 @@
     "status": "Provisional",
     "note": ""
   },
-   {
-    "competition": "Intermediate Hurling Championship",
-    "group": "Knockout",
-    "round": "CSF",
-    "date": "2025-09-20",
-    "time": "14:00",
-    "venue": "Caherconlish",
-    "home": "Knockainey",
-    "away": "Mungret St Pauls",
-    "status": "SCHEDULED",
-    "note": ""
-  }, 
-   {
-    "competition": "Intermediate Hurling Championship",
-    "group": "Knockout",
-    "round": "CSF",
-    "date": "2025-09-20",
-    "time": "14:00",
-    "venue": "Croagh",
-    "home": "Feenagh Kilmeedy",
-    "away": "St Kieran's",
-    "status": "SCHEDULED",
-    "note": ""
-  },
-   {
-    "competition": "Intermediate Hurling Championship",
-    "group": "Knockout",
-    "round": "CF",
-    "date": "2025-10-04",
-    "time": "TBC",
-    "venue": "TBC",
-    "home": "TBC",
-    "away": "TBC",
-    "status": "Provisional",
-    "note": ""
-  },
-     {
+  {
     "competition": "Intermediate Hurling Championship",
     "group": "Knockout",
     "round": "REL",
