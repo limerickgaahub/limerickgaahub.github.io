@@ -264,8 +264,12 @@
     "venue": "Mick Neville Park",
     "home": "Knockaderry",
     "away": "Monaleen",
-    "status": "SCHEDULED",
-    "note": ""
+    "status": "Result",
+    "home_goals": 0,
+    "home_points":26,
+    "away_goals": 1,
+    "away_points":20,
+    "note": "AET"
   },
   {
     "competition": "Premier Junior A Hurling Championship",
