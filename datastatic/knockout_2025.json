@@ -140,7 +140,11 @@
     "venue": "Kilmallock",
     "home": "Feohanagh",
     "away": "Hospital Herbertstown",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 0,
+    "home_points":18,
+    "away_goals": 0,
+    "away_points": 10,
     "note": ""
   },
   {
@@ -149,7 +153,7 @@
     "round": "QF2",
     "date": "2025-09-21",
     "time": "13:00",
-    "venue": "Fedamore",
+    "venue": "Mungret",
     "home": "Cappamore",
     "away": "Na Piarsaigh",
     "status": "SCHEDULED",
@@ -252,7 +256,11 @@
     "venue": "Fedmore",
     "home": "Crecora Manister",
     "away": "Caherline",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 1,
+    "home_points":14,
+    "away_goals": 2,
+    "away_points":19,
     "note": ""
   },
   {
