@@ -311,7 +311,7 @@ td.match, th.match{ text-align:center; }
 #modal-standings td:first-child, #modal-standings th:first-child{
   white-space:normal; word-break:normal; overflow-wrap:normal;
 }
-#modal-standings td:not(:first-child), #modal-standings th:not(:first-child){ text-align:right; }
+#modal-standings td:not(:first-child), #modal-standings th:not(:first-child){ text-align:cen; }
 #modal-standings tbody td:not(:first-child){ font-variant-numeric:tabular-nums; }
   
 /* Controls lighter */
@@ -1101,6 +1101,14 @@ thead th, tbody td{ padding:.55rem .55rem; }
   background-color: #ffffff;  /* keep odd rows clean */
 }
 
+/* Light row striping for readability in modal standings */
+#modal-standings tbody tr:nth-child(even) {
+  background-color: #fafafa;  /* subtle grey */
+}
+
+#modal-standings tbody tr:nth-child(odd) {
+  background-color: #ffffff;  /* keep odd rows clean */
+}
   
 </style>
 
