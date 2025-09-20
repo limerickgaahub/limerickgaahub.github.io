@@ -490,11 +490,11 @@
       "home": "Bruff",
       "away": "Croagh Kilfinny",
       "venue": "Ballybrown",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 16,
+      "away_goals": 0,
+      "away_points": 12
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
