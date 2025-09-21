@@ -24,7 +24,11 @@
     "venue": "Bruff",
     "home": "Kilmallock",
     "away": "Monaleen",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 2,
+    "home_points":27,
+    "away_goals": 0,
+    "away_points": 30,
     "note": ""
   },
   {
