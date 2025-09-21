@@ -264,7 +264,7 @@
     "venue": "Quaid Park",
     "home": "Dromcollogher Broadford",
     "away": "Monagea",
-    "status": "SCHEDULED",
+    "status": "Result",
     "home_goals": 4,
     "home_points":13,
     "away_goals": 3,
@@ -280,7 +280,11 @@
     "venue": "Kilbreedy",
     "home": "Old Christians",
     "away": "Garryspillane",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 1,
+    "home_points":17,
+    "away_goals": 0,
+    "away_points": 13,
     "note": ""
   },
   {
@@ -292,7 +296,11 @@
     "venue": "Tournafulla",
     "home": "Templeglantine",
     "away": "Killeedy",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 0,
+    "home_points":18,
+    "away_goals": 0,
+    "away_points": 12,
     "note": ""
   },
   {
@@ -303,7 +311,7 @@
     "time": "w/e of",
     "venue": "TBC",
     "home": "Claughaun",
-    "away": "Old Christians / Garryspillane",
+    "away": "Old Christians",
     "status": "Provisional",
     "note": "Date is 'weekend of'."
   },
@@ -315,7 +323,7 @@
     "time": "w/e of",
     "venue": "TBC",
     "home": "Castletown Ballyagran",
-    "away": "Templeglantine / Killeedy",
+    "away": "Templeglantine",
     "status": "Provisional",
     "note": "Date is 'weekend of'."
   },
