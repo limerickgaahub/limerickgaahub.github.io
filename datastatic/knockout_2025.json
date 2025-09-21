@@ -120,7 +120,11 @@
     "venue": "Mungret",
     "home": "Cappamore",
     "away": "Na Piarsaigh",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 1,
+    "home_points":15,
+    "away_goals": 2,
+    "away_points": 20,
     "note": ""
   },
   {
