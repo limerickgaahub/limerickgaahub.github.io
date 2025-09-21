@@ -2230,11 +2230,11 @@
       "home": "Crecora Manister",
       "away": "Doon",
       "venue": "Crecora Manister GAA",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 10,
+      "away_goals": 4,
+      "away_points": 13
     },
     {
       "competition": "Junior C Hurling Championship",
