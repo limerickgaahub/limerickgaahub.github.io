@@ -8,7 +8,11 @@
     "venue": "Askeaton",
     "home": "Ballybrown",
     "away": "Adare",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 0,
+    "home_points":20,
+    "away_goals": 2,
+    "away_points": 10,
     "note": ""
   },
   {
