@@ -39,7 +39,7 @@
     "time": "w/e of",
     "venue": "TBC",
     "home": "Na Piarsaigh",
-    "away": "Monaleen / Kilmallock",
+    "away": "Kilmallock",
     "status": "Provisional",
     "note": "Date is 'weekend of'."
   },
@@ -51,7 +51,7 @@
     "time": "w/e of",
     "venue": "TBC",
     "home": "Doon",
-    "away": "Adare / Ballybrown",
+    "away": "Ballybrown",
     "status": "Provisional",
     "note": "Date is 'weekend of'."
   },
@@ -143,7 +143,7 @@
     "time": "w/e of",
     "venue": "TBC",
     "home": "Bruree",
-    "away": "Feohanagh/Hospital Herbertstown",
+    "away": "Feohanagh",
     "status": "Provisional",
     "note": ""
   },
@@ -155,7 +155,7 @@
     "time": "w/e of",
     "venue": "TBC",
     "home": "Murroe Boher",
-    "away": "Cappamore / Na Piarsaigh",
+    "away": "Na Piarsaigh",
     "status": "Provisional",
     "note": ""
   },
@@ -227,7 +227,7 @@
     "time": "TBC",
     "venue": "TBC",
     "home": "Doon",
-    "away": "Knockaderry / Monaleen",
+    "away": "Knockaderry",
     "status": "Provisional",
     "note": ""
   },
@@ -239,7 +239,7 @@
     "time": "TBC",
     "venue": "TBC",
     "home": "Askeaton Ballysteen Kilcornan",
-    "away": "Crecora Manister / Caherline",
+    "away": "Caherline",
     "status": "Provisional",
     "note": ""
   },
@@ -265,6 +265,10 @@
     "home": "Dromcollogher Broadford",
     "away": "Monagea",
     "status": "SCHEDULED",
+    "home_goals": 4,
+    "home_points":13,
+    "away_goals": 3,
+    "away_points": 13,
     "note": ""
   },
   {
