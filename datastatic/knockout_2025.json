@@ -332,7 +332,11 @@
     "venue": "Ballyagran",
     "home": "Bruff",
     "away": "Patrickswell",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 1,
+    "home_points":14,
+    "away_goals": 0,
+    "away_points":15,
     "note": ""
   },
   {
