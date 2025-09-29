@@ -2270,16 +2270,16 @@
       "competition": "Junior C Hurling Championship",
       "group": "Group 2",
       "round": "R 6",
-      "date": "2025-09-28",
-      "time": "17:00",
+      "date": "2025-09-29",
+      "time": "19:00",
       "home": "Doon",
       "away": "Adare",
       "venue": "Doon",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 18,
+      "away_goals": 0,
+      "away_points": 12
     },
     {
       "competition": "Junior C Hurling Championship",
