@@ -176,18 +176,6 @@
   {
     "competition": "Intermediate Hurling Championship",
     "group": "Knockout",
-    "round": "Cup",
-    "date": "2025-10-04",
-    "time": "15:00",
-    "venue": "Ballingarry",
-    "home": "St Kieran's",
-    "away": "Knockainey",
-    "status": "SCHEDULED",
-    "note": ""
-  },
-  {
-    "competition": "Intermediate Hurling Championship",
-    "group": "Knockout",
     "round": "F",
     "date": "2025-10-18",
     "time": "TBC",
@@ -250,8 +238,8 @@
     "group": "Knockout",
     "round": "SF",
     "date": "2025-10-04",
-    "time": "TBC",
-    "venue": "TBC",
+    "time": "15:00",
+    "venue": "Fedamore",
     "home": "Doon",
     "away": "Caherline",
     "status": "SCHEDULED",
@@ -262,8 +250,8 @@
     "group": "Knockout",
     "round": "SF",
     "date": "2025-10-05",
-    "time": "TBC",
-    "venue": "TBC",
+    "time": "13:00",
+    "venue": "Sean Finn Park",
     "home": "Askeaton Ballysteen Kilcornan",
     "away": "Knockaderry",
     "status": "SCHEDULED",
@@ -383,6 +371,18 @@
   },
 
 
+  {
+    "competition": "Junior B Hurling Championship",
+    "group": "Knockout",
+    "round": "SF",
+    "date": "2025-12-31",
+    "time": "00:00",
+    "venue": "TBC",
+    "home": "TBC",
+    "away": "TBC",
+    "status": "Provisional",
+    "note": "Date is 'weekend of'."
+  },
   {
     "competition": "Junior B Hurling Championship",
     "group": "Knockout",
