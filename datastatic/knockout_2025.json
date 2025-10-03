@@ -1,3 +1,5 @@
+
+
 [
   {
     "competition": "Senior Hurling Championship",
@@ -379,10 +381,12 @@
     "away_points":15,
     "note": ""
   },
+
+
   {
     "competition": "Junior B Hurling Championship",
     "group": "Knockout",
-    "round": "SF1",
+    "round": "SF",
     "date": "2025-12-31",
     "time": "00:00",
     "venue": "TBC",
@@ -394,7 +398,7 @@
   {
     "competition": "Junior B Hurling Championship",
     "group": "Knockout",
-    "round": "SF2",
+    "round": "SF",
     "date": "2025-12-31",
     "time": "00:00",
     "venue": "TBC",
@@ -403,7 +407,7 @@
     "status": "Provisional",
     "note": "Date is 'weekend of'."
   },
-  {
+    {
     "competition": "Junior B Hurling Championship",
     "group": "Knockout",
     "round": "F",
@@ -413,6 +417,54 @@
     "home": "TBC",
     "away": "TBC",
     "status": "Provisional",
+    "note": "Date is 'weekend of'."
+  },
+    {
+    "competition": "Junior B Hurling Championship",
+    "group": "Knockout",
+    "round": "QF",
+    "date": "2025-10-06",
+    "time": "20:00",
+    "venue": "Knocklong",
+    "home": "Ballybrown",
+    "away": "Fedamore",
+    "status": "SCHEDULED",
+    "note": "Date is 'weekend of'."
+  }, 
+  {
+    "competition": "Junior B Hurling Championship",
+    "group": "Knockout",
+    "round": "QF",
+    "date": "2025-10-05",
+    "time": "11:00",
+    "venue": "Kilbreedy",
+    "home": "Doon",
+    "away": "Na Piarsaigh",
+    "status": "SCHEDULED",
+    "note": ""
+  },
+  {
+    "competition": "Junior B Hurling Championship",
+    "group": "Knockout",
+    "round": "QF",
+    "date": "2025-10-05",
+    "time": "12:00",
+    "venue": "Feenagh",
+    "home": "Granagh Ballingarry",
+    "away": "Staker Wallace",
+    "status": "SCHEDULED",
+    "note": ""
+  },
+  {
+    "competition": "Junior B Hurling Championship",
+    "group": "Knockout",
+    "round": "QF",
+    "date": "2025-10-05",
+    "time": "12:00",
+    "venue": "Croom",
+    "home": "Camogue Rovers",
+    "away": "Croagh Kilfinny",
+    "status": "SCHEDULED",
     "note": ""
   },
   {
@@ -424,8 +476,8 @@
     "venue": "TBC",
     "home": "TBC",
     "away": "TBC",
-    "status": "Provisional",
-    "note": "Date is 'weekend of'."
+    "status": "SCHEDULED",
+    "note": "."
   },
   {
     "competition": "Junior C Hurling Championship",
