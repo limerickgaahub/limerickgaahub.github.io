@@ -2305,11 +2305,11 @@
       "home": "Crecora Manister",
       "away": "Askeaton Ballysteen Kilcornan",
       "venue": "Crecora Manister GAA",
-      "status": "SCHEDULED",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 10,
+      "away_goals": 1,
+      "away_points": 13
     },
     {
       "competition": "Junior C Hurling Championship",
