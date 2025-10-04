@@ -90,7 +90,11 @@
     "venue": "Ballyagran",
     "home": "Garryspillane",
     "away": "Croagh Kilfinny",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 1,
+    "home_points":12,
+    "away_goals": 1,
+    "away_points": 11,
     "note": ""
   },
   {
@@ -100,7 +104,7 @@
     "date": "2025-10-19",
     "time": "13:00",
     "venue": "TUS Gaelic Grounds",
-    "home": "SF1 Winner",
+    "home": "Garryspillane",
     "away": "SF2 Winner",
     "status": "SCHEDULED",
     "note": ""
