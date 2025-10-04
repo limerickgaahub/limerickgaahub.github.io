@@ -78,7 +78,11 @@
     "venue": "Kilmallock",
     "home": "Blackrock",
     "away": "Effin",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 1,
+    "home_points":13,
+    "away_goals": 4,
+    "away_points": 14,
     "note": ""
   },
   {
@@ -118,7 +122,11 @@
     "venue": "Knocklong",
     "home": "South Liberties",
     "away": "Glenroe",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 0,
+    "home_points":11,
+    "away_goals": 1,
+    "away_points": 18,
     "note": ""
   },  
   {
@@ -162,7 +170,11 @@
     "venue": "Feenagh",
     "home": "Bruree",
     "away": "Feohanagh",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 2,
+    "home_points":19,
+    "away_goals": 2,
+    "away_points": 12,
     "note": ""
   },
   {
@@ -174,7 +186,11 @@
     "venue": "Cappamore",
     "home": "Murroe Boher",
     "away": "Na Piarsaigh",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 3,
+    "home_points":18,
+    "away_goals": 0,
+    "away_points": 15,
     "note": ""
   },
   {
