@@ -262,7 +262,11 @@
     "venue": "Fedamore",
     "home": "Doon",
     "away": "Caherline",
-    "status": "SCHEDULED",
+    "status": "Result",
+    "home_goals": 2,
+    "home_points":9,
+    "away_goals": 2,
+    "away_points":8,
     "note": ""
   },
   {
