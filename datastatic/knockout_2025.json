@@ -43,6 +43,10 @@
     "home": "Na Piarsaigh",
     "away": "Kilmallock",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   },
   {
@@ -55,6 +59,10 @@
     "home": "Doon",
     "away": "Ballybrown",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   },
   {
@@ -67,6 +75,10 @@
     "home": "SF1 Winner",
     "away": "SF2 Winner",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": ""
   },
   {
@@ -111,6 +123,10 @@
     "home": "Garryspillane",
     "away": "Effin",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": ""
   },
 {
@@ -203,6 +219,10 @@
     "home": "Murroe Boher",
     "away": "Bruree",
     "status": "Provisional",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": ""
   },
   {
@@ -279,6 +299,10 @@
     "home": "Askeaton Ballysteen Kilcornan",
     "away": "Knockaderry",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": ""
   },
   {
@@ -291,6 +315,10 @@
     "home": "Doon",
     "away": "SF2 Winner",
     "status": "Provisional",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": ""
   },
   {
@@ -351,6 +379,10 @@
     "home": "Claughaun",
     "away": "Templeglantine",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   },
   {
@@ -363,6 +395,10 @@
     "home": "Castletown Ballyagran",
     "away": "Old Christians",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   },
   {
@@ -375,6 +411,10 @@
     "home": "SF1 Winner",
     "away": "SF2 Winner",
     "status": "Provisional",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": ""
   },
   {
@@ -405,6 +445,10 @@
     "home": "TBC",
     "away": "TBC",
     "status": "Provisional",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   },
   {
@@ -417,6 +461,10 @@
     "home": "TBC",
     "away": "TBC",
     "status": "Provisional",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   },
   {
@@ -429,6 +477,10 @@
     "home": "TBC",
     "away": "TBC",
     "status": "Provisional",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   },
     {
@@ -441,6 +493,10 @@
     "home": "TBC",
     "away": "TBC",
     "status": "Provisional",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   },
     {
@@ -453,6 +509,10 @@
     "home": "Ballybrown",
     "away": "Fedamore",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   }, 
   {
@@ -465,6 +525,10 @@
     "home": "Doon",
     "away": "Na Piarsaigh",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": ""
   },
   {
@@ -477,6 +541,10 @@
     "home": "Granagh Ballingarry",
     "away": "Staker Wallace",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": ""
   },
   {
@@ -484,11 +552,15 @@
     "group": "Knockout",
     "round": "QF",
     "date": "2025-10-05",
-    "time": "12:00",
-    "venue": "Croom",
+    "time": "13:00",
+    "venue": "Mick Neville Park",
     "home": "Camogue Rovers",
     "away": "Croagh Kilfinny",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": ""
   },
   {
@@ -501,6 +573,10 @@
     "home": "TBC",
     "away": "TBC",
     "status": "SCHEDULED",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "."
   },
   {
@@ -513,6 +589,10 @@
     "home": "TBC",
     "away": "TBC",
     "status": "Provisional",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   },
   {
@@ -525,6 +605,10 @@
     "home": "TBC",
     "away": "TBC",
     "status": "Provisional",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   },
   {
@@ -537,6 +621,10 @@
     "home": "TBC",
     "away": "TBC",
     "status": "Provisional",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": "Date is 'weekend of'."
   },
   {
@@ -549,6 +637,10 @@
     "home": "TBC",
     "away": "TBC",
     "status": "Provisional",
+    "home_goals": null,
+    "home_points":null,
+    "away_goals": null,
+    "away_points": null,
     "note": ""
   }
 ]
