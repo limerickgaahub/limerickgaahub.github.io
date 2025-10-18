@@ -899,12 +899,16 @@ const MANUAL_JC_POINTS = {
     "Garryspillane",
     "Garryspillane",
     "Patrickswell",
-    "Kilteely Dromkeen"
+    "Kilteely Dromkeen",
+    "Garryspillane"
   ],
   "Group 2": [
     "Crecora Manistir",
     "Dromcollogher Broadford",
-    "Dromcollogher Broadford"
+    "Dromcollogher Broadford",
+    "Askeaton Ballysteen Kilcornan",
+    "St. Kieran's",
+    "St. Kieran's"
   ]
 };
 
