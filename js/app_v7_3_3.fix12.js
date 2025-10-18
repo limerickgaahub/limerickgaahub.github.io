@@ -907,8 +907,8 @@ const MANUAL_JC_POINTS = {
     "Dromcollogher Broadford",
     "Dromcollogher Broadford",
     "Askeaton Ballysteen Kilcornan",
-    "St. Kieran's",
-    "St. Kieran's"
+    "St Kieran's",
+    "St Kieran's"
   ]
 };
 
