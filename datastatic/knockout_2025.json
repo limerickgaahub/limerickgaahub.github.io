@@ -122,12 +122,12 @@
     "venue": "TUS Gaelic Grounds",
     "home": "Garryspillane",
     "away": "Effin",
-    "status": "SCHEDULED",
-    "home_goals": null,
-    "home_points":null,
-    "away_goals": null,
-    "away_points": null,
-    "note": ""
+    "status": "Result",
+    "home_goals": 4,
+    "home_points": 19,
+    "away_goals": 2,
+    "away_points": 25,
+    "note": "Garryspillane win on penalties 3-0"
   },
 {
     "competition": "Premier Intermediate Hurling Championship",
