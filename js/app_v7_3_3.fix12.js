@@ -1138,18 +1138,21 @@ const sorted = []
     th.innerHTML = `<tr>
       <th>Team</th><th class="right">P</th><th class="right">W</th>
       <th class="right">D</th><th class="right">L</th>
+      <th class="right">PF</th><th class="right">PA</th>
       <th class="right">PD</th><th class="right">Pts</th>
     </tr>`;
   }
 
   const tbody=document.querySelector('#g-standings-table tbody');
-  tbody.innerHTML=sorted.map(r=>`
+  tbody.innerHTML = sorted.map(r=>`
     <tr>
       <td>${esc(r.team)}</td>
       <td class="right">${r.p||0}</td>
       <td class="right">${r.w||0}</td>
       <td class="right">${r.d||0}</td>
       <td class="right">${r.l||0}</td>
+      <td class="right">${r.pf||0}</td>
+      <td class="right">${r.pa||0}</td>
       <td class="right">${(r.pf||0)-(r.pa||0)}</td>
       <td class="right"><strong>${r.pts||0}</strong></td>
     </tr>`).join('');
