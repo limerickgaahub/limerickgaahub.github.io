@@ -792,6 +792,10 @@ thead th, tbody td{ padding:.55rem .55rem; }
   padding-right: 10px !important;
   border-left: 1px solid var(--line);
 }
+#modal-standings{
+  table-layout:fixed;
+}
+
 
 
 
