@@ -262,24 +262,30 @@ td.match, th.match{ text-align:center; }
 #g-standings-table{ table-layout:fixed; width:100%; }
 #modal-standings{ table-layout:fixed;  width:100%; }
 /* compact table (keep as-is) */
-#g-standings-table th:first-child, #g-standings-table td:first-child{
-  width:52%;
-  white-space:normal; word-break:normal; overflow-wrap:anywhere;
-}
 
-/* expanded modal table (a bit narrower for Team to free space for numbers) */
-#modal-standings th:first-child,
-#modal-standings td:first-child{
-  width:50%;                 /* ← key change */
-  text-align:left;
+/* Give Team more space in the COMPACT standings table only */
+#g-standings-table{ table-layout:fixed; width:100%; }
+#g-standings-table th:first-child,
+#g-standings-table td:first-child{
+  width:64% !important;
   white-space:normal;
   overflow-wrap:anywhere;
 }
-#g-standings-table th:not(:first-child), #g-standings-table td:not(:first-child),
-#modal-standings th:not(:first-child), #modal-standings td:not(:first-child){
-  width:auto;           /* slightly narrower numeric cols */
-  min-width:3.2rem;
+
+/* Compact numeric cols: tight */
+#g-standings-table th:not(:first-child),
+#g-standings-table td:not(:first-child){
+  min-width: 2.3rem !important;
+  text-align:right;
+  font-variant-numeric: tabular-nums;
+  white-space:nowrap;
+  padding-left:4px;
+  padding-right:4px;
 }
+
+/* Modal gets its own sizing rules elsewhere (DO NOT share min-widths here) */
+#modal-standings{ table-layout:fixed; width:100%; }
+
 
 
 /* Mobile niceties */
@@ -658,22 +664,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
   }
 }
 
-/* === LGH PATCH — widen numeric columns in standings === */
-#g-standings-table th.right,
-#g-standings-table td.right,
-#modal-standings th.right,
-#modal-standings td.right {
-  min-width: 4.2em; /* base for P, W, D, L, PF, PA, Pts */
-}
-
-/* Give Diff extra space */
-#g-standings-table th:nth-child(8),
-#g-standings-table td:nth-child(8),
-#modal-standings th:nth-child(8),
-#modal-standings td:nth-child(8) {
-  min-width: 4.5em;  /* much wider for Diff */
-  text-align: right;
-}
 
 .table-wrap tbody td { padding: 12px 12px; }   /* was 14px */
 
@@ -728,53 +718,10 @@ thead th, tbody td{ padding:.55rem .55rem; }
 /* Optional: stop global hover fighting the modal striping */
 #modal-standings tbody tr:hover td { background: inherit; }
 
-
-/* ===== Standings: make numbers readable (modal + compact table) ===== */
-
-/* 1) Do NOT use fixed layout for standings */
-#g-standings-table,
-#modal-standings{
-  table-layout: auto !important;
-}
-
-/* 2) Right align + tabular digits everywhere numeric */
-#g-standings-table th:not(:first-child),
-#g-standings-table td:not(:first-child),
-#modal-standings th:not(:first-child),
-#modal-standings td:not(:first-child){
-  text-align: right !important;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-/* 3) Give numeric cells real breathing room */
-#modal-standings th,
-#modal-standings td{
-  padding-left: 10px !important;
-  padding-right: 10px !important;
-}
-
-/* 4) Add subtle vertical separators so columns don’t “glue” */
-#modal-standings th:not(:first-child),
-#modal-standings td:not(:first-child){
-  border-left: 1px solid var(--line);
-}
-
-/* Optional: make the table feel tighter/cleaner */
-#modal-standings{
-  border-collapse: collapse !important; /* overrides your global separate/spacing */
-}
-
-/* ===== Modal standings: protect Team column width ===== */
-#modal-standings{
-  width:100%;
-  table-layout: fixed !important;   /* back to fixed, but with controlled col widths */
-}
-
 /* Team gets the space */
 #modal-standings th:first-child,
 #modal-standings td:first-child{
-  width: 46% !important;            /* try 46–55% depending on your team name lengths */
+  width: 42% !important;            /* try 46–55% depending on your team name lengths */
   text-align: left !important;
   white-space: normal !important;
   overflow-wrap: anywhere !important;
@@ -843,14 +790,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
   text-align:right !important;
   font-variant-numeric: tabular-nums;
   white-space:nowrap;
-  padding-left:8px !important;       /* a bit more room than compact */
-  padding-right:8px !important;
+  padding-left:10px !important;       /* a bit more room than compact */
+  padding-right:10px !important;
   border-left:1px solid var(--line); /* stops “13588” visual glue */
 }
-
-
-
-
-
-
-
