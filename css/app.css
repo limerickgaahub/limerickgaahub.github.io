@@ -268,9 +268,12 @@ td.match, th.match{ text-align:center; }
 }
 
 /* expanded modal table (a bit narrower for Team to free space for numbers) */
-#modal-standings th:first-child, #modal-standings td:first-child{
-  width:40%;
-  white-space:normal; word-break:normal; overflow-wrap:anywhere;
+#modal-standings th:first-child,
+#modal-standings td:first-child{
+  width:50%;                 /* ← key change */
+  text-align:left;
+  white-space:normal;
+  overflow-wrap:anywhere;
 }
 #g-standings-table th:not(:first-child), #g-standings-table td:not(:first-child),
 #modal-standings th:not(:first-child), #modal-standings td:not(:first-child){
@@ -761,6 +764,35 @@ thead th, tbody td{ padding:.55rem .55rem; }
 #modal-standings{
   border-collapse: collapse !important; /* overrides your global separate/spacing */
 }
+
+/* ===== Modal standings: protect Team column width ===== */
+#modal-standings{
+  width:100%;
+  table-layout: fixed !important;   /* back to fixed, but with controlled col widths */
+}
+
+/* Team gets the space */
+#modal-standings th:first-child,
+#modal-standings td:first-child{
+  width: 46% !important;            /* try 46–55% depending on your team name lengths */
+  text-align: left !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Numeric cols stay tight and readable */
+#modal-standings th:not(:first-child),
+#modal-standings td:not(:first-child){
+  width: auto !important;
+  min-width: 3.2rem;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  border-left: 1px solid var(--line);
+}
+
 
 
 
