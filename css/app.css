@@ -862,4 +862,18 @@ thead th, tbody td{ padding:.55rem .55rem; }
     width: auto !important;
   }
 }
+/* === FINAL FIX: compact standings – let Team absorb remaining width === */
+@media (max-width: 880px){
 
+  /* Lock numeric columns at their natural width */
+  #g-standings-table th:not(:first-child),
+  #g-standings-table td:not(:first-child){
+    width: auto;
+  }
+
+  /* Force Team column to take all remaining space */
+  #g-standings-table th:first-child,
+  #g-standings-table td:first-child{
+    width: 100% !important;
+  }
+}
