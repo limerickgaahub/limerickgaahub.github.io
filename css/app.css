@@ -877,3 +877,13 @@ thead th, tbody td{ padding:.55rem .55rem; }
     width: 100% !important;
   }
 }
+/* === FIX: standings container not bleeding full width on mobile === */
+@media (max-width: 880px){
+  #g-standings .table-wrap{
+    margin-left: calc(-1 * var(--bleed));
+    margin-right: calc(-1 * var(--bleed));
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+  }
+}
