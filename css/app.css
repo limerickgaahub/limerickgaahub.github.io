@@ -791,3 +791,27 @@ thead th, tbody td{ padding:.55rem .55rem; }
   padding-right:10px !important;
   border-left:1px solid var(--line); /* stops “13588” visual glue */
 }
+/* ===== Standings: desktop polish ===== */
+@media (min-width: 881px){
+  #g-standings-table, #modal-standings { border-collapse: separate; border-spacing: 0; }
+
+  /* Sticky header */
+  #g-standings-table thead th{
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 2;
+  }
+
+  /* Zebra striping */
+  #g-standings-table tbody tr:nth-child(even) td{ background:#fafafa; }
+  #g-standings-table tbody tr:nth-child(odd)  td{ background:#ffffff; }
+
+  /* Hover (subtle) */
+  #g-standings-table tbody tr:hover td{ background: rgba(0,0,0,.05); }
+
+  /* Make Pts feel important */
+  #g-standings-table td:last-child strong{
+    font-weight: 800;
+  }
+}
