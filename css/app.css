@@ -718,16 +718,15 @@ thead th, tbody td{ padding:.55rem .55rem; }
   color:#374151;   /* muted dark grey */
 }
 
-/* Center align numeric columns P → Pts in modal standings */
-#modal-standings th:nth-child(n+2):nth-child(-n+9),
-#modal-standings td:nth-child(n+2):nth-child(-n+9) {
-  text-align: center !important;     /* override .right */
-  display: table-cell;               /* keep table semantics */
-  vertical-align: middle;            /* tidy vertical placement */
+/* Standings: right-align all numeric cols + tabular numerals */
+#g-standings-table th:not(:first-child),
+#g-standings-table td:not(:first-child),
+#modal-standings th:not(:first-child),
+#modal-standings td:not(:first-child){
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
-
-
-
 
 /* Modal standings striping (apply to TD so it always shows) */
 #modal-standings tbody tr:nth-child(even) td { background:#fafafa; }
