@@ -255,6 +255,74 @@ thead th{
   font-size:14px; font-weight:800; color:#1f2937; text-align:left; padding:14px;
   white-space:nowrap;                /* keep header labels like "Date/Time" intact */
 }
+
+diff --git a/index.html b/index.html
+--- a/index.html
++++ b/index.html
+@@ -268,6 +268,40 @@
+ tbody tr:nth-child(even) td{ background:#fcfcfd; }
+ tbody tr:hover td{ background:#f1f9f4; }
+
++/* Standings modal: compact layout for mobile (expanded view) */
++#standings-modal .table-wrap{ border-radius:12px; }
++#modal-standings thead th,
++#modal-standings tbody td{
++  padding:10px 8px;          /* smaller than global 14px */
++  font-size:14px;            /* keeps readability */
++}
++/* Let the Team column wrap cleanly; keep numbers tight */
++#modal-standings thead th:first-child,
++#modal-standings tbody td:first-child{
++  white-space:normal;        /* override header nowrap for Team */
++  width:38%;
++}
++#modal-standings thead th:nth-child(n+2){
++  width:7.75%;               /* 8 numeric columns share remaining width */
++}
++/* Tabular numbers improve scanability */
++#modal-standings td.right, #modal-standings th.right{
++  font-variant-numeric: tabular-nums;
++}
++/* Extra-tight on very small phones */
++@media (max-width: 420px){
++  #modal-standings thead th,
++  #modal-standings tbody td{
++    padding:8px 6px;
++    font-size:13px;
++  }
++  #modal-standings thead th:first-child,
++  #modal-standings tbody td:first-child{
++    width:36%;
++  }
++  #modal-standings thead th:nth-child(n+2){
++    width:8%;
++  }
++}
++
+ /* Remove old green identity bar on each row */
+ .table-wrap tbody tr{ position:relative; }
+ .table-wrap tbody tr::before{ content:none; }
+
+  diff --git a/index.html b/index.html
+--- a/index.html
++++ b/index.html
+@@ -249,7 +249,9 @@
+ /* Tables */
+-.table-wrap{ overflow-x:hidden; border-radius:14px; border:1px solid var(--line); background:#fff; min-width:0; }
++.table-wrap{
++  overflow-x:auto; -webkit-overflow-scrolling:touch;
++  border-radius:14px; border:1px solid var(--line); background:#fff; min-width:0;
++}
+
+diff --git a/index.html b/index.html
+--- a/index.html
++++ b/index.html
+@@ -735,7 +735,7 @@
+-#sc-form input, #sc-form select{ padding:8px 10px; border-radius:8px; border:1px solid #DDD; font-size:14px; }
++#sc-form input, #sc-form select{ padding:8px 10px; border-radius:8px; border:1px solid #DDD; font-size:16px; }
+
+  
+  
 tbody td{
   padding:14px; border-bottom:1px solid var(--line); font-size:15px; line-height:1.25;
   word-break:normal; overflow-wrap:normal;        /* do NOT break words anywhere */
