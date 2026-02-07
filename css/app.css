@@ -825,3 +825,18 @@ thead th, tbody td{ padding:.55rem .55rem; }
     display: none;
   }
 }
+/* ===== Standings: numeric alignment (global) ===== */
+#g-standings-table td,
+#g-standings-table th,
+#modal-standings td,
+#modal-standings th{
+  font-variant-numeric: tabular-nums;
+}
+
+/* Right-align all numeric columns */
+#g-standings-table td.right,
+#g-standings-table th.right,
+#modal-standings td.right,
+#modal-standings th.right{
+  text-align: right;
+}
