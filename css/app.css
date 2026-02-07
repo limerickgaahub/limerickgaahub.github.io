@@ -263,14 +263,6 @@ td.match, th.match{ text-align:center; }
 #modal-standings{ table-layout:fixed;  width:100%; }
 /* compact table (keep as-is) */
 
-/* Give Team more space in the COMPACT standings table only */
-#g-standings-table{ table-layout:fixed; width:100%; }
-#g-standings-table th:first-child,
-#g-standings-table td:first-child{
-  width:64% !important;
-  white-space:normal;
-  overflow-wrap:anywhere;
-}
 
 /* Compact numeric cols: tight */
 #g-standings-table th:not(:first-child),
@@ -753,10 +745,15 @@ thead th, tbody td{ padding:.55rem .55rem; }
 
 #g-standings-table th:first-child,
 #g-standings-table td:first-child{
-  width:64% !important;              /* Team dominates */
+  width:56% !important;              /* Team dominates */
   text-align:left;
   white-space:normal !important;
   overflow-wrap:anywhere !important;
+}
+
+#g-standings-table td:first-child{
+  color:#1f2937;
+  opacity:.95;
 }
 
 #g-standings-table th:not(:first-child),
