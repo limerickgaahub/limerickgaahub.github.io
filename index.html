@@ -159,9 +159,6 @@
 */
 
 /* ===== Safe dead-space reclaim (sides) ===== */
-body {                 /* was margin: 70px 20px 20px; */
-  margin:70px 12px 20px;
-}
 @media (max-width:880px){
   body {               /* was 60px 10px 10px; override slightly */
     margin:60px 8px 10px;
@@ -248,7 +245,15 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .iconbtn i{ font-size:14px; }
 
 /* Tables */
-.table-wrap{ overflow-x:hidden; border-radius:14px; border:1px solid var(--line); background:#fff; min-width:0; }
+.table-wrap{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#fff;
+  min-width:0;
+}
+
 table{ width:100%; border-collapse:separate; border-spacing:0; table-layout:fixed; }
 thead th{
   position:sticky; top:0; background:#f8fafb; border-bottom:1px solid var(--line);
@@ -262,7 +267,7 @@ tbody td{
 }
 td.right, th.right{ text-align:right; }
 tbody tr:nth-child(even) td{ background:#fcfcfd; }
-tbody tr:hover td{ background:#f1f9f4; }
+#modal-standings tbody tr:hover td { background:#f1f9f4; }
 
 /* Remove old green identity bar on each row */
 .table-wrap tbody tr{ position:relative; }
@@ -311,7 +316,7 @@ td.match, th.match{ text-align:center; }
 #modal-standings td:first-child, #modal-standings th:first-child{
   white-space:normal; word-break:normal; overflow-wrap:normal;
 }
-#modal-standings td:not(:first-child), #modal-standings th:not(:first-child){ text-align:cen; }
+
 #modal-standings tbody td:not(:first-child){ font-variant-numeric:tabular-nums; }
   
 /* Controls lighter */
@@ -419,12 +424,42 @@ td.match, th.match{ text-align:center; }
   }
 }
 
-/* XS phones: keep Venue visible; just hide the R column */
-#team-table thead th:nth-child(1), #team-table tbody td:nth-child(1),
-#date-table thead th:nth-child(1), #date-table tbody td:nth-child(1){ display:none; }
 
 thead th, tbody td{ padding:.55rem .55rem; }
 .match-score{ font-size:12.5px; }
+
+/* Standings modal: compact layout for mobile (expanded view) */
+#standings-modal .table-wrap{ border-radius:12px; }
+
+#modal-standings thead th,
+#modal-standings tbody td{
+  padding:10px 8px;     /* tighter than global */
+  font-size:14px;
+}
+
+/* Team can wrap; numbers stay compact */
+#modal-standings thead th:first-child,
+#modal-standings tbody td:first-child{
+  white-space:normal;   /* override header nowrap for Team */
+  width:38%;
+}
+
+#modal-standings td.right,
+#modal-standings th.right{
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 420px){
+  #modal-standings thead th,
+  #modal-standings tbody td{
+    padding:8px 6px;
+    font-size:13px;
+  }
+  #modal-standings thead th:first-child,
+  #modal-standings tbody td:first-child{
+    width:36%;
+  }
+}
 
 
 /* Footer */
@@ -711,14 +746,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
   text-align: right;
 }
 
-/* === LGH PATCH — widen mobile panels slightly to align edges === */
-@media (max-width:880px){
-  .panel.card{
-    margin-left:-4px;   /* nudge left */
-    margin-right:-4px;  /* nudge right */
-    width: calc(100% + 8px); /* keep overall width neat */
-  }
-}
 
 /* === LGH Share Card — overlay + card === */
 #sharecard-overlay[hidden]{ display:none !important; }
@@ -735,7 +762,7 @@ thead th, tbody td{ padding:.55rem .55rem; }
 #sc-form{ display:grid; grid-template-columns: 1fr 1fr; gap:12px 16px; margin-bottom:12px; }
 #sc-form .sc-row{ display:flex; flex-direction:column; gap:6px; }
 #sc-form label{ font-size:13px; color:#333; }
-#sc-form input, #sc-form select{ padding:8px 10px; border-radius:8px; border:1px solid #DDD; font-size:14px; }
+#sc-form input, #sc-form select{ padding:8px 10px; border-radius:8px; border:1px solid #DDD; font-size:16px; }
 .sc-actions{ grid-column:1/-1; display:flex; gap:8px; padding-top:4px; }
 .sc-actions button{ padding:8px 12px; border-radius:10px; border:1px solid #DDD; background:#f6f6f6; cursor:pointer; }
 .sc-actions button:disabled{ opacity:.5; cursor:not-allowed; }
@@ -1079,37 +1106,29 @@ thead th, tbody td{ padding:.55rem .55rem; }
 /* Center align numeric columns P → Pts in modal standings */
 #modal-standings th:nth-child(n+2):nth-child(-n+9),
 #modal-standings td:nth-child(n+2):nth-child(-n+9) {
-  text-align: center !important;
-  justify-content: center;
-}
-
-/* Center align numeric columns P → Pts in modal standings */
-#modal-standings th:nth-child(n+2):nth-child(-n+9),
-#modal-standings td:nth-child(n+2):nth-child(-n+9) {
   text-align: center !important;     /* override .right */
-  display: table-cell;               /* reset any flex */
+  display: table-cell;               /* keep table semantics */
   vertical-align: middle;            /* tidy vertical placement */
 }
 
 
-/* Light row striping for readability in modal standings */
-#modal-standings tbody tr:nth-child(even) {
-  background-color: #fafafa;  /* subtle grey */
+
+
+/* Modal standings striping (apply to TD so it always shows) */
+#modal-standings tbody tr:nth-child(even) td { background:#fafafa; }
+#modal-standings tbody tr:nth-child(odd)  td { background:#ffffff; }
+
+/* Optional: stop global hover fighting the modal striping */
+#modal-standings tbody tr:hover td { background: inherit; }
+
+/* Modal: right-align numeric columns (P → Pts) */
+#modal-standings th:nth-child(n+2):nth-child(-n+9),
+#modal-standings td:nth-child(n+2):nth-child(-n+9){
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
 }
 
-#modal-standings tbody tr:nth-child(odd) {
-  background-color: #ffffff;  /* keep odd rows clean */
-}
 
-/* Light row striping for readability in modal standings */
-#modal-standings tbody tr:nth-child(even) {
-  background-color: #fafafa;  /* subtle grey */
-}
-
-#modal-standings tbody tr:nth-child(odd) {
-  background-color: #ffffff;  /* keep odd rows clean */
-}
-  
 </style>
 
 <script>
@@ -1396,7 +1415,8 @@ thead th, tbody td{ padding:.55rem .55rem; }
       setTimeout(() => {
         const ok = (window.LGH_V7_3_3_READY === true) || (window.LGH_V7_3_READY === true);
         if (!ok) {
-          document.getElementById('lgh-warning').style.display = 'block';
+          const warnEl = document.getElementById('lgh-warning');
+          if (warnEl) warnEl.style.display = 'block';
           console.error("[LGH] Warning shown: READY flags not true at load.");
         } else {
           console.log("[LGH] App ready; warning suppressed.");
