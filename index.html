@@ -61,7 +61,18 @@
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+
 <link rel="stylesheet" href="/css/app.css?v=7_3_3_fix12">
+
+<script>
+  if (new URLSearchParams(location.search).get('share') === '1') {
+    const l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = '/css/sharecard.css?v=7_3_3_fix12';
+    document.head.appendChild(l);
+  }
+</script>
+
 
 <script>
   // Capture ?share=1 early before syncURL() strips it
