@@ -278,16 +278,6 @@ td.match, th.match{ text-align:center; }
   min-width:3.2rem;
 }
 
-/* Modal numeric columns — give each a sensible width */
-#modal-standings th:nth-child(2), #modal-standings td:nth-child(2){ min-width:3.2rem; white-space:nowrap; } /* P */
-#modal-standings th:nth-child(3), #modal-standings td:nth-child(3){ min-width:3.2rem; white-space:nowrap; } /* W */
-#modal-standings th:nth-child(4), #modal-standings td:nth-child(4){ min-width:3.2rem; white-space:nowrap; } /* D */
-#modal-standings th:nth-child(5), #modal-standings td:nth-child(5){ min-width:3.2rem; white-space:nowrap; } /* L */
-#modal-standings th:nth-child(6), #modal-standings td:nth-child(6){ min-width:5.4rem; white-space:nowrap; } /* PF */
-#modal-standings th:nth-child(7), #modal-standings td:nth-child(7){ min-width:5.4rem; white-space:nowrap; } /* PA */
-#modal-standings th:nth-child(8), #modal-standings td:nth-child(8){ min-width:5.4rem; white-space:nowrap; } /* Diff */
-#modal-standings th:nth-child(9), #modal-standings td:nth-child(9){ min-width:5.2rem; white-space:nowrap; } /* Pts */
-
 
 /* Mobile niceties */
 @supports(padding:max(0px)){
@@ -735,9 +725,43 @@ thead th, tbody td{ padding:.55rem .55rem; }
 /* Optional: stop global hover fighting the modal striping */
 #modal-standings tbody tr:hover td { background: inherit; }
 
-/* Modal: right-align numeric columns (P → Pts) */
-#modal-standings th:nth-child(n+2):nth-child(-n+9),
-#modal-standings td:nth-child(n+2):nth-child(-n+9){
+
+/* ===== Standings: make numbers readable (modal + compact table) ===== */
+
+/* 1) Do NOT use fixed layout for standings */
+#g-standings-table,
+#modal-standings{
+  table-layout: auto !important;
+}
+
+/* 2) Right align + tabular digits everywhere numeric */
+#g-standings-table th:not(:first-child),
+#g-standings-table td:not(:first-child),
+#modal-standings th:not(:first-child),
+#modal-standings td:not(:first-child){
   text-align: right !important;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
+
+/* 3) Give numeric cells real breathing room */
+#modal-standings th,
+#modal-standings td{
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+/* 4) Add subtle vertical separators so columns don’t “glue” */
+#modal-standings th:not(:first-child),
+#modal-standings td:not(:first-child){
+  border-left: 1px solid var(--line);
+}
+
+/* Optional: make the table feel tighter/cleaner */
+#modal-standings{
+  border-collapse: collapse !important; /* overrides your global separate/spacing */
+}
+
+
+
+
