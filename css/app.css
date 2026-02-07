@@ -694,8 +694,6 @@ thead th, tbody td{ padding:.55rem .55rem; }
 }
 
 /* Standings: right-align all numeric cols + tabular numerals */
-#g-standings-table th:not(:first-child),
-#g-standings-table td:not(:first-child),
 #modal-standings th:not(:first-child),
 #modal-standings td:not(:first-child){
   text-align: right;
@@ -840,3 +838,28 @@ thead th, tbody td{ padding:.55rem .55rem; }
 #modal-standings th.right{
   text-align: right;
 }
+/* === FIX: compact standings must reflow to fill container === */
+@media (max-width: 880px){
+  #g-standings-table{
+    table-layout: auto;   /* ← critical */
+  }
+}
+@media (max-width: 880px){
+  #g-standings-table th:first-child,
+  #g-standings-table td:first-child{
+    width: auto !important;
+  }
+}
+/* FIX: allow compact standings to use full width */
+@media (max-width: 880px){
+  #g-standings-table{
+    table-layout: auto;
+  }
+}
+@media (max-width: 880px){
+  #g-standings-table th:first-child,
+  #g-standings-table td:first-child{
+    width: auto !important;
+  }
+}
+
