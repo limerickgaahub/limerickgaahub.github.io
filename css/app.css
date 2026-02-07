@@ -815,3 +815,13 @@ thead th, tbody td{ padding:.55rem .55rem; }
     font-weight: 800;
   }
 }
+/* ===== Standings: mobile compact ===== */
+/* Hide PF / PA in in-page standings table */
+@media (max-width: 880px){
+  #g-standings-table th:nth-child(6),
+  #g-standings-table td:nth-child(6),
+  #g-standings-table th:nth-child(7),
+  #g-standings-table td:nth-child(7){
+    display: none;
+  }
+}
