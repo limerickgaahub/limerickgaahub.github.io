@@ -796,6 +796,59 @@ thead th, tbody td{ padding:.55rem .55rem; }
   table-layout:fixed;
 }
 
+/* =========================================================
+   STANDINGS — COMPACT TABLE (non-modal): Team-first
+   ========================================================= */
+#g-standings-table{
+  table-layout: fixed;
+  width:100%;
+}
+
+#g-standings-table th:first-child,
+#g-standings-table td:first-child{
+  width:64% !important;              /* Team dominates */
+  text-align:left;
+  white-space:normal !important;
+  overflow-wrap:anywhere !important;
+}
+
+#g-standings-table th:not(:first-child),
+#g-standings-table td:not(:first-child){
+  text-align:right !important;
+  font-variant-numeric: tabular-nums;
+  white-space:nowrap;
+  min-width: 2.3rem !important;      /* allow shrink */
+  padding-left:4px !important;       /* don’t waste width */
+  padding-right:4px !important;
+}
+
+
+/* =========================================================
+   STANDINGS — MODAL TABLE: numeric breathing room
+   ========================================================= */
+#modal-standings{
+  table-layout: fixed;
+  width:100%;
+}
+
+#modal-standings th:first-child,
+#modal-standings td:first-child{
+  text-align:left;
+  white-space:normal !important;     /* wrapping allowed */
+  overflow-wrap:anywhere !important;
+}
+
+#modal-standings th:not(:first-child),
+#modal-standings td:not(:first-child){
+  text-align:right !important;
+  font-variant-numeric: tabular-nums;
+  white-space:nowrap;
+  padding-left:8px !important;       /* a bit more room than compact */
+  padding-right:8px !important;
+  border-left:1px solid var(--line); /* stops “13588” visual glue */
+}
+
+
 
 
 
