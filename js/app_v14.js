@@ -520,25 +520,32 @@ away_goals: r.away_goals, away_points: r.away_points
 }
   } // /* LGH PATCH: close rowHTML cleanly */
 
-function updateSportPillLabel(){
-  const n = el('sportpill-label');
-  if(!n) return;
-  n.textContent = (state.section === 'football') ? 'Football' : 'Hurling';
-}
-
-function wireSportPill(){
-  const pill = el('sportpill');
-  const menu = el('sport-menu');
-  if(!pill || !menu) return;
-
-  const open = ()=>{
-    const rect = pill.getBoundingClientRect();
-    menu.style.top  = `${rect.bottom + window.scrollY + 6}px`;
-    menu.style.left = `${rect.left + window.scrollX}px`;
-    menu.classList.add('open');
-    menu.setAttribute('aria-hidden','false');
-    pill.setAttribute('aria-expanded','true');
-  };
+  function updateSportSeg(){
+    const bar = el('sportbar');
+    if(!bar) return;
+  
+    const btns = bar.querySelectorAll('.sportseg-btn[data-sport]');
+    btns.forEach(b=>{
+      const sport = b.getAttribute('data-sport');
+      const on = (sport === state.section);
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  
+  function wireSportSeg(){
+    const bar = el('sportbar');
+    if(!bar) return;
+  
+    bar.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.sportseg-btn[data-sport]');
+      if(!btn) return;
+  
+      const sport = btn.getAttribute('data-sport'); // 'hurling' | 'football'
+      const tab = document.querySelector(`.navtab[data-nav="${sport}"]`);
+      if(tab) tab.click(); // reuse existing navtab logic
+    });
+  }
 
   const close = ()=>{
     menu.classList.remove('open');
@@ -1403,7 +1410,7 @@ const sorted = []
       if (name === 'about') LGH_ANALYTICS.viewAbout();
       else if (name === 'hurling') LGH_ANALYTICS.page('/hurling','Hurling – Limerick GAA Hub');
       else if (name === 'football') LGH_ANALYTICS.page('/football','Football – Limerick GAA Hub');
-      updateSportPillLabel();
+      updateSportSeg();
     });
   });
 
@@ -1700,8 +1707,8 @@ if (di) {
 
      
     buildCompetitionMenu();
-    wireSportPill();
-    updateSportPillLabel();
+    wireSportSeg();
+    updateSportSeg();
     if (typeof rebuildMatchesMenu === 'function') rebuildMatchesMenu();
 
     // Select top-level section
