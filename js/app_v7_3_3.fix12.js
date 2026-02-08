@@ -1380,6 +1380,13 @@ const sorted = []
     });
   });
 
+  // Ensure clicking the brand always scrolls to top (even if already on "/")
+document.querySelectorAll('a.brand').forEach(a=>{
+  a.addEventListener('click', ()=>{
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  });
+});
+
   // Top nav tabs
   $$('.navtab').forEach(tab=>{
     tab.addEventListener('click',()=>{
@@ -1398,6 +1405,28 @@ const sorted = []
     });
   });
 
+function setCompHomeMode(on){
+  document.body.classList.toggle('comp-home', !!on);
+}
+
+function goCompHome(){
+  // clear selection so we show list only
+  state.comp = null;
+  state.group = null;
+
+  // ensure Competition tab is active + panel shown
+  $$('.view-tabs .vt').forEach(s=>s.classList.remove('active'));
+  const compSeg = el('comp-tab');
+  if (compSeg) compSeg.classList.add('active');
+
+  $$('#panel-hurling .panel').forEach(p=>p.style.display='none');
+  el('group-panel').style.display = '';
+
+  setCompHomeMode(true);
+  syncURL(true);
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+  
 // View tabs (Competition/Team/Date)
 $$('.view-tabs .vt').forEach(seg=>{
   seg.addEventListener('click',()=>{
@@ -1410,11 +1439,14 @@ $$('.view-tabs .vt').forEach(seg=>{
     el(target).style.display='';
 
     // Render target view
-    if (target==='group-panel'){ 
-      state.view='matches'; VIEW_MODE='competition'; 
-      renderGroupTable(); 
-      LGH_ANALYTICS.viewCompetition(state.comp, state.group, 'matches'); 
+    if (target==='group-panel'){
+      VIEW_MODE = 'competition';
+
+    // New behaviour: Competition button always goes to Competition Home (list)
+    goCompHome();
+      return;
     }
+
     if (target==='by-team'){ 
       VIEW_MODE='team'; 
       renderByTeam(); 
