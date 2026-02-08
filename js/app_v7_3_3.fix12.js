@@ -572,6 +572,7 @@ function wireSportPill(){
 
 /* Show Competition list instead of dropping straight into Senior Group 1 */
 function setCompetitionHomeMode(on){
+  document.body.classList.toggle('comp-home', !!on);
   const list = el('comp-list');
   const selected = el('comp-selected');
   const tabs = document.querySelector('#group-panel > .section-tabs');
