@@ -1003,3 +1003,13 @@ thead th, tbody td{ padding:.55rem .55rem; }
 #sport-menu .item:hover{
   background: rgba(0,0,0,0.04);
 }
+/* Competition Home mode: show only the competition list area */
+body.comp-home #comp-selected,
+body.comp-home #matches-menu,
+body.comp-home #controls-matches,
+body.comp-home .matches-wrap,
+body.comp-home #g-standings,
+body.comp-home #table-footnote,
+body.comp-home #sharebar-comp {
+  display: none !important;
+}
