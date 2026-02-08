@@ -520,6 +520,79 @@ away_goals: r.away_goals, away_points: r.away_points
 }
   } // /* LGH PATCH: close rowHTML cleanly */
 
+function updateSportPillLabel(){
+  const n = el('sportpill-label');
+  if(!n) return;
+  n.textContent = (state.section === 'football') ? 'Football' : 'Hurling';
+}
+
+function wireSportPill(){
+  const pill = el('sportpill');
+  const menu = el('sport-menu');
+  if(!pill || !menu) return;
+
+  const open = ()=>{
+    const rect = pill.getBoundingClientRect();
+    menu.style.top  = `${rect.bottom + window.scrollY + 6}px`;
+    menu.style.left = `${rect.left + window.scrollX}px`;
+    menu.classList.add('open');
+    menu.setAttribute('aria-hidden','false');
+    pill.setAttribute('aria-expanded','true');
+  };
+
+  const close = ()=>{
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden','true');
+    pill.setAttribute('aria-expanded','false');
+  };
+
+  pill.addEventListener('click', ()=>{
+    if(menu.classList.contains('open')) close();
+    else open();
+  });
+
+  menu.addEventListener('click', (e)=>{
+    const it = e.target.closest('.item');
+    if(!it) return;
+    const sport = it.getAttribute('data-sport');
+    const tab = document.querySelector(`.navtab[data-nav="${sport}"]`);
+    if(tab) tab.click();
+    close();
+  });
+
+  document.addEventListener('click', (e)=>{
+    if(menu.classList.contains('open') && !menu.contains(e.target) && !pill.contains(e.target)){
+      close();
+    }
+  });
+
+  window.addEventListener('resize', close, {passive:true});
+  window.addEventListener('scroll', close, {passive:true});
+}
+
+/* Show Competition list instead of dropping straight into Senior Group 1 */
+function setCompetitionHomeMode(on){
+  const list = el('comp-list');
+  const selected = el('comp-selected');
+  const tabs = document.querySelector('#group-panel > .section-tabs');
+  const matchesMenu = el('matches-menu');
+  const controlsMatches = el('controls-matches');
+  const matchesWrap = document.querySelector('.matches-wrap');
+  const standings = el('g-standings');
+  const foot = el('table-footnote');
+  const share = el('sharebar-comp');
+
+  if(list) list.style.display = on ? '' : 'none';
+  if(selected) selected.style.display = on ? 'none' : '';
+  if(tabs) tabs.style.display = on ? 'none' : '';
+  if(matchesMenu) matchesMenu.style.display = on ? 'none' : '';
+  if(controlsMatches) controlsMatches.style.display = on ? 'none' : '';
+  if(matchesWrap) matchesWrap.style.display = on ? 'none' : '';
+  if(standings) standings.style.display = on ? 'none' : 'none'; // stays hidden until Table view
+  if(foot) foot.style.display = 'none';
+  if(share) share.style.display = on ? 'none' : '';
+}
+  
 function buildCompetitionMenu(){
   // Limit to the seven comps (order preserved)
   const ALL = [
@@ -545,8 +618,10 @@ function buildCompetitionMenu(){
 
 
   // Desired default: Senior -> Group 1
-  function setCompetition(comp, push=false, suppressUrl=false){
+    function setCompetition(comp, push=false, suppressUrl=false){
     state.comp = comp || ALL[0];
+    setCompetitionHomeMode(false);
+
 
     // Default group: Group 1 for all except PIHC (no groups)
       const meta = DISPLAY_NAMES[state.comp] || {};
@@ -621,9 +696,42 @@ function buildCompetitionMenu(){
   window.addEventListener('resize', closeMenu, {passive:true});
   window.addEventListener('scroll', closeMenu, {passive:true});
 
-  // Initial selection (URL overrides if present)
-  let initialComp = params.comp && ALL.includes(params.comp) ? params.comp : ALL[0];
-  setCompetition(initialComp, false, FIRST_LOAD_NO_QUERY);
+    // Render Competition home list (Senior / PI / …)
+  const list = el('comp-list');
+  if(list){
+    list.innerHTML = ALL.map(c=>{
+      const dn = DISPLAY_NAMES[c] || {};
+      const title = dn.label || c;
+      const sub = dn.long || '';
+      return `
+        <div class="comp-row" data-comp="${esc(c)}">
+          <div class="left">
+            <div class="title">${esc(title)}</div>
+            <div class="sub">${esc(sub)}</div>
+          </div>
+          <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+      `;
+    }).join('');
+
+    list.addEventListener('click', (e)=>{
+      const row = e.target.closest('.comp-row');
+      if(!row) return;
+      const comp = row.getAttribute('data-comp');
+      setCompetition(comp, true);
+    });
+  }
+
+  // Initial: if URL has comp, enter it; otherwise show competition list
+  let initialComp = (params.comp && ALL.includes(params.comp)) ? params.comp : null;
+  if(initialComp){
+    setCompetition(initialComp, false, FIRST_LOAD_NO_QUERY);
+  } else {
+    state.comp = null;
+    state.group = null;
+    setCompetitionHomeMode(true);
+    if (!FIRST_LOAD_NO_QUERY) syncURL(false);
+  }
 }
 
 function getGroupsForComp(comp){
@@ -1285,6 +1393,7 @@ const sorted = []
       if (name === 'about') LGH_ANALYTICS.viewAbout();
       else if (name === 'hurling') LGH_ANALYTICS.page('/hurling','Hurling – Limerick GAA Hub');
       else if (name === 'football') LGH_ANALYTICS.page('/football','Football – Limerick GAA Hub');
+      updateSportPillLabel();
     });
   });
 
@@ -1557,6 +1666,8 @@ if (di) {
 
      
     buildCompetitionMenu();
+    wireSportPill();
+    updateSportPillLabel();
     if (typeof rebuildMatchesMenu === 'function') rebuildMatchesMenu();
 
     // Select top-level section
