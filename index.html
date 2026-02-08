@@ -113,6 +113,18 @@
     </div>
   </div>
 
+    <!-- Mobile sport selector (single pill) -->
+  <div class="sportbar card" id="sportbar">
+    <button class="sportpill" id="sportpill" type="button" aria-haspopup="menu" aria-expanded="false">
+      <span id="sportpill-label">Hurling</span>
+      <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="menu" id="sport-menu" role="menu" aria-hidden="true">
+    <div class="item" data-sport="hurling">Hurling</div>
+    <div class="item" data-sport="football">Football</div>
+  </div>
+
 
   <!-- Hurling -->
   <div id="panel-hurling" class="card">
@@ -124,6 +136,7 @@
     <div class="menu" id="comp-menu" role="menu" aria-hidden="true"></div>
 
     <div class="panel card" id="group-panel" style="margin-top:6px;">
+        <div id="comp-list" class="comp-list" style="display:none;"></div>
         <div class="comp-selected" id="comp-selected" aria-live="polite"></div>
 
     <div class="section-tabs">
