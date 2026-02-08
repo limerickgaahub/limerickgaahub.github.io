@@ -675,9 +675,10 @@ function buildCompetitionMenu(){
     menu.setAttribute('aria-hidden','true');
   };
 
-  compTab.addEventListener('click', ()=>{ 
-    if(menu.classList.contains('open')) closeMenu(); else openMenu();
-  });
+  compTab.addEventListener('click', (e)=>{ 
+  e.preventDefault();
+  goCompHome();
+});
 
   menu.addEventListener('click', (e)=>{
     const it = e.target.closest('.item');
@@ -1381,11 +1382,12 @@ const sorted = []
   });
 
   // Ensure clicking the brand always scrolls to top (even if already on "/")
-document.querySelectorAll('a.brand').forEach(a=>{
-  a.addEventListener('click', ()=>{
-    window.scrollTo({ top: 0, behavior: 'auto' });
+  document.querySelectorAll('a.brand').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      e.preventDefault();
+      goCompHome();
+    });
   });
-});
 
   // Top nav tabs
   $$('.navtab').forEach(tab=>{
@@ -1405,9 +1407,6 @@ document.querySelectorAll('a.brand').forEach(a=>{
     });
   });
 
-function setCompHomeMode(on){
-  document.body.classList.toggle('comp-home', !!on);
-}
 
 function goCompHome(){
   // clear selection so we show list only
@@ -1422,7 +1421,9 @@ function goCompHome(){
   $$('#panel-hurling .panel').forEach(p=>p.style.display='none');
   el('group-panel').style.display = '';
 
-  setCompHomeMode(true);
+  // IMPORTANT: use the REAL UI toggler
+  setCompetitionHomeMode(true);
+
   syncURL(true);
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
