@@ -1027,3 +1027,47 @@ body.comp-home #sharebar-comp {
 /* Competition dropdown no longer used */
 #comp-menu { display: none !important; }
 
+/* ===== Sport segmented toggle (replaces big sportpill) ===== */
+.sportbar{
+  padding: 6px 10px;       /* less vertical space */
+  margin-top: 6px;
+  border-radius: 14px;
+}
+
+/* container */
+.sportseg{
+  display:flex;
+  width:100%;
+  max-width: 520px;        /* stops it looking like a runway on desktop */
+  margin: 0 auto;          /* centered */
+  padding: 3px;            /* thin outer gutter */
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+/* each half */
+.sportseg button{
+  flex:1;
+  border:0;
+  background: transparent;
+  border-radius: 999px;
+  padding: 8px 12px;       /* controls height */
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* active half */
+.sportseg button.active{
+  background: var(--accent);
+  color:#fff;
+}
+
+/* inactive half */
+.sportseg button:not(.active){
+  color: var(--text);
+}
+
+
