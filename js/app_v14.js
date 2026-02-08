@@ -547,36 +547,6 @@ away_goals: r.away_goals, away_points: r.away_points
     });
   }
 
-  const close = ()=>{
-    menu.classList.remove('open');
-    menu.setAttribute('aria-hidden','true');
-    pill.setAttribute('aria-expanded','false');
-  };
-
-  pill.addEventListener('click', ()=>{
-    if(menu.classList.contains('open')) close();
-    else open();
-  });
-
-  menu.addEventListener('click', (e)=>{
-    const it = e.target.closest('.item');
-    if(!it) return;
-    const sport = it.getAttribute('data-sport');
-    const tab = document.querySelector(`.navtab[data-nav="${sport}"]`);
-    if(tab) tab.click();
-    close();
-  });
-
-  document.addEventListener('click', (e)=>{
-    if(menu.classList.contains('open') && !menu.contains(e.target) && !pill.contains(e.target)){
-      close();
-    }
-  });
-
-  window.addEventListener('resize', close, {passive:true});
-  window.addEventListener('scroll', close, {passive:true});
-}
-
 /* Show Competition list instead of dropping straight into Senior Group 1 */
 function setCompetitionHomeMode(on){
   document.body.classList.toggle('comp-home', !!on);
@@ -617,6 +587,7 @@ function buildCompetitionMenu(){
   // Build menu items (no groups here)
     // Build menu items
   const menu = el('comp-menu');
+  if (!menu) return;
   menu.innerHTML = ALL.map(c => {
     const dn = DISPLAY_NAMES[c];
     // Use short label (dn.label) for dropdown; fallback to c
@@ -1723,8 +1694,16 @@ if (di) {
     } else if (params.v === 'date') {
       (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-date"]'));
     } else {
-      // Default (matches) — render directly so the URL stays as /
-      renderGroupTable();
+      // Clean homepage: show the Competition list (your intended default)
+      // If a specific competition is deep-linked, buildCompetitionMenu() already handled it.
+      if (!params.comp && FIRST_LOAD_NO_QUERY) {
+        goCompHome();
+      } else if (params.comp) {
+        // do nothing: buildCompetitionMenu() already called setCompetition()
+      } else {
+        // non-empty query but no explicit view; safe fallback
+        renderGroupTable();
+      }
     }
   })();
 
