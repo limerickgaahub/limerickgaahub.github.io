@@ -1173,4 +1173,35 @@ body.comp-home #sharebar-comp {
   color: #7b818a; /* one notch lighter than muted */
 }
 
+/* Competition Home cards: always show title + subtitle */
+#comp-list .comp-row.comp-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+#comp-list .comp-left{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+#comp-list .comp-title{
+  font-weight:700;
+  line-height:1.15;
+}
+
+#comp-list .comp-subtitle{
+  display:block !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  font-size:13px;
+  line-height:1.25;
+  color:var(--muted);
+  white-space:normal;   /* allows wrap */
+}
+
+
 
