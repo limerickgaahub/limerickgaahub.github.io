@@ -1127,6 +1127,50 @@ body.comp-home #sharebar-comp {
     max-width: none;
   }
 }
+/* =========================================================
+   LGH polish: unify pills + comp card accent (v7_3_3_fix12+)
+   ========================================================= */
 
+/* A) Unify pill sizing (top pills + Group/Table pills) */
+#panel-hurling .section-tabs.view-tabs .seg.vt,
+#panel-hurling #group-panel .section-tabs .seg {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Make sure inner pills don't look "bigger" due to extra padding/margins */
+#panel-hurling #group-panel .section-tabs { gap: 8px; }
+#panel-hurling #group-panel .section-tabs .seg { margin: 0; }
+
+/* Optional: ensure text doesn’t jump vertically on different elements */
+#panel-hurling .section-tabs.view-tabs .seg.vt { line-height: 1; }
+#panel-hurling #group-panel .section-tabs .seg { line-height: 1; }
+
+/* B) Competition list cards (will work once JS adds .comp-card hooks) */
+#comp-list .comp-card{
+  position: relative;
+  overflow: hidden; /* keeps accent inside rounded corners */
+}
+
+#comp-list .comp-card::before{
+  content:"";
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width: 3px;               /* 2–3px: use 3 for the “slick” look */
+  background: var(--accent);
+  opacity: .95;
+}
+
+/* Subtitle de-emphasis (optional, mild) */
+#comp-list .comp-card .comp-subtitle{
+  color: #7b818a; /* one notch lighter than muted */
+}
 
 
