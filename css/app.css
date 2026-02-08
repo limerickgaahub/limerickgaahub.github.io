@@ -887,3 +887,62 @@ thead th, tbody td{ padding:.55rem .55rem; }
     border-radius: 0;
   }
 }
+/* Mobile sport pill (single selector under header) */
+.sportbar{
+  margin-top: 8px;
+  padding: 10px;
+}
+
+.sportpill{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  font-weight: 700;
+}
+
+/* Hide the old header navtabs on small screens (use burger + sport pill instead) */
+@media (max-width: 720px){
+  .navtabs{ display:none !important; }
+}
+
+/* Competition list (Competition home screen) */
+.comp-list{
+  padding: 6px 2px;
+}
+
+.comp-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  margin-bottom: 8px;
+  cursor:pointer;
+}
+
+.comp-row .left{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.comp-row .title{
+  font-weight:800;
+}
+
+.comp-row .sub{
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.comp-row .chev{
+  color: var(--muted);
+}
