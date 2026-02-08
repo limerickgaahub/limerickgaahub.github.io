@@ -1069,5 +1069,64 @@ body.comp-home #sharebar-comp {
 .sportseg button:not(.active){
   color: var(--text);
 }
+/* === LGH PATCH — sport toggle should match content width === */
+.sportseg{
+  max-width: none !important;   /* remove the 520px cap */
+  width: 100% !important;       /* fill the available content width */
+  margin: 0 !important;         /* stop centering narrow control */
+}
+@media (max-width: 880px){
+  .sportbar{ padding-left: 0; padding-right: 0; } /* optional: flush align */
+}
+/* === LGH PATCH — controls pills centered + more modern === */
+.controls.card{
+  justify-content: center !important;   /* centre the whole control group */
+  flex-wrap: wrap;                       /* prevents overflow on narrow screens */
+  gap: 10px !important;
+}
+
+/* make each control look like a modern pill */
+.pretty-select,
+.pretty-input{
+  min-width: 220px;                      /* stops them looking tiny on desktop */
+  max-width: 360px;                      /* stops them going comically wide */
+  box-shadow: 0 1px 0 rgba(0,0,0,.03);   /* subtle polish */
+}
+
+/* ensure the text inside is visually centred vertically */
+.pretty-select select,
+.pretty-input input[type="date"]{
+  height: 44px;                          /* modern tap target */
+  padding-top: 0;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* subtle hover/focus so it feels “app-like” */
+.pretty-select:hover,
+.pretty-input:hover{
+  border-color: #d7dde3;
+}
+
+.pretty-select:focus-within,
+.pretty-input:focus-within{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,107,60,.12);
+}
+
+/* mobile: let them fill the width cleanly */
+@media (max-width: 880px){
+  .controls.card{
+    justify-content: stretch !important;
+  }
+  .pretty-select,
+  .pretty-input{
+    flex: 1 1 260px;                     /* grows, wraps, stays usable */
+    min-width: 0;                         /* critical for flex shrinking */
+    max-width: none;
+  }
+}
+
 
 
