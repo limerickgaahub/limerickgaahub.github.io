@@ -4,7 +4,6 @@ const warn = (...a) => { if (!__PROD__) console.warn(...a); };
 const err  = (...a) => console.error(...a);
 
 
-
 log("[LGH] app js evaluating");
 window.LGH_V7_3_READY = true;
 window.LGH_V7_3_3_READY = true;
@@ -683,15 +682,13 @@ function buildCompetitionMenu(){
       const sub = dn.long || '';
       return `
         <div class="comp-row comp-card" data-comp="${esc(c)}">
-          <div class="left">
+          <div class="left comp-left">
             <div class="title comp-title">${esc(title)}</div>
             <div class="sub comp-subtitle">${esc(sub)}</div>
           </div>
           <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
         </div>
       `;
-    }).join('');
-
 
     list.addEventListener('click', (e)=>{
       const row = e.target.closest('.comp-row');
