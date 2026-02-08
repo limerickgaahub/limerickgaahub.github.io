@@ -676,27 +676,32 @@ function buildCompetitionMenu(){
   window.addEventListener('scroll', closeMenu, {passive:true});
 
     // Render Competition home list (Senior / PI / …)
-    list.innerHTML = ALL.map(c=>{
-      const dn = DISPLAY_NAMES[c] || {};
-      const title = dn.label || c;
-      const sub = dn.long || '';
-      return `
-        <div class="comp-row comp-card" data-comp="${esc(c)}">
-          <div class="left comp-left">
-            <div class="title comp-title">${esc(title)}</div>
-            <div class="sub comp-subtitle">${esc(sub)}</div>
+    const list = el('comp-list');
+    if (list) {
+      list.innerHTML = ALL.map(c => {
+        const dn = DISPLAY_NAMES[c] || {};
+        const title = dn.label || c;
+        const sub = dn.long || '';
+        return `
+          <div class="comp-row comp-card" data-comp="${esc(c)}">
+            <div class="left comp-left">
+              <div class="title comp-title">${esc(title)}</div>
+              <div class="sub comp-subtitle">${esc(sub)}</div>
+            </div>
+            <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
           </div>
-          <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
-        </div>
-      `;
+        `;
+      }).join('');
+  
+      // bind ONCE (outside the map)
+      list.addEventListener('click', (e) => {
+        const row = e.target.closest('.comp-row');
+        if (!row) return;
+        const comp = row.getAttribute('data-comp');
+        setCompetition(comp, true);
+      });
+    }
 
-    list.addEventListener('click', (e)=>{
-      const row = e.target.closest('.comp-row');
-      if(!row) return;
-      const comp = row.getAttribute('data-comp');
-      setCompetition(comp, true);
-    });
-  }
 
   // Initial: if URL has comp, enter it; otherwise show competition list
   let initialComp = (params.comp && ALL.includes(params.comp)) ? params.comp : null;
