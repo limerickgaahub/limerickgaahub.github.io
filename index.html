@@ -113,24 +113,47 @@
     </div>
   </div>
 
-  <!-- Mobile sport selector (segmented toggle) -->
-  <div class="sportbar" id="sportbar" aria-label="Sport selector">
-    <div class="sportseg" role="tablist" aria-label="Choose sport">
-      <button class="sportseg-btn active" type="button" data-sport="hurling" aria-pressed="true">
-        Hurling
-      </button>
-      <button class="sportseg-btn" type="button" data-sport="football" aria-pressed="false">
-        Football
-      </button>
+  <div class="sportbar-wrap">
+    <div class="sportbar" id="sportbar" aria-label="Sport selector">
+      <div class="sportseg" role="tablist" aria-label="Choose sport">
+        <button class="sportseg-btn active" type="button" data-sport="hurling" aria-pressed="true">
+          Hurling
+        </button>
+        <button class="sportseg-btn" type="button" data-sport="football" aria-pressed="false">
+          Football
+        </button>
+      </div>
     </div>
   </div>
 
+
   <!-- Hurling -->
   <div id="panel-hurling" class="card">
-    <div class="section-tabs view-tabs" id="view-tabs">
-      <div class="seg vt active" data-target="group-panel" id="comp-tab">Competition</div>
-      <div class="seg vt" data-target="by-team">Club</div>
-      <div class="seg vt" data-target="by-date">Date</div>
+    <div class="section-tabs view-tabs" id="view-tabs" role="tablist" aria-label="View selector">
+      <button class="seg vt active"
+              role="tab"
+              aria-selected="true"
+              data-target="group-panel"
+              id="comp-tab"
+              type="button">
+        Competition
+      </button>
+    
+      <button class="seg vt"
+              role="tab"
+              aria-selected="false"
+              data-target="by-team"
+              type="button">
+        Club
+      </button>
+    
+      <button class="seg vt"
+              role="tab"
+              aria-selected="false"
+              data-target="by-date"
+              type="button">
+        Date
+      </button>
     </div>
     <div class="menu" id="comp-menu" role="menu" aria-hidden="true"></div>
 
@@ -152,7 +175,7 @@
   <label for="status" class="sr-only">Show</label>
   <div class="pretty-select">
     <select id="status">
-      <option value="">All (fixtures & results)</option>
+      <option value="">All</option>
       <option value="Result">Results only</option>
       <option value="Fixture">Fixtures only</option>
     </select>
