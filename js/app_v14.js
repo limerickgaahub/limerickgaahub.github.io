@@ -677,22 +677,21 @@ function buildCompetitionMenu(){
   window.addEventListener('scroll', closeMenu, {passive:true});
 
     // Render Competition home list (Senior / PI / …)
-  const list = el('comp-list');
-  if(list){
     list.innerHTML = ALL.map(c=>{
       const dn = DISPLAY_NAMES[c] || {};
       const title = dn.label || c;
       const sub = dn.long || '';
       return `
-        <div class="comp-row" data-comp="${esc(c)}">
+        <div class="comp-row comp-card" data-comp="${esc(c)}">
           <div class="left">
-            <div class="title">${esc(title)}</div>
-            <div class="sub">${esc(sub)}</div>
+            <div class="title comp-title">${esc(title)}</div>
+            <div class="sub comp-subtitle">${esc(sub)}</div>
           </div>
           <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
         </div>
       `;
     }).join('');
+
 
     list.addEventListener('click', (e)=>{
       const row = e.target.closest('.comp-row');
