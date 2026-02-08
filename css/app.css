@@ -946,3 +946,60 @@ thead th, tbody td{ padding:.55rem .55rem; }
 .comp-row .chev{
   color: var(--muted);
 }
+/* Mobile sport selector (single pill) */
+.sportbar{
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 18px;
+}
+
+.sportpill{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding: 12px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: #fff;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+.sportpill i{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(0,0,0,0.02);
+}
+/* Sport dropdown menu */
+#sport-menu.menu{
+  position:absolute;
+  z-index: 9999;
+  min-width: 220px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.14);
+  padding: 6px;
+  display:none;
+}
+
+#sport-menu.menu.open{ display:block; }
+
+#sport-menu .item{
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor:pointer;
+}
+
+#sport-menu .item:hover{
+  background: rgba(0,0,0,0.04);
+}
