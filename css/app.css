@@ -1013,3 +1013,6 @@ body.comp-home #table-footnote,
 body.comp-home #sharebar-comp {
   display: none !important;
 }
+/* Competition dropdown no longer used */
+#comp-menu { display: none !important; }
+
