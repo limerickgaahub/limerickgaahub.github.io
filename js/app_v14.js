@@ -1718,20 +1718,26 @@ if (di) {
   window.LGH.isResult = (s) => /^(res|final|walkover)/i.test(String(s||''));
   window.LGH.isKO = (m) => String(m.group||'').toLowerCase()==='knockout' || String(m.stage||'').toLowerCase()==='knockout';
 
-// --- Keep "All / Fixtures / Results" visible only on Matches, and restore when returning ---
+// --- Keep "All / Fixtures / Results" visible ONLY when actually viewing Matches (not comp home, not table) ---
 function updateMatchFilterVisibility() {
   const mc = document.getElementById('controls-matches');
   if (!mc) return;
 
-  const groupPanel = document.getElementById('group-panel');
-  const standingsPanel = document.getElementById('g-standings'); // table container
+  const compList   = document.getElementById('comp-list');      // competition home list
+  const matchesWrap= document.querySelector('.matches-wrap');   // matches table wrapper
+  const standings  = document.getElementById('g-standings');    // standings container (Table view)
 
-  const isHidden = (el) => !el || el.hidden || getComputedStyle(el).display === 'none';
+  const isVisible = (el) => !!el && getComputedStyle(el).display !== 'none';
 
-  // Show control when Matches list is visible (group panel shown & standings hidden)
-  const show = groupPanel && !isHidden(groupPanel) && isHidden(standingsPanel);
+  // We ONLY show the filter when:
+  // - the competition list is NOT showing (i.e., we're inside a chosen competition)
+  // - matches table is visible
+  // - standings/table is NOT visible
+  const show =
+    !isVisible(compList) &&
+    isVisible(matchesWrap) &&
+    !isVisible(standings);
 
-  mc.hidden = !show;
   mc.style.display = show ? '' : 'none';
 }
 
