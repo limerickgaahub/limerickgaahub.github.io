@@ -1199,13 +1199,6 @@ body.comp-home #sharebar-comp {
   color:var(--muted);
   white-space:normal;   /* allows wrap */
 }
-/* ===== Compact view tabs: League | Championship | Club | Date ===== */
-
-#panel-hurling .section-tabs.view-tabs{
-  display:flex;
-  flex-wrap:nowrap;          /* force single row */
-  gap:4px;                   /* tighter gap */
-}
 
 /* Individual pills */
 #panel-hurling .section-tabs.view-tabs .seg.vt{
@@ -1219,9 +1212,7 @@ body.comp-home #sharebar-comp {
   white-space:nowrap;
   text-align:center;
 }
-#panel-hurling .section-tabs.view-tabs .seg.vt{
-  letter-spacing:-0.1px;
-}
+
 /* ===== View tabs: let short pills be content-width; let Championship expand ===== */
 
 #panel-hurling .section-tabs.view-tabs{
@@ -1249,5 +1240,42 @@ body.comp-home #sharebar-comp {
   flex:1 1 auto;          /* this one expands */
   overflow:hidden;        /* prevent ugly spill */
   text-overflow:ellipsis; /* safety net (rare once others shrink) */
+}
+/* ===== FINAL: Top view tabs (League | Championship | Club | Date) ===== */
+
+#panel-hurling .section-tabs.view-tabs{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:6px;                 /* slightly more breathing room */
+  align-items:center;
+}
+
+/* Base pill style */
+#panel-hurling .section-tabs.view-tabs .seg.vt{
+  flex:0 0 auto;           /* content width by default */
+  min-width:0;
+  height:36px;
+  padding:0 12px;          /* nice “space around word” */
+  border-radius:999px;     /* true pill looks best here */
+  font-size:13px;
+  font-weight:600;
+  line-height:36px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;
+  letter-spacing:0;        /* undo squashing */
+}
+
+/* Championship: expand, BUT don't get greedy */
+#panel-hurling .section-tabs.view-tabs #comp-tab{
+  flex:1 1 auto;
+  max-width: 170px;        /* key: prevents the pill looking oversized */
+  justify-content:center;
+  overflow:hidden;
+  text-overflow:ellipsis;  /* safety net only */
+}
+#panel-hurling .section-tabs.view-tabs .seg.vt:not(#comp-tab){
+  padding:0 14px;
 }
 
