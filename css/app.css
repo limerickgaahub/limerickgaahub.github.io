@@ -1199,6 +1199,28 @@ body.comp-home #sharebar-comp {
   color:var(--muted);
   white-space:normal;   /* allows wrap */
 }
+/* ===== Compact view tabs: League | Championship | Club | Date ===== */
 
+#panel-hurling .section-tabs.view-tabs{
+  display:flex;
+  flex-wrap:nowrap;          /* force single row */
+  gap:4px;                   /* tighter gap */
+}
+
+/* Individual pills */
+#panel-hurling .section-tabs.view-tabs .seg.vt{
+  flex:1 1 0;                /* allow pills to shrink evenly */
+  min-width:0;               /* IMPORTANT: allows text to compress */
+  height:36px;               /* slimmer */
+  padding:0 8px;             /* less horizontal padding */
+  line-height:36px;          /* vertical centering */
+  font-size:13px;            /* slightly smaller text */
+  border-radius:10px;        /* not full pill – cleaner & denser */
+  white-space:nowrap;
+  text-align:center;
+}
+#panel-hurling .section-tabs.view-tabs .seg.vt{
+  letter-spacing:-0.1px;
+}
 
 
