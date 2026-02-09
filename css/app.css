@@ -1222,5 +1222,32 @@ body.comp-home #sharebar-comp {
 #panel-hurling .section-tabs.view-tabs .seg.vt{
   letter-spacing:-0.1px;
 }
+/* ===== View tabs: let short pills be content-width; let Championship expand ===== */
 
+#panel-hurling .section-tabs.view-tabs{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:4px;
+  align-items:center;
+}
+
+/* Default: pills size to their text */
+#panel-hurling .section-tabs.view-tabs .seg.vt{
+  flex:0 0 auto;          /* NOT equal-width anymore */
+  min-width:0;
+  height:36px;
+  padding:0 10px;
+  line-height:36px;
+  font-size:13px;
+  border-radius:10px;
+  white-space:nowrap;
+  text-align:center;
+}
+
+/* Championship pill: take the remaining space */
+#panel-hurling .section-tabs.view-tabs #comp-tab{
+  flex:1 1 auto;          /* this one expands */
+  overflow:hidden;        /* prevent ugly spill */
+  text-overflow:ellipsis; /* safety net (rare once others shrink) */
+}
 
