@@ -1391,6 +1391,7 @@ function goCompHome(){
   // clear selection so we show list only
   state.comp = null;
   state.group = null;
+  state.view = 'matches';
 
   // ensure Competition tab is active + panel shown
   $$('.view-tabs .vt').forEach(s=>s.classList.remove('active'));
@@ -1403,7 +1404,7 @@ function goCompHome(){
   // IMPORTANT: use the REAL UI toggler
   setCompetitionHomeMode(true);
 
-  syncURL(true);
+  syncURL(false);
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
   
@@ -1413,6 +1414,11 @@ $$('.view-tabs .vt').forEach(seg=>{
     seg.parentElement.querySelectorAll('.seg').forEach(s=>s.classList.remove('active'));
     seg.classList.add('active');
     const target = seg.getAttribute('data-target');
+
+    state.view =
+    (target === 'group-panel') ? 'matches' :
+    (target === 'by-team')     ? 'team' :
+    (target === 'by-date')     ? 'date' : state.view;
 
     // Switch visible panel
     $$('#panel-hurling .panel').forEach(p=>p.style.display='none');
@@ -1468,7 +1474,7 @@ const CLUB_EXCLUDE = new Set([
 
 
 function renderByTeam(){
-  VIEW_MODE='team'; state.view='team';
+  VIEW_MODE='team';
   const sel = el('team');
 
   const cleanName = s => String(s || '')
@@ -1530,7 +1536,7 @@ function renderByTeam(){
 
 
 function renderByDate(){
-  VIEW_MODE='date'; state.view='date';
+  VIEW_MODE='date';
 
   const tbl   = el('date-table');
   const thead = tbl.tHead || tbl.createTHead();
