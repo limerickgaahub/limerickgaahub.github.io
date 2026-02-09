@@ -129,32 +129,42 @@
 
   <!-- Hurling -->
   <div id="panel-hurling" class="card">
-    <div class="section-tabs view-tabs" id="view-tabs" role="tablist" aria-label="View selector">
-      <button class="seg vt active"
-              role="tab"
-              aria-selected="true"
-              data-target="group-panel"
-              id="comp-tab"
-              type="button">
-        Competition
-      </button>
-    
-      <button class="seg vt"
-              role="tab"
-              aria-selected="false"
-              data-target="by-team"
-              type="button">
-        Club
-      </button>
-    
-      <button class="seg vt"
-              role="tab"
-              aria-selected="false"
-              data-target="by-date"
-              type="button">
-        Date
-      </button>
-    </div>
+  <div class="section-tabs view-tabs" id="view-tabs" role="tablist" aria-label="View selector">
+  
+    <button class="seg vt"
+            role="tab"
+            aria-selected="false"
+            data-target="league-panel"
+            id="league-tab"
+            type="button">
+      League
+    </button>
+  
+    <button class="seg vt active"
+            role="tab"
+            aria-selected="true"
+            data-target="group-panel"
+            id="comp-tab"
+            type="button">
+      Championship
+    </button>
+  
+    <button class="seg vt"
+            role="tab"
+            aria-selected="false"
+            data-target="by-team"
+            type="button">
+      Club
+    </button>
+  
+    <button class="seg vt"
+            role="tab"
+            aria-selected="false"
+            data-target="by-date"
+            type="button">
+      Date
+    </button>
+  </div>
     <div class="menu" id="comp-menu" role="menu" aria-hidden="true"></div>
 
     <div class="panel card" id="group-panel" style="margin-top:6px;">
@@ -227,6 +237,11 @@
       </div> 
     </div>
 
+    <div class="panel card" id="league-panel" style="display:none; margin-top:6px;">
+      <h2>League</h2>
+      <div class="sm-muted">Awaiting fixture release.</div>
+    </div>
+    
       <div class="panel card" id="by-team" style="display:none; margin-top:6px;">
         <h2>By Club</h2>
         <div class="controls card" id="controls-team">
