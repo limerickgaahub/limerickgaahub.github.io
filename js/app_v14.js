@@ -1278,7 +1278,7 @@ const sorted = []
     if (state.comp)   sp.set('comp',  state.comp);
     if (state.group)  sp.set('group', state.group);
     if (state.team)   sp.set('team',  state.team);
-    if (state.date)   sp.set('date',  state.date);
+    if (state.view === 'date' && state.date) sp.set('date', state.date);
       // Preserve the share gate if it was enabled when the page loaded
     if (window.__LGH_SHARE_ENABLED === true) sp.set('share', '1');
 
@@ -1415,8 +1415,13 @@ $$('.view-tabs .vt').forEach(seg=>{
     seg.classList.add('active');
     const target = seg.getAttribute('data-target');
 
+    // Clear view-specific state when leaving that view
+    if (target !== 'by-date') state.date = null;
+    if (target !== 'by-team') state.team = null;
+    
     state.view =
     (target === 'group-panel') ? 'matches' :
+    (target === 'league-panel') ? 'league'  :
     (target === 'by-team')     ? 'team' :
     (target === 'by-date')     ? 'date' : state.view;
 
