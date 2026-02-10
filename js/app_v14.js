@@ -1857,6 +1857,14 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// Ensure Archive works everywhere (desktop + burger)
+document.querySelectorAll('[data-nav="archive"]').forEach(link=>{
+  link.addEventListener('click', (e)=>{
+    e.preventDefault();
+    window.location.href = '/?season=2025&s=hurling&comp=Senior%20Hurling%20Championship';
+  });
+});
+
 // Also recompute on hash changes (deep links) and once at load end
 window.addEventListener('hashchange', updateMatchFilterVisibility);
 updateMatchFilterVisibility();
