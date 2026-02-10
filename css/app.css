@@ -146,7 +146,32 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .offcanvas.open{ transform:translateX(0); }
 .offcanvas .oc-head{ padding:14px 16px; font-weight:800; border-bottom:1px solid var(--line); }
 .offcanvas .oc-body{ padding:10px; display:flex; flex-direction:column; gap:8px; }
-.offcanvas .oc-link{ padding:10px 12px; border-radius:12px; background:#f6f7f8; cursor:pointer; font-weight:700; }
+
+.offcanvas .oc-link{
+  padding:10px 12px;
+  border-radius:12px;
+  background:#f6f7f8;
+  cursor:pointer;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.offcanvas .oc-badge{
+  font-size:12px;
+  padding:2px 8px;
+  border-radius:999px;
+  background:rgba(0,107,60,.12);
+  color:var(--accent);
+  font-weight:800;
+}
+
+.offcanvas .oc-link.oc-archive{
+  background:#f2fbf5;
+}
+
 .oc-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .2s; z-index:110; }
 .oc-backdrop.show{ opacity:1; pointer-events:auto; }
 
