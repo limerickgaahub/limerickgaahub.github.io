@@ -196,16 +196,11 @@ const sortDateOnly = (a, b) =>
 
   function setSeasonBanner(){
     const b = ensureSeasonBanner();
-    const isArchive = (state.season === '2025');
-
-    // Keep it simple: one compact "chip row" inside the banner
+  
     b.hidden = false;
     b.innerHTML = `
       <div class="season-chips" role="status" aria-label="Season indicator">
-        <span class="chip ${isArchive ? 'chip-archive' : 'chip-live'}">
-          ${isArchive ? 'Archive' : 'Season'}
-        </span>
-        <span class="chip chip-season">${esc(state.season)}</span>
+        <span class="season-chip" data-season="${esc(state.season)}">${esc(state.season)}</span>
       </div>
     `;
   }
@@ -1455,18 +1450,19 @@ const sorted = []
       tab.classList.add('active');
   
       const name = tab.dataset.nav;
-  
-      // Archive is a link, not a section
+    
+      // Archive is a link, not a section — ALWAYS handle this first
       if (name === 'archive') {
         window.location.href = '/?season=2025&s=hurling&comp=Senior%20Hurling%20Championship';
         return;
       }
-
+    
       // If user is in Archive and taps Hurling/Football, go back to CURRENT season
       if (state.season === '2025' && (name === 'hurling' || name === 'football')) {
         window.location.href = `/?s=${name}`;
         return;
       }
+
 
       // Hide sport selector on About
       const sportWrap = document.querySelector('.sportbar-wrap');
