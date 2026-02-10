@@ -114,16 +114,22 @@
   <div class="oc-backdrop" id="oc-backdrop"></div>
   <div class="offcanvas" id="offcanvas" aria-hidden="true">
     <div class="oc-head">Menu</div>
+    
     <div class="oc-body">
-      <div class="oc-link" data-nav="hurling">Hurling</div>
-      <div class="oc-link" data-nav="football">Football</div>
-      <div class="oc-link" data-nav="about">About</div>
+  <div class="oc-link" data-nav="hurling" data-season="2026">Hurling (2026)</div>
 
-      <button id="a2hs-btn" class="menu-item">
-        Add to Home Screen
-      </button>
-    </div>
+  <div class="oc-link oc-archive" data-nav="hurling" data-season="2025">
+    2025 Championship <span class="oc-badge">Archive</span>
   </div>
+
+  <div class="oc-link" data-nav="football">Football</div>
+  <div class="oc-link" data-nav="about">About</div>
+
+  <button id="a2hs-btn" class="menu-item">
+    Add to Home Screen
+  </button>
+</div>    
+</div>
 
   <div class="sportbar-wrap">
     <div class="sportbar" id="sportbar" aria-label="Sport selector">
@@ -400,14 +406,33 @@
       const close=()=>{ oc.classList.remove('open'); bd.classList.remove('show'); oc.setAttribute('aria-hidden','true'); };
       burger.addEventListener('click', open);
       bd.addEventListener('click', close);
+      
       oc.addEventListener('click', e=>{
-        const link=e.target.closest('.oc-link');
-        if(link){
-          const tab=document.querySelector(`.navtab[data-nav="${link.dataset.nav}"]`);
-          if(tab) tab.click();
-          close();
-        }
-      });
+  const link = e.target.closest('.oc-link');
+  if(!link) return;
+
+  const season = link.dataset.season;
+
+  // If a season is chosen, do a clean reload so app_v14.js fetches the right JSONs
+  if (season) {
+    const u = new URL(location.href);
+    const share = u.searchParams.get('share'); // preserve share gate if present
+
+    u.search = ''; // wipe everything
+    if (share === '1') u.searchParams.set('share', '1');
+
+    // Only write ?season=... when NOT default (keeps / clean for 2026)
+    if (season !== '2026') u.searchParams.set('season', season);
+
+    location.href = u.pathname + (u.search ? u.search : '');
+    return;
+  }
+
+  // Normal nav behaviour
+  const tab=document.querySelector(`.navtab[data-nav="${link.dataset.nav}"]`);
+  if(tab) tab.click();
+  close();
+});      
     })();
 
     function closeCompMenu(){
