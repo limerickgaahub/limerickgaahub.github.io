@@ -30,9 +30,16 @@ function showWarn(msg){
   window.LGH_V7_3_READY = true;
   window.LGH_V7_3_3_READY = true;
 
-  const DATA_URL = 'data/hurling_2025.json';
+  // Season-aware data sources
+  const DEFAULT_SEASON = '2026';
+  const SEASON_SOURCES = {
+    '2026': { data: 'data/hurling_2026.json', ko: 'datastatic/knockout_2026.json' },
+    '2025': { data: 'data/archive/hurling_2025.json', ko: 'datastatic/archive/knockout_2025.json' }
+  };
 
-  const KO_URL = 'datastatic/knockout_2025.json';
+  // These are reassigned once we read URL params
+  let DATA_URL = SEASON_SOURCES[DEFAULT_SEASON].data;
+  let KO_URL   = SEASON_SOURCES[DEFAULT_SEASON].ko;
 
   function isKO(m){
     return (m.stage === 'knockout') || ((m.group || '').toLowerCase() === 'knockout');
@@ -163,7 +170,16 @@ const sortDateOnly = (a, b) =>
 
 
   const params=new Proxy(new URLSearchParams(location.search),{get:(sp,prop)=>sp.get(prop)});
-  const state={ section:'hurling', view:'matches', comp:null, group:null, team:null, date:null };
+  const state={ season:DEFAULT_SEASON, section:'hurling', view:'matches', comp:null, group:null, team:null, date:null };
+
+  // Read season from URL (?season=2025). Default is 2026 (no query param needed).
+  const reqSeason = params.season || DEFAULT_SEASON;
+  state.season = SEASON_SOURCES[reqSeason] ? reqSeason : DEFAULT_SEASON;
+
+  DATA_URL = SEASON_SOURCES[state.season].data;
+  KO_URL   = SEASON_SOURCES[state.season].ko;
+
+  
   const FIRST_LOAD_NO_QUERY = !location.search;   // true if user landed without query params
 
   let MATCHES=[];
@@ -280,7 +296,11 @@ async function load(){
   try {
     let j = null;
     let stale = false;
-      const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache:'no-store' });
+      const bust = (state.season === '2026') ? `?t=${Date.now()}` : '';
+      const opts = (state.season === '2026') ? { cache:'no-store' } : { cache:'force-cache' };
+      
+      const res = await fetch(`${DATA_URL}${bust}`, opts);
+      
       if (res.ok) {
         j = await res.json();
       } else {
@@ -367,7 +387,11 @@ if (isWO) {
 
     // 2) Manual Knockout overlay (OUTSIDE the map)
     try {
-      const r2 = await fetch(`${KO_URL}?t=${Date.now()}`, { cache:'no-store' });
+      const bust2 = (state.season === '2026') ? `?t=${Date.now()}` : '';
+      const opts2 = (state.season === '2026') ? { cache:'no-store' } : { cache:'force-cache' };
+
+      const r2 = await fetch(`${KO_URL}${bust2}`, opts2);
+
       if (r2.ok) {
         const ko = await r2.json();
         const normalized = (ko.matches || ko || []).map(r => {
@@ -403,6 +427,14 @@ if (isWO) {
       warn('[LGH] KO overlay skipped:', e);
     }
 
+    if (!MATCHES.length) {
+      showWarn(
+        state.season === '2026'
+          ? '2026 data not loaded yet — open Menu → 2025 Championship (Archive) for last season.'
+          : 'No matches found for this season.'
+      );
+    }
+    
 } catch (e) {
 err('[LGH] Data load threw error:', e);
 // Optional but recommended fail-soft if the outer try trips:
@@ -1259,6 +1291,7 @@ const sorted = []
     if (state.group)  sp.set('group', state.group);
     if (state.team)   sp.set('team',  state.team);
     if (state.view === 'date' && state.date) sp.set('date', state.date);
+    if (state.season && state.season !== DEFAULT_SEASON) sp.set('season', state.season);
       // Preserve the share gate if it was enabled when the page loaded
     if (window.__LGH_SHARE_ENABLED === true) sp.set('share', '1');
 
