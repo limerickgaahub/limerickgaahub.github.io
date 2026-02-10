@@ -1458,11 +1458,11 @@ const sorted = []
       }
     
       // If user is in Archive and taps Hurling/Football, go back to CURRENT season
-      if (state.season === '2025' && (name === 'hurling' || name === 'football')) {
+      // BUT do NOT do this when the URL explicitly requested the archive season (boot/deep-link)
+      if (state.season === '2025' && (name === 'hurling' || name === 'football') && !params.season) {
         window.location.href = `/?s=${name}`;
         return;
       }
-
 
       // Hide sport selector on About
       const sportWrap = document.querySelector('.sportbar-wrap');
