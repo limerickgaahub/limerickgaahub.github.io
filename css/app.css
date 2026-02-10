@@ -1303,4 +1303,45 @@ body.comp-home #sharebar-comp {
 #panel-hurling .section-tabs.view-tabs .seg.vt:not(#comp-tab){
   padding:0 14px;
 }
+/* Season banner + chip (right aligned) */
+#season-banner {
+  display: flex;
+  justify-content: flex-end;   /* push content to right */
+  align-items: center;
+  margin: 8px 0 0;
+  padding: 0 2px;              /* tiny breathing room */
+}
 
+#season-banner .season-chips {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* The actual chip */
+#season-banner .season-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+}
+
+/* Optional subtle differentiation between seasons */
+#season-banner .season-chip[data-season="2025"]{
+  opacity: 0.9;
+}
+#season-banner .season-chip[data-season="2026"]{
+  opacity: 1;
+}
+#season-banner .season-chip{
+  border-color: rgba(0,107,60,0.25);
+}
