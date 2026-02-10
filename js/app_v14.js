@@ -179,6 +179,59 @@ const sortDateOnly = (a, b) =>
   DATA_URL = SEASON_SOURCES[state.season].data;
   KO_URL   = SEASON_SOURCES[state.season].ko;
 
+    // ---------- Season UI (chips/banner + hide League pill in archive) ----------
+  function ensureSeasonBanner(){
+    let b = document.getElementById('season-banner');
+    if (!b) {
+      b = document.createElement('div');
+      b.id = 'season-banner';
+      b.className = 'season-banner';
+      // Put it just under the view tabs if possible, else at top of hurling panel
+      const viewTabs = document.querySelector('#panel-hurling .section-tabs.view-tabs');
+      if (viewTabs && viewTabs.parentElement) viewTabs.insertAdjacentElement('afterend', b);
+      else document.querySelector('#panel-hurling')?.prepend(b);
+    }
+    return b;
+  }
+
+  function setSeasonBanner(){
+    const b = ensureSeasonBanner();
+    const isArchive = (state.season === '2025');
+
+    // Keep it simple: one compact "chip row" inside the banner
+    b.hidden = false;
+    b.innerHTML = `
+      <div class="season-chips" role="status" aria-label="Season indicator">
+        <span class="chip ${isArchive ? 'chip-archive' : 'chip-live'}">
+          ${isArchive ? 'Archive' : 'Season'}
+        </span>
+        <span class="chip chip-season">${esc(state.season)}</span>
+      </div>
+    `;
+  }
+
+  function toggleLeaguePillForSeason(){
+    const isArchive = (state.season === '2025');
+
+    // The League pill is a view-tab button with data-target="league-panel" in your codebase
+    const leagueBtn = document.querySelector('#panel-hurling .view-tabs .vt[data-target="league-panel"]');
+    if (!leagueBtn) return; // nothing to do
+
+    leagueBtn.style.display = isArchive ? 'none' : '';
+
+    // Safety: if user somehow is on League while in archive, kick them back to Competition
+    if (isArchive && leagueBtn.classList.contains('active')) {
+      const compBtn = document.querySelector('#panel-hurling .view-tabs .vt[data-target="group-panel"]');
+      if (compBtn) compBtn.click();
+    }
+  }
+
+  function applySeasonUI(){
+    setSeasonBanner();
+    toggleLeaguePillForSeason();
+  }
+  // --------------------------------------------------------------------------
+
   
   const FIRST_LOAD_NO_QUERY = !location.search;   // true if user landed without query params
 
@@ -1418,6 +1471,7 @@ const sorted = []
       else if (name === 'football') LGH_ANALYTICS.page('/football','Football – Limerick GAA Hub');
   
       updateSportSeg();
+      applySeasonUI();
     });
   });
 
@@ -1726,6 +1780,7 @@ if (di) {
     buildCompetitionMenu();
     wireSportSeg();
     updateSportSeg();
+    applySeasonUI();
     if (typeof rebuildMatchesMenu === 'function') rebuildMatchesMenu();
 
     // Select top-level section
