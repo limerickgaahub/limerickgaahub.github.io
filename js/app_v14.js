@@ -1433,10 +1433,17 @@ const sorted = []
     });
   });
 
-  // Ensure clicking the brand always scrolls to top (even if already on "/")
+  // Ensure clicking the brand always goes to CURRENT season home
   document.querySelectorAll('a.brand').forEach(a=>{
     a.addEventListener('click', (e)=>{
       e.preventDefault();
+  
+      // If user is in Archive, take them back to the main (2026) home
+      if (state.season === '2025') {
+        window.location.href = '/';
+        return;
+      }
+  
       goCompHome();
     });
   });
@@ -1454,7 +1461,13 @@ const sorted = []
         window.location.href = '/?season=2025&s=hurling&comp=Senior%20Hurling%20Championship';
         return;
       }
-  
+
+      // If user is in Archive and taps Hurling/Football, go back to CURRENT season
+      if (state.season === '2025' && (name === 'hurling' || name === 'football')) {
+        window.location.href = `/?s=${name}`;
+        return;
+      }
+
       // Hide sport selector on About
       const sportWrap = document.querySelector('.sportbar-wrap');
       if (sportWrap) sportWrap.style.display = (name === 'about') ? 'none' : '';
