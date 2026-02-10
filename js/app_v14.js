@@ -608,7 +608,7 @@ function buildCompetitionMenu(){
 
 
   // Desired default: Senior -> Group 1
-    function setCompetition(comp, push=false, suppressUrl=false){
+    function setCompetition(comp, push=false, suppressUrl=false, groupOverride=null){
     state.comp = comp || ALL[0];
     setCompetitionHomeMode(false);
 
@@ -625,7 +625,14 @@ function buildCompetitionMenu(){
         state.group = null;
       }
 
-
+      // Optional deep-link override (?group=...)
+      if (groupOverride) {
+        const allowed = getGroupsForComp(state.comp); // includes 'Knockout' if applicable
+        if (allowed.includes(groupOverride)) {
+          state.group = groupOverride;
+        }
+      }
+      
     // Selected header
     const dn = DISPLAY_NAMES[state.comp];
     el('comp-selected').textContent = (dn && dn.long) ? dn.long : state.comp;
@@ -718,7 +725,7 @@ function buildCompetitionMenu(){
   // Initial: if URL has comp, enter it; otherwise show competition list
   let initialComp = (params.comp && ALL.includes(params.comp)) ? params.comp : null;
   if(initialComp){
-    setCompetition(initialComp, false, FIRST_LOAD_NO_QUERY);
+    setCompetition(initialComp, false, FIRST_LOAD_NO_QUERY, params.group || null);
   } else {
     state.comp = null;
     state.group = null;
@@ -1386,19 +1393,33 @@ const sorted = []
     tab.addEventListener('click',()=>{
       $$('.navtab').forEach(t=>t.classList.remove('active'));
       tab.classList.add('active');
-      const name=tab.dataset.nav;
-      state.section=name;
-      el('panel-hurling').style.display=(name==='hurling')?'':'none';
-      el('panel-football').style.display=(name==='football')?'':'none';
-      el('panel-about').style.display=(name==='about')?'':'none';
+  
+      const name = tab.dataset.nav;
+  
+      // Archive is a link, not a section
+      if (name === 'archive') {
+        window.location.href = '/?season=2025&s=hurling&comp=Senior%20Hurling%20Championship';
+        return;
+      }
+  
+      // Hide sport selector on About
+      const sportWrap = document.querySelector('.sportbar-wrap');
+      if (sportWrap) sportWrap.style.display = (name === 'about') ? 'none' : '';
+  
+      state.section = name;
+      el('panel-hurling').style.display  = (name==='hurling')  ? '' : 'none';
+      el('panel-football').style.display = (name==='football') ? '' : 'none';
+      el('panel-about').style.display    = (name==='about')    ? '' : 'none';
+  
       syncURL(true);
+  
       if (name === 'about') LGH_ANALYTICS.viewAbout();
-      else if (name === 'hurling') LGH_ANALYTICS.page('/hurling','Hurling – Limerick GAA Hub');
+      else if (name === 'hurling')  LGH_ANALYTICS.page('/hurling','Hurling – Limerick GAA Hub');
       else if (name === 'football') LGH_ANALYTICS.page('/football','Football – Limerick GAA Hub');
+  
       updateSportSeg();
     });
   });
-
 
 function goCompHome(){
   // clear selection so we show list only
