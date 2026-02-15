@@ -1,35 +1,8 @@
 /* THEME */
 :root{
-  --card:#ffffff;
-  --bg:#f6f7f8;
-  --text:#111;
-  --muted:#6b7280;
-
-  --accent:#006B3C;
-  --accent-2:#88C999;
-
-  /* refined neutrals */
-  --line:#e6e9ee;          /* slightly cooler, less “grey” */
-  --line-2:#dbe1e8;        /* hover/active border */
-  --surface:#ffffff;       /* base surface */
-  --surface-2:#f8fafb;     /* subtle raised surface */
-  --surface-3:#f1f4f7;     /* pill background */
-  --tint:rgba(0,107,60,.06);
-  --tint-2:rgba(0,107,60,.10);
-
-  /* radii (standardized) */
-  --r-lg:18px;
-  --r-md:14px;
-  --r-sm:10px;
-
-  /* elevation (consistent) */
-  --shadow-sm:0 1px 2px rgba(16,24,40,.06);
-  --shadow-md:0 10px 30px rgba(16,24,40,.10);
-
-  /* focus ring */
-  --ring:0 0 0 3px rgba(0,107,60,.14);
+  --card:#ffffff; --muted:#6b7280; --accent:#006B3C; --accent-2:#88C999;
+  --line:#e9ecef; --text:#111; --bg:#f6f7f8;
 }
-
 
 /* A11y-only label */
 .sr-only {
@@ -83,26 +56,30 @@
 
 /* Hide the browser's small date chevron,
    but keep the native picker behavior */
-.pretty-input input[type="date"]::-webkit-calendar-picker-indicator{
-  opacity:.65;
-  cursor:pointer;
+.pretty-input input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0 !important;           /* invisible */
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  border: none !important;
+  background: transparent !important;
+
+  /* keep it clickable to trigger the calendar */
+  pointer-events: auto !important;
+  position: absolute;
+  right: 0; top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 
-/* show native calendar icon and keep it subtle */
-.pretty-input input[type="date"]::-webkit-calendar-picker-indicator{
-  opacity:.65;
-  cursor:pointer;
+/* Chevron to match the Club dropdown */
+.pretty-input::after {
+  content:"";
+  position:absolute; right:.8rem; top:50%; transform:translateY(-50%) rotate(45deg);
+  width:.55rem; height:.55rem; border-right:2px solid #666; border-bottom:2px solid #666;
+  pointer-events:none;
 }
 
-/* remove any weird inner controls on webkit */
-.pretty-input input[type="date"]::-webkit-inner-spin-button,
-.pretty-input input[type="date"]::-webkit-clear-button{
-  display:none;
-}
-.pretty-input input[type="date"]{
-  padding-right:1rem; /* was 2.6rem */
-}
 
 /* Improve font rendering sharpness */
 .sharecard, .sc-table-standings td, .sc-table-standings th {
@@ -154,12 +131,7 @@ td.dcol, th.dcol,
 td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   
 /* Header */
-.header{
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  background:rgba(255,255,255,.92);
-  backdrop-filter:saturate(1.2) blur(8px);
-  border-bottom:1px solid rgba(16,24,40,.08);
-}
+.header{ position:fixed; top:0; left:0; right:0; z-index:100; background:#fff; border-bottom:1px solid var(--line); }
 .header::before{ content:""; display:block; height:4px; background:var(--accent); }
 .header-inner{
   display:flex; align-items:center; justify-content:space-between;
@@ -216,30 +188,11 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   background:#f2fbf5;
 }
 
-.offcanvas{
-  background:var(--surface);
-  box-shadow:var(--shadow-md);
-  border-left:1px solid rgba(16,24,40,.08);
-}
-.offcanvas .oc-link{
-  background:var(--surface-2);
-  border:1px solid rgba(16,24,40,.06);
-}
-.offcanvas .oc-link:hover{ background:var(--tint); }
-
 .oc-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .2s; z-index:110; }
 .oc-backdrop.show{ opacity:1; pointer-events:auto; }
 
 /* Cards & sections */
-.card{
-  background:var(--surface);
-  border-radius:var(--r-lg);
-  border:1px solid rgba(16,24,40,.06);     /* ultra subtle, avoids “double outline” */
-  box-shadow:var(--shadow-sm);
-  padding:14px;
-  max-width:1100px;
-  margin:0 auto;
-}
+.card{ background:#fff; border-radius:18px; box-shadow:0 8px 24px rgba(0,0,0,.05); padding:14px; max-width:1100px; margin:0 auto; }
 .section-tabs{ display:flex; gap:10px; margin:6px 0 12px; flex-wrap:wrap; }
 .section-tabs .seg{ padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
 .section-tabs .seg.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
@@ -268,16 +221,7 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 
 
 /* Competition dropdown */
-.menu{
-  background:var(--surface);
-  border:1px solid rgba(16,24,40,.10);
-  border-radius:var(--r-md);
-  box-shadow:var(--shadow-md);
-}
-.menu .item:hover,
-.menu .item.active{ background:var(--tint); }
-
-
+.menu{ position:absolute; min-width:280px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 28px rgba(0,0,0,.12); padding:6px; display:none; max-height:60vh; overflow:auto; z-index:130; }
 .menu.open{ display:block; }
 .menu .item{ padding:12px 14px; border-radius:10px; cursor:pointer; font-weight:700; }
 .menu .item:hover,.menu .item.active{ background:#f1f9f4; }
@@ -317,16 +261,6 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   color:#fff;
 }
 
-/* icon buttons get consistent hover + border */
-.iconbtn{
-  border-radius:var(--r-sm);
-  border:1px solid rgba(16,24,40,.10);
-  background:var(--surface);
-  box-shadow:var(--shadow-sm);
-}
-.iconbtn:hover{ border-color:rgba(16,24,40,.16); }
-
-
 /* =========================================================
    TABLES + MATCH ROWS (single source of truth)
    ========================================================= */
@@ -334,11 +268,10 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .table-wrap{
   overflow-x:auto;
   -webkit-overflow-scrolling:touch;
-  border-radius:var(--r-md);
-  border:1px solid rgba(16,24,40,.10);
-  background:var(--surface);
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#fff;
   min-width:0;
-  box-shadow:var(--shadow-sm);
 }
 
 /* Default table sizing */
@@ -349,20 +282,18 @@ table{
   table-layout:fixed;
 }
 
-/* UPDATE header background + borders */
 thead th{
-  background:var(--surface-2);
-  border-bottom:1px solid rgba(16,24,40,.10);
-}
-
-/* soften row borders slightly */
-tbody td{
-  border-bottom:1px solid rgba(16,24,40,.08);
-}
-
-/* soften row borders slightly */
-tbody td{
-  border-bottom:1px solid rgba(16,24,40,.08);
+  position:sticky;
+  top:0;
+  z-index:1;
+  background:#f8fafb;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+  font-weight:800;
+  color:#1f2937;
+  text-align:left;
+  padding:12px 12px;
+  white-space:nowrap;
 }
 
 tbody td{
@@ -374,9 +305,6 @@ tbody td{
   word-break:normal;
   overflow-wrap:normal;
 }
-
-/* hover tint uses accent tint */
-tbody tr:hover td{ background:var(--tint); }
 
 /* zebra + hover: micro-depth, not “big cards” */
 tbody tr:nth-child(even) td{ background:#fbfcfd; }
@@ -540,7 +468,7 @@ td.match, th.match{ text-align:center; }
 .pretty-input input[type="date"]{
   height:44px;
   font-size:15px;
-  padding-right:1rem;
+  padding-right:2.6rem; /* space for chevron */
   font-variant-numeric:tabular-nums;
 }
 
@@ -717,30 +645,32 @@ body.comp-home #sharebar-comp{
 /* =========================================================
    SEASON CHIP (small, right aligned)
    ========================================================= */
-/* Season/Archive indicator – simple text, no pill UI */
 #season-banner{
   display:flex;
   justify-content:flex-end;
   align-items:center;
   margin:8px 0 0;
   padding:0 2px;
-  font-size:12px;
-  font-weight:800;
-  color:var(--muted);
 }
-
-/* kill the chip UI */
-#season-banner .season-chips,
-#season-banner .season-chip{ display:none !important; }
-
-/* allow JS to just set textContent on #season-banner */
-#season-banner::before{
-  content:"";
-  width:6px; height:6px;
+#season-banner .season-chips{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+#season-banner .season-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:20px;
+  padding:0 7px;
   border-radius:999px;
-  background:rgba(0,107,60,.35);
-  margin-right:8px;
-  display:inline-block;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.2px;
+  border:1px solid rgba(0,107,60,0.25);
+  background:#fff;
+  color:var(--text);
+  box-shadow:0 1px 0 rgba(0,0,0,0.04);
 }
 
 /* =========================================================
