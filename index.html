@@ -465,7 +465,48 @@
         });
       });
 
+      // ===== Force Matches/Table view to actually show/hide the right sections =====
+  (function(){
+    const groupPanel   = document.getElementById('group-panel');
+    if (!groupPanel) return;
+  
+    const matchesWrap  = groupPanel.querySelector('.matches-wrap');
+    const standings    = document.getElementById('g-standings');
+    const footnote     = document.getElementById('table-footnote');
+    const controls     = document.getElementById('controls-matches');
+  
+    const segMatches   = groupPanel.querySelector('.section-tabs .seg[data-view="matches"]');
+    const segTable     = groupPanel.querySelector('.section-tabs .seg[data-view="table"]');
+  
+    function setActive(seg){
+      groupPanel.querySelectorAll('.section-tabs .seg').forEach(s=>s.classList.remove('active'));
+      if (seg) seg.classList.add('active');
+    }
+  
+    function showMatches(){
+      setActive(segMatches);
+      if (matchesWrap) matchesWrap.style.display = '';
+      if (standings)   standings.style.display = 'none';
+      if (footnote)    footnote.style.display = 'none';
+      if (controls)    controls.style.display = '';     // keep your filter visible in matches
+    }
+  
+    function showTable(){
+      setActive(segTable);
+      if (matchesWrap) matchesWrap.style.display = 'none';
+      if (standings)   standings.style.display = '';    // IMPORTANT: no CSS !important
+      if (footnote)    footnote.style.display = '';
+      if (controls)    controls.style.display = 'none'; // hide matches-only filter in table view
+    }
+  
+    if (segMatches) segMatches.addEventListener('click', showMatches);
+    if (segTable)   segTable.addEventListener('click', showTable);
+  
+    // On first load, default to Matches
+    showMatches();
+  })();
 
+    
     
     // Back button
 
@@ -488,8 +529,6 @@
           console.log("[LGH] App ready; warning suppressed.");
         }
         // Ensure default view on first load
-        document.getElementById('g-standings').style.display = 'none';
-        document.querySelector('.matches-wrap').style.display = '';
       }, 50);
     });
 
