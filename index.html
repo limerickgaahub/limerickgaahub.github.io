@@ -491,14 +491,14 @@
       if (controls)    controls.style.display = '';     // keep your filter visible in matches
     }
   
-    function showTable(){
-      setActive(segTable);
-      if (matchesWrap) matchesWrap.style.display = 'none';
-      if (standings)   standings.style.display = '';    // IMPORTANT: no CSS !important
-      if (footnote)    footnote.style.display = '';
-      if (controls)    controls.style.display = 'none'; // hide matches-only filter in table view
-    }
-  
+  function showTable(){
+    setActive(segTable);
+    if (matchesWrap) matchesWrap.style.display = 'none';
+    if (standings)   standings.style.display = 'block';   // force visible
+    if (footnote)    footnote.style.display = 'block';    // force visible
+    if (controls)    controls.style.display = 'none';
+  }
+
     if (segMatches) segMatches.addEventListener('click', showMatches);
     if (segTable)   segTable.addEventListener('click', showTable);
   
