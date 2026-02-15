@@ -133,8 +133,17 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 /* Header */
 .header{ position:fixed; top:0; left:0; right:0; z-index:100; background:#fff; border-bottom:1px solid var(--line); }
 .header::before{ content:""; display:block; height:4px; background:var(--accent); }
-.header-inner{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; max-width:1100px; margin:0 auto; }
-.brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+.header-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:nowrap;
+  gap:12px; padding:10px 16px; max-width:1100px; margin:0 auto;
+}
+.brand{
+  flex:1 1 auto;
+  min-width:0;
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none; color:inherit;
+}
 .brand img{ width:20px; height:20px; }
 .navtabs{ display:flex; gap:8px; align-items:center; }
 .navtab{ padding:8px 12px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; }
@@ -234,6 +243,23 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .sharebar .spacer{ flex:1; }
 .iconbtn{ display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:8px 10px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; font-weight:700; font-size:13px; }
 .iconbtn i{ font-size:14px; }
+
+.iconbtn[data-role="copy"],
+.iconbtn[data-role="share"]{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+}
+
+.iconbtn[data-role="copy"]:hover,
+.iconbtn[data-role="share"]:hover{
+  filter:brightness(1.05);
+}
+
+.iconbtn[data-role="copy"] i,
+.iconbtn[data-role="share"] i{
+  color:#fff;
+}
 
 /* =========================================================
    TABLES + MATCH ROWS (single source of truth)
@@ -435,6 +461,27 @@ td.match, th.match{ text-align:center; }
   box-shadow:0 0 0 3px rgba(0,107,60,.12);
 }
 
+.pretty-input{
+  position:relative;
+}
+
+.pretty-input input[type="date"]{
+  height:44px;
+  font-size:15px;
+  padding-right:2.6rem; /* space for chevron */
+  font-variant-numeric:tabular-nums;
+}
+
+/* Invisible tap target over the input (keeps it clean) */
+.date-open{
+  position:absolute;
+  inset:0;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  pointer-events:none;  /* do NOT block the input */
+}
+
 /* =========================================================
    COMPETITION HOME LIST
    ========================================================= */
@@ -490,8 +537,10 @@ body.comp-home #sharebar-comp{
    ========================================================= */
 
 /* Standings hidden by default; shown only when Table pill is active */
-#g-standings{ display:none; }
-
+#g-standings,
+#table-footnote{
+  display:none;
+}
 
 #g-standings-table,
 #modal-standings{
@@ -555,6 +604,12 @@ body.comp-home #sharebar-comp{
   white-space:nowrap;
   border-left:1px solid var(--line);
 }
+
+/* Modal is not used — hard-disable it so it never renders */
+#standings-modal{
+  display:none !important;
+}
+
 
 /* =========================================================
    SPORT SEGMENTED TOGGLE (keep only one system)
@@ -633,4 +688,47 @@ body.comp-home #sharebar-comp{
 @media (max-width:880px){
   .sharebar{ justify-content:center; }
   .sharebar .spacer{ display:none; }
+}
+
+.site-footer{
+  max-width:1100px;
+  margin:14px auto 24px;
+  text-align:center;
+  color:var(--muted);
+  font-weight:800;
+  font-size:12px;
+}
+
+.site-footer::after{
+  content:"";
+  display:block;
+  margin:10px auto 0;
+  width:80px;
+  height:3px;
+  border-radius:999px;
+  background:rgba(0,107,60,.25);
+}
+
+.scroll-top-btn{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  left:auto;
+  z-index:200;
+  width:44px;
+  height:44px;
+  border-radius:999px;
+  border:1px solid var(--accent);
+  background:var(--accent);
+  color:#fff;
+  display:none;              /* your JS toggles it */
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+}
+
+.scroll-top-btn i{ color:#fff; }
+
+.scroll-top-btn:hover{
+  filter:brightness(1.06);
 }
