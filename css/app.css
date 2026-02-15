@@ -536,17 +536,10 @@ body.comp-home #sharebar-comp{
    STANDINGS (compact in-page + roomy modal)
    ========================================================= */
 
-/* Standings hidden by default; shown only when Table pill is active */
-/* Hide table by default */
-#g-standings,
-#table-footnote {
-  display: none;
-}
+/* Standings containers default to visible when JS removes inline display:none */
+#g-standings { display:block; }
+#table-footnote { display:block; }
 
-/* Show table only when Table view is active */
-.section-tabs .seg.active[data-view="table"] ~ * #g-standings {
-  display: block;
-}
 
 #g-standings-table,
 #modal-standings{
