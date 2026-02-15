@@ -537,9 +537,15 @@ body.comp-home #sharebar-comp{
    ========================================================= */
 
 /* Standings hidden by default; shown only when Table pill is active */
+/* Hide table by default */
 #g-standings,
-#table-footnote{
-  display:none;
+#table-footnote {
+  display: none;
+}
+
+/* Show table only when Table view is active */
+.section-tabs .seg.active[data-view="table"] ~ * #g-standings {
+  display: block;
 }
 
 #g-standings-table,
