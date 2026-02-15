@@ -140,6 +140,13 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .navtab{ padding:8px 12px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; }
 .navtab.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
 
+.brand{ min-width:0; }                 /* allow shrink inside flex */
+.brand h1{
+  white-space:nowrap;                  /* force single line */
+  overflow:hidden;
+  text-overflow:ellipsis;              /* safety on tiny widths */
+}
+
 /* Burger / offcanvas */
 .burger{ display:none; background:none; border:none; font-size:20px; padding:8px; }
 .offcanvas{ position:fixed; inset:0 0 0 auto; width:80%; max-width:320px; background:#fff; box-shadow:-10px 0 24px rgba(0,0,0,.12); transform:translateX(100%); transition:transform .25s ease; z-index:120; }
@@ -180,6 +187,29 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .section-tabs{ display:flex; gap:10px; margin:6px 0 12px; flex-wrap:wrap; }
 .section-tabs .seg{ padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
 .section-tabs .seg.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
+
+/* View tabs must stay on one row */
+.section-tabs.view-tabs{
+  flex-wrap:nowrap;
+  gap:6px;
+}
+
+/* Keep pills compact so they fit */
+.section-tabs.view-tabs .seg.vt{
+  flex:0 0 auto;
+  white-space:nowrap;
+  padding:8px 10px;
+}
+
+/* Let Championship expand into remaining space */
+.section-tabs.view-tabs #comp-tab{
+  flex:1 1 auto;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+
 
 /* Competition dropdown */
 .menu{ position:absolute; min-width:280px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 28px rgba(0,0,0,.12); padding:6px; display:none; max-height:60vh; overflow:auto; z-index:130; }
@@ -319,6 +349,9 @@ td.match, th.match{ text-align:center; }
   body{ margin:60px 8px 10px; }
   .card{ padding:10px; }
 
+  .navtabs{ display:none; }
+  .burger{ display:inline-block; }
+
   thead th, tbody td{
     padding:9px 6px;
     font-size:13px;
@@ -455,6 +488,11 @@ body.comp-home #sharebar-comp{
 /* =========================================================
    STANDINGS (compact in-page + roomy modal)
    ========================================================= */
+
+/* Standings hidden by default; shown only when Table pill is active */
+#g-standings{ display:none; }
+
+
 #g-standings-table,
 #modal-standings{
   width:100%;
