@@ -603,12 +603,7 @@ body.comp-home #sharebar-comp{
 
 /* Mobile: hide PF/PA in compact standings */
 @media (max-width:880px){
-  #g-standings-table th:nth-child(6),
-  #g-standings-table td:nth-child(6),
-  #g-standings-table th:nth-child(7),
-  #g-standings-table td:nth-child(7){
-    display:none;
-  }
+
   /* Let Team absorb remaining width cleanly */
   #g-standings-table{ table-layout:auto; }
   #g-standings-table th:first-child,
@@ -639,6 +634,35 @@ body.comp-home #sharebar-comp{
 /* Modal is not used — hard-disable it so it never renders */
 #standings-modal{
   display:none !important;
+}
+
+/* Standings: compact numeric columns so everything fits */
+#g-standings-table{
+  table-layout:fixed;
+  width:100%;
+}
+
+#g-standings-table thead th,
+#g-standings-table tbody td{
+  padding:8px 4px;
+  font-size:13px;
+}
+
+/* Team column gets flexible width */
+#g-standings-table th:first-child,
+#g-standings-table td:first-child{
+  width:auto;
+  min-width:0;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+
+/* All numeric columns tighter */
+#g-standings-table th:not(:first-child),
+#g-standings-table td:not(:first-child){
+  width:9%;
+  text-align:right;
+  white-space:nowrap;
 }
 
 
@@ -764,3 +788,11 @@ body.comp-home #sharebar-comp{
 .scroll-top-btn:hover{
   filter:brightness(1.06);
 }
+
+/* Remove standings expand button */
+#standings-expand,
+.standings-expand,
+.iconbtn[data-role="standings-expand"]{
+  display:none !important;
+}
+
