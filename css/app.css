@@ -49,7 +49,8 @@
 .pretty-select::after {
   content:"";
   position:absolute; right:.8rem; top:50%; transform:translateY(-50%) rotate(45deg);
-  width:.55rem; height:.55rem; border-right:2px solid #666; border-bottom:2px solid #666;
+  border-right:2px solid var(--muted);
+  border-bottom:2px solid var(--muted);
   pointer-events:none;
 }
 
@@ -93,9 +94,6 @@
     padding:10px;      /* already apply 10px below; keep it consistent */
   }
 }
-/* Optional: make the main cards slightly rounder/tighter to reduce the “double-outline” feel */
-.card { border:1px solid var(--line); }  /* adds a clean single boundary so the inner table border feels intentional */
-.table-wrap { border-color:#eef0f2; }    /* soften inner border */
 
   
 *{ box-sizing:border-box; }
@@ -240,7 +238,19 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 
 
 /* Competition dropdown */
-.menu{ position:absolute; min-width:280px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 28px rgba(0,0,0,.12); padding:6px; display:none; max-height:60vh; overflow:auto; z-index:130; }
+.menu{
+  position:absolute;
+  min-width:280px;
+  background:var(--surface);
+  border:1px solid rgba(16,24,40,.10);
+  border-radius:12px;
+  box-shadow:var(--shadow-md);
+  padding:6px;
+  display:none;
+  max-height:60vh;
+  overflow:auto;
+  z-index:130;
+}
 .menu.open{ display:block; }
 .menu .item{ padding:12px 14px; border-radius:10px; cursor:pointer; font-weight:700; }
 .menu .item:hover,.menu .item.active{ background:var(--tint); }
@@ -564,35 +574,42 @@ body.comp-home #sharebar-comp{
   display:none !important;
 }
 
-/* =========================================================
-   STANDINGS (compact in-page + roomy modal)
-   ========================================================= */
-
-/* Standings containers default to visible when JS removes inline display:none */
+/* Default: standings visible unless comp-home */
 #g-standings { display:block; }
 #table-footnote { display:block; }
 
+/* =========================================================
+   STANDINGS (in-page only; modal disabled)
+   ========================================================= */
 
-#g-standings-table,
-#modal-standings{
+/* Modal is not used */
+#standings-modal{ display:none !important; }
+
+/* Standings table defaults */
+#g-standings-table{
   width:100%;
   table-layout:fixed;
 }
 
 #g-standings-table thead th,
-#g-standings-table tbody td,
-#modal-standings thead th,
-#modal-standings tbody td{
+#g-standings-table tbody td{
   font-variant-numeric:tabular-nums;
 }
 
+/* Alignment: Team left, all numeric right */
 #g-standings-table th:first-child,
 #g-standings-table td:first-child{
   text-align:left;
   white-space:normal;
   overflow-wrap:anywhere;
+}
+
+/* Default Team width (desktop/tablet) */
+#g-standings-table th:first-child,
+#g-standings-table td:first-child{
   width:56%;
 }
+
 #g-standings-table th:not(:first-child),
 #g-standings-table td:not(:first-child){
   text-align:right;
@@ -601,38 +618,42 @@ body.comp-home #sharebar-comp{
   padding-right:6px;
 }
 
-/* Mobile: hide PF/PA in compact standings */
+/* Mobile: narrow Team so PF/PA/PD have space */
 @media (max-width:880px){
+  #g-standings-table{
+    table-layout:fixed;
+  }
 
-  /* Let Team absorb remaining width cleanly */
-  #g-standings-table{ table-layout:auto; }
+  #g-standings-table thead th,
+  #g-standings-table tbody td{
+    padding:8px 4px;
+    font-size:13px;
+  }
+
   #g-standings-table th:first-child,
-  #g-standings-table td:first-child{ width:auto; }
+  #g-standings-table td:first-child{
+    width:40%;
+  }
+
+  /* numeric columns share remaining width */
+  #g-standings-table th:not(:first-child),
+  #g-standings-table td:not(:first-child){
+    width:7.5%;
+  }
 }
 
-/* Modal: more breathing room */
-#standings-modal .table-wrap{ border-radius:12px; }
-#modal-standings thead th,
-#modal-standings tbody td{
-  padding:10px 8px;
-  font-size:14px;
-}
-#modal-standings th:first-child,
-#modal-standings td:first-child{
-  width:42%;
-  text-align:left;
-  white-space:normal;
-  overflow-wrap:anywhere;
-}
-#modal-standings th:not(:first-child),
-#modal-standings td:not(:first-child){
-  text-align:right;
-  white-space:nowrap;
-  border-left:1px solid var(--line);
+/* Very small screens: allow scroll rather than cramp */
+@media (max-width:360px){
+  #g-standings-table{
+    table-layout:auto;
+    min-width:420px;
+  }
 }
 
-/* Modal is not used — hard-disable it so it never renders */
-#standings-modal{
+/* Hide standings expand button (if present) */
+#standings-expand,
+.standings-expand,
+.iconbtn[data-role="standings-expand"]{
   display:none !important;
 }
 
@@ -663,6 +684,19 @@ body.comp-home #sharebar-comp{
   width:9%;
   text-align:right;
   white-space:nowrap;
+}
+
+/* Standings alignment: Team left, everything else right */
+#g-standings-table th:first-child,
+#g-standings-table td:first-child{
+  text-align:left;
+}
+
+#g-standings-table th:not(:first-child),
+#g-standings-table td:not(:first-child){
+  text-align:right;
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
 }
 
 
@@ -787,12 +821,5 @@ body.comp-home #sharebar-comp{
 
 .scroll-top-btn:hover{
   filter:brightness(1.06);
-}
-
-/* Remove standings expand button */
-#standings-expand,
-.standings-expand,
-.iconbtn[data-role="standings-expand"]{
-  display:none !important;
 }
 
