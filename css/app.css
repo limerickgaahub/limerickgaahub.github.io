@@ -205,7 +205,10 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .iconbtn{ display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:8px 10px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; font-weight:700; font-size:13px; }
 .iconbtn i{ font-size:14px; }
 
-/* Tables */
+/* =========================================================
+   TABLES + MATCH ROWS (single source of truth)
+   ========================================================= */
+
 .table-wrap{
   overflow-x:auto;
   -webkit-overflow-scrolling:touch;
@@ -215,31 +218,60 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   min-width:0;
 }
 
-table{ width:100%; border-collapse:separate; border-spacing:0; table-layout:fixed; }
+/* Default table sizing */
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+}
+
 thead th{
-  position:sticky; top:0; background:#f8fafb; border-bottom:1px solid var(--line);
-  font-size:14px; font-weight:800; color:#1f2937; text-align:left; padding:14px;
-  white-space:nowrap;                /* keep header labels like "Date/Time" intact */
+  position:sticky;
+  top:0;
+  z-index:1;
+  background:#f8fafb;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+  font-weight:800;
+  color:#1f2937;
+  text-align:left;
+  padding:12px 12px;
+  white-space:nowrap;
 }
+
 tbody td{
-  padding:14px; border-bottom:1px solid var(--line); font-size:15px; line-height:1.25;
-  word-break:normal; overflow-wrap:normal;        /* do NOT break words anywhere */
-  vertical-align:top;
+  padding:12px 12px;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+  line-height:1.25;
+  vertical-align:middle;
+  word-break:normal;
+  overflow-wrap:normal;
 }
+
+/* zebra + hover: micro-depth, not “big cards” */
+tbody tr:nth-child(even) td{ background:#fbfcfd; }
+tbody tr:hover td{ background:#f3f6f4; }
+
+/* Column helpers */
 td.right, th.right{ text-align:right; }
-tbody tr:nth-child(even) td{ background:#fcfcfd; }
-#modal-standings tbody tr:hover td { background:#f1f9f4; }
+td.rcol, th.rcol{ text-align:center; vertical-align:middle; }
+td.vcol, th.vcol{ text-align:center; vertical-align:middle; }
+td.dcol, th.dcol{ text-align:left; }
+td.tcol, th.tcol{ text-align:left; }
 
-/* Remove old green identity bar on each row */
-.table-wrap tbody tr{ position:relative; }
-.table-wrap tbody tr::before{ content:none; }
-
-/* Match block */
+/* Match block (dense, centred) */
 td.match, th.match{ text-align:center; }
-.match-block{ display:grid; grid-template-rows:auto auto auto; row-gap:3px; justify-items:center; }
-.match-team{ display:block; line-height:1.2; }
+.match-block{
+  display:grid;
+  grid-template-rows:auto auto auto;
+  row-gap:3px;
+  justify-items:center;
+}
+.match-team{ display:block; line-height:1.15; }
 
-/* Scoreline: one line, green pill */
+/* Score pill */
 .match-score{
   display:inline-block;
   padding:2px 10px;
@@ -247,248 +279,74 @@ td.match, th.match{ text-align:center; }
   background:#e6f4ea;
   color:var(--accent);
   font-weight:800;
-  font-size:14px;
+  font-size:13px;
   line-height:1.2;
   letter-spacing:.2px;
-  white-space:nowrap;                /* keep "0-23 - 0-18" on one line */
+  white-space:nowrap;
+}
+
+/* Meta line (team/date views) */
+.match-meta{
+  margin-top:4px;
+  font-size:12px;
+  color:var(--muted);
 }
 
 /* Status badge */
 .status-badge{
-  display:inline-block; padding:3px 8px; border-radius:999px; font-weight:700; font-size:12px;
-  background:#f3f4f6; color:#111;
+  display:inline-block;
+  padding:3px 8px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:12px;
+  background:#f3f4f6;
+  color:#111;
 }
-.status-badge.status-Result,.status-badge.status-final,.status-badge.status-Final{ background:#e8f5e9; }
-.status-badge.status-Fixture{ background:#eef2ff; }
-
-/* Match meta line */
-.match-meta{ margin-top:4px; font-size:12px; color:var(--muted); }
-
-/* Standings spacing (no truncation/ellipsis, allow natural wrap) */
-#g-standings-table thead th, #g-standings-table tbody td{ padding:8px 6px; }
-#g-standings-table td:first-child, #g-standings-table th:first-child{
-  white-space:normal; word-break:normal; overflow-wrap:normal;
+.status-badge.status-Result,
+.status-badge.status-final,
+.status-badge.status-Final{
+  background:#e8f5e9;
 }
-#g-standings-table td:not(:first-child), #g-standings-table th:not(:first-child){ text-align:right; }
-#g-standings-table tbody td:not(:first-child){ font-variant-numeric:tabular-nums; }
-
-/* Modal standings mirror (also no truncation) */
-#modal-standings thead th, #modal-standings tbody td{ padding:8px 6px; }
-#modal-standings td:first-child, #modal-standings th:first-child{
-  white-space:normal; word-break:normal; overflow-wrap:normal;
+.status-badge.status-Fixture{
+  background:#eef2ff;
 }
 
-#modal-standings tbody td:not(:first-child){ font-variant-numeric:tabular-nums; }
-  
-/* Controls lighter */
-.controls.card{ box-shadow:none; border-radius:12px; border:1px solid var(--line); }
-
-/* Give Team more space in both compact and expanded tables */
-#g-standings-table{ table-layout:fixed; width:100%; }
-#modal-standings{ table-layout:fixed;  width:100%; }
-/* compact table (keep as-is) */
-
-
-/* Compact numeric cols: tight */
-#g-standings-table th:not(:first-child),
-#g-standings-table td:not(:first-child){
-  min-width: 2.3rem !important;
-  text-align:right;
-  font-variant-numeric: tabular-nums;
-  white-space:nowrap;
-  padding-left:4px;
-  padding-right:4px;
-}
-
-/* Modal gets its own sizing rules elsewhere (DO NOT share min-widths here) */
-#modal-standings{ table-layout:fixed; width:100%; }
-
-
-
-/* Mobile niceties */
-@supports(padding:max(0px)){
-  body{
-    padding-left:max(env(safe-area-inset-left),0);
-    padding-right:max(env(safe-area-inset-right),0);
-  }
-}
+/* =========================================================
+   MOBILE TABLE LAYOUT (single, consistent rule-set)
+   ========================================================= */
 @media (max-width:880px){
-  .navtabs{ display:none; }
-  .burger{ display:inline-block; }
-  .card{ padding:12px; }
-  thead th, tbody td{ padding:10px 7px; font-size:13px; }
-  .match-score{ font-size:13px; }
 
-  /* LGH PATCH — mobile polish for all match tables */
-#g-table, #team-table, #date-table{ table-layout:fixed; width:100%; }
+  body{ margin:60px 8px 10px; }
+  .card{ padding:10px; }
 
-/* R column: narrower & centred */
-#g-table thead th:nth-child(1),  #g-table tbody td:nth-child(1),
-#team-table thead th:nth-child(1),#team-table tbody td:nth-child(1),
-#date-table thead th:nth-child(1),#date-table tbody td:nth-child(1){
-  width:2.25rem;
-  text-align:center !important;
-  vertical-align:middle !important;
-  white-space:nowrap;
-}
-
-/* Date/Time (single column on mobile): centred and compact width */
-#g-table thead th:nth-child(2),  #g-table tbody td:nth-child(2),
-#team-table thead th:nth-child(2),#team-table tbody td:nth-child(2),
-#date-table thead th:nth-child(2),#date-table tbody td:nth-child(2){
-  width:5.25rem;
-  text-align:center !important;
-  vertical-align:middle !important;
-}
-
-/* Match column: give it the flex space to prevent overlap */
-#g-table thead th:nth-child(3),  #g-table tbody td:nth-child(3),
-#team-table thead th:nth-child(3),#team-table tbody td:nth-child(3),
-#date-table thead th:nth-child(3),#date-table tbody td:nth-child(3){
-  width:auto;
-}
-
-/* Venue: keep visible, centred, modest width */
-#g-table thead th:nth-child(4),  #g-table tbody td:nth-child(4),
-#team-table thead th:nth-child(4),#team-table tbody td:nth-child(4),
-#date-table thead th:nth-child(4),#date-table tbody td:nth-child(4){
-  width:22%;
-  text-align:center !important;
-  vertical-align:middle !important;
-}
-
-/* Three-line Date/Time stack */
-.dt3{ display:grid; grid-auto-rows:min-content; row-gap:2px; justify-items:center; line-height:1.05; }
-.dt3 .dt-day{ font-weight:700; }
-.dt3 .dt-date, .dt3 .dt-time{ font-variant-numeric:tabular-nums; }
-
-  /* Date/Time: left aligned */
-  #g-table thead th:nth-child(2),
-  #g-table tbody td:nth-child(2){
-    text-align:left !important;
-    vertical-align:middle !important;
-  }
-  /* Venue: centred */
-  #g-table thead th:nth-child(4),
-  #g-table tbody td:nth-child(4){
-    text-align:center !important;
-    vertical-align:middle !important;
-  }
-}
-
-
-thead th, tbody td{ padding:.55rem .55rem; }
-.match-score{ font-size:12.5px; }
-
-/* Standings modal: compact layout for mobile (expanded view) */
-#standings-modal .table-wrap{ border-radius:12px; }
-
-#modal-standings thead th,
-#modal-standings tbody td{
-  padding:10px 8px;     /* tighter than global */
-  font-size:14px;
-}
-
-/* Team can wrap; numbers stay compact */
-#modal-standings thead th:first-child,
-#modal-standings tbody td:first-child{
-  white-space:normal;   /* override header nowrap for Team */
-  width:38%;
-}
-
-#modal-standings td.right,
-#modal-standings th.right{
-  font-variant-numeric: tabular-nums;
-}
-
-@media (max-width: 420px){
-  #modal-standings thead th,
-  #modal-standings tbody td{
-    padding:8px 6px;
+  thead th, tbody td{
+    padding:9px 6px;
     font-size:13px;
   }
-  #modal-standings thead th:first-child,
-  #modal-standings tbody td:first-child{
-    width:36%;
-  }
-}
 
+  /* force match tables to behave */
+  #g-table, #team-table, #date-table{ table-layout:fixed; width:100%; }
 
-/* Footer */
-.site-footer{ max-width:1100px; margin:16px auto 24px; text-align:center; color:#6b7280; font-size:12px; }
-
-/* Back button */
-.back-btn{ display:inline-flex; align-items:center; gap:6px; margin:8px 0; padding:6px 10px; border:1px solid var(--line); border-radius:999px; background:#f9fafb; cursor:pointer; font-size:13px; color:#333; }
-.back-btn i{ font-size:12px; }
-
-/* Back to top (Date view) */
-.scroll-top-btn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  z-index:150;          /* header=100, offcanvas=120, modal=200 */
-  display:none;         /* only shown when Date panel visible */
-  padding:10px 12px;
-  border-radius:999px;
-  background:var(--accent);
-  color:#fff;
-  border:1px solid var(--accent);
-  cursor:pointer;
-  font-size:16px;
-}
-.scroll-top-btn:hover{
-  background:var(--accent-2);
-  border-color:var(--accent-2);
-}
-
-
-/* LGH PATCH — hide modal by default; show only when opened */
-.modal{ 
-  position:fixed; inset:0; display:none; 
-  align-items:center; justify-content:center; 
-  background:rgba(0,0,0,.35); z-index:200; padding:20px;
-}
-.modal[aria-hidden="false"]{ display:flex; }
-.modal .sheet{
-  width:min(900px,96vw); max-height:90vh; overflow:auto;
-  background:#fff; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.2);
-}
-.modal .sheet-header{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:10px; padding:12px 14px; border-bottom:1px solid var(--line);
-}
-.modal .close{
-  border:1px solid var(--line); border-radius:8px; padding:6px 10px;
-  background:#f9fafb; cursor:pointer;
-}
-/* END LGH PATCH */
-
-/* === LGH PATCH — Mobile table readability + dead space reclaim === */
-@media (max-width:880px){
-
-  /* Trim outer margins + card padding slightly to reclaim dead space */
-  body{ margin:60px 8px 10px; }     /* was 60px 10px 10px */
-  .card{ padding:10px; }            /* was 12px */
-
-  /* Tighten table cell padding (safe for fingers, still readable) */
-  thead th, tbody td{ padding:8px 6px; }   /* was 10px 7px */
-
-  /* Column width rebalance:
-     - R shrinks slightly (2.25rem → 2.0rem)
-     - Date/Time shrinks slightly (5.25rem → 5.0rem)
-     - Venue gains space (22% → 26%) */
+  /* R */
   #g-table thead th:nth-child(1),  #g-table tbody td:nth-child(1),
   #team-table thead th:nth-child(1),#team-table tbody td:nth-child(1),
   #date-table thead th:nth-child(1),#date-table tbody td:nth-child(1){
     width:2.0rem;
+    text-align:center !important;
+    vertical-align:middle !important;
+    white-space:nowrap;
   }
 
+  /* Date/Time column */
   #g-table thead th:nth-child(2),  #g-table tbody td:nth-child(2),
   #team-table thead th:nth-child(2),#team-table tbody td:nth-child(2),
   #date-table thead th:nth-child(2),#date-table tbody td:nth-child(2){
-    width:4.5rem;
+    width:4.8rem;
+    text-align:center !important;
+    vertical-align:middle !important;
   }
 
+  /* Venue */
   #g-table thead th:nth-child(4),  #g-table tbody td:nth-child(4),
   #team-table thead th:nth-child(4),#team-table tbody td:nth-child(4),
   #date-table thead th:nth-child(4),#date-table tbody td:nth-child(4){
@@ -496,852 +354,245 @@ thead th, tbody td{ padding:.55rem .55rem; }
     text-align:center !important;
     vertical-align:middle !important;
   }
+
+  /* 3-line Date/Time stack */
+  .dt3{
+    display:grid;
+    grid-auto-rows:min-content;
+    row-gap:2px;
+    justify-items:center;
+    line-height:1.05;
+  }
+  .dt3 .dt-day{ font-weight:800; }
+  .dt3 .dt-date,
+  .dt3 .dt-time{ font-variant-numeric:tabular-nums; }
+
+  .match-score{ font-size:12.5px; }
 }
 
-/* XS phones (≤360px) — squeeze a bit more without hurting readability */
 @media (max-width:360px){
-
-  .card{ padding:8px; }  /* was 10px above */
-  thead th, tbody td{ padding:7px 5px; } /* slightly tighter */
-
-  /* Give Venue a touch more space */
-  #g-table thead th:nth-child(4),  #g-table tbody td:nth-child(4),
-  #team-table thead th:nth-child(4),#team-table tbody td:nth-child(4),
-  #date-table thead th:nth-child(4),#date-table tbody td:nth-child(4){
-    width:28%;   /* was 26% above */
-  }
-
-  /* Optional: if Venue text still clips on very long names,
-     I can hide the R column entirely on XS */
-  #team-table thead th:nth-child(1), #team-table tbody td:nth-child(1),
-  #date-table thead th:nth-child(1), #date-table tbody td:nth-child(1){
-    display:none;
-  }
-}
-/* === END PATCH === */
-
-/* === LGH PATCH — mobile: bleed inner blocks to card edges (with +1px overbleed) === */
-@media (max-width: 880px){
-  /* declare mobile card padding + derived overbleed */
-  :root{
-    --card-pad: 10px;            /* your mobile .card padding */
-    --bleed: calc(var(--card-pad));  /* +1px to hide curve/border seam */
-  }
-
-  /* Ensure cards actually use the variable (keeps things DRY if you change later) */
-  .card{ padding: var(--card-pad); }
-
-  /* Tables: Competition / Club / Date */
-  #group-panel .table-wrap,
-  #by-team .table-wrap,
-  #by-date .table-wrap{
-    margin-left: calc(-1 * var(--bleed));
-    margin-right: calc(-1 * var(--bleed));
-    border-left: 0;
-    border-right: 0;
-    border-radius: 0;
-  }
-
-  /* Controls (filter / club select / date picker) */
-  #group-panel .controls.card,
-  #by-team .controls.card,
-  #by-date .controls.card{
-    margin-left: calc(-1 * var(--bleed));
-    margin-right: calc(-1 * var(--bleed));
-    border-left: 0;
-    border-right: 0;
-    border-radius: 0;
-  }
-}
-/* === END PATCH === */
-  
-/* Social links in About */
-.social-list{ display:flex; flex-wrap:wrap; gap:10px; margin:8px 0 0; }
-.social-link{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:8px 12px; border:1px solid var(--line);
-  border-radius:999px; background:#fff; text-decoration:none; color:inherit;
-  font-weight:700; font-size:13px;
-}
-.social-link i{ font-size:14px; }
-
-/* Share buttons – consistent look */
-.iconbtn[data-role]{ padding:8px 12px; font-weight:700; }
-
-/* === LGH PATCH — Coloured About links + green Share buttons === */
-
-/* Social link colours */
-.social-link[href*="instagram"] { 
-  background: #E1306C; /* Instagram pink */
-  color: #fff;
-}
-.social-link[href*="x.com"] { 
-  background: #000000; /* X black */
-  color: #fff;
-}
-.social-link[href^="mailto:"] { 
-  background: var(--accent); /* site green */
-  color: #fff;
-}
-
-/* Force icon + text inside social links to white */
-.social-link i,
-.social-link span {
-  color: #fff !important;
-}
-
-/* Copy + Share buttons: green theme */
-.iconbtn[data-role="copy"],
-.iconbtn[data-role="share"] {
-  background: var(--accent);
-  color: #fff;
-  border: 1px solid var(--accent);
-}
-
-.iconbtn[data-role="copy"]:hover,
-.iconbtn[data-role="share"]:hover {
-  background: var(--accent-2);
-  border-color: var(--accent-2);
-}
-
-/* Footnote (subtle) */
-.footnote{
-  margin-top:8px;
-  font-size:12px;       /* small */
-  color:#6b7280;        /* muted */
-  font-style:italic;    /* gentle emphasis */
-}
-
-/* Give bottom sharebars a little space and tidy alignment */
-.sharebar { margin-top: 14px; }
-@media (max-width:880px){
-  .sharebar { justify-content:center; }
-  .sharebar .spacer { display:none; }
-}
-
-/* Desktop/tablet only: give numerics more room */
-@media (min-width: 881px) {
-  #g-standings-table th.right,
-  #g-standings-table td.right,
-  #modal-standings th.right,
-  #modal-standings td.right {
-    min-width: 3.4em;   /* roomy but not excessive */
-  }
-  #g-standings-table th:nth-child(8),
-  #g-standings-table td:nth-child(8),
-  #modal-standings th:nth-child(8),
-  #modal-standings td:nth-child(8) {
-    min-width: 4.2em;   /* Diff */
-  }
-}
-
-/* Mobile: keep numerics tight so Team gets space */
-@media (max-width: 880px) {
-  #g-standings-table th.right,
-  #g-standings-table td.right,
-  #modal-standings th.right,
-  #modal-standings td.right { 
-    min-width: 2.4em; 
-  }
-  #g-standings-table th:nth-child(8),
-  #g-standings-table td:nth-child(8),
-  #modal-standings th:nth-child(8),
-  #modal-standings td:nth-child(8) { 
-    min-width: 3.2em; 
-  }
-}
-
-/* On very small screens, tighten Diff slightly to avoid overflow */
-@media (max-width: 420px) {
-  #g-standings-table th:nth-child(8),
-  #g-standings-table td:nth-child(8),
-  #modal-standings th:nth-child(8),
-  #modal-standings td:nth-child(8) {
-    min-width: 3.8em; /* compromise */
-  }
-}
-
-
-/* === LGH PATCH — keep card tables inside the card border === */
-#group-panel .table-wrap > table,
-#by-team .table-wrap > table,
-#by-date .table-wrap > table,
-#g-standings-table {
-  width: 100.0%;   /* was 100% via the global table rule */
-  margin: 0 auto; /* centers so both vertical edges align cleanly */
-}
-
-/* On very narrow screens, trim a touch more */
-@media (max-width: 420px){
-  #group-panel .table-wrap > table,
-  #by-team .table-wrap > table,
-  #by-date .table-wrap > table,
-  #g-standings-table {
-    width: 100%;
-  }
-}
-
-
-.table-wrap tbody td { padding: 12px 12px; }   /* was 14px */
-
-@media (max-width: 880px){
-  /* Remove the tiny native chevron/calendar icon */
-  .pretty-input input[type="date"]::-webkit-calendar-picker-indicator{
-    display: none !important;
-    -webkit-appearance: none !important;
-    appearance: none !important;
-  }
-
-  /* Keep your big chevron (from .pretty-input::after) */
-  .pretty-input{ position: relative; }
-  .pretty-input::after{
-    /* your existing big chevron styles already here; ensure it stays visible */
-    z-index: 2;
-  }
-
-  /* Make the big chevron area a tappable button that sits on top (right side) */
-  .pretty-input .date-open{
-    position: absolute;
-    top: 0; right: 0;
-    width: 3rem;               /* hit-area width around the big chevron */
-    height: 100%;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    z-index: 3;                /* above ::after chevron so taps register */
-    cursor: pointer;
-  }
-}
-
-.dt3 .dt-round{
-  font-weight:700;
-  color:#374151;   /* muted dark grey */
-}
-
-/* Standings: right-align all numeric cols + tabular numerals */
-#modal-standings th:not(:first-child),
-#modal-standings td:not(:first-child){
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-/* Modal standings striping (apply to TD so it always shows) */
-#modal-standings tbody tr:nth-child(even) td { background:#fafafa; }
-#modal-standings tbody tr:nth-child(odd)  td { background:#ffffff; }
-
-/* Optional: stop global hover fighting the modal striping */
-#modal-standings tbody tr:hover td { background: inherit; }
-
-/* Team gets the space */
-#modal-standings th:first-child,
-#modal-standings td:first-child{
-  width: 42% !important;            /* try 46–55% depending on your team name lengths */
-  text-align: left !important;
-  white-space: normal !important;
-  overflow-wrap: anywhere !important;
-}
-
-/* Numeric cols stay tight and readable */
-#modal-standings th:not(:first-child),
-#modal-standings td:not(:first-child){
-  width: auto !important;
-  min-width: 3.2rem;
-  text-align: right !important;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  padding-left: 10px !important;
-  padding-right: 10px !important;
-  border-left: 1px solid var(--line);
-}
-#modal-standings{
-  table-layout:fixed;
+  .card{ padding:8px; }
+  thead th, tbody td{ padding:7px 5px; }
 }
 
 /* =========================================================
-   STANDINGS — COMPACT TABLE (non-modal): Team-first
+   CONTROLS (status/team/date) – keep tidy + app-like focus
    ========================================================= */
-#g-standings-table{
-  table-layout: fixed;
-  width:100%;
-}
-
-#g-standings-table th:first-child,
-#g-standings-table td:first-child{
-  width:56% !important;              /* Team dominates */
-  text-align:left;
-  white-space:normal !important;
-  overflow-wrap:anywhere !important;
-}
-
-#g-standings-table td:first-child{
-  color:#1f2937;
-  opacity:.95;
-}
-
-#g-standings-table th:not(:first-child),
-#g-standings-table td:not(:first-child){
-  text-align:right !important;
-  font-variant-numeric: tabular-nums;
-  white-space:nowrap;
-  min-width: 2.3rem !important;      /* allow shrink */
-  padding-left:4px !important;       /* don’t waste width */
-  padding-right:4px !important;
-}
-
-
-/* =========================================================
-   STANDINGS — MODAL TABLE: numeric breathing room
-   ========================================================= */
-#modal-standings{
-  table-layout: fixed;
-  width:100%;
-}
-
-#modal-standings th:first-child,
-#modal-standings td:first-child{
-  text-align:left;
-  white-space:normal !important;     /* wrapping allowed */
-  overflow-wrap:anywhere !important;
-}
-
-#modal-standings th:not(:first-child),
-#modal-standings td:not(:first-child){
-  text-align:right !important;
-  font-variant-numeric: tabular-nums;
-  white-space:nowrap;
-  padding-left:10px !important;       /* a bit more room than compact */
-  padding-right:10px !important;
-  border-left:1px solid var(--line); /* stops “13588” visual glue */
-}
-/* ===== Standings: desktop polish ===== */
-@media (min-width: 881px){
-  #g-standings-table, #modal-standings { border-collapse: separate; border-spacing: 0; }
-
-  /* Sticky header */
-  #g-standings-table thead th{
-    position: sticky;
-    top: 0;
-    background: #fff;
-    z-index: 2;
-  }
-
-  /* Zebra striping */
-  #g-standings-table tbody tr:nth-child(even) td{ background:#fafafa; }
-  #g-standings-table tbody tr:nth-child(odd)  td{ background:#ffffff; }
-
-  /* Hover (subtle) */
-  #g-standings-table tbody tr:hover td{ background: rgba(0,0,0,.05); }
-
-  /* Make Pts feel important */
-  #g-standings-table td:last-child strong{
-    font-weight: 800;
-  }
-}
-/* ===== Standings: mobile compact ===== */
-/* Hide PF / PA in in-page standings table */
-@media (max-width: 880px){
-  #g-standings-table th:nth-child(6),
-  #g-standings-table td:nth-child(6),
-  #g-standings-table th:nth-child(7),
-  #g-standings-table td:nth-child(7){
-    display: none;
-  }
-}
-/* ===== Standings: numeric alignment (global) ===== */
-#g-standings-table td,
-#g-standings-table th,
-#modal-standings td,
-#modal-standings th{
-  font-variant-numeric: tabular-nums;
-}
-
-/* Right-align all numeric columns */
-#g-standings-table td.right,
-#g-standings-table th.right,
-#modal-standings td.right,
-#modal-standings th.right{
-  text-align: right;
-}
-/* === FIX: compact standings must reflow to fill container === */
-@media (max-width: 880px){
-  #g-standings-table{
-    table-layout: auto;   /* ← critical */
-  }
-}
-@media (max-width: 880px){
-  #g-standings-table th:first-child,
-  #g-standings-table td:first-child{
-    width: auto !important;
-  }
-}
-/* FIX: allow compact standings to use full width */
-@media (max-width: 880px){
-  #g-standings-table{
-    table-layout: auto;
-  }
-}
-@media (max-width: 880px){
-  #g-standings-table th:first-child,
-  #g-standings-table td:first-child{
-    width: auto !important;
-  }
-}
-/* === FINAL FIX: compact standings – let Team absorb remaining width === */
-@media (max-width: 880px){
-
-  /* Lock numeric columns at their natural width */
-  #g-standings-table th:not(:first-child),
-  #g-standings-table td:not(:first-child){
-    width: auto;
-  }
-
-  /* Force Team column to take all remaining space */
-  #g-standings-table th:first-child,
-  #g-standings-table td:first-child{
-    width: 100% !important;
-  }
-}
-/* === FIX: standings container not bleeding full width on mobile === */
-@media (max-width: 880px){
-  #g-standings .table-wrap{
-    margin-left: calc(-1 * var(--bleed));
-    margin-right: calc(-1 * var(--bleed));
-    border-left: 0;
-    border-right: 0;
-    border-radius: 0;
-  }
-}
-/* Mobile sport pill (single selector under header) */
-.sportbar{
-  margin-top: 8px;
-  padding: 10px;
-}
-
-.sportpill{
-  width:100%;
+.controls.card{
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-content:center;
+  flex-wrap:wrap;
   gap:10px;
-  padding: 10px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--card);
-  font-weight: 700;
+  box-shadow:none;
+  border-radius:12px;
+  border:1px solid var(--line);
 }
 
-/* Hide the old header navtabs on small screens (use burger + sport pill instead) */
-@media (max-width: 720px){
-  .navtabs{ display:none !important; }
+.pretty-select,
+.pretty-input{
+  flex:1 1 260px;
+  min-width:0;
+  max-width:360px;
+  box-shadow:0 1px 0 rgba(0,0,0,.03);
+}
+.pretty-select:focus-within,
+.pretty-input:focus-within{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(0,107,60,.12);
 }
 
-/* Competition list (Competition home screen) */
-.comp-list{
-  padding: 6px 2px;
-}
+/* =========================================================
+   COMPETITION HOME LIST
+   ========================================================= */
+.comp-list{ padding:6px 2px; }
 
 .comp-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding: 12px 12px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: var(--card);
-  margin-bottom: 8px;
+  gap:12px;
+  padding:12px 12px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--card);
+  margin-bottom:8px;
   cursor:pointer;
+  position:relative;
+  overflow:hidden;
 }
-
-.comp-row .left{
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-}
-
-.comp-row .title{
-  font-weight:800;
-}
-
-.comp-row .sub{
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-.comp-row .chev{
-  color: var(--muted);
-}
-/* Mobile sport selector (single pill) */
-.sportbar{
-  margin-top: 8px;
-  padding: 10px;
-  border-radius: 18px;
-}
-
-.sportpill{
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;          /* centre the label */
-  gap:10px;
-  padding: 12px 16px;
-  border-radius: 999px;
-
-  background: var(--accent);       /* green pill */
-  color:#fff;
-  border: 1px solid var(--accent);
-
-  font-weight: 800;
-  font-size: 16px;                 /* bigger */
-  letter-spacing: 0.2px;
-
-  box-shadow: none;                /* stop looking like a separate card */
-}
-
-.sportpill{ cursor:pointer; }
-.sportpill:active{ transform: translateY(1px); }
-
-.sportpill i{
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border: 1px solid rgba(255,255,255,0.35);
-  background: rgba(255,255,255,0.12);
-  color:#fff;
-}
-
-/* Sport dropdown menu */
-#sport-menu.menu{
-  position:absolute;
-  z-index: 9999;
-  min-width: 220px;
-  border: 1px solid rgba(0,0,0,0.10);
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 14px 40px rgba(0,0,0,0.14);
-  padding: 6px;
-  display:none;
-}
-
-#sport-menu.menu.open{ display:block; }
-
-#sport-menu .item{
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-weight: 700;
-  cursor:pointer;
-}
-
-#sport-menu .item:hover{
-  background: rgba(0,0,0,0.04);
-}
-/* Competition Home mode: hide match content ONLY (keep controls visible) */
-body.comp-home .matches-wrap,
-body.comp-home #g-standings,
-body.comp-home #table-footnote,
-body.comp-home #sharebar-comp {
-  display: none !important;
-}
-/* Competition dropdown no longer used */
-#comp-menu { display: none !important; }
-
-/* ===== Sport segmented toggle (replaces big sportpill) ===== */
-.sportbar{
-  padding: 6px 10px;       /* less vertical space */
-  margin-top: 6px;
-  border-radius: 14px;
-}
-
-/* container */
-.sportseg{
-  display:flex;
-  width:100%;
-  max-width: 520px;        /* stops it looking like a runway on desktop */
-  margin: 0 auto;          /* centered */
-  padding: 3px;            /* thin outer gutter */
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: #fff;
-}
-
-/* each half */
-.sportseg button{
-  flex:1;
-  border:0;
-  background: transparent;
-  border-radius: 999px;
-  padding: 8px 12px;       /* controls height */
-  font-weight: 800;
-  font-size: 15px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-/* active half */
-.sportseg button.active{
-  background: var(--accent);
-  color:#fff;
-}
-
-/* inactive half */
-.sportseg button:not(.active){
-  color: var(--text);
-}
-/* === LGH PATCH — sport toggle should match content width === */
-.sportseg{
-  max-width: none !important;   /* remove the 520px cap */
-  width: 100% !important;       /* fill the available content width */
-  margin: 0 !important;         /* stop centering narrow control */
-}
-@media (max-width: 880px){
-  .sportbar{ padding-left: 0; padding-right: 0; } /* optional: flush align */
-}
-/* === LGH PATCH — controls pills centered + more modern === */
-.controls.card{
-  justify-content: center !important;   /* centre the whole control group */
-  flex-wrap: wrap;                       /* prevents overflow on narrow screens */
-  gap: 10px !important;
-}
-
-/* make each control look like a modern pill */
-.pretty-select,
-.pretty-input{
-  min-width: 220px;                      /* stops them looking tiny on desktop */
-  max-width: 360px;                      /* stops them going comically wide */
-  box-shadow: 0 1px 0 rgba(0,0,0,.03);   /* subtle polish */
-}
-
-/* ensure the text inside is visually centred vertically */
-.pretty-select select,
-.pretty-input input[type="date"]{
-  height: 44px;                          /* modern tap target */
-  padding-top: 0;
-  padding-bottom: 0;
-  display: flex;
-  align-items: center;
-}
-
-/* subtle hover/focus so it feels “app-like” */
-.pretty-select:hover,
-.pretty-input:hover{
-  border-color: #d7dde3;
-}
-
-.pretty-select:focus-within,
-.pretty-input:focus-within{
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(0,107,60,.12);
-}
-
-/* mobile: let them fill the width cleanly */
-@media (max-width: 880px){
-  .controls.card{
-    justify-content: stretch !important;
-  }
-  .pretty-select,
-  .pretty-input{
-    flex: 1 1 260px;                     /* grows, wraps, stays usable */
-    min-width: 0;                         /* critical for flex shrinking */
-    max-width: none;
-  }
-}
-/* =========================================================
-   LGH polish: unify pills + comp card accent (v7_3_3_fix12+)
-   ========================================================= */
-
-/* A) Unify pill sizing (top pills + Group/Table pills) */
-#panel-hurling .section-tabs.view-tabs .seg.vt,
-#panel-hurling #group-panel .section-tabs .seg {
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 999px;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Make sure inner pills don't look "bigger" due to extra padding/margins */
-#panel-hurling #group-panel .section-tabs { gap: 8px; }
-#panel-hurling #group-panel .section-tabs .seg { margin: 0; }
-
-/* Optional: ensure text doesn’t jump vertically on different elements */
-#panel-hurling .section-tabs.view-tabs .seg.vt { line-height: 1; }
-#panel-hurling #group-panel .section-tabs .seg { line-height: 1; }
-
-/* B) Competition list cards (will work once JS adds .comp-card hooks) */
-#comp-list .comp-card{
-  position: relative;
-  overflow: hidden; /* keeps accent inside rounded corners */
-}
-
-#comp-list .comp-card::before{
+.comp-row::before{
   content:"";
   position:absolute;
   left:0; top:0; bottom:0;
-  width: 3px;               /* 2–3px: use 3 for the “slick” look */
-  background: var(--accent);
-  opacity: .95;
+  width:3px;
+  background:var(--accent);
+  opacity:.95;
 }
-
-/* Subtitle de-emphasis (optional, mild) */
-#comp-list .comp-card .comp-subtitle{
-  color: #7b818a; /* one notch lighter than muted */
-}
-
-/* Competition Home cards: always show title + subtitle */
-#comp-list .comp-row.comp-card{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-
-#comp-list .comp-left{
+.comp-row .left{
   min-width:0;
   display:flex;
   flex-direction:column;
   gap:2px;
 }
-
-#comp-list .comp-title{
-  font-weight:700;
-  line-height:1.15;
-}
-
-#comp-list .comp-subtitle{
-  display:block !important;
-  opacity:1 !important;
-  visibility:visible !important;
+.comp-row .title{ font-weight:800; line-height:1.15; }
+.comp-row .sub{
+  color:var(--muted);
   font-size:13px;
   line-height:1.25;
-  color:var(--muted);
-  white-space:normal;   /* allows wrap */
+  white-space:normal;
+}
+.comp-row .chev{ color:var(--muted); }
+
+/* Competition home mode */
+body.comp-home .matches-wrap,
+body.comp-home #g-standings,
+body.comp-home #table-footnote,
+body.comp-home #sharebar-comp{
+  display:none !important;
 }
 
-/* Individual pills */
-#panel-hurling .section-tabs.view-tabs .seg.vt{
-  flex:1 1 0;                /* allow pills to shrink evenly */
-  min-width:0;               /* IMPORTANT: allows text to compress */
-  height:36px;               /* slimmer */
-  padding:0 8px;             /* less horizontal padding */
-  line-height:36px;          /* vertical centering */
-  font-size:13px;            /* slightly smaller text */
-  border-radius:10px;        /* not full pill – cleaner & denser */
+/* =========================================================
+   STANDINGS (compact in-page + roomy modal)
+   ========================================================= */
+#g-standings-table,
+#modal-standings{
+  width:100%;
+  table-layout:fixed;
+}
+
+#g-standings-table thead th,
+#g-standings-table tbody td,
+#modal-standings thead th,
+#modal-standings tbody td{
+  font-variant-numeric:tabular-nums;
+}
+
+#g-standings-table th:first-child,
+#g-standings-table td:first-child{
+  text-align:left;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  width:56%;
+}
+#g-standings-table th:not(:first-child),
+#g-standings-table td:not(:first-child){
+  text-align:right;
   white-space:nowrap;
-  text-align:center;
+  padding-left:6px;
+  padding-right:6px;
 }
 
-/* ===== View tabs: let short pills be content-width; let Championship expand ===== */
-
-#panel-hurling .section-tabs.view-tabs{
-  display:flex;
-  flex-wrap:nowrap;
-  gap:4px;
-  align-items:center;
+/* Mobile: hide PF/PA in compact standings */
+@media (max-width:880px){
+  #g-standings-table th:nth-child(6),
+  #g-standings-table td:nth-child(6),
+  #g-standings-table th:nth-child(7),
+  #g-standings-table td:nth-child(7){
+    display:none;
+  }
+  /* Let Team absorb remaining width cleanly */
+  #g-standings-table{ table-layout:auto; }
+  #g-standings-table th:first-child,
+  #g-standings-table td:first-child{ width:auto; }
 }
 
-/* Default: pills size to their text */
-#panel-hurling .section-tabs.view-tabs .seg.vt{
-  flex:0 0 auto;          /* NOT equal-width anymore */
-  min-width:0;
-  height:36px;
-  padding:0 10px;
-  line-height:36px;
-  font-size:13px;
-  border-radius:10px;
+/* Modal: more breathing room */
+#standings-modal .table-wrap{ border-radius:12px; }
+#modal-standings thead th,
+#modal-standings tbody td{
+  padding:10px 8px;
+  font-size:14px;
+}
+#modal-standings th:first-child,
+#modal-standings td:first-child{
+  width:42%;
+  text-align:left;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+#modal-standings th:not(:first-child),
+#modal-standings td:not(:first-child){
+  text-align:right;
   white-space:nowrap;
-  text-align:center;
+  border-left:1px solid var(--line);
 }
 
-/* Championship pill: take the remaining space */
-#panel-hurling .section-tabs.view-tabs #comp-tab{
-  flex:1 1 auto;          /* this one expands */
-  overflow:hidden;        /* prevent ugly spill */
-  text-overflow:ellipsis; /* safety net (rare once others shrink) */
+/* =========================================================
+   SPORT SEGMENTED TOGGLE (keep only one system)
+   ========================================================= */
+.sportbar{
+  margin-top:6px;
+  padding:6px 10px;
+  border-radius:14px;
 }
-/* ===== FINAL: Top view tabs (League | Championship | Club | Date) ===== */
-
-#panel-hurling .section-tabs.view-tabs{
+.sportseg{
   display:flex;
-  flex-wrap:nowrap;
-  gap:6px;                 /* slightly more breathing room */
-  align-items:center;
+  width:100%;
+  padding:3px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+}
+.sportseg button{
+  flex:1;
+  border:0;
+  background:transparent;
+  border-radius:999px;
+  padding:8px 12px;
+  font-weight:800;
+  font-size:15px;
+  line-height:1;
+  cursor:pointer;
+}
+.sportseg button.active{
+  background:var(--accent);
+  color:#fff;
 }
 
-/* Base pill style */
-#panel-hurling .section-tabs.view-tabs .seg.vt{
-  flex:0 0 auto;           /* content width by default */
-  min-width:0;
-  height:36px;
-  padding:0 12px;          /* nice “space around word” */
-  border-radius:999px;     /* true pill looks best here */
-  font-size:13px;
-  font-weight:600;
-  line-height:36px;
+/* =========================================================
+   SEASON CHIP (small, right aligned)
+   ========================================================= */
+#season-banner{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  margin:8px 0 0;
+  padding:0 2px;
+}
+#season-banner .season-chips{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+#season-banner .season-chip{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  white-space:nowrap;
-  letter-spacing:0;        /* undo squashing */
+  height:20px;
+  padding:0 7px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.2px;
+  border:1px solid rgba(0,107,60,0.25);
+  background:#fff;
+  color:var(--text);
+  box-shadow:0 1px 0 rgba(0,0,0,0.04);
 }
 
-/* Championship: expand, BUT don't get greedy */
-#panel-hurling .section-tabs.view-tabs #comp-tab{
-  flex:1 1 auto;
-  max-width: 170px;        /* key: prevents the pill looking oversized */
-  justify-content:center;
-  overflow:hidden;
-  text-overflow:ellipsis;  /* safety net only */
+/* =========================================================
+   FOOTNOTE + SHAREBAR
+   ========================================================= */
+.footnote{
+  margin-top:8px;
+  font-size:12px;
+  color:var(--muted);
+  font-style:italic;
 }
-#panel-hurling .section-tabs.view-tabs .seg.vt:not(#comp-tab){
-  padding:0 14px;
-}
-/* Season banner + chip (right aligned) */
-#season-banner {
-  display: flex;
-  justify-content: flex-end;   /* push content to right */
-  align-items: center;
-  margin: 8px 0 0;
-  padding: 0 2px;              /* tiny breathing room */
-}
-
-#season-banner .season-chips {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* The actual chip */
-#season-banner .season-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 20px;
-  padding: 0 6px;
-  border-radius: 999px;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  border: 1px solid var(--line);
-  background: #fff;
-  color: var(--text);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.04);
-}
-
-/* Optional subtle differentiation between seasons */
-#season-banner .season-chip[data-season="2025"]{
-  opacity: 0.9;
-}
-#season-banner .season-chip[data-season="2026"]{
-  opacity: 1;
-}
-#season-banner .season-chip{
-  border-color: rgba(0,107,60,0.25);
+.sharebar{ display:flex; align-items:center; gap:8px; margin:14px 0 0; }
+.sharebar .spacer{ flex:1; }
+@media (max-width:880px){
+  .sharebar{ justify-content:center; }
+  .sharebar .spacer{ display:none; }
 }
