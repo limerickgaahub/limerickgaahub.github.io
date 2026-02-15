@@ -1,7 +1,21 @@
 /* THEME */
 :root{
-  --card:#ffffff; --muted:#6b7280; --accent:#006B3C; --accent-2:#88C999;
-  --line:#e9ecef; --text:#111; --bg:#f6f7f8;
+  --card:#ffffff;
+  --bg:#f6f7f8;
+  --text:#111;
+  --muted:#6b7280;
+
+  --accent:#006B3C;
+  --accent-2:#88C999;
+
+  --line:#e6e9ee;                 /* refined border */
+  --surface:#ffffff;
+  --surface-2:#f8fafb;            /* subtle header surface */
+  --surface-3:#f1f4f7;            /* pill surface */
+  --tint:rgba(0,107,60,.06);      /* hover tint */
+
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06);
+  --shadow-md:0 10px 30px rgba(16,24,40,.10);
 }
 
 /* A11y-only label */
@@ -54,31 +68,7 @@
   font-size:1rem; line-height:1.2;
 }
 
-/* Hide the browser's small date chevron,
-   but keep the native picker behavior */
-.pretty-input input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0 !important;           /* invisible */
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  border: none !important;
-  background: transparent !important;
 
-  /* keep it clickable to trigger the calendar */
-  pointer-events: auto !important;
-  position: absolute;
-  right: 0; top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-
-/* Chevron to match the Club dropdown */
-.pretty-input::after {
-  content:"";
-  position:absolute; right:.8rem; top:50%; transform:translateY(-50%) rotate(45deg);
-  width:.55rem; height:.55rem; border-right:2px solid #666; border-bottom:2px solid #666;
-  pointer-events:none;
-}
 
 
 /* Improve font rendering sharpness */
@@ -131,7 +121,12 @@ td.dcol, th.dcol,
 td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   
 /* Header */
-.header{ position:fixed; top:0; left:0; right:0; z-index:100; background:#fff; border-bottom:1px solid var(--line); }
+.header{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(1.2) blur(8px);
+  border-bottom:1px solid rgba(16,24,40,.08);
+}
 .header::before{ content:""; display:block; height:4px; background:var(--accent); }
 .header-inner{
   display:flex; align-items:center; justify-content:space-between;
@@ -146,7 +141,15 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 }
 .brand img{ width:20px; height:20px; }
 .navtabs{ display:flex; gap:8px; align-items:center; }
-.navtab{ padding:8px 12px; border-radius:999px; background:#ececec; cursor:pointer; font-weight:700; border:1px solid transparent; }
+.navtab{
+  padding:8px 12px;
+  border-radius:999px;
+  background:var(--surface-3);
+  cursor:pointer;
+  font-weight:700;
+  border:1px solid rgba(16,24,40,.06);
+}
+.navtab:hover{ background:var(--surface-2); }
 .navtab.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
 
 .brand{ min-width:0; }                 /* allow shrink inside flex */
@@ -192,9 +195,25 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .oc-backdrop.show{ opacity:1; pointer-events:auto; }
 
 /* Cards & sections */
-.card{ background:#fff; border-radius:18px; box-shadow:0 8px 24px rgba(0,0,0,.05); padding:14px; max-width:1100px; margin:0 auto; }
+.card{
+  background:var(--surface);
+  border-radius:18px;
+  border:1px solid rgba(16,24,40,.06);
+  box-shadow:var(--shadow-sm);
+  padding:14px;
+  max-width:1100px;
+  margin:0 auto;
+}
 .section-tabs{ display:flex; gap:10px; margin:6px 0 12px; flex-wrap:wrap; }
-.section-tabs .seg{ padding:9px 14px; border-radius:999px; background:#efefef; cursor:pointer; font-weight:800; border:1px solid transparent; }
+.section-tabs .seg{
+  padding:9px 14px;
+  border-radius:999px;
+  background:var(--surface-3);
+  cursor:pointer;
+  font-weight:800;
+  border:1px solid rgba(16,24,40,.06);
+}
+.section-tabs .seg:hover{ background:var(--surface-2); }
 .section-tabs .seg.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
 
 /* View tabs must stay on one row */
@@ -224,7 +243,7 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .menu{ position:absolute; min-width:280px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 28px rgba(0,0,0,.12); padding:6px; display:none; max-height:60vh; overflow:auto; z-index:130; }
 .menu.open{ display:block; }
 .menu .item{ padding:12px 14px; border-radius:10px; cursor:pointer; font-weight:700; }
-.menu .item:hover,.menu .item.active{ background:#f1f9f4; }
+.menu .item:hover,.menu .item.active{ background:var(--tint); }
 
 /* Selected label */
 .comp-selected{ margin:8px 0 10px; font-weight:800; font-size:15px; color:#1f2937; }
@@ -269,9 +288,10 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   overflow-x:auto;
   -webkit-overflow-scrolling:touch;
   border-radius:14px;
-  border:1px solid var(--line);
-  background:#fff;
+  border:1px solid rgba(16,24,40,.10);
+  background:var(--surface);
   min-width:0;
+  box-shadow:var(--shadow-sm);
 }
 
 /* Default table sizing */
@@ -286,11 +306,11 @@ thead th{
   position:sticky;
   top:0;
   z-index:1;
-  background:#f8fafb;
-  border-bottom:1px solid var(--line);
+  background:var(--surface-2);
+  border-bottom:1px solid rgba(16,24,40,.10);
+  color:#1f2937;
   font-size:13px;
   font-weight:800;
-  color:#1f2937;
   text-align:left;
   padding:12px 12px;
   white-space:nowrap;
@@ -308,7 +328,7 @@ tbody td{
 
 /* zebra + hover: micro-depth, not “big cards” */
 tbody tr:nth-child(even) td{ background:#fbfcfd; }
-tbody tr:hover td{ background:#f3f6f4; }
+tbody tr:hover td{ background:var(--tint); }
 
 /* Column helpers */
 td.right, th.right{ text-align:right; }
@@ -468,8 +488,20 @@ td.match, th.match{ text-align:center; }
 .pretty-input input[type="date"]{
   height:44px;
   font-size:15px;
-  padding-right:2.6rem; /* space for chevron */
+  padding-right:1.1rem; /* no fake chevron now */
   font-variant-numeric:tabular-nums;
+}
+
+/* Date: keep ONE icon (native calendar), subtle */
+.pretty-input input[type="date"]::-webkit-calendar-picker-indicator{
+  opacity:.65;
+  cursor:pointer;
+}
+
+/* WebKit cleanup */
+.pretty-input input[type="date"]::-webkit-inner-spin-button,
+.pretty-input input[type="date"]::-webkit-clear-button{
+  display:none;
 }
 
 /* Invisible tap target over the input (keeps it clean) */
@@ -643,7 +675,7 @@ body.comp-home #sharebar-comp{
 }
 
 /* =========================================================
-   SEASON CHIP (small, right aligned)
+   ARCHIVE INDICATOR (text only; no pills)
    ========================================================= */
 #season-banner{
   display:flex;
@@ -651,27 +683,28 @@ body.comp-home #sharebar-comp{
   align-items:center;
   margin:8px 0 0;
   padding:0 2px;
-}
-#season-banner .season-chips{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-}
-#season-banner .season-chip{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  height:20px;
-  padding:0 7px;
-  border-radius:999px;
-  font-size:10px;
+
+  font-size:12px;
   font-weight:800;
-  letter-spacing:.2px;
-  border:1px solid rgba(0,107,60,0.25);
-  background:#fff;
-  color:var(--text);
-  box-shadow:0 1px 0 rgba(0,0,0,0.04);
+  color:var(--muted);
 }
+
+/* small dot only when text exists */
+#season-banner::before{
+  content:"";
+  width:6px; height:6px;
+  border-radius:999px;
+  background:rgba(0,107,60,.35);
+  margin-right:8px;
+  display:inline-block;
+}
+#season-banner:empty::before{ display:none; }
+
+/* hard-disable any old chip markup if still present */
+#season-banner .season-chips,
+#season-banner .season-chip{ display:none !important; }
+
+
 
 /* =========================================================
    FOOTNOTE + SHAREBAR
