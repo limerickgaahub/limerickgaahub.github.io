@@ -4,19 +4,20 @@ Scrape County Hurling League Division 1–12 fixtures from:
   https://limerickgaa.ie/senior-hurling-fixtures/
 
 Outputs:
-  data/league.json
+  <outdir>/league.json   (default: data/league.json)
 
 This script is intentionally separate from any existing fixture/results scrapers.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
 from dataclasses import dataclass
 from datetime import datetime, date, time
-from typing import List, Optional, Dict, Any, Tuple
+from typing import List, Optional, Dict, Any
 
 import requests
 from bs4 import BeautifulSoup
@@ -52,7 +53,7 @@ class LeagueFixture:
     date: str  # YYYY-MM-DD
     time_local: Optional[str]  # HH:MM
     tz: str
-    datetime_iso: Optional[str]  # YYYY-MM-DDTHH:MM:SS+00:00 (we don't compute offset; leave local ISO)
+    datetime_iso: Optional[str]  # local ISO only (no offset computation)
     home: str
     away: str
     venue: str
@@ -100,7 +101,6 @@ def get_page_html() -> str:
     except Exception:
         pass
 
-    # Fallback: fetch the page
     r = http_get(URL)
     return r.text
 
@@ -113,19 +113,17 @@ def normalize_lines(html: str) -> List[str]:
     """
     soup = BeautifulSoup(html, "html.parser")
 
-    # If full page was fetched, focus on main content if possible
     main = soup.select_one("main") or soup.select_one("article") or soup
     text = main.get_text("\n")
 
     raw = [ln.strip() for ln in text.splitlines()]
-    raw = [ln for ln in raw if ln]  # drop blanks
+    raw = [ln for ln in raw if ln]
 
     stitched: List[str] = []
     i = 0
     while i < len(raw):
         s = raw[i]
 
-        # stitch date ordinal split
         if i + 2 < len(raw) and re.match(rf"^{WEEKDAYS}\s+\d{{1,2}}$", s, flags=re.IGNORECASE):
             t1 = raw[i + 1]
             t2 = raw[i + 2]
@@ -177,18 +175,14 @@ def slugify_team(s: str) -> str:
 
 
 def make_id(div: str, round_s: str, d_iso: str, home: str, away: str) -> str:
-    # Deterministic id
     return f"league-{div}-{round_s}-{d_iso}-{slugify_team(home)}-vs-{slugify_team(away)}"
 
 
 def is_plausible_team(s: str) -> bool:
-    # Avoid picking up obvious non-team noise lines
     if len(s.strip()) < 2:
         return False
     bad = {"venue", "referee", "round", "fixtures", "results"}
-    if s.strip().lower() in bad:
-        return False
-    return True
+    return s.strip().lower() not in bad
 
 
 def parse_league(lines: List[str]) -> List[LeagueFixture]:
@@ -209,9 +203,7 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
         group = f"Division {div_no}"
         competition = "County Hurling League"
 
-        # Scan forward within a reasonable window for the match block
         j = i + 1
-
         round_txt: Optional[str] = None
         d: Optional[date] = None
         home: Optional[str] = None
@@ -227,7 +219,7 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
                 round_txt = f"R {rm.group(1)}"
                 j += 1
                 break
-            if DIV_RE.match(lines[j]):  # next division starts
+            if DIV_RE.match(lines[j]):
                 break
             j += 1
 
@@ -247,12 +239,11 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
             if DIV_RE.match(lines[j]):
                 break
             if V_RE.match(lines[j]):
-                # previous non-empty line is home
                 k = j - 1
                 while k > i and not lines[k].strip():
                     k -= 1
                 cand_home = lines[k].strip()
-                # next non-empty line is away
+
                 k = j + 1
                 while k < len(lines) and not lines[k].strip():
                     k += 1
@@ -284,7 +275,6 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
             vm = VENUE_RE.match(lines[j])
             if vm:
                 v = (vm.group(1) or "").strip()
-                # sometimes venue is on the next line
                 if not v and j + 1 < len(lines) and not REF_RE.match(lines[j + 1]) and not DIV_RE.match(lines[j + 1]):
                     v = lines[j + 1].strip()
                     j += 1
@@ -301,11 +291,9 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
 
             j += 1
 
-        # build fixture only if core fields exist
         if round_txt and d and home and away:
             d_iso = d.strftime("%Y-%m-%d")
             time_local = t.strftime("%H:%M") if t else None
-            # Keep datetime_iso simple/local; you can compute offsets later if needed
             dt_iso = f"{d_iso}T{time_local}:00" if time_local else None
             fid = make_id(str(div_no), round_txt.replace(" ", ""), d_iso, home, away)
 
@@ -334,7 +322,10 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
 
 
 def write_json(out_path: str, fixtures: List[LeagueFixture]) -> None:
-    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    parent = os.path.dirname(out_path)
+    if parent:
+        os.makedirs(parent, exist_ok=True)
+
     payload = {
         "competition": "County Hurling League",
         "season": datetime.now().year,
@@ -345,13 +336,31 @@ def write_json(out_path: str, fixtures: List[LeagueFixture]) -> None:
         json.dump(payload, fp, ensure_ascii=False, indent=2)
 
 
-def main():
-    out_path = os.environ.get("LGH_LEAGUE_OUT", "data/league.json")
+def resolve_out_path(args_outdir: str, args_out: Optional[str]) -> str:
+    # Precedence:
+    # 1) explicit --out
+    # 2) env var LGH_LEAGUE_OUT
+    # 3) --outdir/league.json
+    if args_out:
+        return args_out
+    env = os.environ.get("LGH_LEAGUE_OUT")
+    if env:
+        return env
+    return os.path.join(args_outdir, "league.json")
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--outdir", default="data", help="Directory to write league.json into (default: data)")
+    ap.add_argument("--out", default=None, help="Full output path. Overrides --outdir and LGH_LEAGUE_OUT.")
+    args = ap.parse_args()
+
+    out_path = resolve_out_path(args.outdir, args.out)
+
     html = get_page_html()
     lines = normalize_lines(html)
     fixtures = parse_league(lines)
 
-    # Basic sanity: keep only Div 1–12
     fixtures = [f for f in fixtures if 1 <= int(f.group.split()[-1]) <= 12]
 
     write_json(out_path, fixtures)
