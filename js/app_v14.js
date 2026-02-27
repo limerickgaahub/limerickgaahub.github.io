@@ -19,7 +19,7 @@ function showWarn(msg){
     n = document.createElement('p');
     n.id = 'js-warning';
     n.className = 'notice';
-    document.querySelector('main')?.prepend(n);
+    document.querySelector('#panel-hurling')?.prepend(n);
   }
   n.textContent = msg;
   n.style.display = 'block';
@@ -30,16 +30,23 @@ function showWarn(msg){
   window.LGH_V7_3_READY = true;
   window.LGH_V7_3_3_READY = true;
 
-  // Season-aware data sources
-  const DEFAULT_SEASON = '2026';
-  const SEASON_SOURCES = {
-    '2026': { data: 'data/hurling_2026.json', ko: 'datastatic/knockout_2026.json' },
-    '2025': { data: 'data/archive/hurling_2025.json', ko: 'datastatic/archive/knockout_2025.json' }
-  };
+const SEASON_SOURCES = {
+  '2026': {
+    data:   'data/data_2026.json',
+    ko:     'data/ko_2026.json',
+    league: 'data/league.json'
+  },
+  '2025': {
+    data:   'data/data_2025.json',
+    ko:     'data/ko_2025.json',
+    league: null
+  }
+};
 
   // These are reassigned once we read URL params
   let DATA_URL = SEASON_SOURCES[DEFAULT_SEASON].data;
   let KO_URL   = SEASON_SOURCES[DEFAULT_SEASON].ko;
+  let LEAGUE_URL = SEASON_SOURCES[DEFAULT_SEASON].league;
 
   function isKO(m){
     return (m.stage === 'knockout') || ((m.group || '').toLowerCase() === 'knockout');
@@ -141,6 +148,8 @@ const COMP_RANK = (() => {
     const idx = ORDER.indexOf(lbl);
     rank[full] = idx >= 0 ? idx + 1 : 99;
   }
+  // Ensure League sorts ahead of championships in By Date when on the same date
+rank['County Hurling League'] = 0;
   return rank;
 })();
 
@@ -170,7 +179,7 @@ const sortDateOnly = (a, b) =>
 
 
   const params=new Proxy(new URLSearchParams(location.search),{get:(sp,prop)=>sp.get(prop)});
-  const state={ season:DEFAULT_SEASON, section:'hurling', view:'matches', comp:null, group:null, team:null, date:null };
+  const state={ season:DEFAULT_SEASON, section:'hurling', view:'matches', comp:null, group:null, team:null, date:null, leagueDiv:null };
 
   // Read season from URL (?season=2025). Default is 2026 (no query param needed).
   const reqSeason = params.season || DEFAULT_SEASON;
@@ -178,6 +187,7 @@ const sortDateOnly = (a, b) =>
 
   DATA_URL = SEASON_SOURCES[state.season].data;
   KO_URL   = SEASON_SOURCES[state.season].ko;
+  LEAGUE_URL = SEASON_SOURCES[state.season].league;
 
     // ---------- Season UI (chips/banner + hide League pill in archive) ----------
   function ensureSeasonBanner(){
@@ -475,6 +485,35 @@ if (isWO) {
       warn('[LGH] KO overlay skipped:', e);
     }
 
+    // Load league fixtures (if enabled for the season)
+if (LEAGUE_URL) {
+  try {
+    const leagueRaw = await fetch(LEAGUE_URL).then(r=>r.json());
+    const fixtures = leagueRaw?.fixtures || [];
+    const norm = fixtures.map((f, i) => ({
+      id: f.id || `league_${i}`,
+      season: f.season || state.season,
+      section: (f.section || 'hurling'),
+      competition: 'County Hurling League',
+      group: f.division ? `Division ${String(f.division).trim()}` : (f.group || ''),
+      round: f.round || '',
+      date: f.date || '',
+      time: f.time || '',
+      venue: f.venue || '',
+      home: f.home || '',
+      away: f.away || '',
+      status: f.status || 'Fixture',
+      home_goals: f.home_goals ?? null,
+      home_points: f.home_points ?? null,
+      away_goals: f.away_goals ?? null,
+      away_points: f.away_points ?? null
+    }));
+    MATCHES = mergeById(MATCHES, norm);
+  } catch(e) {
+    console.warn('[LGH] league.json failed to load', e);
+  }
+}
+    
     if (!MATCHES.length) {
       showWarn(
         state.season === '2026'
@@ -1346,6 +1385,7 @@ const sorted = []
     if (state.group)  sp.set('group', state.group);
     if (state.team)   sp.set('team',  state.team);
     if (state.view === 'date' && state.date) sp.set('date', state.date);
+    if (state.view === 'league' && state.leagueDiv) sp.set('div', state.leagueDiv);
     if (state.season && state.season !== DEFAULT_SEASON) sp.set('season', state.season);
       // Preserve the share gate if it was enabled when the page loaded
     if (window.__LGH_SHARE_ENABLED === true) sp.set('share', '1');
@@ -1361,25 +1401,42 @@ const sorted = []
   function toast(msg){ const div=document.createElement('div'); div.textContent=msg; div.style.cssText='position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:#111;color:#fff;padding:8px 12px;border-radius:8px;z-index:200;opacity:.95'; document.body.appendChild(div); setTimeout(()=>div.remove(),1500); }
 
   document.addEventListener('click',(e)=>{
-    if (e.target.closest('#btn-share')) {
-      const url = currentShareURL();
-      const title = 'Limerick GAA Hub';
-      const text  = 'Fixtures, results & tables';
-      if (navigator.share) {
-        navigator.share({ title, text, url });
-      } else {
-        navigator.clipboard?.writeText(url);
-        toast('Link copied');
-      }
-      LGH_ANALYTICS.clickShare('share');   // ← inside the if
-    }
-  
-    if (e.target.closest('#btn-copy')) {
-      navigator.clipboard?.writeText(currentShareURL());
-      toast('Link copied');
-      LGH_ANALYTICS.clickShare('copy');    // ← inside the if
-    }
-  });
+
+  if (e.target.closest('#btn-share')) {
+    const url = currentShareURL();
+    const title = 'Limerick GAA Hub';
+    const text  = 'Fixtures, results & tables';
+    if (navigator.share) navigator.share({ title, text, url });
+    else { navigator.clipboard?.writeText(url); toast('Link copied'); }
+    LGH_ANALYTICS.clickShare('share');
+    return;
+  }
+
+  if (e.target.closest('#btn-copy')) {
+    navigator.clipboard?.writeText(currentShareURL());
+    toast('Link copied');
+    LGH_ANALYTICS.clickShare('copy');
+    return;
+  }
+
+  // League sharebar buttons (MUST be top-level)
+  if (e.target.closest('#sharebar-league [data-role="share"]')) {
+    const url = currentShareURL();
+    const title = 'Limerick GAA Hub';
+    const text  = 'League fixtures';
+    if (navigator.share) navigator.share({ title, text, url });
+    else { navigator.clipboard?.writeText(url); toast('Link copied'); }
+    if (LGH_ANALYTICS?.clickShare) LGH_ANALYTICS.clickShare('share');
+    return;
+  }
+
+  if (e.target.closest('#sharebar-league [data-role="copy"]')) {
+    navigator.clipboard?.writeText(currentShareURL());
+    toast('Link copied');
+    if (LGH_ANALYTICS?.clickShare) LGH_ANALYTICS.clickShare('copy');
+    return;
+  }
+});
 
   // Section tabs (Matches/Table)
   $$('#group-panel .section-tabs .seg').forEach(seg=>{
@@ -1515,6 +1572,7 @@ $$('.view-tabs .vt').forEach(seg=>{
     // Clear view-specific state when leaving that view
     if (target !== 'by-date') state.date = null;
     if (target !== 'by-team') state.team = null;
+    if (target !== 'league-panel') state.leagueDiv = null;
     
     state.view =
     (target === 'group-panel') ? 'matches' :
@@ -1535,6 +1593,12 @@ $$('.view-tabs .vt').forEach(seg=>{
       return;
     }
 
+    if (target==='league-panel'){
+      VIEW_MODE='league';
+      renderLeague();
+      if (typeof LGH_ANALYTICS?.viewCompetition === 'function') LGH_ANALYTICS.viewCompetition('League');
+    }
+    
     if (target==='by-team'){ 
       VIEW_MODE='team'; 
       renderByTeam(); 
@@ -1573,6 +1637,84 @@ const CLUB_EXCLUDE = new Set([
 "Old Christians / Garryspillane",
 "Templeglantine / Killeedy"
 ]);
+
+function renderLeague(){
+  VIEW_MODE='league';
+
+  const sel = el('league-div');
+  const tbl = el('league-table');
+  const thead = tbl.tHead || tbl.createTHead();
+  const tbody = tbl.tBodies[0] || tbl.createTBody();
+
+  const isMobile = matchMedia('(max-width:880px)').matches;
+  const isTiny   = matchMedia('(max-width:400px)').matches;
+  buildHead(thead, isMobile, isTiny);
+
+  // Build division list from loaded league fixtures
+  const leagueRows = MATCHES.filter(r => String(r.competition||'') === 'County Hurling League');
+
+  if (!leagueRows.length){
+    sel.innerHTML = '<option value="">No league fixtures loaded</option>';
+    sel.disabled = true;
+    tbody.innerHTML = '';
+    return;
+  }
+  sel.disabled = false;
+
+  const divs = [...new Set(leagueRows.map(r => String(r.group||'').trim()).filter(Boolean))];
+
+  // Sort: Division 1..12, else alpha
+  divs.sort((a,b)=>{
+    const na = +(a.match(/\d+/)?.[0] || 999);
+    const nb = +(b.match(/\d+/)?.[0] || 999);
+    return na - nb || a.localeCompare(b);
+  });
+
+  sel.innerHTML =
+    '<option value="">Select division…</option>' +
+    divs.map(d => `<option>${esc(d)}</option>`).join('');
+
+  // Map a requested div param (e.g. "7" or "Division 7") to an option value
+  const resolveDivValue = (v) => {
+    if (!v) return '';
+    const s = String(v).trim();
+    // exact match (already a label like "Division 7")
+    const exact = divs.find(d => d === s);
+    if (exact) return exact;
+    // numeric match
+    const n = s.match(/\d+/)?.[0];
+    if (!n) return '';
+    return divs.find(d => (d.match(/\d+/)?.[0] === n)) || '';
+  };
+
+  const draw = () => {
+    const divLabel = sel.value || '';
+    const n = divLabel.match(/\d+/)?.[0] || '';
+    state.leagueDiv = n || null;
+    syncURL();
+
+    const isMobileNow = matchMedia('(max-width:880px)').matches;
+    const isTinyNow   = matchMedia('(max-width:400px)').matches;
+    buildHead(thead, isMobileNow, isTinyNow);
+
+    if (!divLabel) { tbody.innerHTML=''; return; }
+
+    const rows = leagueRows
+      .filter(r => String(r.group||'') === divLabel)
+      .sort(sortRoundDate);
+
+    tbody.innerHTML = rows.map(r => rowHTML(r, isMobileNow, isTinyNow)).join('');
+  };
+
+  sel.oninput = draw;
+
+  // Default / deep-link selection
+  const wanted = resolveDivValue(state.leagueDiv);
+  if (wanted) sel.value = wanted;
+  else if (!sel.value && divs.length) sel.value = divs[0];
+
+  draw();
+}
 
 
 function renderByTeam(){
@@ -1803,6 +1945,14 @@ if (di) {
       (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-team"]'));
     } else if (params.v === 'date') {
       (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="by-date"]'));
+      } else if (params.v === 'league') {
+  (function(n){ if(n) n.click(); })(document.querySelector('.view-tabs .vt[data-target="league-panel"]'));
+  // Apply requested division after the panel renders
+  if (params.div) {
+    state.leagueDiv = String(params.div);
+    // renderLeague() will map numeric div to the correct option value
+    setTimeout(()=>{ try{ renderLeague(); }catch(e){} }, 0);
+  }   
     } else {
       // Clean homepage: show the Competition list (your intended default)
       // If a specific competition is deep-linked, buildCompetitionMenu() already handled it.
