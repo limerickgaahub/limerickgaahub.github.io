@@ -31,11 +31,31 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 lxml python-dateutil pyyaml
 
-      - name: Clean tmp dir
-        run: rm -rf tmp_league
+      - name: Prepare tmp dir
+        run: |
+          rm -rf tmp_league
+          mkdir -p tmp_league
 
-      - name: Run league scraper to tmp
-        run: python scripts/scrape_league_fixtures.py --outdir tmp_league
+      - name: Connectivity check (limerickgaa.ie)
+        run: |
+          # Don't fail job here; this is just to make logs clearer.
+          curl -I --max-time 20 -L https://limerickgaa.ie/ || true
+          curl -I --max-time 20 -L https://limerickgaa.ie/wp-json/ || true
+
+      - name: Run league scraper to tmp (retry)
+        run: |
+          set -e
+          # Retry a few times in case the site times out transiently from GitHub runners.
+          for i in 1 2 3 4; do
+            echo "Attempt $i/4..."
+            python scripts/scrape_league_fixtures.py --outdir tmp_league && break
+            code=$?
+            echo "Scraper failed with exit code $code"
+            if [ "$i" -eq 4 ]; then
+              exit $code
+            fi
+            sleep $((i*15))
+          done
 
       - name: Upload debug artifacts (league tmp)
         if: always()
