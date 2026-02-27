@@ -30,15 +30,17 @@ function showWarn(msg){
   window.LGH_V7_3_READY = true;
   window.LGH_V7_3_3_READY = true;
 
+const DEFAULT_SEASON = '2026';
+
 const SEASON_SOURCES = {
   '2026': {
-    data:   'data/data_2026.json',
-    ko:     'data/ko_2026.json',
+    data:   'data/hurling_2026.json',
+    ko:     null,                  // no knockout_2026.json in repo
     league: 'data/league.json'
   },
   '2025': {
-    data:   'data/data_2025.json',
-    ko:     'data/ko_2025.json',
+    data:   'data/hurling_2025.json',
+    ko:     'data/knockout_2025.json',
     league: null
   }
 };
@@ -443,52 +445,54 @@ if (isWO) {
 
     const baseCount = MATCHES.length;
 
-    // 2) Manual Knockout overlay (OUTSIDE the map)
-    try {
-      const bust2 = (state.season === '2026') ? `?t=${Date.now()}` : '';
-      const opts2 = (state.season === '2026') ? { cache:'no-store' } : { cache:'force-cache' };
+// 2) Manual Knockout overlay (OUTSIDE the map)
+if (KO_URL) {
+  try {
+    const bust2 = (state.season === '2026') ? `?t=${Date.now()}` : '';
+    const opts2 = (state.season === '2026') ? { cache:'no-store' } : { cache:'force-cache' };
 
-      const r2 = await fetch(`${KO_URL}${bust2}`, opts2);
+    const r2 = await fetch(`${KO_URL}${bust2}`, opts2);
 
-      if (r2.ok) {
-        const ko = await r2.json();
-        const normalized = (ko.matches || ko || []).map(r => {
-          const out = {
-            competition: r.competition || '',
-            group:       'Knockout',
-            stage:       'knockout',
-            round:       r.round || '',
-            date:        r.date || '',
-            time:        r.time || '',
-            home:        r.home || '',
-            away:        r.away || '',
-            venue:       r.venue || '',
-            status:      r.status || 'Provisional',
-            home_goals:  r.home_goals,
-            home_points: r.home_points,
-            away_goals:  r.away_goals,
-            away_points: r.away_points
-          };
+    if (r2.ok) {
+      const ko = await r2.json();
+      const normalized = (ko.matches || ko || []).map(r => {
+        const out = {
+          competition: r.competition || '',
+          group:       'Knockout',
+          stage:       'knockout',
+          round:       r.round || '',
+          date:        r.date || '',
+          time:        r.time || '',
+          home:        r.home || '',
+          away:        r.away || '',
+          venue:       r.venue || '',
+          status:      r.status || 'Provisional',
+          home_goals:  r.home_goals,
+          home_points: r.home_points,
+          away_goals:  r.away_goals,
+          away_points: r.away_points
+        };
 
-          // ↓ normalize here too, to keep everything consistent
-          out.competition = INV_COMP_CODES[out.competition] || out.competition;
-          
-          out.code = compCode(out.competition);
-          return attachScores(out);
-        });
-        MATCHES = mergeById(MATCHES, normalized);
-        log('[LGH] load(): base=%d, knockout=%d, total=%d', baseCount, normalized.length, MATCHES.length);
-      } else {
-        warn('[LGH] KO overlay fetch not OK:', r2.status, r2.statusText);
-      }
-    } catch(e){
-      warn('[LGH] KO overlay skipped:', e);
+        out.competition = INV_COMP_CODES[out.competition] || out.competition;
+        out.code = compCode(out.competition);
+        return attachScores(out);
+      });
+      MATCHES = mergeById(MATCHES, normalized);
+      log('[LGH] load(): base=%d, knockout=%d, total=%d', baseCount, normalized.length, MATCHES.length);
+    } else {
+      warn('[LGH] KO overlay fetch not OK:', r2.status, r2.statusText);
     }
+  } catch(e){
+    warn('[LGH] KO overlay skipped:', e);
+  }
+}
 
     // Load league fixtures (if enabled for the season)
 if (LEAGUE_URL) {
   try {
-    const leagueRaw = await fetch(LEAGUE_URL).then(r=>r.json());
+    const bustL = (state.season === '2026') ? `?t=${Date.now()}` : '';
+    const optsL = (state.season === '2026') ? { cache:'no-store' } : { cache:'force-cache' };
+    const leagueRaw = await fetch(`${LEAGUE_URL}${bustL}`, optsL).then(r=>r.json());
     const fixtures = leagueRaw?.fixtures || [];
     const norm = fixtures.map((f, i) => ({
       id: f.id || `league_${i}`,
