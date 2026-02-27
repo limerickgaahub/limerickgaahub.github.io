@@ -31,7 +31,10 @@ TZ = "Europe/Dublin"
 DIV_RE = re.compile(r"^County Hurling League\s+Div(?:ision|sion)\s*(\d{1,2})\s*$", re.IGNORECASE)
 ROUND_RE = re.compile(r"^Round\s*(\d+)\s*$", re.IGNORECASE)
 V_RE = re.compile(r"^V\s*$", re.IGNORECASE)
-TIME_RE = re.compile(r"\b(\d{1,2}):(\d{2})\b")  # 19:30
+TIME_RE = re.compile(
+    r"\b(\d{1,2}):(\d{2})\s*([ap])\.?\s*m\.?\b|\b(\d{1,2}):(\d{2})\b",
+    re.IGNORECASE
+)
 VENUE_RE = re.compile(r"^Venue:\s*(.*)\s*$", re.IGNORECASE)
 REF_RE = re.compile(r"^Referee:\s*(.*)\s*$", re.IGNORECASE)
 
@@ -156,17 +159,36 @@ def parse_date_line(s: str) -> Optional[date]:
         return None
     return date(year, mm, day)
 
-
 def parse_time_line(s: str) -> Optional[time]:
     m = TIME_RE.search(s)
     if not m:
         return None
-    hh = int(m.group(1))
-    mi = int(m.group(2))
+
+    # Case 1: 12-hour format with am/pm
+    if m.group(1) is not None:
+        hh = int(m.group(1))
+        mi = int(m.group(2))
+        ap = m.group(3).lower()
+
+        if not (1 <= hh <= 12 and 0 <= mi <= 59):
+            return None
+
+        # Convert to 24-hour clock
+        if ap == "a":
+            hh = 0 if hh == 12 else hh
+        else:  # pm
+            hh = 12 if hh == 12 else hh + 12
+
+        return time(hh, mi)
+
+    # Case 2: 24-hour format
+    hh = int(m.group(4))
+    mi = int(m.group(5))
+
     if not (0 <= hh <= 23 and 0 <= mi <= 59):
         return None
-    return time(hh, mi)
 
+    return time(hh, mi)
 
 def slugify_team(s: str) -> str:
     s = s.strip().lower()
