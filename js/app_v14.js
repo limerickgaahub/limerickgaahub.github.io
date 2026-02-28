@@ -204,12 +204,13 @@ const sortDateOnly = (a, b) =>
   LEAGUE_URL = SEASON_SOURCES[state.season].league;
 
   const seasonIndicator = document.getElementById('season-indicator');
+const season = state.season; // <-- add this
 
-  if (season && season !== '2026' && seasonIndicator) {
-    seasonIndicator.textContent = `${season} Season · Archive`;
-  } else if (seasonIndicator) {
-    seasonIndicator.textContent = '';
-  }  
+if (season !== '2026' && seasonIndicator) {
+  seasonIndicator.textContent = `${season} Season · Archive`;
+} else if (seasonIndicator) {
+  seasonIndicator.textContent = '';
+}
   
   
   // ---------- Season UI (chips/banner + hide League pill in archive) ----------
