@@ -5,12 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Limerick GAA Hub</title>
 <meta name="color-scheme" content="light only">
-<span id="season-indicator" class="season-indicator"></span>
   
   <!-- PWA -->
   <link rel="manifest" href="/manifest.webmanifest">
   <meta name="theme-color" content="#006B3C">
-  <link rel="apple-touch-icon" href="/icons/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Limerick GAA Hub">
@@ -61,10 +59,6 @@
 
 <!-- Apple Touch -->
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<meta name="apple-mobile-web-app-title" content="Limerick GAA Hub">
-
-<!-- Android / PWA -->
-<link rel="manifest" href="/site.webmanifest">
 
 <!-- Font Awesome -->
 <link rel="stylesheet"
@@ -128,9 +122,13 @@
   
     <div class="oc-link oc-about" data-nav="about">About</div>
   
-    <button id="a2hs-btn" class="menu-item">
-      Add to Home Screen
-    </button>
+<button id="a2hs-btn" class="menu-item" type="button" style="display:none">
+  Add to Home Screen
+</button>
+
+<div id="a2hs-ios" class="menu-item" style="display:none">
+  iPhone/iPad: tap Share → “Add to Home Screen”.
+</div>
   </div>
 
     
@@ -150,6 +148,8 @@
   </div>
 
 
+  <span id="season-indicator" class="season-indicator"></span>
+  
   <!-- Hurling -->
   <div id="panel-hurling" class="card">
 
@@ -414,7 +414,7 @@
 </div>
 
 
-  <footer class="site-footer">Limerick GAA Hub · 2025</footer>
+  <footer class="site-footer">Limerick GAA Hub · 2026</footer>
 
   <!-- JS -->
   <script src="/js/app_v14.js?v=20260215" defer></script>
