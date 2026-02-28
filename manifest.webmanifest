@@ -1,7 +1,10 @@
 {
+  "id": "/",
   "name": "Limerick GAA Hub",
   "short_name": "LGH",
+  "description": "Fixtures, results and tables for Limerick GAA competitions",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#006B3C",
