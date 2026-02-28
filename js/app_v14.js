@@ -52,7 +52,7 @@ const SEASON_SOURCES = {
   },
   '2025': {
     data:   'data/hurling_2025.json',
-    ko:     'data/knockout_2025.json',
+    ko:     'datastatic/knockout_2025.json',
     league: null
   }
 };
