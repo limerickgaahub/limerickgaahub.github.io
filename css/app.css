@@ -244,6 +244,111 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .oc-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .2s; z-index:110; }
 .oc-backdrop.show{ opacity:1; pointer-events:auto; }
 
+/* ===== Premium off-canvas rows (A2HS) ===== */
+
+.offcanvas .oc-row{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 12px;
+  margin-top: 10px;
+
+  border-radius: 14px;
+  border: 1px solid rgba(17,17,17,.08);
+  background: rgba(255,255,255,.92);
+
+  color: var(--text);
+  text-align: left;
+
+  box-shadow: 0 1px 2px rgba(16,24,40,.06);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.offcanvas .oc-row:active{
+  transform: translateY(1px);
+}
+
+.offcanvas .oc-row--a2hs{
+  cursor: pointer;
+}
+
+.offcanvas .oc-ico{
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0,107,60,.10);
+  border: 1px solid rgba(0,107,60,.18);
+  color: var(--accent);
+
+  flex: 0 0 34px;
+}
+
+.offcanvas .oc-ico i{
+  font-size: 15px;
+  line-height: 1;
+}
+
+.offcanvas .oc-txt{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.offcanvas .oc-title{
+  font-weight: 650;
+  font-size: 14px;
+  line-height: 1.15;
+  letter-spacing: .1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.offcanvas .oc-sub{
+  font-size: 12.5px;
+  line-height: 1.2;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.offcanvas .oc-right{
+  color: rgba(17,17,17,.35);
+  flex: 0 0 auto;
+}
+
+.offcanvas .oc-row--hint{
+  border-style: dashed;
+  background: rgba(0,107,60,.04);
+  border-color: rgba(0,107,60,.14);
+}
+
+.offcanvas .oc-ico--hint{
+  background: rgba(0,107,60,.08);
+  border-color: rgba(0,107,60,.16);
+}
+
+/* hover polish (desktop) */
+@media (hover:hover){
+  .offcanvas .oc-row--a2hs:hover{
+    border-color: rgba(0,107,60,.28);
+    box-shadow: 0 6px 18px rgba(16,24,40,.10);
+  }
+}
+
+
+
+
 /* Cards & sections */
 .card{
   background:var(--surface);
