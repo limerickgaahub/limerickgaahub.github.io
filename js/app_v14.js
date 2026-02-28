@@ -4,6 +4,61 @@ const warn = (...a) => { if (!__PROD__) console.warn(...a); };
 const err  = (...a) => console.error(...a);
 
 
+// --- PWA / Add to Home Screen (A2HS) ---
+(function pwaA2HS(){
+  // 1) Service worker registration (required for installability)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(console.error);
+    });
+  }
+
+  // 2) Android/Chrome install prompt handling
+  let deferredPrompt = null;
+
+  const isIos = () => /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = () =>
+    window.matchMedia?.('(display-mode: standalone)').matches ||
+    (('standalone' in navigator) && navigator.standalone === true);
+
+  function show(el){ if (el) el.style.display = ''; }
+  function hide(el){ if (el) el.style.display = 'none'; }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();                  // critical
+    deferredPrompt = e;
+
+    const btn = document.getElementById('a2hs-btn');
+    if (btn) show(btn);
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    hide(document.getElementById('a2hs-btn'));
+    hide(document.getElementById('a2hs-ios'));
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('a2hs-btn');
+    const iosHint = document.getElementById('a2hs-ios');
+
+    // iOS: no beforeinstallprompt; show instructions if not installed
+    if (isIos() && !isStandalone()) show(iosHint);
+    else hide(iosHint);
+
+    if (!btn) return;
+
+    btn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;       // not eligible / already installed
+      hide(btn);
+
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;   // accepted/dismissed (not always reliable)
+      deferredPrompt = null;
+    });
+  });
+})();
+
 log("[LGH] app js evaluating");
 
 (function defaultHomeToLeague(){
