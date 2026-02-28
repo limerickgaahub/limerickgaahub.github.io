@@ -203,7 +203,16 @@ const sortDateOnly = (a, b) =>
   KO_URL   = SEASON_SOURCES[state.season].ko;
   LEAGUE_URL = SEASON_SOURCES[state.season].league;
 
-    // ---------- Season UI (chips/banner + hide League pill in archive) ----------
+  const seasonIndicator = document.getElementById('season-indicator');
+
+  if (season && season !== '2026' && seasonIndicator) {
+    seasonIndicator.textContent = `${season} Season · Archive`;
+  } else if (seasonIndicator) {
+    seasonIndicator.textContent = '';
+  }  
+  
+  
+  // ---------- Season UI (chips/banner + hide League pill in archive) ----------
   function ensureSeasonBanner(){
     let b = document.getElementById('season-banner');
     if (!b) {
