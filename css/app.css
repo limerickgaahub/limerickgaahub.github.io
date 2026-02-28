@@ -254,7 +254,7 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   max-width:1100px;
   margin:0 auto;
 }
-.section-tabs{ display:flex; gap:10px; margin:6px 0 12px; flex-wrap:wrap; }
+.section-tabs{ display:flex; gap:10px; margin:4px 0 8px; flex-wrap:wrap; }
 .section-tabs .seg{
   padding:9px 14px;
   border-radius:999px;
@@ -534,6 +534,8 @@ td.match, th.match{ text-align:center; }
   justify-content:center;
   flex-wrap:wrap;
   gap:10px;
+  margin:0;                 /* add this */
+  padding:10px 12px;        /* was inherited from .card (14px) -> slightly tighter */
   box-shadow:none;
   border-radius:12px;
   border:1px solid var(--line);
@@ -586,7 +588,10 @@ td.match, th.match{ text-align:center; }
 }
 
 @media (max-width:880px){
-  .controls.card{ justify-content:stretch; }
+  .controls.card{
+    justify-content:stretch;
+    padding:8px 10px;       /* tighter on mobile */
+  }
   .pretty-select, .pretty-input{ max-width:none; }
 }
 
@@ -770,7 +775,7 @@ body.comp-home #sharebar-comp{
    SPORT SEGMENTED TOGGLE (keep only one system)
    ========================================================= */
 .sportbar{
-  margin-top:6px;
+  margin:4px 0 8px;     /* was margin-top:6px; -> now tight and controlled */
   padding:6px 10px;
   border-radius:14px;
 }
