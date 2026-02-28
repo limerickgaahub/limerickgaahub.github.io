@@ -206,6 +206,48 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 
 .offcanvas .oc-link.oc-archive{
   background:#f2fbf5;
+  border:1px solid rgba(0,107,60,.18);
+  font-weight:900;
+}
+.offcanvas .oc-link.oc-archive .oc-badge{
+  background:var(--accent);
+  color:#fff;
+}
+
+/* Remove any green tint from the specific 2025 Hurling item */
+.offcanvas .oc-link.oc-2025-hurling,
+.offcanvas .oc-link[data-season="2025"][data-sport="hurling"]{
+  background:#f6f7f8 !important;
+  border:0 !important;
+  color:var(--text) !important;
+}
+.offcanvas .oc-link.oc-2025-hurling .oc-badge,
+.offcanvas .oc-link[data-season="2025"][data-sport="hurling"] .oc-badge{
+  background:rgba(16,24,40,.08) !important;
+  color:var(--text) !important;
+}
+
+
+/* Emphasise 2026 + Archive in burger */
+.offcanvas .oc-link[data-season="2026"],
+.offcanvas .oc-link.oc-2026{
+  font-weight:900;
+  background:var(--surface-3);
+  margin-top:14px;
+  border:1px solid rgba(16,24,40,.10);
+}
+
+.offcanvas .oc-link.oc-about{
+  position:relative;
+}
+.offcanvas .oc-link.oc-about::before{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  top:-8px;
+  height:1px;
+  background:var(--line);
 }
 
 .oc-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .2s; z-index:110; }
@@ -757,24 +799,15 @@ body.comp-home #sharebar-comp{
 #season-banner{
   display:flex;
   justify-content:flex-end;
-  align-items:center;
-  margin:8px 0 0;
-  padding:0 2px;
-
+  align-items:flex-end;     /* was center */
+  margin:0;                 /* was 8px 0 0 */
+  padding:10px 2px 0;       /* push it down from top */
+  min-height:34px;          /* reserve a band so it never touches the top */
   font-size:12px;
   font-weight:800;
   color:var(--muted);
 }
 
-/* small dot only when text exists */
-#season-banner::before{
-  content:"";
-  width:6px; height:6px;
-  border-radius:999px;
-  background:rgba(0,107,60,.35);
-  margin-right:8px;
-  display:inline-block;
-}
 #season-banner:empty::before{ display:none; }
 
 /* hard-disable any old chip markup if still present */
