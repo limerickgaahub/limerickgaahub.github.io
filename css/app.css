@@ -85,15 +85,6 @@
 .toolbar-dark .pretty-select::after { border-color:#bbb; }
 */
 
-/* ===== Safe dead-space reclaim (sides) ===== */
-@media (max-width:880px){
-  body {               /* was 60px 10px 10px; override slightly */
-    margin:60px 8px 10px;
-  }
-  .card {              /* a touch tighter on mobile */
-    padding:10px;      /* already apply 10px below; keep it consistent */
-  }
-}
 
   
 *{ box-sizing:border-box; }
@@ -463,14 +454,22 @@ td.match, th.match{ text-align:center; }
    ========================================================= */
 @media (max-width:880px){
 
-  body{ margin:60px 8px 10px; }
-  .card{ padding:10px; }
+  body{
+    margin:60px 0 10px;   /* remove side margins */
+    padding:0 10px;       /* single outer gutter */
+  }
 
+    .card{
+    margin:0;             /* prevent extra centering “air” */
+    padding:8px;          /* tighter inner gutter */
+  }
+
+  
   .navtabs{ display:none; }
   .burger{ display:inline-block; }
 
   thead th, tbody td{
-    padding:9px 6px;
+    padding:8px 5px;
     font-size:13px;
   }
 
@@ -521,8 +520,9 @@ td.match, th.match{ text-align:center; }
 }
 
 @media (max-width:360px){
-  .card{ padding:8px; }
-  thead th, tbody td{ padding:7px 5px; }
+  body{ padding:0 8px; }      /* slightly smaller gutter */
+  .card{ padding:6px; }
+  thead th, tbody td{ padding:7px 4px; }
 }
 
 /* =========================================================
@@ -583,6 +583,11 @@ td.match, th.match{ text-align:center; }
   background:transparent;
   cursor:pointer;
   pointer-events:none;  /* do NOT block the input */
+}
+
+@media (max-width:880px){
+  .controls.card{ justify-content:stretch; }
+  .pretty-select, .pretty-input{ max-width:none; }
 }
 
 /* =========================================================
