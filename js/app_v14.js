@@ -5,6 +5,18 @@ const err  = (...a) => console.error(...a);
 
 
 log("[LGH] app js evaluating");
+
+(function defaultHomeToLeague(){
+  if (location.pathname !== '/') return;
+  if (location.search || location.hash) return;
+
+  // Guard against any unexpected repeat execution
+  const target = '/?v=league&div=1';
+  if ((location.pathname + location.search + location.hash) === target) return;
+
+  location.replace(target);
+})();
+
 window.LGH_V7_3_READY = true;
 window.LGH_V7_3_3_READY = true;
 log("[LGH] flags now:",
