@@ -1,3 +1,9 @@
+// --- logging (must exist before any log() calls) ---
+const __PROD__ = !/^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+const log  = (...a) => { if (!__PROD__) console.log(...a); };
+const warn = (...a) => { if (!__PROD__) console.warn(...a); };
+const err  = (...a) => console.error(...a);
+
 // --- PWA / Add to Home Screen (A2HS) ---
 (function pwaA2HS(){
   // 1) Service worker registration (required for installability)
