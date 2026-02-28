@@ -943,3 +943,30 @@ body.is-archive{
   height:1px;
   background:var(--line);
 }
+
+/* Mobile: remove double-nesting (card inside card) */
+@media (max-width:880px){
+
+  /* Keep the outer page padding you already use (or your current body rules) */
+  /* No change required here unless you want it */
+
+  /* Outer panel stays as the main card */
+  #panel-hurling.card{
+    padding:10px;               /* keep a single inset */
+  }
+
+  /* Inner panels should NOT behave like cards on mobile */
+  #panel-hurling .panel.card{
+    background:transparent;
+    border:0;
+    box-shadow:none;
+    padding:0;                  /* this is the width win */
+    margin-top:6px;             /* preserve your spacing */
+  }
+
+  /* If you still want a tiny inset for the tabs/labels (not the table) */
+  #panel-hurling .panel.card > .section-tabs,
+  #panel-hurling .panel.card > .comp-selected{
+    padding:0 2px;
+  }
+}
