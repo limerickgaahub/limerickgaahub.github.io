@@ -1,3 +1,56 @@
+// --- PWA / Add to Home Screen (A2HS) ---
+(function pwaA2HS(){
+  // Service worker registration
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(console.error);
+    });
+  }
+
+  let deferredPrompt = null;
+
+  const isIos = () => /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = () =>
+    window.matchMedia?.('(display-mode: standalone)').matches ||
+    (('standalone' in navigator) && navigator.standalone === true);
+
+  const show = (el) => { if (el) el.style.display = ''; };
+  const hide = (el) => { if (el) el.style.display = 'none'; };
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    show(document.getElementById('a2hs-btn'));
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    hide(document.getElementById('a2hs-btn'));
+    hide(document.getElementById('a2hs-ios'));
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('a2hs-btn');
+    const iosHint = document.getElementById('a2hs-ios');
+
+    // iOS: show instructions when not installed
+    if (isIos() && !isStandalone()) show(iosHint);
+    else hide(iosHint);
+
+    if (!btn) return;
+
+    btn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      hide(btn);
+
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    });
+  });
+})();
+
+
 const __PROD__ = !/^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 const log  = (...a) => { if (!__PROD__) console.log(...a); };
 const warn = (...a) => { if (!__PROD__) console.warn(...a); };
