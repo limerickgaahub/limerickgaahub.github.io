@@ -952,7 +952,7 @@ body.is-archive{
 
   /* Outer panel stays as the main card */
   #panel-hurling.card{
-    padding:10px;               /* keep a single inset */
+    padding:8px;               /* keep a single inset */
   }
 
   /* Inner panels should NOT behave like cards on mobile */
