@@ -164,6 +164,25 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .offcanvas .oc-head{ padding:14px 16px; font-weight:800; border-bottom:1px solid var(--line); }
 .offcanvas .oc-body{ padding:10px; display:flex; flex-direction:column; gap:8px; }
 
+/* Offcanvas section headings (non-clickable) */
+.offcanvas .oc-heading{
+  padding:8px 12px 2px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* Optional: make About feel like a distinct "pill" */
+.offcanvas .oc-link.oc-about{
+  background:var(--surface-3);
+  border:1px solid rgba(16,24,40,.06);
+}
+
+.offcanvas .oc-heading + .oc-link{ margin-top:2px; }
+.offcanvas .oc-link + .oc-heading{ margin-top:10px; }
+
 .offcanvas .oc-link{
   padding:10px 12px;
   border-radius:12px;
@@ -821,5 +840,18 @@ body.comp-home #sharebar-comp{
 
 .scroll-top-btn:hover{
   filter:brightness(1.06);
+}
+
+.season-indicator{
+  margin-left:8px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+body.is-archive{
+  background:#f3f4f6; /* slightly cooler grey */
 }
 
