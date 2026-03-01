@@ -142,8 +142,11 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   border:1px solid rgba(16,24,40,.08);
 }
 .navtab:hover{ background:var(--surface-2); }
-.navtab.active{ background:var(--accent-soft); background:var(--accent-soft); border-color:var(--accent-line); }
-
+.navtab.active{
+  background:var(--accent-soft);
+  color:var(--accent);
+  border-color:var(--accent-line);
+}
 .brand{ min-width:0; }                 /* allow shrink inside flex */
 .brand h1{
   white-space:nowrap;                  /* force single line */
@@ -193,14 +196,14 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   font-size:12px;
   padding:2px 8px;
   border-radius:999px;
-  background:rgba(0,107,60,.12);
+  background:var(--accent-soft);
   color:var(--accent);
   font-weight:800;
 }
 
 .offcanvas .oc-link.oc-archive{
-  background:#f2fbf5;
-  border:1px solid rgba(0,107,60,.18);
+  background:rgba(11,122,74,.06);
+  border:1px solid var(--accent-line);
   font-weight:900;
 }
 .offcanvas .oc-link.oc-archive .oc-badge{
@@ -332,13 +335,13 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 
 .offcanvas .oc-row--hint{
   border-style: dashed;
-  background: rgba(0,107,60,.04);
+  background: rgba(11,122,74,.05);
   border-color: rgba(0,107,60,.14);
 }
 
 .offcanvas .oc-ico--hint{
-  background: rgba(0,107,60,.08);
-  border-color: rgba(0,107,60,.16);
+  background: var(--accent-soft);
+  border-color: rgba(11,122,74,.28);;
 }
 
 /* hover polish (desktop) */
@@ -416,7 +419,11 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .menu .item:hover,.menu .item.active{ background:var(--tint); }
 
 /* Selected label */
-.comp-selected{ margin:8px 0 10px; font-weight:800; font-size:15px; color:#1f2937; }
+.comp-selected{ margin:8px 0 10px; color:#0f172a;
+font-size:12px;
+font-weight:800;
+letter-spacing:.02em;
+text-transform:uppercase; }
 
 /* Always reserve ~two lines for the competition header text */
 #comp-selected{
@@ -458,10 +465,10 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   overflow-x:auto;
   -webkit-overflow-scrolling:touch;
   border-radius:var(--radius-card);
-  border:1px solid rgba(16,24,40,.05);
+  border:1px solid rgba(16,24,40,.06);
   background:var(--surface);
   min-width:0;
-  box-shadow:var(--shadow-sm);
+  box-shadow:0 1px 2px rgba(16,24,40,.05), 0 10px 24px rgba(16,24,40,.06);
 }
 
 /* Default table sizing */
@@ -476,11 +483,13 @@ thead th{
   position:sticky;
   top:0;
   z-index:1;
-  background:#f7f8f7;
-  border-bottom:1px solid rgba(16,24,40,.06);
-  color:#1f2937;
-  font-size:12.5px;
-  font-weight:750;
+  background:linear-gradient(to bottom, #fafcfb, #f4f7f5);
+  border-bottom:1px solid rgba(16,24,40,.08);
+  color:#0f172a;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.02em;
+  text-transform:uppercase;
   text-align:left;
   padding:12px 12px;
   white-space:nowrap;
@@ -488,17 +497,24 @@ thead th{
 
 tbody td{
   padding:12px 12px;
-  border-bottom:1px solid rgba(16,24,40,.06);
+  border-bottom:1px solid rgba(16,24,40,.05);
   font-size:14px;
   line-height:1.25;
   vertical-align:middle;
   word-break:normal;
   overflow-wrap:normal;
+  color:#0f172a;
+  font-variant-numeric:tabular-nums;
+}
+
+thead th + th,
+tbody td + td{
+  border-left:1px solid rgba(16,24,40,.04);
 }
 
 /* zebra + hover: micro-depth, not “big cards” */
-tbody tr:nth-child(even) td{ background:#fafbfa; }
-tbody tr:hover td{ background:var(--tint); }
+tbody tr:nth-child(even) td{ background:rgba(15,23,42,.015); }
+tbody tr:hover td{ background:rgba(11,122,74,.06); }
 
 /* Column helpers */
 td.right, th.right{ text-align:right; }
@@ -716,7 +732,7 @@ td.match, th.match{ text-align:center; }
   gap:12px;
   padding:12px 12px;
   border:1px solid rgba(16,24,40,.05);
-  border-radius:var(--radius-card);
+  border-radius:14px;
   background:var(--card);
   margin-bottom:8px;
   cursor:pointer;
@@ -832,48 +848,6 @@ body.comp-home #sharebar-comp{
   display:none !important;
 }
 
-/* Standings: compact numeric columns so everything fits */
-#g-standings-table{
-  table-layout:fixed;
-  width:100%;
-}
-
-#g-standings-table thead th,
-#g-standings-table tbody td{
-  padding:8px 4px;
-  font-size:13px;
-}
-
-/* Team column gets flexible width */
-#g-standings-table th:first-child,
-#g-standings-table td:first-child{
-  width:auto;
-  min-width:0;
-  white-space:normal;
-  overflow-wrap:anywhere;
-}
-
-/* All numeric columns tighter */
-#g-standings-table th:not(:first-child),
-#g-standings-table td:not(:first-child){
-  width:9%;
-  text-align:right;
-  white-space:nowrap;
-}
-
-/* Standings alignment: Team left, everything else right */
-#g-standings-table th:first-child,
-#g-standings-table td:first-child{
-  text-align:left;
-}
-
-#g-standings-table th:not(:first-child),
-#g-standings-table td:not(:first-child){
-  text-align:right;
-  white-space:nowrap;
-  font-variant-numeric:tabular-nums;
-}
-
 
 /* =========================================================
    SPORT SEGMENTED TOGGLE (keep only one system)
@@ -964,7 +938,7 @@ body.comp-home #sharebar-comp{
   width:80px;
   height:3px;
   border-radius:999px;
-  background:rgba(0,107,60,.25);
+  background:rgba(11,122,74,.25);
 }
 
 .scroll-top-btn{
