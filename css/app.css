@@ -598,42 +598,53 @@ td.match, th.match{ text-align:center; }
   }
 
   /* force match tables to behave */
-  #g-table, #team-table, #date-table{ table-layout:fixed; width:100%; }
+  #g-table, #team-table, #date-table, #league-table{ table-layout:fixed; width:100%; }
 
   /* R */
-  #g-table thead th:nth-child(1),  #g-table tbody td:nth-child(1),
-  #team-table thead th:nth-child(1),#team-table tbody td:nth-child(1),
-  #date-table thead th:nth-child(1),#date-table tbody td:nth-child(1){
-    width:2.2ch;
-    min-width:2.2ch;
-    max-width:2.2ch;
+  #g-table thead th:nth-child(1),     #g-table tbody td:nth-child(1),
+  #team-table thead th:nth-child(1),  #team-table tbody td:nth-child(1),
+  #date-table thead th:nth-child(1),  #date-table tbody td:nth-child(1),
+  #league-table thead th:nth-child(1),#league-table tbody td:nth-child(1){
+    width:3ch;
+    min-width:3ch;
+    max-width:3ch;
     text-align:center !important;
     vertical-align:middle !important;
     white-space:nowrap;
-    padding-left:0 !important;
-    padding-right:0 !important;
+    padding-left:2px !important;
+    padding-right:2px !important;
   }
   
   /* Date column */
-  #g-table thead th:nth-child(2),  #g-table tbody td:nth-child(2),
-  #team-table thead th:nth-child(2),#team-table tbody td:nth-child(2),
-  #date-table thead th:nth-child(2),#date-table tbody td:nth-child(2){
-    width:3.3rem;
-    min-width:3.3rem;
-    max-width:3.3rem;
+  #g-table thead th:nth-child(2),     #g-table tbody td:nth-child(2),
+  #team-table thead th:nth-child(2),  #team-table tbody td:nth-child(2),
+  #date-table thead th:nth-child(2),  #date-table tbody td:nth-child(2),
+  #league-table thead th:nth-child(2),#league-table tbody td:nth-child(2){
+    width:4.2rem;
+    min-width:4.2rem;
+    max-width:4.2rem;
     text-align:center !important;
     vertical-align:middle !important;
-    padding-left:1px;
-    padding-right:1px;
+    padding-left:2px !important;
+    padding-right:2px !important;
   }
 
+    /* Match column */
+  #g-table thead th:nth-child(3),     #g-table tbody td:nth-child(3),
+  #team-table thead th:nth-child(3),  #team-table tbody td:nth-child(3),
+  #date-table thead th:nth-child(3),  #date-table tbody td:nth-child(3),
+  #league-table thead th:nth-child(3),#league-table tbody td:nth-child(3){
+    width:42%;
+  }
+  
   /* Venue */
-  #g-table thead th:nth-child(4),  #g-table tbody td:nth-child(4),
-  #team-table thead th:nth-child(4),#team-table tbody td:nth-child(4),
-  #date-table thead th:nth-child(4),#date-table tbody td:nth-child(4){
-    width:5.4rem;
-    min-width:5.4rem;
-    max-width:5.4rem;
+  #g-table thead th:nth-child(4),     #g-table tbody td:nth-child(4),
+  #team-table thead th:nth-child(4),  #team-table tbody td:nth-child(4),
+  #date-table thead th:nth-child(4),  #date-table tbody td:nth-child(4),
+  #league-table thead th:nth-child(4),#league-table tbody td:nth-child(4){
+    width:6.2rem;
+    min-width:6.2rem;
+    max-width:6.2rem;
     text-align:center !important;
     vertical-align:middle !important;
     white-space:normal !important;
