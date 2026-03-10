@@ -106,7 +106,7 @@ h2{ margin:0 0 8px; font-size:16px; }
 .sm-muted{ color:#6b7280; font-size:12px; }
 
 td.rcol, th.rcol { vertical-align: middle; }      /* center R vertically */
-td.vcol, th.vcol { text-align: left; vertical-align: middle; }    /* Venue left */
+td.vcol, th.vcol { text-align: center; vertical-align: middle; }
 td.dcol, th.dcol,
 td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 
@@ -516,6 +516,13 @@ td.vcol, th.vcol{ text-align:left; vertical-align:middle; }
 td.dcol, th.dcol{ text-align:left; }
 td.tcol, th.tcol{ text-align:left; }
 
+td.vcol{
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+  line-height:1.15;
+}
+
 /* Match block (dense, centred) */
 td.match, th.match{ text-align:center; }
 .match-block{
@@ -597,23 +604,27 @@ td.match, th.match{ text-align:center; }
   #g-table thead th:nth-child(1),  #g-table tbody td:nth-child(1),
   #team-table thead th:nth-child(1),#team-table tbody td:nth-child(1),
   #date-table thead th:nth-child(1),#date-table tbody td:nth-child(1){
-    width:1.4rem;
+    width:1.1rem;
+    min-width:1.1rem;
+    max-width:1.1rem;
     text-align:center !important;
     vertical-align:middle !important;
     white-space:nowrap;
-    padding-left:3px;
-    padding-right:3px;
+    padding-left:1px;
+    padding-right:1px;
   }
-
+  
   /* Date column */
   #g-table thead th:nth-child(2),  #g-table tbody td:nth-child(2),
   #team-table thead th:nth-child(2),#team-table tbody td:nth-child(2),
   #date-table thead th:nth-child(2),#date-table tbody td:nth-child(2){
-    width:4.1rem;
+    width:3.7rem;
+    min-width:3.7rem;
+    max-width:3.7rem;
     text-align:center !important;
     vertical-align:middle !important;
-    padding-left:4px;
-    padding-right:4px;
+    padding-left:2px;
+    padding-right:2px;
   }
 
   /* Venue */
