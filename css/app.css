@@ -512,7 +512,7 @@ tbody tr:hover td{ background:rgba(11,122,74,.06); }
 
 td.right, th.right{ text-align:right; }
 td.rcol, th.rcol{ text-align:center; vertical-align:middle; }
-td.vcol, th.vcol{ text-align:left; vertical-align:middle; }
+td.vcol, th.vcol{ text-align:center; vertical-align:middle; }
 td.dcol, th.dcol{ text-align:left; }
 td.tcol, th.tcol{ text-align:left; }
 
@@ -604,35 +604,37 @@ td.match, th.match{ text-align:center; }
   #g-table thead th:nth-child(1),  #g-table tbody td:nth-child(1),
   #team-table thead th:nth-child(1),#team-table tbody td:nth-child(1),
   #date-table thead th:nth-child(1),#date-table tbody td:nth-child(1){
-    width:1.1rem;
-    min-width:1.1rem;
-    max-width:1.1rem;
+    width:2.2ch;
+    min-width:2.2ch;
+    max-width:2.2ch;
     text-align:center !important;
     vertical-align:middle !important;
     white-space:nowrap;
-    padding-left:1px;
-    padding-right:1px;
+    padding-left:0 !important;
+    padding-right:0 !important;
   }
   
   /* Date column */
   #g-table thead th:nth-child(2),  #g-table tbody td:nth-child(2),
   #team-table thead th:nth-child(2),#team-table tbody td:nth-child(2),
   #date-table thead th:nth-child(2),#date-table tbody td:nth-child(2){
-    width:3.7rem;
-    min-width:3.7rem;
-    max-width:3.7rem;
+    width:3.3rem;
+    min-width:3.3rem;
+    max-width:3.3rem;
     text-align:center !important;
     vertical-align:middle !important;
-    padding-left:2px;
-    padding-right:2px;
+    padding-left:1px;
+    padding-right:1px;
   }
 
   /* Venue */
   #g-table thead th:nth-child(4),  #g-table tbody td:nth-child(4),
   #team-table thead th:nth-child(4),#team-table tbody td:nth-child(4),
   #date-table thead th:nth-child(4),#date-table tbody td:nth-child(4){
-    width:22%;
-    text-align:left !important;
+    width:5.4rem;
+    min-width:5.4rem;
+    max-width:5.4rem;
+    text-align:center !important;
     vertical-align:middle !important;
     white-space:normal !important;
     overflow-wrap:anywhere;
