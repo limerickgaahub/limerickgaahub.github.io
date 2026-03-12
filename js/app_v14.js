@@ -243,7 +243,8 @@ const sortDateOnly = (a, b) =>
   const VENUE_MAP = {
   "BALLYBROWN GAA": "Ballybrown",
   "Caherdavin": "Páirc Uí Dromgúil",
-  "Dromin/Athlacca": "Dromin / Athlacca"
+  "Dromin/Athlacca": "Dromin / Athlacca",
+  "Round 5 Winners": "Askeaton Ballysteen Kilcornan"
 };
 
 function mapVenue(v){
