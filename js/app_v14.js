@@ -240,6 +240,18 @@ const sortDateOnly = (a, b) =>
   const toInt=v=>v==null||v===''?null:(Number(v)||0);
   const parseRoundNum=r=>{ const m=String(r||'').match(/(\d+)/); return m?Number(m[1]):999; };
 
+  const VENUE_MAP = {
+  "BALLYBROWN GAA": "Ballybrown",
+  "Caherdavin": "Páirc Uí Dromgúil",
+  "Dromin/Athlacca": "Dromin / Athlacca"
+};
+
+function mapVenue(v){
+  if (!v) return '';
+  const key = String(v).trim();
+  return VENUE_MAP[key] || key;
+}
+  
   // Treat "Walkover" as a result for all filters/partitions.
   const RESULT_RE=/^(res|final|walkover)/i;
   const isResult=s=>RESULT_RE.test(String(s||''));
@@ -462,7 +474,7 @@ async function load(){
         time:        r.time || '',
         home:        r.home || '',
         away:        r.away || '',
-        venue:       r.venue || '',
+        venue:       mapVenue(r.venue),
         status:      r.status || '',
         home_goals:  r.home_goals,
         home_points: r.home_points,
@@ -544,7 +556,7 @@ if (KO_URL) {
           time:        r.time || '',
           home:        r.home || '',
           away:        r.away || '',
-          venue:       r.venue || '',
+          venue:       mapVenue(r.venue),
           status:      r.status || 'Provisional',
           home_goals:  r.home_goals,
           home_points: r.home_points,
@@ -582,7 +594,7 @@ if (LEAGUE_URL) {
       round: f.round || '',
       date: f.date || '',
       time: f.time || f.time_local || (f.datetime_iso ? String(f.datetime_iso).slice(11,16) : ''),
-      venue: f.venue || '',
+      venue: mapVenue(f.venue),
       home: f.home || '',
       away: f.away || '',
       status: f.status || 'Fixture',
