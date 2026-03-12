@@ -1064,6 +1064,21 @@ body.is-archive{
     padding:8px;               /* keep a single inset */
   }
 
+  /* Homepage top spacing after removing Hurling / Football pills */
+#panel-hurling{
+  margin-top:8px;
+}
+
+#panel-hurling > #season-banner{
+  padding-top:4px;
+  min-height:24px;
+}
+
+#panel-hurling > .section-tabs.view-tabs{
+  margin-top:0;
+  margin-bottom:8px;
+}
+
   /* Inner panels should NOT behave like cards on mobile */
   #panel-hurling .panel.card{
     background:transparent;
