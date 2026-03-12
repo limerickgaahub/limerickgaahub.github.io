@@ -1053,6 +1053,27 @@ body.is-archive{
   background:var(--line);
 }
 
+/* ===== Tighten hero -> content -> top pills ===== */
+.header{
+  margin-bottom: 6px;
+}
+
+#panel-hurling.card{
+  margin-top: 0;
+  padding-top: 8px;
+}
+
+#panel-hurling > #view-tabs{
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 0;
+}
+
+/* Keep the first visible panel snug under the pills */
+#panel-hurling > .panel.card{
+  margin-top: 0;
+}
+
 /* Mobile: remove double-nesting (card inside card) */
 @media (max-width:880px){
 
