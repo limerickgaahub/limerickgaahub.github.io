@@ -581,7 +581,7 @@ if (LEAGUE_URL) {
       group: f.division ? `Division ${String(f.division).trim()}` : (f.group || ''),
       round: f.round || '',
       date: f.date || '',
-      time: f.time || '',
+      time: f.time || f.time_local || (f.datetime_iso ? String(f.datetime_iso).slice(11,16) : ''),
       venue: f.venue || '',
       home: f.home || '',
       away: f.away || '',
