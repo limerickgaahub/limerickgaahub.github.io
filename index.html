@@ -203,13 +203,25 @@
         <div id="comp-list" class="comp-list" style="display:none;"></div>
         <div class="comp-selected" id="comp-selected" aria-live="polite"></div>
 
-    <div class="section-tabs">
-      <div class="seg active" data-view="matches" id="matches-seg">
-        <span id="matches-label">Matches</span>
-        <i class="fa-solid fa-chevron-down" id="matches-chevron" style="font-size:12px; margin-left:6px;"></i>
-      </div>
-      <div class="seg" data-view="table">Table</div>
-    </div>
+  <div class="section-tabs" id="comp-view-tabs" role="tablist" aria-label="Competition view selector">
+  <button class="seg active"
+          data-view="matches"
+          id="matches-seg"
+          type="button"
+          aria-selected="true">
+    <span id="matches-label">Matches</span>
+    <i class="fa-solid fa-chevron-down" id="matches-chevron" style="font-size:12px; margin-left:6px;"></i>
+  </button>
+
+  <button class="seg"
+          data-view="table"
+          id="table-seg"
+          type="button"
+          aria-selected="false">
+    Table
+  </button>
+</div>
+      
     <!-- New: Matches dropdown menu -->
     <div class="menu" id="matches-menu" role="menu" aria-hidden="true"></div>
 
