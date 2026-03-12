@@ -272,9 +272,7 @@
       </div> 
     </div>
 
-<div class="panel card" id="league-panel" style="display:none; margin-top:6px;">
-  <h2>League</h2>
-
+    <div class="panel card" id="league-panel" style="display:none; margin-top:6px;">
   <div class="controls card" id="controls-league" style="margin-top:6px;">
     <label for="league-div" class="sr-only">Select division</label>
     <div class="pretty-select">
@@ -282,11 +280,56 @@
     </div>
   </div>
 
-  <div class="table-wrap">
+  <div class="section-tabs" id="league-view-tabs" role="tablist" aria-label="League view selector">
+    <button class="seg active"
+            role="tab"
+            aria-selected="true"
+            data-league-view="matches"
+            id="league-matches-tab"
+            type="button">
+      Matches
+    </button>
+    <button class="seg"
+            role="tab"
+            aria-selected="false"
+            data-league-view="table"
+            id="league-table-tab"
+            type="button">
+      Table
+    </button>
+  </div>
+
+  <div class="table-wrap" id="league-matches-wrap">
     <table id="league-table">
       <thead></thead>
       <tbody></tbody>
     </table>
+  </div>
+
+  <div id="league-standings" style="margin-top:12px; display:none;">
+    <div class="table-wrap">
+      <table id="league-standings-table">
+        <colgroup>
+          <col style="width:44%">
+          <col style="width:6%"><col style="width:6%"><col style="width:6%"><col style="width:6%">
+          <col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:8%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th class="right">P</th>
+            <th class="right">W</th>
+            <th class="right">D</th>
+            <th class="right">L</th>
+            <th class="right">PF</th>
+            <th class="right">PA</th>
+            <th class="right">PD</th>
+            <th class="right">Pts</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </div>
 
   <div class="sharebar" id="sharebar-league">
@@ -297,7 +340,6 @@
 </div>
           
       <div class="panel card" id="by-team" style="display:none; margin-top:6px;">
-        <h2>By Club</h2>
         <div class="controls card" id="controls-team">
           <label for="team" class="sr-only">Select club</label>
         <div class="pretty-select">
@@ -319,7 +361,6 @@
 
         <!-- Share (Date) — inside the panel -->
             <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
-              <h2>By Date</h2>
               <div id="controls-date" class="controls card">
                 <label class="sr-only" for="date-input">Select date</label>
                 <div class="pretty-input">
