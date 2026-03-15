@@ -1167,6 +1167,78 @@ thead th{
   line-height:1.12;
   color:#0b1320;
 }
+/* =========================================================
+   POLISH PASS 2 — final mobile league dropdown alignment
+   Replace the current Patch 2 with this
+   ========================================================= */
+
+@media (max-width:880px){
+
+  /* Lift the top 4 pills slightly higher in the container */
+  #panel-hurling.card{
+    padding-top:6px;
+  }
+
+  #panel-hurling > #season-banner{
+    padding-top:2px;
+    min-height:18px;
+  }
+
+  #panel-hurling > #view-tabs{
+    margin-top:0;
+    margin-bottom:8px;
+  }
+
+  /* Keep the League panel snug under the top 4 pills */
+  #league-panel{
+    margin-top:8px !important;
+  }
+
+  /* Division dropdown row:
+     - same usable width as the 4 pills row above
+     - equal gap above/below
+     - no inherited card inset narrowing it */
+  #controls-league.controls.card{
+    margin-top:0 !important;
+    margin-bottom:8px !important;
+    padding:0 !important;
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    display:block;
+  }
+
+  #controls-league .pretty-select{
+    display:block;
+    width:100%;
+    max-width:none;
+    flex:none;
+    min-height:40px;
+    border-radius:12px;
+  }
+
+  /* Match dropdown height to standard pill height */
+  #controls-league .pretty-select select{
+    height:40px;
+    min-height:40px;
+    padding:0 2.2rem 0 .9rem;
+    line-height:40px;
+    font-size:15px;
+  }
+
+  /* Keep chevron centred */
+  #controls-league .pretty-select::after{
+    top:50%;
+    transform:translateY(-50%) rotate(45deg);
+  }
+
+  /* Leave Matches / Table layout exactly as-is;
+     only keep spacing tidy */
+  #league-view-tabs{
+    margin-top:0 !important;
+  }
+}
+
 
 /* 5) Keep the score pill strong beside the bolder team names */
 .match-score{
@@ -1180,92 +1252,3 @@ thead th{
   }
 }
 
-/* =========================================================
-   POLISH PASS 2 — mobile alignment / spacing / green sync
-   ========================================================= */
-
-/* 1) Use the exact same dark green as the table header outside the container */
-body,
-body.is-archive{
-  background:#0b7a4a;
-}
-
-/* 2) Tighten the top of the main container so the 4 pills sit higher */
-@media (max-width:880px){
-
-  #panel-hurling.card{
-    padding-top:6px;
-  }
-
-  #panel-hurling > #season-banner{
-    padding-top:2px;
-    min-height:18px;
-  }
-
-  /* Top 4 pills row */
-  #panel-hurling > #view-tabs.section-tabs.view-tabs{
-    width:100%;
-    margin-top:0;
-    margin-bottom:10px;
-    gap:10px;
-    align-items:stretch;
-  }
-
-  #panel-hurling > #view-tabs.section-tabs.view-tabs .seg{
-    height:56px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:0 16px;
-    border-radius:18px;
-  }
-
-  /* Keep Championship as the flexible centre pill */
-  #panel-hurling > #view-tabs.section-tabs.view-tabs #comp-tab{
-    flex:1 1 auto;
-    min-width:0;
-  }
-
-  /* The inner panel should start immediately under the top pills */
-  #panel-hurling > .panel.card{
-    margin-top:0;
-  }
-
-  /* Division dropdown row
-     Assumption: this is the FIRST .section-tabs inside the inner panel */
-  #panel-hurling > .panel.card > .section-tabs:first-of-type{
-    width:100%;
-    margin-top:0;
-    margin-bottom:10px;
-    gap:0;
-  }
-
-  #panel-hurling > .panel.card > .section-tabs:first-of-type .seg{
-    width:100%;
-    height:56px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 18px;
-    border-radius:18px;
-  }
-
-  /* Matches / Table row
-     Same gap above it as the gap above the dropdown */
-  #panel-hurling > .panel.card > .section-tabs:last-of-type{
-    width:100%;
-    margin-top:0;
-    margin-bottom:10px;
-    gap:10px;
-    align-items:stretch;
-  }
-
-  #panel-hurling > .panel.card > .section-tabs:last-of-type .seg{
-    height:56px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:0 18px;
-    border-radius:18px;
-  }
-}
