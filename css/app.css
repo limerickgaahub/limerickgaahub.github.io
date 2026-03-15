@@ -1123,7 +1123,7 @@ body.is-archive{
 /* 1) Outer page background: soft green frame */
 body,
 body.is-archive{
-  background:#eef6f2;
+  background:#decefe5;
 }
 
 /* 2) Make the main white containers stand out a bit more */
@@ -1136,7 +1136,7 @@ body.is-archive{
 
 /* 3) Stronger table header row */
 thead th{
-  background:linear-gradient(to bottom, #f2f5f3, #e9efeb);
+  background:linear-gradient(to bottom, #d7eadf, #c6e1d2);
   color:#111827;
   font-weight:850;
   letter-spacing:.04em;
