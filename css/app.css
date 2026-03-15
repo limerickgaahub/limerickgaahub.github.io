@@ -1120,64 +1120,47 @@ body.is-archive{
    POLISH PASS 1 — append-only overrides
    ========================================================= */
 
-/* 1) Strong Limerick green page frame */
+/* 1) Strong Limerick green outside the main container only */
 body,
 body.is-archive{
   background:#0b7a4a;
 }
 
-/* 2) Make the main white containers stand out more */
+/* Keep the main site header/hero bar white */
+.header{
+  background:rgba(255,255,255,.94);
+  border-bottom:1px solid rgba(16,24,40,.05);
+  box-shadow:0 1px 0 rgba(16,24,40,.04);
+}
+
+.header::before{
+  background:var(--accent);
+}
+
+.header,
+.header h1,
+.header .navtab{
+  color:inherit;
+}
+
+/* 2) Make the main white containers stand out more against green */
 .card{
   border:1px solid rgba(16,24,40,.06);
   box-shadow:
     0 1px 2px rgba(16,24,40,.05),
-    0 10px 28px rgba(16,24,40,.08);
+    0 10px 28px rgba(16,24,40,.10);
 }
 
-/* 3) Strong crest-style header bar */
-.header{
-  background:#0b7a4a;
-  border-bottom:1px solid rgba(0,0,0,.18);
-  box-shadow:0 2px 6px rgba(0,0,0,.12);
-}
-
-/* lighter accent strip at top */
-.header::before{
-  background:#88C999;
-}
-
-/* header text colour */
-.header,
-.header h1,
-.header .navtab{
-  color:#ffffff;
-}
-
-/* navigation tabs in header */
-.navtab{
-  border:1px solid rgba(255,255,255,.25);
-}
-
-.navtab:hover{
-  background:rgba(255,255,255,.12);
-}
-
-.navtab.active{
-  background:rgba(255,255,255,.18);
-  color:#ffffff;
-  border-color:rgba(255,255,255,.35);
-}
-
-/* 4) Stronger but clean table header row */
+/* 3) Table header row: strong green with white text */
 thead th{
-  background:linear-gradient(to bottom, #e7f4ee, #d7eadf);
-  color:#111827;
+  background:#0b7a4a;
+  color:#ffffff;
   font-weight:850;
   letter-spacing:.04em;
-  border-bottom:1px solid rgba(16,24,40,.12);
+  border-bottom:1px solid rgba(0,0,0,.16);
 }
 
-/* 5) Team names become the hero */
+/* 4) Team names become the hero */
 .match-team{
   font-weight:800;
   font-size:15px;
@@ -1185,12 +1168,12 @@ thead th{
   color:#0b1320;
 }
 
-/* 6) Keep the score pill strong beside the bolder team names */
+/* 5) Keep the score pill strong beside the bolder team names */
 .match-score{
   font-weight:850;
 }
 
-/* 7) Mobile: preserve fit while still making teams more prominent */
+/* 6) Mobile: preserve fit while still making teams more prominent */
 @media (max-width:880px){
   .match-team{
     font-size:14px;
