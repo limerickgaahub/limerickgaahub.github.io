@@ -1180,7 +1180,7 @@ thead th{
   }
 
   #panel-hurling > #season-banner{
-    padding-top:2px;
+    padding-top:4px;
     min-height:18px;
   }
 
@@ -1221,7 +1221,7 @@ thead th{
   #controls-league .pretty-select select{
     height:40px;
     min-height:40px;
-    padding:0 2.2rem 0 .9rem;
+    padding:0.2 2.2rem 0 .9rem;
     line-height:40px;
     font-size:15px;
   }
