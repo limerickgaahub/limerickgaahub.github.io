@@ -1167,14 +1167,15 @@ thead th{
   line-height:1.12;
   color:#0b1320;
 }
+
 /* =========================================================
-   POLISH PASS 2 — final mobile league dropdown alignment
+   POLISH PASS 2 — mobile league spacing + dropdown polish
    Replace the current Patch 2 with this
    ========================================================= */
 
 @media (max-width:880px){
 
-  /* Lift the top 4 pills slightly higher in the container */
+  /* Top of panel */
   #panel-hurling.card{
     padding-top:6px;
   }
@@ -1184,71 +1185,79 @@ thead th{
     min-height:18px;
   }
 
+  /* Top 4 pills */
   #panel-hurling > #view-tabs{
     margin-top:0;
-    margin-bottom:8px;
+    margin-bottom:12px;
   }
 
-  /* Keep the League panel snug under the top 4 pills */
+  /* League panel sits neatly below top pills */
   #league-panel{
-    margin-top:8px !important;
+    margin-top:0 !important;
   }
 
-  /* Division dropdown row:
-     - same usable width as the 4 pills row above
-     - equal gap above/below
-     - no inherited card inset narrowing it */
+  /* Division dropdown row
+     - centred
+     - equal spacing above and below */
   #controls-league.controls.card{
-    margin-top:0 !important;
-    margin-bottom:8px !important;
+    margin:0 auto 12px !important;
     padding:0 !important;
+    width:100%;
     background:transparent !important;
     border:0 !important;
     box-shadow:none !important;
-    display:block;
+    display:flex !important;
+    justify-content:center;
+    align-items:center;
   }
 
+  /* Dropdown container
+     - narrower than top pill row
+     - centred */
   #controls-league .pretty-select{
-    display:block;
-    width:100%;
-    max-width:none;
-    flex:none;
-    min-height:40px;
+    width:88%;
+    max-width:320px;
+    min-height:42px;
     border-radius:12px;
+
+    /* polish to match pill style */
+    background:var(--surface-3);
+    border:1px solid rgba(16,24,40,.10);
+    box-shadow:0 1px 2px rgba(16,24,40,.05);
   }
 
-  /* Match dropdown height to standard pill height */
+  /* Dropdown text alignment */
   #controls-league .pretty-select select{
-    height:40px;
-    min-height:40px;
-    padding:0.2 2.2rem 0 .9rem;
-    line-height:40px;
+    height:42px;
+    min-height:42px;
+    padding:0 2.35rem 0 .95rem;
+    line-height:42px;
     font-size:15px;
+    font-weight:650;
   }
 
-  /* Keep chevron centred */
+  /* Chevron alignment */
   #controls-league .pretty-select::after{
+    right:.9rem;
     top:50%;
     transform:translateY(-50%) rotate(45deg);
   }
 
-  /* Leave Matches / Table layout exactly as-is;
-     only keep spacing tidy */
+  /* Matches / Table pills spacing */
   #league-view-tabs{
     margin-top:0 !important;
+    margin-bottom:0 !important;
   }
 }
 
-
-/* 5) Keep the score pill strong beside the bolder team names */
+/* Keep the score pill strong beside the bolder team names */
 .match-score{
   font-weight:850;
 }
 
-/* 6) Mobile: preserve fit while still making teams more prominent */
+/* Mobile: preserve fit while still making teams more prominent */
 @media (max-width:880px){
   .match-team{
     font-size:14px;
   }
 }
-
