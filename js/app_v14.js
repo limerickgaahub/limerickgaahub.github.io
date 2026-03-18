@@ -1263,131 +1263,7 @@ function renderStandings(){
     ( meta.pihc ? true : (r.group || '') === (state.group || '') )
   );
 
-  function renderLeagueStandings(){
-  const divLabel = el('league-div')?.value || '';
-  const tbody = document.querySelector('#league-standings-table tbody');
-  const table = el('league-standings-table');
-
-  if (!table || !tbody) return;
-
-  if (!divLabel) {
-    tbody.innerHTML = '';
-    return;
-  }
-
-  const fixtures = MATCHES.filter(r =>
-    r.competition === 'County Hurling League' &&
-    (r.group || '') === divLabel
-  );
-
-  const teams = new Map();
-
-  for (const f of fixtures) {
-    if (!teams.has(f.home)) teams.set(f.home, { team:f.home, p:0, w:0, d:0, l:0, pf:0, pa:0, gf:0, ga:0, pts:0 });
-    if (!teams.has(f.away)) teams.set(f.away, { team:f.away, p:0, w:0, d:0, l:0, pf:0, pa:0, gf:0, ga:0, pts:0 });
-  }
-
-  const results = fixtures.filter(r => isResult(r.status) || isWalkover(r));
-
-  for (const m of results) {
-    const H = teams.get(m.home);
-    const A = teams.get(m.away);
-
-    if (!H || !A) continue;
-
-    if (isWalkover(m)) {
-      H.p++;
-      A.p++;
-
-      if (m.walkover_winner === 'home') {
-        H.w++; H.pts += 2; A.l++;
-      } else if (m.walkover_winner === 'away') {
-        A.w++; A.pts += 2; H.l++;
-      }
-      continue;
-    }
-
-    const hs = _readScoreFromRow(m,'home');
-    const as = _readScoreFromRow(m,'away');
-
-    if (hs.total == null || as.total == null) continue;
-
-    H.p++; A.p++;
-    H.pf += hs.total; H.pa += as.total; H.gf += hs.goals; H.ga += as.goals;
-    A.pf += as.total; A.pa += hs.total; A.gf += as.goals; A.ga += hs.goals;
-
-    if (hs.total > as.total) {
-      H.w++; H.pts += 2; A.l++;
-    } else if (as.total > hs.total) {
-      A.w++; A.pts += 2; H.l++;
-    } else {
-      H.d++; A.d++; H.pts++; A.pts++;
-    }
-  }
-
-  const all = [...teams.values()];
-  const byPts = new Map();
-
-  for (const t of all) {
-    if (!byPts.has(t.pts)) byPts.set(t.pts, []);
-    byPts.get(t.pts).push(t);
-  }
-
-  const sorted = []
-    .concat(...[...byPts.keys()].sort((a,b)=>b-a).map(pts=>{
-      const bucket = byPts.get(pts);
-
-      if (bucket.length === 2) {
-        bucket.sort((a,b)=>{
-          const h2h = _h2hCompare(a, b, results);
-          if (h2h !== 0) return h2h;
-          return _compareByPD_PF_GF(a,b);
-        });
-        return bucket;
-      }
-
-      bucket.sort(_compareByPD_PF_GF);
-      return bucket;
-    }));
-
-tbody.innerHTML = sorted.map(r => `
-  <tr>
-    <td>${esc(r.team)}</td>
-    <td class="right">${r.p || 0}</td>
-    <td class="right"><strong>${r.pts || 0}</strong></td>
-    <td class="right">${r.w || 0}</td>
-    <td class="right">${r.d || 0}</td>
-    <td class="right">${r.l || 0}</td>
-    <td class="right">${r.pf || 0}</td>
-    <td class="right">${r.pa || 0}</td>
-    <td class="right">${(r.pf || 0) - (r.pa || 0)}</td>
-  </tr>
-`).join('');
-}
-
-  function setLeagueSubview(view){
-  const matchesTab = el('league-matches-tab');
-  const tableTab = el('league-table-tab');
-  const matchesWrap = el('league-matches-wrap');
-  const standings = el('league-standings');
-
-  if (!matchesTab || !tableTab || !matchesWrap || !standings) return;
-
-  const showTable = (view === 'table');
-
-  matchesTab.classList.toggle('active', !showTable);
-  tableTab.classList.toggle('active', showTable);
-
-  matchesTab.setAttribute('aria-selected', showTable ? 'false' : 'true');
-  tableTab.setAttribute('aria-selected', showTable ? 'true' : 'false');
-
-  matchesWrap.style.display = showTable ? 'none' : '';
-  standings.style.display = showTable ? '' : 'none';
-
-  if (showTable) renderLeagueStandings();
-}
-
-  
+   
   // Hide Matches-only controls when Table view is active
   const mc = document.getElementById('controls-matches');
   if (mc) mc.style.display = 'none';
@@ -1928,6 +1804,130 @@ function renderLeague(){
 
   draw();
   setLeagueSubview('matches');
+}
+
+ function renderLeagueStandings(){
+  const divLabel = el('league-div')?.value || '';
+  const tbody = document.querySelector('#league-standings-table tbody');
+  const table = el('league-standings-table');
+
+  if (!table || !tbody) return;
+
+  if (!divLabel) {
+    tbody.innerHTML = '';
+    return;
+  }
+
+  const fixtures = MATCHES.filter(r =>
+    r.competition === 'County Hurling League' &&
+    (r.group || '') === divLabel
+  );
+
+  const teams = new Map();
+
+  for (const f of fixtures) {
+    if (!teams.has(f.home)) teams.set(f.home, { team:f.home, p:0, w:0, d:0, l:0, pf:0, pa:0, gf:0, ga:0, pts:0 });
+    if (!teams.has(f.away)) teams.set(f.away, { team:f.away, p:0, w:0, d:0, l:0, pf:0, pa:0, gf:0, ga:0, pts:0 });
+  }
+
+  const results = fixtures.filter(r => isResult(r.status) || isWalkover(r));
+
+  for (const m of results) {
+    const H = teams.get(m.home);
+    const A = teams.get(m.away);
+
+    if (!H || !A) continue;
+
+    if (isWalkover(m)) {
+      H.p++;
+      A.p++;
+
+      if (m.walkover_winner === 'home') {
+        H.w++; H.pts += 2; A.l++;
+      } else if (m.walkover_winner === 'away') {
+        A.w++; A.pts += 2; H.l++;
+      }
+      continue;
+    }
+
+    const hs = _readScoreFromRow(m,'home');
+    const as = _readScoreFromRow(m,'away');
+
+    if (hs.total == null || as.total == null) continue;
+
+    H.p++; A.p++;
+    H.pf += hs.total; H.pa += as.total; H.gf += hs.goals; H.ga += as.goals;
+    A.pf += as.total; A.pa += hs.total; A.gf += as.goals; A.ga += hs.goals;
+
+    if (hs.total > as.total) {
+      H.w++; H.pts += 2; A.l++;
+    } else if (as.total > hs.total) {
+      A.w++; A.pts += 2; H.l++;
+    } else {
+      H.d++; A.d++; H.pts++; A.pts++;
+    }
+  }
+
+  const all = [...teams.values()];
+  const byPts = new Map();
+
+  for (const t of all) {
+    if (!byPts.has(t.pts)) byPts.set(t.pts, []);
+    byPts.get(t.pts).push(t);
+  }
+
+  const sorted = []
+    .concat(...[...byPts.keys()].sort((a,b)=>b-a).map(pts=>{
+      const bucket = byPts.get(pts);
+
+      if (bucket.length === 2) {
+        bucket.sort((a,b)=>{
+          const h2h = _h2hCompare(a, b, results);
+          if (h2h !== 0) return h2h;
+          return _compareByPD_PF_GF(a,b);
+        });
+        return bucket;
+      }
+
+      bucket.sort(_compareByPD_PF_GF);
+      return bucket;
+    }));
+
+tbody.innerHTML = sorted.map(r => `
+  <tr>
+    <td>${esc(r.team)}</td>
+    <td class="right">${r.p || 0}</td>
+    <td class="right"><strong>${r.pts || 0}</strong></td>
+    <td class="right">${r.w || 0}</td>
+    <td class="right">${r.d || 0}</td>
+    <td class="right">${r.l || 0}</td>
+    <td class="right">${r.pf || 0}</td>
+    <td class="right">${r.pa || 0}</td>
+    <td class="right">${(r.pf || 0) - (r.pa || 0)}</td>
+  </tr>
+`).join('');
+}
+
+  function setLeagueSubview(view){
+  const matchesTab = el('league-matches-tab');
+  const tableTab = el('league-table-tab');
+  const matchesWrap = el('league-matches-wrap');
+  const standings = el('league-standings');
+
+  if (!matchesTab || !tableTab || !matchesWrap || !standings) return;
+
+  const showTable = (view === 'table');
+
+  matchesTab.classList.toggle('active', !showTable);
+  tableTab.classList.toggle('active', showTable);
+
+  matchesTab.setAttribute('aria-selected', showTable ? 'false' : 'true');
+  tableTab.setAttribute('aria-selected', showTable ? 'true' : 'false');
+
+  matchesWrap.style.display = showTable ? 'none' : '';
+  standings.style.display = showTable ? '' : 'none';
+
+  if (showTable) renderLeagueStandings();
 }
 
 
