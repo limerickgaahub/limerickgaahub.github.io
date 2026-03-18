@@ -1292,3 +1292,118 @@ thead th{
     border-bottom:2px solid #0b7a4a !important;
   }
 }
+
+/* =========================================================
+   STICKY STANDINGS — BBC STYLE
+   ========================================================= */
+
+/* Ensure scroll context behaves correctly */
+.table-wrap{
+  position:relative;
+}
+
+/* Required so sticky works cleanly */
+#g-standings-table,
+#league-standings-table{
+  position:relative;
+}
+
+/* ---------- STICKY COLUMNS ---------- */
+
+/* TEAM */
+#g-standings-table th:nth-child(1),
+#g-standings-table td:nth-child(1),
+#league-standings-table th:nth-child(1),
+#league-standings-table td:nth-child(1){
+  position:sticky;
+  left:0;
+  z-index:3;
+  background:#fff;
+}
+
+/* P */
+#g-standings-table th:nth-child(2),
+#g-standings-table td:nth-child(2),
+#league-standings-table th:nth-child(2),
+#league-standings-table td:nth-child(2){
+  position:sticky;
+  left:56%; /* matches your current Team width */
+  z-index:3;
+  background:#fff;
+}
+
+/* PTS (last sticky column) */
+#g-standings-table th:last-child,
+#g-standings-table td:last-child,
+#league-standings-table th:last-child,
+#league-standings-table td:last-child{
+  position:sticky;
+  left:calc(56% + 6%);
+  z-index:3;
+  background:#fff;
+}
+
+/* ---------- HEADER layering ---------- */
+#g-standings-table thead th,
+#league-standings-table thead th{
+  z-index:4;
+}
+
+/* ---------- BBC-style right fade/shadow ---------- */
+
+#g-standings-table td:last-child::after,
+#g-standings-table th:last-child::after,
+#league-standings-table td:last-child::after,
+#league-standings-table th:last-child::after{
+  content:"";
+  position:absolute;
+  top:0;
+  right:-12px;
+  width:12px;
+  height:100%;
+  pointer-events:none;
+
+  background:linear-gradient(
+    to right,
+    rgba(15,23,42,0.10),
+    rgba(15,23,42,0.04),
+    rgba(15,23,42,0)
+  );
+}
+
+/* ---------- subtle divider (premium feel) ---------- */
+
+#g-standings-table td:last-child,
+#g-standings-table th:last-child,
+#league-standings-table td:last-child,
+#league-standings-table th:last-child{
+  border-right:1px solid rgba(16,24,40,.08);
+}
+
+/* ---------- mobile adjustment ---------- */
+
+@media (max-width:880px){
+
+  /* match your mobile width (40%) */
+  #g-standings-table th:nth-child(2),
+  #g-standings-table td:nth-child(2),
+  #league-standings-table th:nth-child(2),
+  #league-standings-table td:nth-child(2){
+    left:40%;
+  }
+
+  #g-standings-table th:last-child,
+  #g-standings-table td:last-child,
+  #league-standings-table th:last-child,
+  #league-standings-table td:last-child{
+    left:calc(40% + 7.5%);
+  }
+}
+@media (min-width:881px){
+  #g-standings-table td:last-child::after,
+  #g-standings-table th:last-child::after,
+  #league-standings-table td:last-child::after,
+  #league-standings-table th:last-child::after{
+    display:none;
+  }
+}
