@@ -1350,19 +1350,19 @@ function renderStandings(){
       return bucket;
     }));
 
-  tbody.innerHTML = sorted.map(r => `
-    <tr>
-      <td>${esc(r.team)}</td>
-      <td class="right">${r.p || 0}</td>
-      <td class="right">${r.w || 0}</td>
-      <td class="right">${r.d || 0}</td>
-      <td class="right">${r.l || 0}</td>
-      <td class="right">${r.pf || 0}</td>
-      <td class="right">${r.pa || 0}</td>
-      <td class="right">${(r.pf || 0) - (r.pa || 0)}</td>
-      <td class="right"><strong>${r.pts || 0}</strong></td>
-    </tr>
-  `).join('');
+tbody.innerHTML = sorted.map(r => `
+  <tr>
+    <td>${esc(r.team)}</td>
+    <td class="right">${r.p || 0}</td>
+    <td class="right"><strong>${r.pts || 0}</strong></td>
+    <td class="right">${r.w || 0}</td>
+    <td class="right">${r.d || 0}</td>
+    <td class="right">${r.l || 0}</td>
+    <td class="right">${r.pf || 0}</td>
+    <td class="right">${r.pa || 0}</td>
+    <td class="right">${(r.pf || 0) - (r.pa || 0)}</td>
+  </tr>
+`).join('');
 }
 
   function setLeagueSubview(view){
@@ -1551,12 +1551,17 @@ const sorted = []
   if (gt) {
     const th = gt.tHead || gt.createTHead();
     // Always (re)write the header so it matches the body
-    th.innerHTML = `<tr>
-      <th>Team</th><th class="right">P</th><th class="right">W</th>
-      <th class="right">D</th><th class="right">L</th>
-      <th class="right">PF</th><th class="right">PA</th>
-      <th class="right">PD</th><th class="right">Pts</th>
-    </tr>`;
+th.innerHTML = `<tr>
+  <th>Team</th>
+  <th class="right">P</th>
+  <th class="right">Pts</th>
+  <th class="right">W</th>
+  <th class="right">D</th>
+  <th class="right">L</th>
+  <th class="right">PF</th>
+  <th class="right">PA</th>
+  <th class="right">PD</th>
+</tr>`;
   }
 
   const tbody=document.querySelector('#g-standings-table tbody');
@@ -1564,35 +1569,14 @@ const sorted = []
     <tr>
       <td>${esc(r.team)}</td>
       <td class="right">${r.p||0}</td>
+      <td class="right"><strong>${r.pts||0}</strong></td>
       <td class="right">${r.w||0}</td>
       <td class="right">${r.d||0}</td>
       <td class="right">${r.l||0}</td>
       <td class="right">${r.pf||0}</td>
       <td class="right">${r.pa||0}</td>
       <td class="right">${(r.pf||0)-(r.pa||0)}</td>
-      <td class="right"><strong>${r.pts||0}</strong></td>
     </tr>`).join('');
-
-  // Modal (already includes PF/PA/PD; keep your existing head)
-  const mt=el('modal-standings');
-  if(mt){
-    if(!mt.tHead||!mt.tHead.rows.length){
-      mt.createTHead().innerHTML=`<tr><th>Team</th><th class="right">P</th><th class="right">W</th><th class="right">D</th><th class="right">L</th><th class="right">PF</th><th class="right">PA</th><th class="right">PD</th><th class="right">Pts</th></tr>`;
-    }
-    const mb=mt.tBodies[0]||mt.createTBody();
-    mb.innerHTML=sorted.map(r=>`
-      <tr>
-        <td>${esc(r.team)}</td>
-        <td class="right">${r.p||0}</td>
-        <td class="right">${r.w||0}</td>
-        <td class="right">${r.d||0}</td>
-        <td class="right">${r.l||0}</td>
-        <td class="right">${r.pf||0}</td>
-        <td class="right">${r.pa||0}</td>
-        <td class="right">${(r.pf||0)-(r.pa||0)}</td>
-        <td class="right"><strong>${r.pts||0}</strong></td>
-      </tr>`).join('');
-  }
 }
 
  
@@ -2078,54 +2062,6 @@ if (di) {
   }
   }
 }
-  
-  (function(){
-  const btn   = el('btn-expand');
-  const modal = el('standings-modal');
-  const close = el('modal-close');
-  const sheet = modal?.querySelector('.sheet');
-  if (!btn || !modal || !close || !sheet) return;
-
-  let lastFocused = null;
-  const onKeyDown = (e) => {
-    if (e.key === 'Escape') { e.preventDefault(); closeModal(); }
-    // Simple focus trap: keep tab focus inside the modal
-    if (e.key === 'Tab') {
-      const focusables = sheet.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-      const list = Array.from(focusables).filter(x => !x.hasAttribute('disabled') && x.tabIndex !== -1);
-      if (!list.length) return;
-      const first = list[0], last = list[list.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  };
-
-  function openModal(){
-    lastFocused = document.activeElement;
-    modal.removeAttribute('inert');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    // Move focus inside dialog
-    (close.focus?.() || sheet.focus?.());
-    document.addEventListener('keydown', onKeyDown);
-  }
-
-  function closeModal(){
-    // Blur anything focused in the dialog before hiding
-    document.activeElement?.blur?.();
-    modal.setAttribute('aria-hidden', 'true');
-    modal.setAttribute('inert', '');
-    document.body.style.overflow = '';
-    document.removeEventListener('keydown', onKeyDown);
-    // Return focus to the trigger for a11y
-    lastFocused?.focus?.();
-  }
-
-  btn.addEventListener('click', openModal);
-  close.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-})();
-
 
  const statusEl = el('status');
   if (statusEl) statusEl.addEventListener('input', ()=>{ renderGroupTable(); syncURL(); });
