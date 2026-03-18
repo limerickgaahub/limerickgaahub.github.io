@@ -1294,12 +1294,12 @@ thead th{
 }
 
 /* =========================================================
-   PREMIUM STICKY STANDINGS — CLEAN VERSION
-   Requires column order:
+   PREMIUM STICKY STANDINGS — FINAL CSS PATCH
+   Assumes column order:
    Team | P | Pts | W | D | L | PF | PA | PD
    ========================================================= */
 
-/* clean scroll container */
+/* scroll container */
 #g-standings .table-wrap,
 #league-standings .table-wrap{
   position:relative;
@@ -1308,7 +1308,15 @@ thead th{
   -webkit-overflow-scrolling:touch;
 }
 
-/* desktop: leave it natural */
+/* unify standings header colour */
+#g-standings-table thead th,
+#league-standings-table thead th{
+  background:#08633c;
+  color:#fff;
+  border-bottom:1px solid rgba(0,0,0,.16);
+}
+
+/* desktop: keep clean, no fake cue */
 @media (min-width:881px){
   #g-standings-table,
   #league-standings-table{
@@ -1336,56 +1344,62 @@ thead th{
 
   #g-standings-table,
   #league-standings-table{
-    min-width:31rem;   /* enough to scroll, not absurdly wide */
+    min-width:29rem;   /* enough to scroll, not bloated */
     table-layout:fixed;
     border-collapse:separate;
     border-spacing:0;
     position:relative;
   }
 
-  /* compact premium widths */
+  /* ---------- widths ---------- */
+
+  /* Team */
   #g-standings-table th:nth-child(1),
   #g-standings-table td:nth-child(1),
   #league-standings-table th:nth-child(1),
   #league-standings-table td:nth-child(1){
-    width:8.8rem;
-    min-width:8.8rem;
-    max-width:8.8rem;
+    width:7.9rem;
+    min-width:7.9rem;
+    max-width:7.9rem;
     text-align:left;
   }
 
+  /* P */
   #g-standings-table th:nth-child(2),
   #g-standings-table td:nth-child(2),
   #league-standings-table th:nth-child(2),
   #league-standings-table td:nth-child(2){
-    width:2.5rem;
-    min-width:2.5rem;
-    max-width:2.5rem;
+    width:2.35rem;
+    min-width:2.35rem;
+    max-width:2.35rem;
     text-align:right;
   }
 
+  /* Pts */
   #g-standings-table th:nth-child(3),
   #g-standings-table td:nth-child(3),
   #league-standings-table th:nth-child(3),
   #league-standings-table td:nth-child(3){
-    width:3rem;
-    min-width:3rem;
-    max-width:3rem;
+    width:2.9rem;
+    min-width:2.9rem;
+    max-width:2.9rem;
     text-align:right;
   }
 
-  /* remaining columns tight */
+  /* remaining columns */
   #g-standings-table th:nth-child(n+4),
   #g-standings-table td:nth-child(n+4),
   #league-standings-table th:nth-child(n+4),
   #league-standings-table td:nth-child(n+4){
-    width:3rem;
-    min-width:3rem;
-    max-width:3rem;
+    width:2.9rem;
+    min-width:2.9rem;
+    max-width:2.9rem;
     text-align:right;
   }
 
-  /* sticky first 3 actual columns */
+  /* ---------- sticky columns ---------- */
+
+  /* Team */
   #g-standings-table th:nth-child(1),
   #g-standings-table td:nth-child(1),
   #league-standings-table th:nth-child(1),
@@ -1394,23 +1408,26 @@ thead th{
     left:0;
   }
 
+  /* P */
   #g-standings-table th:nth-child(2),
   #g-standings-table td:nth-child(2),
   #league-standings-table th:nth-child(2),
   #league-standings-table td:nth-child(2){
     position:sticky;
-    left:8.8rem;
+    left:7.9rem;
   }
 
+  /* Pts */
   #g-standings-table th:nth-child(3),
   #g-standings-table td:nth-child(3),
   #league-standings-table th:nth-child(3),
   #league-standings-table td:nth-child(3){
     position:sticky;
-    left:11.3rem; /* Team + P */
+    left:10.25rem; /* Team + P */
   }
 
-  /* sticky body cells */
+  /* ---------- body sticky cells ---------- */
+
   #g-standings-table tbody td:nth-child(1),
   #g-standings-table tbody td:nth-child(2),
   #g-standings-table tbody td:nth-child(3),
@@ -1421,7 +1438,7 @@ thead th{
     z-index:3;
   }
 
-  /* preserve zebra */
+  /* preserve zebra on pinned cells */
   #g-standings-table tbody tr:nth-child(even) td:nth-child(1),
   #g-standings-table tbody tr:nth-child(even) td:nth-child(2),
   #g-standings-table tbody tr:nth-child(even) td:nth-child(3),
@@ -1431,12 +1448,31 @@ thead th{
     background:#f8faf9;
   }
 
-  /* sticky header cells */
+  /* preserve hover on pinned cells */
+  #g-standings-table tbody tr:hover td:nth-child(1),
+  #g-standings-table tbody tr:hover td:nth-child(2),
+  #g-standings-table tbody tr:hover td:nth-child(3),
+  #league-standings-table tbody tr:hover td:nth-child(1),
+  #league-standings-table tbody tr:hover td:nth-child(2),
+  #league-standings-table tbody tr:hover td:nth-child(3){
+    background:#eef6f2;
+  }
+
+  /* ---------- header cells ---------- */
+
   #g-standings-table thead th,
   #league-standings-table thead th{
     z-index:2;
-    border-right:0;
+    background:#08633c;
+    color:#fff;
     background-clip:padding-box;
+    border-right:1px solid #08633c;   /* green seams, not white */
+    border-bottom:1px solid rgba(0,0,0,.16);
+  }
+
+  #g-standings-table thead th:last-child,
+  #league-standings-table thead th:last-child{
+    border-right:0;
   }
 
   #g-standings-table thead th:nth-child(1),
@@ -1445,26 +1481,33 @@ thead th{
   #league-standings-table thead th:nth-child(1),
   #league-standings-table thead th:nth-child(2),
   #league-standings-table thead th:nth-child(3){
+    z-index:6;
     background:#08633c;
     color:#fff;
-    z-index:6;
+    border-right:1px solid #08633c;
+    border-bottom:1px solid rgba(0,0,0,.16); /* same underline as all headers */
+    box-shadow:none;
+    transform:translateZ(0);
+    will-change:transform;
   }
 
-  /* Pts emphasis */
+  /* ---------- premium emphasis ---------- */
+
+  /* Third fixed column should be Pts */
   #g-standings-table td:nth-child(3),
   #league-standings-table td:nth-child(3){
     font-weight:850;
     color:#0b1320;
   }
 
-  /* depth cue on final sticky column */
+  /* subtle divider + fade on final sticky column */
   #g-standings-table th:nth-child(3),
   #g-standings-table td:nth-child(3),
   #league-standings-table th:nth-child(3),
   #league-standings-table td:nth-child(3){
     box-shadow:
       1px 0 0 rgba(16,24,40,.08),
-      12px 0 16px -10px rgba(15,23,42,.28);
+      10px 0 14px -10px rgba(15,23,42,.24);
   }
 
   #g-standings-table th:nth-child(3)::after,
@@ -1474,30 +1517,19 @@ thead th{
     content:"";
     position:absolute;
     top:0;
-    right:-12px;
-    width:12px;
+    right:-10px;
+    width:10px;
     height:100%;
     pointer-events:none;
     background:linear-gradient(
       to right,
-      rgba(15,23,42,.12) 0%,
-      rgba(15,23,42,.05) 45%,
+      rgba(15,23,42,.10) 0%,
+      rgba(15,23,42,.04) 45%,
       rgba(15,23,42,0) 100%
     );
   }
 
-  /* reduce header seam flicker */
-  #g-standings-table thead th:nth-child(1),
-  #g-standings-table thead th:nth-child(2),
-  #g-standings-table thead th:nth-child(3),
-  #league-standings-table thead th:nth-child(1),
-  #league-standings-table thead th:nth-child(2),
-  #league-standings-table thead th:nth-child(3){
-    transform:translateZ(0);
-    will-change:transform;
-  }
-
-  /* team text handling */
+  /* Team text wrapping */
   #g-standings-table td:nth-child(1),
   #league-standings-table td:nth-child(1){
     white-space:normal;
@@ -1507,32 +1539,33 @@ thead th{
   }
 }
 
+/* very small phones */
 @media (max-width:360px){
   #g-standings-table,
   #league-standings-table{
-    min-width:29.5rem;
+    min-width:27.75rem;
   }
 
   #g-standings-table th:nth-child(1),
   #g-standings-table td:nth-child(1),
   #league-standings-table th:nth-child(1),
   #league-standings-table td:nth-child(1){
-    width:8.2rem;
-    min-width:8.2rem;
-    max-width:8.2rem;
+    width:7.35rem;
+    min-width:7.35rem;
+    max-width:7.35rem;
   }
 
   #g-standings-table th:nth-child(2),
   #g-standings-table td:nth-child(2),
   #league-standings-table th:nth-child(2),
   #league-standings-table td:nth-child(2){
-    left:8.2rem;
+    left:7.35rem;
   }
 
   #g-standings-table th:nth-child(3),
   #g-standings-table td:nth-child(3),
   #league-standings-table th:nth-child(3),
   #league-standings-table td:nth-child(3){
-    left:10.7rem;
+    left:9.7rem;
   }
 }
