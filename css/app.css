@@ -1313,7 +1313,7 @@ thead th{
 #league-standings-table thead th{
   background:#08633c;
   color:#fff;
-  border-bottom:1px solid rgba(0,0,0,.16);
+  border-bottom:2px solid #064d2f;
 }
 
 /* desktop: keep clean, no fake cue */
@@ -1358,9 +1358,9 @@ thead th{
   #g-standings-table td:nth-child(1),
   #league-standings-table th:nth-child(1),
   #league-standings-table td:nth-child(1){
-    width:7.9rem;
-    min-width:7.9rem;
-    max-width:7.9rem;
+    width:7.45rem;
+    min-width:7.45rem;
+    max-width:7.45rem;
     text-align:left;
   }
 
@@ -1414,7 +1414,7 @@ thead th{
   #league-standings-table th:nth-child(2),
   #league-standings-table td:nth-child(2){
     position:sticky;
-    left:7.9rem;
+    left:7.45rem;
   }
 
   /* Pts */
@@ -1423,7 +1423,7 @@ thead th{
   #league-standings-table th:nth-child(3),
   #league-standings-table td:nth-child(3){
     position:sticky;
-    left:10.25rem; /* Team + P */
+    left:9.8rem; /* Team + P */
   }
 
   /* ---------- body sticky cells ---------- */
@@ -1467,7 +1467,7 @@ thead th{
     color:#fff;
     background-clip:padding-box;
     border-right:1px solid #08633c;   /* green seams, not white */
-    border-bottom:1px solid rgba(0,0,0,.16);
+    border-bottom:2px solid #064d2f;
   }
 
   #g-standings-table thead th:last-child,
@@ -1476,20 +1476,20 @@ thead th{
   }
 
   #g-standings-table thead th:nth-child(1),
-  #g-standings-table thead th:nth-child(2),
-  #g-standings-table thead th:nth-child(3),
-  #league-standings-table thead th:nth-child(1),
-  #league-standings-table thead th:nth-child(2),
-  #league-standings-table thead th:nth-child(3){
-    z-index:6;
-    background:#08633c;
-    color:#fff;
-    border-right:1px solid #08633c;
-    border-bottom:1px solid rgba(0,0,0,.16); /* same underline as all headers */
-    box-shadow:none;
-    transform:translateZ(0);
-    will-change:transform;
-  }
+#g-standings-table thead th:nth-child(2),
+#g-standings-table thead th:nth-child(3),
+#league-standings-table thead th:nth-child(1),
+#league-standings-table thead th:nth-child(2),
+#league-standings-table thead th:nth-child(3){
+  z-index:6;
+  background:#08633c;
+  color:#fff;
+  border-right:1px solid #08633c;
+  border-bottom:2px solid #064d2f;
+  box-shadow:none;
+  transform:translateZ(0);
+  will-change:transform;
+}
 
   /* ---------- premium emphasis ---------- */
 
@@ -1550,22 +1550,26 @@ thead th{
   #g-standings-table td:nth-child(1),
   #league-standings-table th:nth-child(1),
   #league-standings-table td:nth-child(1){
-    width:7.35rem;
-    min-width:7.35rem;
-    max-width:7.35rem;
+    width:7rem;
+    min-width:7rem;
+    max-width:7rem;
   }
 
   #g-standings-table th:nth-child(2),
   #g-standings-table td:nth-child(2),
   #league-standings-table th:nth-child(2),
   #league-standings-table td:nth-child(2){
-    left:7.35rem;
+    left:7rem;
   }
 
   #g-standings-table th:nth-child(3),
   #g-standings-table td:nth-child(3),
   #league-standings-table th:nth-child(3),
   #league-standings-table td:nth-child(3){
-    left:9.7rem;
+    left:9.35rem;
   }
+}
+#g-standings-table thead th:nth-child(3),
+#league-standings-table thead th:nth-child(3){
+  text-transform:none;
 }
