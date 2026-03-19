@@ -786,7 +786,7 @@ td.match, th.match{ text-align:center; }
 body.comp-home .matches-wrap,
 body.comp-home #g-standings,
 body.comp-home #table-footnote,
-body.comp-home #sharebar-comp{
+body.comp-home #sharebar-main{
   display:none !important;
 }
 
@@ -1053,68 +1053,6 @@ body.is-archive{
   background:var(--line);
 }
 
-/* ===== Tighten hero -> content -> top pills ===== */
-.header{
-  margin-bottom: 6px;
-}
-
-#panel-hurling.card{
-  margin-top: 0;
-  padding-top: 8px;
-}
-
-#panel-hurling > #view-tabs{
-  margin-top: 0;
-  margin-bottom: 12px;
-  padding-top: 0;
-}
-
-/* Keep the first visible panel snug under the pills */
-#panel-hurling > .panel.card{
-  margin-top: 0;
-}
-
-/* Mobile: remove double-nesting (card inside card) */
-@media (max-width:880px){
-
-  /* Keep the outer page padding you already use (or your current body rules) */
-  /* No change required here unless you want it */
-
-  /* Outer panel stays as the main card */
-  #panel-hurling.card{
-    padding:8px;               /* keep a single inset */
-  }
-
-  /* Homepage top spacing after removing Hurling / Football pills */
-#panel-hurling{
-  margin-top:8px;
-}
-
-#panel-hurling > #season-banner{
-  padding-top:4px;
-  min-height:24px;
-}
-
-#panel-hurling > .section-tabs.view-tabs{
-  margin-top:0;
-  margin-bottom:8px;
-}
-
-  /* Inner panels should NOT behave like cards on mobile */
-  #panel-hurling .panel.card{
-    background:transparent;
-    border:0;
-    box-shadow:none;
-    padding:0;                  /* this is the width win */
-    margin-top:6px;             /* preserve your spacing */
-  }
-
-  /* If you still want a tiny inset for the tabs/labels (not the table) */
-  #panel-hurling .panel.card > .section-tabs,
-  #panel-hurling .panel.card > .comp-selected{
-    padding:0 2px;
-  }
-}
 
 /* =========================================================
    POLISH PASS 1 — append-only overrides
@@ -1573,50 +1511,46 @@ thead th{
 #league-standings-table thead th:nth-child(3){
   text-transform:none;
 }
-
 /* =========================================================
-   TOP CONTROLS SPLIT + DE-CARDING PATCH
-   Assumes HTML now contains:
-   - #top-controls
-   - #data-shell
-   - inner panels still use .panel.card
+   HURLING LAYOUT — top controls split, de-carded panels
+   Current structure:
+   #panel-hurling
+   #season-banner
+   #top-controls
+   #data-shell
    ========================================================= */
 
-/* 1) Page rhythm under fixed header */
-body{
-  margin:70px 12px 20px;
-}
-
-/* 2) Outer hurling wrapper should stop looking like a card */
+/* Outer wrapper is no longer a card */
 #panel-hurling.card{
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-  padding:0 !important;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  padding:0;
   max-width:1100px;
-  margin:8px auto 0;
+  margin:2px auto 0;
 }
 
-/* 3) Season banner sits above the sticky pills, tight to hero */
+/* Season/archive text kept tight */
 #panel-hurling > #season-banner{
   max-width:1100px;
-  margin:0 auto 6px;
-  padding:4px 2px 0;
-  min-height:20px;
+  margin:0 auto 2px;
+  padding:2px 2px 0;
+  min-height:14px;
+  line-height:1.1;
 }
 
-/* 4) New top controls bar: directly under hero, sticky, light treatment */
+/* Top controls bar */
 #top-controls.card{
   position:sticky;
-  top:58px;                  /* sits just under header */
-  z-index:90;
+  top:52px;
+  z-index:95;
 
   max-width:1100px;
   margin:0 auto 10px;
-  padding:8px 10px;
+  padding:6px 10px;
 
-  background:rgba(255,255,255,.96);
-  backdrop-filter:saturate(1.15) blur(8px);
+  background:rgba(255,255,255,.97);
+  backdrop-filter:saturate(1.1) blur(6px);
 
   border:1px solid rgba(16,24,40,.06);
   border-radius:14px;
@@ -1625,7 +1559,6 @@ body{
     0 8px 20px rgba(16,24,40,.08);
 }
 
-/* Keep top four pills compact and on one line */
 #top-controls .section-tabs.view-tabs{
   margin:0;
   gap:6px;
@@ -1639,6 +1572,10 @@ body{
   white-space:nowrap;
 }
 
+#top-controls .section-tabs.view-tabs #league-tab{
+  flex:0 0 auto;
+}
+
 #top-controls .section-tabs.view-tabs #comp-tab{
   flex:1 1 auto;
   min-width:0;
@@ -1646,15 +1583,11 @@ body{
   text-overflow:ellipsis;
 }
 
-/* Competition dropdown anchors correctly */
-#top-controls{
-  position:sticky;
-}
 #top-controls .menu{
   z-index:140;
 }
 
-/* 5) Main data shell becomes the only real card */
+/* Main content card */
 #data-shell.card{
   max-width:1100px;
   margin:0 auto;
@@ -1668,32 +1601,21 @@ body{
     0 12px 28px rgba(16,24,40,.10);
 }
 
-/* 6) Flatten inner panels — remove overcarding */
+/* Remove card-within-card feel */
 #data-shell > .panel.card,
 #data-shell .controls.card{
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-  border-radius:0 !important;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  border-radius:0;
 }
 
-/* Tighten inner panels */
 #data-shell > .panel.card{
-  padding:0 !important;
-  margin:0 !important;
+  padding:0;
+  margin:0;
 }
 
-/* Small breathing room inside active content areas */
-#data-shell > .panel.card > .comp-selected,
-#data-shell > .panel.card > .section-tabs,
-#data-shell > .panel.card > .controls,
-#data-shell > .panel.card > .footnote,
-#data-shell > .panel.card > .sharebar{
-  padding-left:2px;
-  padding-right:2px;
-}
-
-/* 7) First content element should not be pushed down */
+/* Tight internal spacing */
 #group-panel,
 #league-panel,
 #by-team,
@@ -1701,7 +1623,6 @@ body{
   margin-top:0 !important;
 }
 
-/* Keep internal sections tidy */
 #group-panel .section-tabs,
 #league-panel .section-tabs,
 #by-team .section-tabs,
@@ -1709,38 +1630,33 @@ body{
   margin-top:0;
 }
 
-/* 8) Competition label spacing */
 #comp-selected{
   margin:2px 0 10px;
 }
 
-/* 9) Mobile refinements */
+/* Shared bottom sharebar */
+#sharebar-main{
+  margin-top:14px;
+}
+
+/* Mobile */
 @media (max-width:880px){
 
-  body{
-    margin:60px 0 10px;
-    padding:0 10px;
-  }
-
   #panel-hurling.card{
-    margin-top:6px;
+    margin-top:2px;
   }
 
   #panel-hurling > #season-banner{
-    margin:0 0 4px;
-    padding:2px 2px 0;
-    min-height:16px;
+    margin:0 0 2px;
+    padding:1px 2px 0;
+    min-height:12px;
   }
 
   #top-controls.card{
-    top:54px;                /* just under mobile header */
+    top:50px;
     margin:0 0 8px;
     padding:6px 8px;
     border-radius:12px;
-  }
-
-  #top-controls .section-tabs.view-tabs{
-    gap:6px;
   }
 
   #top-controls .section-tabs.view-tabs .seg.vt{
@@ -1753,152 +1669,12 @@ body{
     padding:8px;
     border-radius:14px;
   }
-
-  #data-shell > .panel.card{
-    padding:0 !important;
-  }
-
-  #data-shell > .panel.card > .comp-selected,
-  #data-shell > .panel.card > .section-tabs,
-  #data-shell > .panel.card > .controls,
-  #data-shell > .panel.card > .footnote,
-  #data-shell > .panel.card > .sharebar{
-    padding-left:0;
-    padding-right:0;
-  }
-}
-
-/* 10) Very small screens */
-@media (max-width:360px){
-  #top-controls.card{
-    padding:6px;
-  }
-
-  #top-controls .section-tabs.view-tabs .seg.vt{
-    padding:8px 8px;
-    font-size:13px;
-  }
-
-  #data-shell.card{
-    padding:6px;
-  }
-}
-/* =========================================================
-   TOP PILLS BAR — tighten to hero, minimise movement
-   Final override
-   ========================================================= */
-
-/* Outer hurling wrapper stays flat */
-#panel-hurling.card{
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-  padding:0 !important;
-  margin:2px auto 0 !important;
-}
-
-/* Season/archive text should not create a big vertical band */
-#panel-hurling > #season-banner{
-  margin:0 auto 2px !important;
-  padding:2px 2px 0 !important;
-  min-height:14px !important;
-  line-height:1.1;
-}
-
-/* Top control strip sits almost flush under hero */
-#top-controls.card{
-  position:sticky;
-  top:52px;                     /* pull much closer to hero */
-  z-index:95;
-
-  margin:0 auto 10px !important; /* keep your perfect gap below */
-  padding:6px 10px !important;
-
-  background:rgba(255,255,255,.97);
-  backdrop-filter:saturate(1.1) blur(6px);
-
-  border:1px solid rgba(16,24,40,.06);
-  border-radius:14px;
-  box-shadow:
-    0 1px 2px rgba(16,24,40,.05),
-    0 8px 20px rgba(16,24,40,.08);
-}
-
-/* Keep the pills visually tight inside the strip */
-#top-controls .section-tabs.view-tabs{
-  margin:0 !important;
-  gap:6px;
-  flex-wrap:nowrap;
-}
-
-#top-controls .section-tabs.view-tabs .seg.vt{
-  padding:8px 10px;
-  min-width:0;
-  white-space:nowrap;
-}
-
-#top-controls .section-tabs.view-tabs #comp-tab{
-  flex:1 1 auto;
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-/* Main data shell remains the one real card */
-#data-shell.card{
-  margin:0 auto !important;
-  padding:10px !important;
-}
-
-/* Flatten inner panels fully */
-#data-shell > .panel.card,
-#data-shell .controls.card{
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-  border-radius:0 !important;
-}
-
-#data-shell > .panel.card{
-  padding:0 !important;
-  margin:0 !important;
-}
-
-/* Mobile */
-@media (max-width:880px){
-
-  #panel-hurling.card{
-    margin-top:2px !important;
-  }
-
-  #panel-hurling > #season-banner{
-    margin:0 0 2px !important;
-    padding:1px 2px 0 !important;
-    min-height:12px !important;
-  }
-
-  #top-controls.card{
-    top:50px;                   /* almost fixed under mobile hero */
-    margin:0 0 8px !important;  /* preserve the nice gap below */
-    padding:6px 8px !important;
-    border-radius:12px;
-  }
-
-  #top-controls .section-tabs.view-tabs .seg.vt{
-    padding:8px 9px;
-    font-size:14px;
-  }
-
-  #data-shell.card{
-    padding:8px !important;
-    border-radius:14px;
-  }
 }
 
 @media (max-width:360px){
   #top-controls.card{
     top:48px;
-    padding:6px !important;
+    padding:6px;
   }
 
   #top-controls .section-tabs.view-tabs .seg.vt{
@@ -1907,6 +1683,6 @@ body{
   }
 
   #data-shell.card{
-    padding:6px !important;
+    padding:6px;
   }
 }
