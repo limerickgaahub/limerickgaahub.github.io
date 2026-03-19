@@ -158,48 +158,54 @@
   <!-- Hurling -->
   <div id="panel-hurling" class="card">
 
-  <!-- Season / archive banner (JS toggles visibility) -->
+    <!-- Season / archive banner (JS toggles visibility) -->
   <div id="season-banner" class="season-banner" hidden></div>
-    
-  <div class="section-tabs view-tabs" id="view-tabs" role="tablist" aria-label="View selector">
-  
-    <button class="seg vt"
-            role="tab"
-            aria-selected="false"
-            data-target="league-panel"
-            id="league-tab"
-            type="button">
-      League
-    </button>
-  
-    <button class="seg vt active"
-            role="tab"
-            aria-selected="true"
-            data-target="group-panel"
-            id="comp-tab"
-            type="button">
-      Championship
-    </button>
-  
-    <button class="seg vt"
-            role="tab"
-            aria-selected="false"
-            data-target="by-team"
-            type="button">
-      Club
-    </button>
-  
-    <button class="seg vt"
-            role="tab"
-            aria-selected="false"
-            data-target="by-date"
-            type="button">
-      Date
-    </button>
-  </div>
-    <div class="menu" id="comp-menu" role="menu" aria-hidden="true"></div>
 
-    <div class="panel card" id="group-panel" style="margin-top:6px;">
+  <!-- Top fixed filter bar -->
+  <div class="top-controls card" id="top-controls">
+    <div class="section-tabs view-tabs" id="view-tabs" role="tablist" aria-label="View selector">
+      <button class="seg vt"
+              role="tab"
+              aria-selected="false"
+              data-target="league-panel"
+              id="league-tab"
+              type="button">
+        League
+      </button>
+
+      <button class="seg vt active"
+              role="tab"
+              aria-selected="true"
+              data-target="group-panel"
+              id="comp-tab"
+              type="button">
+        Championship
+      </button>
+
+      <button class="seg vt"
+              role="tab"
+              aria-selected="false"
+              data-target="by-team"
+              type="button">
+        Club
+      </button>
+
+      <button class="seg vt"
+              role="tab"
+              aria-selected="false"
+              data-target="by-date"
+              type="button">
+        Date
+      </button>
+    </div>
+
+    <div class="menu" id="comp-menu" role="menu" aria-hidden="true"></div>
+  </div>
+
+  <!-- Main data container -->
+  <div class="data-shell card" id="data-shell">
+    <div class="panel card" id="group-panel">
+
         <div id="comp-list" class="comp-list" style="display:none;"></div>
         <div class="comp-selected" id="comp-selected" aria-live="polite"></div>
 
@@ -277,7 +283,7 @@
       </div> 
     </div>
 
-    <div class="panel card" id="league-panel" style="display:none; margin-top:6px;">
+    <div class="panel card" id="league-panel">
   <div class="controls card" id="controls-league" style="margin-top:6px;">
     <label for="league-div" class="sr-only">Select division</label>
     <div class="pretty-select">
@@ -339,7 +345,7 @@
   </div>
 </div>
           
-      <div class="panel card" id="by-team" style="display:none; margin-top:6px;">
+      <div class="panel card" id="by-team" style="display:none;>
         <div class="controls card" id="controls-team">
           <label for="team" class="sr-only">Select club</label>
         <div class="pretty-select">
@@ -360,7 +366,7 @@
 
 
         <!-- Share (Date) — inside the panel -->
-            <div class="panel card" id="by-date" style="display:none; margin-top:6px;">
+            <div class="panel card" id="by-date" style="display:none;>
               <div id="controls-date" class="controls card">
                 <label class="sr-only" for="date-input">Select date</label>
                 <div class="pretty-input">
@@ -387,10 +393,9 @@
                 <div class="spacer"></div>
               </div>
             </div>
-      </div>    <!-- end of #panel-hurling -->
+    </div> <!-- end of #data-shell -->
+  </div>    <!-- end of #panel-hurling -->
 
-
-  
       
   <!-- Football -->
   <div id="panel-football" class="card" style="display:none;">
