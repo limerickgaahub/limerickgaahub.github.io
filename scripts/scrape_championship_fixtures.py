@@ -30,7 +30,6 @@ from bs4 import BeautifulSoup
 SENIOR_URL = "https://limerickgaa.ie/senior-hurling-fixtures/"
 INTERMEDIATE_URL = "https://limerickgaa.ie/intermediate-hurling-fixtures/"
 
-
 TARGET_COMPETITIONS = {
     "Whitebox County Senior Hurling Championship Group 1",
     "Whitebox County Senior Hurling Championship Group 2",
@@ -91,6 +90,7 @@ class ChampionshipMatch:
 
 SESSION = requests.Session()
 
+
 def http_get(url: str, timeout: int = 10) -> requests.Response:
     r = SESSION.get(
         url,
@@ -100,10 +100,15 @@ def http_get(url: str, timeout: int = 10) -> requests.Response:
     r.raise_for_status()
     return r
 
+
 def get_page_html(page_url: str) -> str:
     print(f"[championship] fetching page HTML: {page_url}", flush=True)
     r = http_get(page_url, timeout=12)
     return r.text
+
+
+def clean_line(s: str) -> str:
+    return re.sub(r"\s+", " ", str(s).replace("\xa0", " ")).strip()
 
 
 def normalize_lines(html: str) -> List[str]:
@@ -117,7 +122,7 @@ def normalize_lines(html: str) -> List[str]:
     main = soup.select_one("main") or soup.select_one("article") or soup
     text = main.get_text("\n")
 
-    raw = [ln.strip() for ln in text.splitlines()]
+    raw = [clean_line(ln) for ln in text.splitlines()]
     raw = [ln for ln in raw if ln]
 
     stitched: List[str] = []
@@ -126,8 +131,8 @@ def normalize_lines(html: str) -> List[str]:
         s = raw[i]
 
         if i + 2 < len(raw) and re.match(rf"^{WEEKDAYS}\s+\d{{1,2}}$", s, flags=re.IGNORECASE):
-            t1 = raw[i + 1]
-            t2 = raw[i + 2]
+            t1 = clean_line(raw[i + 1])
+            t2 = clean_line(raw[i + 2])
             if ORD_TOKEN_RE.match(t1) and re.match(r"^[A-Za-z]+", t2):
                 stitched.append(f"{s}^{{{t1}}} {t2}")
                 i += 3
@@ -140,7 +145,8 @@ def normalize_lines(html: str) -> List[str]:
 
 
 def parse_date_line(s: str) -> Optional[date]:
-    m = DATE_RE.match(s.strip())
+    s = clean_line(s)
+    m = DATE_RE.match(s)
     if not m:
         return None
 
@@ -161,7 +167,7 @@ def parse_date_line(s: str) -> Optional[date]:
 
 
 def is_plausible_team(s: str) -> bool:
-    s = s.strip()
+    s = clean_line(s)
     if len(s) < 2:
         return False
 
@@ -178,6 +184,8 @@ def is_plausible_team(s: str) -> bool:
 
 
 def map_competition(raw: str) -> Optional[Dict[str, Optional[str]]]:
+    raw = clean_line(raw)
+
     if raw == "Whitebox County Senior Hurling Championship Group 1":
         return {
             "competition": "Senior Hurling Championship",
@@ -221,16 +229,18 @@ def dedupe_matches(matches: List[ChampionshipMatch]) -> List[ChampionshipMatch]:
     return out
 
 
-def parse_competition_blocks(lines: List[str]) -> List[ChampionshipMatch]:
+def parse_competition_blocks(lines: List[str], page_name: str) -> List[ChampionshipMatch]:
     matches: List[ChampionshipMatch] = []
     i = 0
 
     while i < len(lines):
-        raw_comp = lines[i].strip()
+        raw_comp = clean_line(lines[i])
 
         if raw_comp not in TARGET_COMPETITIONS:
             i += 1
             continue
+
+        print(f"[championship] {page_name} found competition: {raw_comp}", flush=True)
 
         mapped = map_competition(raw_comp)
         if not mapped:
@@ -249,41 +259,51 @@ def parse_competition_blocks(lines: List[str]) -> List[ChampionshipMatch]:
 
         # round
         while j < len(lines) and j < i + 20:
-            if lines[j] in TARGET_COMPETITIONS:
+            line_j = clean_line(lines[j])
+
+            if line_j in TARGET_COMPETITIONS:
                 break
-            rm = ROUND_RE.match(lines[j])
+
+            rm = ROUND_RE.match(line_j)
             if rm:
                 round_txt = f"Round {rm.group(1)}"
                 j += 1
                 break
+
             j += 1
 
         # date
         while j < len(lines) and j < i + 35 and d is None:
-            if lines[j] in TARGET_COMPETITIONS:
+            line_j = clean_line(lines[j])
+
+            if line_j in TARGET_COMPETITIONS:
                 break
-            dd = parse_date_line(lines[j])
+
+            dd = parse_date_line(line_j)
             if dd:
                 d = dd
                 j += 1
                 break
+
             j += 1
 
         # teams
         while j < len(lines) and j < i + 55:
-            if lines[j] in TARGET_COMPETITIONS:
+            line_j = clean_line(lines[j])
+
+            if line_j in TARGET_COMPETITIONS:
                 break
 
-            if V_RE.match(lines[j]):
+            if V_RE.match(line_j):
                 k = j - 1
-                while k > i and not lines[k].strip():
+                while k > i and not clean_line(lines[k]):
                     k -= 1
-                cand_home = lines[k].strip()
+                cand_home = clean_line(lines[k])
 
                 k = j + 1
-                while k < len(lines) and not lines[k].strip():
+                while k < len(lines) and not clean_line(lines[k]):
                     k += 1
-                cand_away = lines[k].strip() if k < len(lines) else ""
+                cand_away = clean_line(lines[k]) if k < len(lines) else ""
 
                 if is_plausible_team(cand_home) and is_plausible_team(cand_away):
                     home = cand_home
@@ -296,17 +316,18 @@ def parse_competition_blocks(lines: List[str]) -> List[ChampionshipMatch]:
 
         # venue / referee
         while j < len(lines) and j < i + 80:
-            if lines[j] in TARGET_COMPETITIONS:
+            line_j = clean_line(lines[j])
+
+            if line_j in TARGET_COMPETITIONS:
                 break
 
-            vm = VENUE_RE.match(lines[j])
+            vm = VENUE_RE.match(line_j)
             if vm:
-                v = (vm.group(1) or "").strip()
+                v = clean_line(vm.group(1) or "")
                 venue = v if v else "TBC"
 
-            # referee is deliberately ignored in output schema,
-            # but still used as a useful marker for end of block
-            rf = REF_RE.match(lines[j])
+            # referee is ignored in output but still marks end of block
+            rf = REF_RE.match(line_j)
             if rf:
                 j += 1
                 break
@@ -314,6 +335,11 @@ def parse_competition_blocks(lines: List[str]) -> List[ChampionshipMatch]:
             j += 1
 
         if round_txt and d and home and away:
+            print(
+                f"[championship] {page_name} parsed match: "
+                f"{competition} | {group} | {round_txt} | {d.strftime('%Y-%m-%d')} | {home} v {away}",
+                flush=True
+            )
             matches.append(
                 ChampionshipMatch(
                     competition=competition,
@@ -330,6 +356,12 @@ def parse_competition_blocks(lines: List[str]) -> List[ChampionshipMatch]:
                     away_goals=None,
                     away_points=None,
                 )
+            )
+        else:
+            print(
+                f"[championship] {page_name} skipped block: "
+                f"comp={raw_comp!r} round={round_txt!r} date={d!r} home={home!r} away={away!r}",
+                flush=True
             )
 
         i = max(i + 1, j)
@@ -374,9 +406,18 @@ def main() -> None:
     senior_lines = normalize_lines(senior_html)
     intermediate_lines = normalize_lines(intermediate_html)
 
+    print(f"[championship] senior lines: {len(senior_lines)}", flush=True)
+    print(f"[championship] intermediate lines: {len(intermediate_lines)}", flush=True)
+
+    senior_matches = parse_competition_blocks(senior_lines, "senior")
+    intermediate_matches = parse_competition_blocks(intermediate_lines, "intermediate")
+
+    print(f"[championship] senior matches parsed: {len(senior_matches)}", flush=True)
+    print(f"[championship] intermediate matches parsed: {len(intermediate_matches)}", flush=True)
+
     matches: List[ChampionshipMatch] = []
-    matches.extend(parse_competition_blocks(senior_lines))
-    matches.extend(parse_competition_blocks(intermediate_lines))
+    matches.extend(senior_matches)
+    matches.extend(intermediate_matches)
     matches = dedupe_matches(matches)
 
     write_json(out_path, matches)
