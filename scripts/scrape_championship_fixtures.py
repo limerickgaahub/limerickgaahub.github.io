@@ -91,28 +91,32 @@ class ChampionshipMatch:
         }
 
 
-def http_get(url: str, timeout: int = 30) -> requests.Response:
-    r = requests.get(
+SESSION = requests.Session()
+
+def http_get(url: str, timeout: int = 10) -> requests.Response:
+    r = SESSION.get(
         url,
-        timeout=timeout,
+        timeout=(5, timeout),  # 5s connect, N s read
         headers={"User-Agent": "limerickgaahub-championship-scraper/1.0"},
     )
     r.raise_for_status()
     return r
 
-
 def get_page_html(page_url: str, wp_api_url: str) -> str:
+    print(f"[championship] trying WP API: {wp_api_url}", flush=True)
     try:
-        r = http_get(wp_api_url)
+        r = http_get(wp_api_url, timeout=6)
         data = r.json()
         if isinstance(data, list) and data:
             rendered = data[0].get("content", {}).get("rendered")
             if rendered and isinstance(rendered, str):
+                print(f"[championship] using WP API: {wp_api_url}", flush=True)
                 return rendered
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"[championship] WP API failed, falling back: {wp_api_url} ({e})", flush=True)
 
-    r = http_get(page_url)
+    print(f"[championship] fetching page HTML: {page_url}", flush=True)
+    r = http_get(page_url, timeout=8)
     return r.text
 
 
