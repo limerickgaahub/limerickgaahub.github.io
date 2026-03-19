@@ -164,23 +164,25 @@
   <!-- Top fixed filter bar -->
   <div class="top-controls card" id="top-controls">
     <div class="section-tabs view-tabs" id="view-tabs" role="tablist" aria-label="View selector">
-      <button class="seg vt"
-              role="tab"
-              aria-selected="false"
-              data-target="league-panel"
-              id="league-tab"
-              type="button">
-        League
-      </button>
 
-      <button class="seg vt active"
-              role="tab"
-              aria-selected="true"
-              data-target="group-panel"
-              id="comp-tab"
-              type="button">
-        Championship
-      </button>
+        <button class="seg vt active"
+            role="tab"
+            aria-selected="true"
+            data-target="league-panel"
+            id="league-tab"
+            type="button">
+      League
+    </button>
+    
+    <button class="seg vt"
+            role="tab"
+            aria-selected="false"
+            data-target="group-panel"
+            id="comp-tab"
+            type="button">
+      Championship
+    </button>
+      
 
       <button class="seg vt"
               role="tab"
@@ -204,7 +206,7 @@
 
   <!-- Main data container -->
   <div class="data-shell card" id="data-shell">
-    <div class="panel card" id="group-panel">
+    <div class="panel card" id="group-panel" style="display:none;">
 
         <div id="comp-list" class="comp-list" style="display:none;"></div>
         <div class="comp-selected" id="comp-selected" aria-live="polite"></div>
@@ -275,12 +277,6 @@
         Tie-breaks: Qualification: Head-to-Head (two teams only), then Points Difference, Points For, Goals For. Relegation: Playoff if two teams on equal points.
       </div>
 
-      <!-- Share (Competition) -->
-      <div class="sharebar" id="sharebar-comp">
-        <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
-        <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
-        <div class="spacer"></div>
-      </div> 
     </div>
 
     <div class="panel card" id="league-panel">
@@ -338,14 +334,9 @@
     </div>
   </div>
 
-  <div class="sharebar" id="sharebar-league">
-    <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
-    <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
-    <div class="spacer"></div>
-  </div>
 </div>
           
-      <div class="panel card" id="by-team" style="display:none;>
+      <div class="panel card" id="by-team" style="display:none;">
         <div class="controls card" id="controls-team">
           <label for="team" class="sr-only">Select club</label>
         <div class="pretty-select">
@@ -356,17 +347,8 @@
       
         <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table></div>
       
-        <!-- Share (Team) -->
-        <div class="sharebar" id="sharebar-team">
-          <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
-          <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
-          <div class="spacer"></div>
-        </div>
       </div>
-
-
-        <!-- Share (Date) — inside the panel -->
-            <div class="panel card" id="by-date" style="display:none;>
+            <div class="panel card" id="by-date" style="display:none;">
               <div id="controls-date" class="controls card">
                 <label class="sr-only" for="date-input">Select date</label>
                 <div class="pretty-input">
@@ -384,14 +366,11 @@
               <i class="fa-solid fa-arrow-up"></i>
             </button>
 
-            
-              
-              <!-- Share (Date) -->
-              <div class="sharebar" id="sharebar-date">
-                <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
-                <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
-                <div class="spacer"></div>
-              </div>
+            </div>
+            <div class="sharebar" id="sharebar-main">
+              <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
+              <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
+              <div class="spacer"></div>
             </div>
     </div> <!-- end of #data-shell -->
   </div>    <!-- end of #panel-hurling -->
@@ -597,12 +576,12 @@
     
     // Back button
 
-    // Brand click = reset to Hurling Competition
-    document.querySelector('.brand').addEventListener('click', e=>{
-      e.preventDefault();
-      document.querySelector('.navtab[data-nav="hurling"]').click();
-      document.querySelector('#view-tabs .vt[data-target="group-panel"]').click();
-    });
+          // Brand click = reset to Hurling League
+      document.querySelector('.brand').addEventListener('click', e=>{
+        e.preventDefault();
+        document.querySelector('.navtab[data-nav="hurling"]').click();
+        document.querySelector('#view-tabs .vt[data-target="league-panel"]').click();
+      });
 
     // Warn if app didn't init (tolerant)
     window.addEventListener('load', () => {
@@ -667,7 +646,7 @@ function updateSharebars(){
   const mailto   = 'mailto:?subject=' + encodeURIComponent('Limerick GAA Hub') +
                    '&body=' + encodeURIComponent(msg + '\n\n' + url);
 
-  ['sharebar-comp','sharebar-team','sharebar-date'].forEach(id=>{
+    ['sharebar-main'].forEach(id=>{
     const bar = document.getElementById(id);
     if (!bar) return;
 
