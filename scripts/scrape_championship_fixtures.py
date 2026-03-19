@@ -30,8 +30,6 @@ from bs4 import BeautifulSoup
 SENIOR_URL = "https://limerickgaa.ie/senior-hurling-fixtures/"
 INTERMEDIATE_URL = "https://limerickgaa.ie/intermediate-hurling-fixtures/"
 
-SENIOR_WP_API = "https://limerickgaa.ie/wp-json/wp/v2/pages?slug=senior-hurling-fixtures"
-INTERMEDIATE_WP_API = "https://limerickgaa.ie/wp-json/wp/v2/pages?slug=intermediate-hurling-fixtures"
 
 TARGET_COMPETITIONS = {
     "Whitebox County Senior Hurling Championship Group 1",
@@ -102,21 +100,9 @@ def http_get(url: str, timeout: int = 10) -> requests.Response:
     r.raise_for_status()
     return r
 
-def get_page_html(page_url: str, wp_api_url: str) -> str:
-    print(f"[championship] trying WP API: {wp_api_url}", flush=True)
-    try:
-        r = http_get(wp_api_url, timeout=6)
-        data = r.json()
-        if isinstance(data, list) and data:
-            rendered = data[0].get("content", {}).get("rendered")
-            if rendered and isinstance(rendered, str):
-                print(f"[championship] using WP API: {wp_api_url}", flush=True)
-                return rendered
-    except Exception as e:
-        print(f"[championship] WP API failed, falling back: {wp_api_url} ({e})", flush=True)
-
+def get_page_html(page_url: str) -> str:
     print(f"[championship] fetching page HTML: {page_url}", flush=True)
-    r = http_get(page_url, timeout=8)
+    r = http_get(page_url, timeout=12)
     return r.text
 
 
@@ -382,8 +368,8 @@ def main() -> None:
 
     out_path = resolve_out_path(args.outdir, args.out)
 
-    senior_html = get_page_html(SENIOR_URL, SENIOR_WP_API)
-    intermediate_html = get_page_html(INTERMEDIATE_URL, INTERMEDIATE_WP_API)
+    senior_html = get_page_html(SENIOR_URL)
+    intermediate_html = get_page_html(INTERMEDIATE_URL)
 
     senior_lines = normalize_lines(senior_html)
     intermediate_lines = normalize_lines(intermediate_html)
