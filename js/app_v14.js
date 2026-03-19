@@ -235,8 +235,17 @@ const sortDateOnly = (a, b) =>
   const fmtDateShort=iso=>{ if(!iso) return ''; const d=new Date(iso+'T00:00:00'); return `${day3[d.getDay()]} ${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`; };
   const fmtTimeShort=t=>{ if(!t) return ''; const m=t.match(/^(\d{1,2}):(\d{2})/); return m?`${pad2(m[1])}:${m[2]}`:t; }; // <-- add colon
   const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const groupShort=g=>(g||'').replace(/^Group\s*/i,'G').trim();
-  const compCode=name=> COMP_CODES[name] || (name? name.split(/\s+/).map(w=>w[0]).join('').toUpperCase() : '?');
+  const groupShort=g=>{
+  const s = String(g || '').trim();
+  if (!s) return '';
+  if (/^Group\s*/i.test(s)) return s.replace(/^Group\s*/i,'G').trim();
+  if (/^Division\s*/i.test(s)) return s.replace(/^Division\s*/i,'Div ').trim();
+  return s;
+};
+const compCode=name=>
+  name === 'County Hurling League'
+    ? 'CHL'
+    : (COMP_CODES[name] || (name ? name.split(/\s+/).map(w=>w[0]).join('').toUpperCase() : '?'));
   const toInt=v=>v==null||v===''?null:(Number(v)||0);
   const parseRoundNum=r=>{ const m=String(r||'').match(/(\d+)/); return m?Number(m[1]):999; };
 
@@ -670,7 +679,19 @@ away_goals: r.away_goals, away_points: r.away_points
 
   function rowHTML(r,isMobile,isTiny){
     const rShort=(r.round||'').replace(/^Round\s*/i,'R').replace(/\s+/g,'')||'—';
-    const dShort=fmtDateShort(r.date), tShort=fmtTimeShort(r.time||'');
+    const dShort = (
+  state.season === '2026' &&
+  r.competition !== 'County Hurling League' &&
+  r.date
+)
+  ? (() => {
+      const d = new Date(r.date + 'T00:00:00');
+      const mon3 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return `w/c ${day3[d.getDay()]} ${pad2(d.getDate())} ${mon3[d.getMonth()]}`;
+    })()
+  : fmtDateShort(r.date),
+tShort = fmtTimeShort(r.time || '');
+
     const stShort=isResult(r.status)?'R':'F';
     const scoreMid = (/^walkover$/i.test(r.status))
   ? 'W/O'
@@ -688,14 +709,23 @@ away_goals: r.away_goals, away_points: r.away_points
 
     if(isMobile){
   // Three-line Date/Time: day, date, time — centred via CSS
-  const parts = (dShort||'').split(' ');
-  const dayLine = parts[0] || '';
-  const dateLine = parts.slice(1).join(' ') || '';
-  const dtHTML = `<div class="dt3">
-                    <div class="dt-day">${esc(dayLine)}</div>
-                    <div class="dt-date">${esc(dateLine)}</div>
-                    <div class="dt-time">${esc(tShort)}</div>
-                  </div>`;
+  let dayLine = '';
+let dateLine = '';
+
+if ((dShort || '').startsWith('w/c ')) {
+  dayLine = 'w/c';
+  dateLine = dShort.replace(/^w\/c\s+/i, '');
+} else {
+  const parts = (dShort || '').split(' ');
+  dayLine = parts[0] || '';
+  dateLine = parts.slice(1).join(' ') || '';
+}
+const dtHTML = `<div class="dt3">
+                  <div class="dt-day">${esc(dayLine)}</div>
+                  <div class="dt-date">${esc(dateLine)}</div>
+                  <div class="dt-time">${esc(tShort)}</div>
+                </div>`;
+
   return `<tr ${trAttr}>
             <td class="rcol">${esc(rShort)}</td>
             <td class="dcol">${dtHTML}</td>
