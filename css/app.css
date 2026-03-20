@@ -1628,18 +1628,18 @@ thead th{
 }
 
 body{
-  margin:56px 12px 20px;
+  margin:58px 12px 20px;
   font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
   background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
 }
 
 #top-controls.card{
   position:sticky;
-  top:48px;
+  top:44px;
   z-index:95;
 
   max-width:1100px;
-  margin:0 auto 6px;
+  margin:0 auto 8px;
   padding:5px 10px;
 
   background:rgba(255,255,255,.98);
@@ -1654,13 +1654,13 @@ body{
 
 @media (max-width:880px){
   body{
-    margin:52px 0 10px;
+    margin:50px 0 10px;
     padding:0 10px;
   }
 
   #top-controls.card{
-    top:46px;
-    margin:0 0 6px;
+    top:42px;
+    margin:0 0 8px;
     padding:5px 8px;
     border-radius:12px;
   }
@@ -1668,7 +1668,7 @@ body{
 
 @media (max-width:360px){
   #top-controls.card{
-    top:44px;
+    top:40px;
     padding:5px 6px;
   }
 }
