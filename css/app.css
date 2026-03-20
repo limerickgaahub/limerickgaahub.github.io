@@ -1419,6 +1419,7 @@ thead th{
   left:50%;
   transform:translateX(-50%);
   z-index:95;
+  isolation:isolate;
 
   width:calc(100% - 24px);
   max-width:1100px;
@@ -1435,6 +1436,18 @@ thead th{
     0 4px 12px rgba(16,24,40,.06);
 }
 
+#top-controls.card::before{
+  content:"";
+  position:absolute;
+  left:-8px;
+  right:-8px;
+  top:-10px;
+  bottom:0;
+  background:#0b7a4a;
+  border-radius:14px 14px 0 0;
+  z-index:-1;
+  pointer-events:none;
+}
 
 #top-controls .section-tabs.view-tabs{
   margin:0;
@@ -1535,6 +1548,13 @@ thead th{
     border-radius:12px;
   }
 
+  #top-controls.card::before{
+  left:-6px;
+  right:-6px;
+  top:-8px;
+  border-radius:12px 12px 0 0;
+}
+  
   #season-banner:empty::before{ display:none; }
   
   #season-banner[hidden]{
@@ -1562,6 +1582,13 @@ thead th{
   padding:5px 6px;
 }
 
+  #top-controls.card::before{
+  left:-4px;
+  right:-4px;
+  top:-8px;
+  border-radius:12px 12px 0 0;
+}
+  
   #top-controls .section-tabs.view-tabs .seg.vt{
     padding:8px 8px;
     font-size:13px;
@@ -1671,6 +1698,7 @@ thead th{
   padding:0 0 6px;
   box-shadow:none;
   isolation:isolate;
+  pointer-events:none;
 }
 
 #controls-date::before{
@@ -1680,6 +1708,7 @@ thead th{
   background:#fff;
   border-radius:12px 12px 0 0;
   z-index:1;
+  pointer-events:none;
 }
 
 #controls-date::after{
@@ -1691,6 +1720,7 @@ thead th{
   height:6px;
   background:#fff;
   z-index:1;
+  pointer-events:none;
 }
 
 #controls-date.controls.card{
