@@ -1,7 +1,7 @@
 {
   "competition": "County Hurling League",
   "season": 2026,
-  "updated_at": "2026-03-20T11:53:48",
+  "updated_at": "2026-03-20T16:21:51",
   "fixtures": [
     {
       "id": "league-5-R1-2026-03-21-monaleen-vs-crecora-manister",
@@ -580,6 +580,22 @@
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
     },
     {
+      "id": "league-9-R1-2026-03-22-ahane-vs-adare",
+      "competition": "County Hurling League",
+      "group": "Division 9",
+      "round": "R 1",
+      "date": "2026-03-22",
+      "time_local": "15:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2026-03-22T15:00:00",
+      "home": "Ahane",
+      "away": "Adare",
+      "venue": "Mackey Park",
+      "referee": "TBC",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+    },
+    {
       "id": "league-3-R1-2026-03-22-feohanagh-vs-granagh-ballingarry",
       "competition": "County Hurling League",
       "group": "Division 3",
@@ -639,6 +655,22 @@
       "home": "Glenroe",
       "away": "Ahane",
       "venue": "Glenroe",
+      "referee": "TBC",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+    },
+    {
+      "id": "league-9-R2-2026-03-28-adare-vs-adare",
+      "competition": "County Hurling League",
+      "group": "Division 9",
+      "round": "R 2",
+      "date": "2026-03-28",
+      "time_local": "14:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2026-03-28T14:00:00",
+      "home": "Adare",
+      "away": "Adare",
+      "venue": "Dooley Park",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
@@ -1460,6 +1492,22 @@
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
     },
     {
+      "id": "league-9-R3-2026-04-18-bruree-vs-adare",
+      "competition": "County Hurling League",
+      "group": "Division 9",
+      "round": "R 3",
+      "date": "2026-04-18",
+      "time_local": "16:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2026-04-18T16:00:00",
+      "home": "Bruree",
+      "away": "Adare",
+      "venue": "Bruree",
+      "referee": "TBC",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+    },
+    {
       "id": "league-1-R3-2026-04-18-patrickswell-vs-adare",
       "competition": "County Hurling League",
       "group": "Division 1",
@@ -2100,6 +2148,22 @@
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
     },
     {
+      "id": "league-9-R4-2026-04-25-adare-vs-feohanagh",
+      "competition": "County Hurling League",
+      "group": "Division 9",
+      "round": "R 4",
+      "date": "2026-04-25",
+      "time_local": "16:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2026-04-25T16:00:00",
+      "home": "Adare",
+      "away": "Feohanagh",
+      "venue": "Dooley Park",
+      "referee": "TBC",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+    },
+    {
       "id": "league-9-R4-2026-04-25-murroe-boher-vs-blackrock",
       "competition": "County Hurling League",
       "group": "Division 9",
@@ -2719,6 +2783,22 @@
       "home": "Bruree",
       "away": "Ahane",
       "venue": "Bruree",
+      "referee": "TBC",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+    },
+    {
+      "id": "league-9-R5-2026-05-16-murroe-boher-vs-adare",
+      "competition": "County Hurling League",
+      "group": "Division 9",
+      "round": "R 5",
+      "date": "2026-05-16",
+      "time_local": "16:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2026-05-16T16:00:00",
+      "home": "Murroe Boher",
+      "away": "Adare",
+      "venue": "Boher",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
@@ -3359,6 +3439,22 @@
       "home": "Glenroe",
       "away": "Murroe Boher",
       "venue": "Glenroe",
+      "referee": "TBC",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+    },
+    {
+      "id": "league-9-R6-2026-05-23-adare-vs-blackrock",
+      "competition": "County Hurling League",
+      "group": "Division 9",
+      "round": "R 6",
+      "date": "2026-05-23",
+      "time_local": "16:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2026-05-23T16:00:00",
+      "home": "Adare",
+      "away": "Blackrock",
+      "venue": "Dooley Park",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
@@ -4047,6 +4143,22 @@
       "home": "Blackrock",
       "away": "Bruree",
       "venue": "KIlfinane",
+      "referee": "TBC",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+    },
+    {
+      "id": "league-9-R7-2026-05-30-adare-vs-glenroe",
+      "competition": "County Hurling League",
+      "group": "Division 9",
+      "round": "R 7",
+      "date": "2026-05-30",
+      "time_local": "16:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2026-05-30T16:00:00",
+      "home": "Adare",
+      "away": "Glenroe",
+      "venue": "Dooley Park",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
