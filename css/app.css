@@ -1076,42 +1076,6 @@ thead th{
     margin-top:0 !important;
   }
 
-  /* Division dropdown row */
-  #controls-league.controls.card{
-    margin:0 auto 12px !important;
-    padding:0 !important;
-    width:100%;
-    background:transparent !important;
-    border:0 !important;
-    box-shadow:none !important;
-    display:flex !important;
-    justify-content:center;
-    align-items:center;
-  }
-
-  /* Make dropdown visibly narrower and centred */
-  #controls-league .pretty-select{
-    width:78% !important;
-    max-width:280px !important;
-    flex:none !important;
-    min-height:42px;
-    border-radius:12px;
-    margin:0 auto !important;
-
-    background:var(--surface-3);
-    border:1px solid rgba(16,24,40,.10);
-    box-shadow:0 1px 2px rgba(16,24,40,.05);
-  }
-
-  /* Fix text padding/alignment inside dropdown */
-  #controls-league .pretty-select select{
-    height:42px;
-    min-height:42px;
-    padding:0 2.35rem 0 1rem !important;
-    line-height:42px;
-    font-size:15px;
-    font-weight:700;
-  }
 
   /* Chevron alignment */
   #controls-league .pretty-select::after{
@@ -1139,39 +1103,6 @@ thead th{
   }
 }
 
-/* =========================================================
-   POLISH PASS 3 — mobile league dropdown refresh
-   Append below Patch 2
-   ========================================================= */
-
-@media (max-width:880px){
-
-  /* Refined branded dropdown: shorter, cleaner, more current */
-  #controls-league .pretty-select{
-    min-height:38px !important;
-    border-radius:10px !important;
-    background:#eef6f2 !important;
-    border:1px solid rgba(11,122,74,.20) !important;
-    box-shadow:0 1px 2px rgba(16,24,40,.04) !important;
-  }
-
-  #controls-league .pretty-select select{
-    height:38px !important;
-    min-height:38px !important;
-    padding:0 2.2rem 0 .9rem !important;
-    line-height:38px !important;
-    font-size:15px !important;
-    font-weight:750 !important;
-    color:#0f172a !important;
-    background:transparent !important;
-  }
-
-  #controls-league .pretty-select::after{
-    right:.9rem !important;
-    border-right:2px solid #0b7a4a !important;
-    border-bottom:2px solid #0b7a4a !important;
-  }
-}
 
 /* =========================================================
    PREMIUM STICKY STANDINGS — FINAL CSS PATCH
@@ -1640,33 +1571,35 @@ thead th{
     padding:6px;
   }
 }
-/* League: dropdown + Matches + Table on one row */
-#controls-league.league-subnav{
+/* League only: layout change, no shared dropdown restyle */
+#league-panel > #controls-league.league-subnav{
   display:flex;
   align-items:center;
   gap:10px;
   flex-wrap:nowrap;
 }
 
-#controls-league .league-division-select-wrap{
+#league-panel > #controls-league .league-division-select-wrap{
   flex:0 0 auto;
   width:auto;
 }
 
-#controls-league .league-division-select-wrap select{
-  width:132px;          /* enough for Division 12 */
+#league-panel > #controls-league .league-division-select-wrap select{
+  width:132px;
   min-width:132px;
   max-width:132px;
 }
 
-#controls-league .league-view-tabs-inline{
+#league-panel > #controls-league > #league-view-tabs.league-view-tabs-inline{
   display:flex;
   align-items:center;
   gap:10px;
   flex:0 0 auto;
+  flex-wrap:nowrap;
+  margin:0;
 }
 
-#controls-league .league-view-tabs-inline .seg{
+#league-panel > #controls-league > #league-view-tabs.league-view-tabs-inline .seg{
   flex:0 0 auto;
   white-space:nowrap;
 }
