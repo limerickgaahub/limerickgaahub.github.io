@@ -1415,7 +1415,7 @@ thead th{
 
 #top-controls.card{
   position:fixed;
-  top:70px;
+  top:74px;
   left:50%;
   transform:translateX(-50%);
   z-index:95;
@@ -1526,7 +1526,7 @@ thead th{
   }
 
   #top-controls.card{
-    top:60px;
+    top:64px;
     left:50%;
     transform:translateX(-50%);
     width:calc(100% - 20px);
@@ -1555,7 +1555,7 @@ thead th{
 
 @media (max-width:360px){
 #top-controls.card{
-  top:58px;
+  top:62px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 16px);
@@ -1646,28 +1646,28 @@ thead th{
   white-space:nowrap;
 }
 /* =========================================================
-   DATE TAB — pin picker + header under the fixed top bars
+   DATE TAB — sticky picker + separate sticky header bar
    ========================================================= */
 
-/* shared offset below your fixed site header + fixed top controls */
 :root{
-  --date-sticky-top-desktop: 128px;
-  --date-sticky-top-mobile: 110px;
-  --date-controls-h: 52px;
+  --date-stick-top-desktop: 132px;
+  --date-stick-top-mobile: 114px;
+  --date-controls-h: 50px;
+  --date-colhead-h: 38px;
 }
 
 #by-date{
   position:relative;
 }
 
-/* make the picker stay below the fixed white bars */
+/* picker */
 #controls-date{
   position:sticky;
-  top:var(--date-sticky-top-desktop);
-  z-index:60;
+  top:var(--date-stick-top-desktop);
+  z-index:70;
   background:#fff;
   margin:0;
-  padding:0 0 8px;
+  padding:0 0 4px;
 }
 
 #controls-date::after{
@@ -1676,7 +1676,6 @@ thead th{
   border-bottom:1px solid rgba(16,24,40,.06);
 }
 
-/* keep the date picker row tight */
 #controls-date.controls.card{
   justify-content:center;
 }
@@ -1685,17 +1684,56 @@ thead th{
   max-width:360px;
 }
 
-/* keep the green table header pinned directly below the picker */
-#date-table thead th{
+/* hide real table header in Date tab only */
+#date-table thead{
+  display:none;
+}
+
+/* separate sticky green header bar */
+#date-colhead{
   position:sticky;
-  top:calc(var(--date-sticky-top-desktop) + var(--date-controls-h));
-  z-index:55;
+  top:calc(var(--date-stick-top-desktop) + var(--date-controls-h));
+  z-index:69;
+
+  display:grid;
+  grid-template-columns:3ch 4.2rem minmax(0,1fr) 6.2rem;
+  align-items:center;
+
+  min-height:var(--date-colhead-h);
+  padding:0 5px;
+
   background:#0b7a4a;
   color:#fff;
   border-bottom:2px solid #064d2f;
+
+  font-size:12px;
+  font-weight:850;
+  letter-spacing:.04em;
+  text-transform:uppercase;
 }
 
-/* stop row 1 sitting under the sticky header stack */
+#date-colhead > span{
+  padding:8px 5px;
+  white-space:nowrap;
+}
+
+#date-colhead .rcol{
+  text-align:center;
+}
+
+#date-colhead .dcol{
+  text-align:center;
+}
+
+#date-colhead .match{
+  text-align:center;
+}
+
+#date-colhead .vcol{
+  text-align:center;
+}
+
+/* keep rows starting immediately below */
 #by-date .table-wrap{
   margin-top:0;
 }
@@ -1703,20 +1741,27 @@ thead th{
 /* mobile */
 @media (max-width:880px){
   #controls-date{
-    top:var(--date-sticky-top-mobile);
+    top:var(--date-stick-top-mobile);
   }
 
-  #date-table thead th{
-    top:calc(var(--date-sticky-top-mobile) + var(--date-controls-h));
+  #date-colhead{
+    top:calc(var(--date-stick-top-mobile) + var(--date-controls-h));
+    grid-template-columns:3ch 4.2rem minmax(0,1fr) 6.2rem;
+    padding:0 5px;
   }
 }
 
 @media (max-width:360px){
   #controls-date{
-    top:106px;
+    top:110px;
   }
 
-  #date-table thead th{
-    top:calc(106px + var(--date-controls-h));
+  #date-colhead{
+    top:calc(110px + var(--date-controls-h));
+    padding:0 4px;
+  }
+
+  #date-colhead > span{
+    padding:7px 4px;
   }
 }
