@@ -1572,34 +1572,3 @@ thead th{
   }
 }
 /* League only: layout change, no shared dropdown restyle */
-#league-panel > #controls-league.league-subnav{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:nowrap;
-}
-
-#league-panel > #controls-league .league-division-select-wrap{
-  flex:0 0 auto;
-  width:auto;
-}
-
-#league-panel > #controls-league .league-division-select-wrap select{
-  width:132px;
-  min-width:132px;
-  max-width:132px;
-}
-
-#league-panel > #controls-league > #league-view-tabs.league-view-tabs-inline{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex:0 0 auto;
-  flex-wrap:nowrap;
-  margin:0;
-}
-
-#league-panel > #controls-league > #league-view-tabs.league-view-tabs-inline .seg{
-  flex:0 0 auto;
-  white-space:nowrap;
-}
