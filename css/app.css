@@ -1605,10 +1605,10 @@ thead th{
   min-height:37px;
   padding:0 2rem 0 12px;
   line-height:37px;
-  font-size:15px;
+  font:inherit;
+  font-size:14px;
   font-weight:750;
-  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  color:inherit;
+  color:#0f172a;
 }
 
 #controls-league .league-division-select-wrap::after{
@@ -1629,4 +1629,6 @@ thead th{
 #controls-league #league-view-tabs .seg{
   flex:0 0 auto;
   white-space:nowrap;
+}
+#controls-league .league-division-select-wrap{ top:-1px; position:relative;
 }
