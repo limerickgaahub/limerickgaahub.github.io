@@ -1571,4 +1571,41 @@ thead th{
     padding:6px;
   }
 }
-/* League only: layout change, no shared dropdown restyle */
+/* League only: keep division dropdown inline with Matches/Table */
+#controls-league{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  flex-wrap:nowrap;
+  gap:10px;
+}
+
+#controls-league.league-subnav{
+  padding:0;
+}
+
+#controls-league.league-subnav .league-division-select-wrap{
+  flex:0 0 132px;
+  width:132px;
+  min-width:132px;
+  max-width:132px;
+  margin:0;
+}
+
+#controls-league.league-subnav .league-division-select-wrap select{
+  width:100%;
+}
+
+#controls-league #league-view-tabs{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:0 0 auto;
+  flex-wrap:nowrap;
+  margin:0;
+}
+
+#controls-league #league-view-tabs .seg{
+  flex:0 0 auto;
+  white-space:nowrap;
+}
