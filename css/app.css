@@ -1592,7 +1592,7 @@ thead th{
   margin:0;
   align-self:center;
   position:relative;
-  top:-4px;
+  top:-6px;
 }
 
 #controls-league .league-division-select-wrap.pretty-select{
@@ -1663,18 +1663,34 @@ thead th{
 /* picker */
 #controls-date{
   position:sticky;
+  position:-webkit-sticky;
   top:var(--date-stick-top-desktop);
   z-index:70;
-  background:#fff;
+  background:transparent;
   margin:0;
-  padding:0 0 4px;
-  box-shadow:0 2px 0 #fff;
+  padding:0 0 6px;
+  box-shadow:none;
+  isolation:isolate;
+}
+
+#controls-date::before{
+  content:"";
+  position:absolute;
+  inset:0 -8px 0 -8px;
+  background:#fff;
+  border-radius:12px 12px 0 0;
+  z-index:1;
 }
 
 #controls-date::after{
   content:"";
-  display:block;
-  border-bottom:1px solid rgba(16,24,40,.06);
+  position:absolute;
+  left:-8px;
+  right:-8px;
+  bottom:0;
+  height:6px;
+  background:#fff;
+  z-index:1;
 }
 
 #controls-date.controls.card{
@@ -1693,8 +1709,9 @@ thead th{
 /* separate sticky green header bar */
 #date-colhead{
   position:sticky;
+  position:-webkit-sticky;
   top:calc(var(--date-stick-top-desktop) + var(--date-controls-h));
-  z-index:69;
+  z-index:79;
 
   display:grid;
   grid-template-columns:3ch 4.2rem minmax(0,1fr) 6.2rem;
@@ -1703,20 +1720,39 @@ thead th{
   min-height:0;
   padding:0 5px;
 
-  background:#0b7a4a;
-  color:#fff;
-  border-bottom:1px solid rgba(0,0,0,.16);
-  box-shadow:none;
+  background:transparent;
+  color:#ffffff;
 
   font-size:12px;
   font-weight:850;
   letter-spacing:.04em;
   text-transform:uppercase;
+
+  isolation:isolate;
+  overflow:hidden;
+}
+
+#date-colhead::before{
+  content:"";
+  position:absolute;
+  inset:0 -8px 0 -8px;
+  background:#0b7a4a;
+  border-top-left-radius:12px;
+  border-top-right-radius:12px;
+  border-bottom:1px solid rgba(0,0,0,.16);
+  z-index:1;
 }
 
 #date-colhead > span{
+  position:relative;
+  z-index:2;
   padding:12px 5px;
   white-space:nowrap;
+}
+
+#controls-date > *{
+  position:relative;
+  z-index:2;
 }
 
 #date-colhead .rcol{
@@ -1740,7 +1776,11 @@ thead th{
 
 /* keep rows starting immediately below */
 #by-date .table-wrap{
+  position:relative;
+  z-index:1;
   margin-top:0;
+  border-top-left-radius:0;
+  border-top-right-radius:0;
 }
 
 /* mobile */
@@ -1748,15 +1788,23 @@ thead th{
   #controls-date{
     top:var(--date-stick-top-mobile);
   }
-  
-  #date-colhead > span{
-  padding:8px 5px;
-  font-size:13px;
-  }
+
   #date-colhead{
     top:calc(var(--date-stick-top-mobile) + var(--date-controls-h));
     grid-template-columns:3ch 4.2rem minmax(0,1fr) 6.2rem;
     padding:0 5px;
+  }
+
+  #date-colhead > span{
+    padding:8px 5px;
+    font-size:13px;
+  }
+
+  #controls-date::before,
+  #controls-date::after,
+  #date-colhead::before{
+    left:-6px;
+    right:-6px;
   }
 }
 
@@ -1769,26 +1817,15 @@ thead th{
     top:calc(110px + var(--date-controls-h));
     padding:0 4px;
   }
-  #date-colhead > span{
-  padding:7px 4px;
-}
+
   #date-colhead > span{
     padding:7px 4px;
   }
-}
-#by-date .table-wrap{
-  position:relative;
-  z-index:1;
-}
-#controls-date,
-#date-colhead{
-  background-clip:padding-box;
-}
-#controls-date::before,
-#date-colhead::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:inherit;
-  z-index:-1;
+
+  #controls-date::before,
+  #controls-date::after,
+  #date-colhead::before{
+    left:-4px;
+    right:-4px;
+  }
 }
