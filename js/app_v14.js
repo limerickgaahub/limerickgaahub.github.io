@@ -697,8 +697,20 @@ tShort = fmtTimeShort(r.time || '');
   ? 'W/O'
   : ((r._homeMid && r._awayMid) ? `${r._homeMid} - ${r._awayMid}` : '—');
 
-    const showMeta=(VIEW_MODE!=='competition');
-    const meta = showMeta ? `<div class="match-meta">${esc(r.code)} · ${esc(groupShort(r.group||''))}</div>` : '';
+  const showMeta = (VIEW_MODE !== 'competition');
+
+let metaText = '';
+if (showMeta) {
+  if (r.competition === 'County Hurling League') {
+    metaText = `HL · ${groupShort(r.group || '')}`;
+  } else {
+    metaText = `${r.code || ''} · ${groupShort(r.group || '')}`.replace(/^\s*·\s*/, '');
+  }
+}
+
+const meta = showMeta && metaText
+  ? `<div class="match-meta">${esc(metaText)}</div>`
+  : '';
 
     const homeHTML=`<span class="match-team">${esc(r.home||'')}</span>`;
     const scoreHTML=`<span class="match-score">${esc(scoreMid)}</span>`;
@@ -1598,18 +1610,11 @@ th.innerHTML = `<tr>
 
   // Ensure clicking the brand always goes to CURRENT season home
   document.querySelectorAll('a.brand').forEach(a=>{
-    a.addEventListener('click', (e)=>{
-      e.preventDefault();
-  
-      // If user is in Archive, take them back to the main (2026) home
-      if (state.season === '2025') {
-        window.location.href = '/';
-        return;
-      }
-  
-      goCompHome();
-    });
+  a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    window.location.href = '/';
   });
+});
 
   // Top nav tabs
   $$('.navtab').forEach(tab=>{
