@@ -345,25 +345,32 @@
         <div class="table-wrap"><table id="team-table"><thead></thead><tbody></tbody></table></div>
       
       </div>
-            <div class="panel card" id="by-date" style="display:none;">
-              <div id="controls-date" class="controls card">
-                <label class="sr-only" for="date-input">Select date</label>
-                <div class="pretty-input">
-                  <input id="date-input" type="date" />
-                  <!-- Mobile chevron tap target -->
-                  <button type="button" class="date-open" aria-label="Open calendar"></button>
-                </div>
-              </div>
+          <div class="panel card" id="by-date" style="display:none;">
+  <div id="controls-date" class="controls card">
+    <label class="sr-only" for="date-input">Select date</label>
+    <div class="pretty-input">
+      <input id="date-input" type="date" />
+      <!-- Mobile chevron tap target -->
+      <button type="button" class="date-open" aria-label="Open calendar"></button>
+    </div>
+  </div>
 
-            
-              <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
+  <div class="date-colhead" id="date-colhead" aria-hidden="true">
+    <span class="rcol">R</span>
+    <span class="dcol">DATE</span>
+    <span class="match">MATCH</span>
+    <span class="vcol">VENUE</span>
+  </div>
 
-            <!-- Back to Top button (only shows when Date tab active) -->
-            <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Back to top">
-              <i class="fa-solid fa-arrow-up"></i>
-            </button>
+  <div class="table-wrap"><table id="date-table"><thead></thead><tbody></tbody></table></div>
 
-            </div>
+  <!-- Back to Top button (only shows when Date tab active) -->
+  <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+</div>
+
+    
             <div class="sharebar" id="sharebar-main">
               <button class="iconbtn" data-role="copy"><i class="fa-solid fa-link"></i> Copy link</button>
               <button class="iconbtn" data-role="share"><i class="fa-solid fa-share"></i> Share</button>
