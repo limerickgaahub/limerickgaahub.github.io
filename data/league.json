@@ -1,7 +1,7 @@
 {
   "competition": "County Hurling League",
   "season": 2026,
-  "updated_at": "2026-03-19T20:46:18",
+  "updated_at": "2026-03-20T11:53:48",
   "fixtures": [
     {
       "id": "league-5-R1-2026-03-21-monaleen-vs-crecora-manister",
@@ -31,6 +31,22 @@
       "home": "Claughaun",
       "away": "Kilmallock",
       "venue": "Claughaun GAA",
+      "referee": "TBC",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+    },
+    {
+      "id": "league-9-R1-2026-03-21-feenagh-kilmeedy-vs-murroe-boher",
+      "competition": "County Hurling League",
+      "group": "Division 9",
+      "round": "R 1",
+      "date": "2026-03-21",
+      "time_local": "14:00",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2026-03-21T14:00:00",
+      "home": "Feenagh Kilmeedy",
+      "away": "Murroe Boher",
+      "venue": "Feenagh",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
@@ -532,22 +548,6 @@
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
     },
     {
-      "id": "league-9-R1-2026-03-22-feenagh-kilmeedy-vs-murroe-boher",
-      "competition": "County Hurling League",
-      "group": "Division 9",
-      "round": "R 1",
-      "date": "2026-03-22",
-      "time_local": "15:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2026-03-22T15:00:00",
-      "home": "Feenagh Kilmeedy",
-      "away": "Murroe Boher",
-      "venue": "Feenagh",
-      "referee": "TBC",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
-    },
-    {
       "id": "league-9-R1-2026-03-22-blackrock-vs-glenroe",
       "competition": "County Hurling League",
       "group": "Division 9",
@@ -996,22 +996,6 @@
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
     },
     {
-      "id": "league-5-R2-2026-03-28-doon-vs-caherline",
-      "competition": "County Hurling League",
-      "group": "Division 5",
-      "round": "R 2",
-      "date": "2026-03-28",
-      "time_local": "17:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2026-03-28T17:00:00",
-      "home": "Doon",
-      "away": "Caherline",
-      "venue": "Doon",
-      "referee": "TBC",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
-    },
-    {
       "id": "league-6-R2-2026-03-28-monagea-vs-claughaun",
       "competition": "County Hurling League",
       "group": "Division 6",
@@ -1071,6 +1055,22 @@
       "home": "St Patrick's",
       "away": "Castletown Ballyagran",
       "venue": "St Patrick's G.A.A Club",
+      "referee": "TBC",
+      "status": "SCHEDULED",
+      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
+    },
+    {
+      "id": "league-5-R2-2026-03-28-doon-vs-caherline",
+      "competition": "County Hurling League",
+      "group": "Division 5",
+      "round": "R 2",
+      "date": "2026-03-28",
+      "time_local": "17:30",
+      "tz": "Europe/Dublin",
+      "datetime_iso": "2026-03-28T17:30:00",
+      "home": "Doon",
+      "away": "Caherline",
+      "venue": "Doon",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/"
