@@ -1645,3 +1645,66 @@ thead th{
   flex:0 0 auto;
   white-space:nowrap;
 }
+/* =========================================================
+   DATE TAB — sticky date control + sticky column headers
+   ========================================================= */
+
+#by-date{
+  position:relative;
+}
+
+#by-date #controls-date{
+  position:sticky;
+  top:0;
+  z-index:30;
+  background:#fff;
+  padding:0 0 8px;
+  margin:0;
+}
+
+#by-date #controls-date::after{
+  content:"";
+  display:block;
+  height:0;
+  border-bottom:1px solid rgba(16,24,40,.05);
+}
+
+#by-date .table-wrap{
+  margin-top:0;
+}
+
+#date-table thead th{
+  position:sticky;
+  top:52px;
+  z-index:20;
+  background:#0b7a4a;
+  color:#fff;
+  border-bottom:2px solid #064d2f;
+}
+
+/* keep the date input row clean and stable */
+#controls-date.controls.card{
+  justify-content:center;
+}
+
+#controls-date .pretty-input{
+  max-width:360px;
+}
+
+/* mobile */
+@media (max-width:880px){
+  #by-date #controls-date{
+    top:0;
+    padding:0 0 8px;
+  }
+
+  #date-table thead th{
+    top:52px;
+  }
+}
+
+@media (max-width:360px){
+  #date-table thead th{
+    top:52px;
+  }
+}
