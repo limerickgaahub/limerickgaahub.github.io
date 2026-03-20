@@ -1700,26 +1700,33 @@ thead th{
   grid-template-columns:3ch 4.2rem minmax(0,1fr) 6.2rem;
   align-items:center;
 
-  min-height:var(--date-colhead-h);
+  min-height:0;
   padding:0 5px;
 
   background:#0b7a4a;
   color:#fff;
-  border-bottom:2px solid #064d2f;
-  box-shadow:0 2px 6px rgba(0,0,0,.06);
+  border-bottom:1px solid rgba(0,0,0,.16);
+  box-shadow:none;
+
+  font-size:12px;
+  font-weight:850;
+  letter-spacing:.04em;
+  text-transform:uppercase;
 }
 
 #date-colhead > span{
-  padding:8px 5px;
+  padding:12px 5px;
   white-space:nowrap;
 }
 
 #date-colhead .rcol{
   text-align:center;
+  vertical-align:middle;
 }
 
 #date-colhead .dcol{
   text-align:center;
+  vertical-align:middle;
 }
 
 #date-colhead .match{
@@ -1728,6 +1735,7 @@ thead th{
 
 #date-colhead .vcol{
   text-align:center;
+  vertical-align:middle;
 }
 
 /* keep rows starting immediately below */
@@ -1740,7 +1748,11 @@ thead th{
   #controls-date{
     top:var(--date-stick-top-mobile);
   }
-
+  
+  #date-colhead > span{
+  padding:8px 5px;
+  font-size:13px;
+  }
   #date-colhead{
     top:calc(var(--date-stick-top-mobile) + var(--date-controls-h));
     grid-template-columns:3ch 4.2rem minmax(0,1fr) 6.2rem;
@@ -1757,7 +1769,9 @@ thead th{
     top:calc(110px + var(--date-controls-h));
     padding:0 4px;
   }
-
+  #date-colhead > span{
+  padding:7px 4px;
+}
   #date-colhead > span{
     padding:7px 4px;
   }
@@ -1769,4 +1783,12 @@ thead th{
 #controls-date,
 #date-colhead{
   background-clip:padding-box;
+}
+#controls-date::before,
+#date-colhead::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:inherit;
+  z-index:-1;
 }
