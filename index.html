@@ -279,39 +279,32 @@
 
     </div>
 
-    <div class="panel card" id="league-panel">
-  <div class="controls card" id="controls-league" style="margin-top:6px;">
-    <label for="league-div" class="sr-only">Select division</label>
-    <div class="pretty-select">
-      <select id="league-div"><option value="">Select division…</option></select>
-    </div>
-  </div>
-
   <div class="panel card" id="league-panel">
-  <div class="controls card" id="controls-league" style="margin-top:6px;">
+  <div class="controls card league-subnav" id="controls-league" style="margin-top:6px;">
     <label for="league-div" class="sr-only">Select division</label>
-    <div class="pretty-select">
+
+    <div class="pretty-select league-division-select-wrap">
       <select id="league-div"><option value="">Select division…</option></select>
     </div>
-  </div>
 
-  <div class="section-tabs" id="league-view-tabs" role="tablist" aria-label="League view selector">
-    <button class="seg active"
-            role="tab"
-            aria-selected="true"
-            data-league-view="matches"
-            id="league-matches-tab"
-            type="button">
-      Matches
-    </button>
-    <button class="seg"
-            role="tab"
-            aria-selected="false"
-            data-league-view="table"
-            id="league-table-tab"
-            type="button">
-      Table
-    </button>
+    <div class="section-tabs league-view-tabs-inline" id="league-view-tabs" role="tablist" aria-label="League view selector">
+      <button class="seg active"
+              role="tab"
+              aria-selected="true"
+              data-league-view="matches"
+              id="league-matches-tab"
+              type="button">
+        Matches
+      </button>
+      <button class="seg"
+              role="tab"
+              aria-selected="false"
+              data-league-view="table"
+              id="league-table-tab"
+              type="button">
+        Table
+      </button>
+    </div>
   </div>
 
   <div id="league-standings" style="margin-top:12px; display:none;">
@@ -334,7 +327,6 @@
       </table>
     </div>
   </div>
-
 </div>
           
       <div class="panel card" id="by-team" style="display:none;">
