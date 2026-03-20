@@ -1442,7 +1442,7 @@ thead th{
   left:-8px;
   right:-8px;
   top:-10px;
-  bottom:0;
+  height:10px;
   background:#0b7a4a;
   border-radius:14px 14px 0 0;
   z-index:-1;
@@ -1552,6 +1552,7 @@ thead th{
   left:-6px;
   right:-6px;
   top:-8px;
+  height:8px;
   border-radius:12px 12px 0 0;
 }
   
@@ -1586,6 +1587,7 @@ thead th{
   left:-4px;
   right:-4px;
   top:-8px;
+  height:8px;
   border-radius:12px 12px 0 0;
 }
   
