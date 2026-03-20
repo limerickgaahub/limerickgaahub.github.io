@@ -1485,7 +1485,7 @@ thead th{
 
 #top-controls.card{
   position:sticky;
-  top:50px;
+  top:70px;
   z-index:95;
 
   max-width:1100px;
@@ -1593,7 +1593,7 @@ thead th{
   }
 
   #top-controls.card{
-    top:48px;
+    top:60px;
     margin:0 0 4px;
     padding:5px 8px;
     border-radius:12px;
@@ -1619,7 +1619,7 @@ thead th{
 
 @media (max-width:360px){
   #top-controls.card{
-    top:48px;
+    top:58px;
     padding:5px 6px;
   }
 
