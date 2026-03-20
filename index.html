@@ -287,30 +287,35 @@
     </div>
   </div>
 
-  <div class="section-tabs" id="league-view-tabs" role="tablist" aria-label="League view selector">
-    <button class="seg active"
-            role="tab"
-            aria-selected="true"
-            data-league-view="matches"
-            id="league-matches-tab"
-            type="button">
-      Matches
-    </button>
-    <button class="seg"
-            role="tab"
-            aria-selected="false"
-            data-league-view="table"
-            id="league-table-tab"
-            type="button">
-      Table
-    </button>
-  </div>
+  <div class="panel card" id="league-panel">
+  <div class="controls card league-subnav" id="controls-league" style="margin-top:6px;">
+    <label for="league-div" class="sr-only">Select division</label>
 
-  <div class="table-wrap" id="league-matches-wrap">
-    <table id="league-table">
-      <thead></thead>
-      <tbody></tbody>
-    </table>
+    <div class="pretty-select league-division-select-wrap">
+      <select id="league-div"><option value="">Division 1</option></select>
+    </div>
+
+    <div class="section-tabs league-view-tabs-inline"
+         id="league-view-tabs"
+         role="tablist"
+         aria-label="League view selector">
+      <button class="seg active"
+              role="tab"
+              aria-selected="true"
+              data-league-view="matches"
+              id="league-matches-tab"
+              type="button">
+        Matches
+      </button>
+      <button class="seg"
+              role="tab"
+              aria-selected="false"
+              data-league-view="table"
+              id="league-table-tab"
+              type="button">
+        Table
+      </button>
+    </div>
   </div>
 
   <div id="league-standings" style="margin-top:12px; display:none;">
