@@ -1646,43 +1646,37 @@ thead th{
   white-space:nowrap;
 }
 /* =========================================================
-   DATE TAB — sticky date control + sticky column headers
+   DATE TAB — pin picker + header under the fixed top bars
    ========================================================= */
+
+/* shared offset below your fixed site header + fixed top controls */
+:root{
+  --date-sticky-top-desktop: 128px;
+  --date-sticky-top-mobile: 110px;
+  --date-controls-h: 52px;
+}
 
 #by-date{
   position:relative;
 }
 
-#by-date #controls-date{
+/* make the picker stay below the fixed white bars */
+#controls-date{
   position:sticky;
-  top:0;
-  z-index:30;
+  top:var(--date-sticky-top-desktop);
+  z-index:60;
   background:#fff;
-  padding:0 0 8px;
   margin:0;
+  padding:0 0 8px;
 }
 
-#by-date #controls-date::after{
+#controls-date::after{
   content:"";
   display:block;
-  height:0;
-  border-bottom:1px solid rgba(16,24,40,.05);
+  border-bottom:1px solid rgba(16,24,40,.06);
 }
 
-#by-date .table-wrap{
-  margin-top:0;
-}
-
-#date-table thead th{
-  position:sticky;
-  top:52px;
-  z-index:20;
-  background:#0b7a4a;
-  color:#fff;
-  border-bottom:2px solid #064d2f;
-}
-
-/* keep the date input row clean and stable */
+/* keep the date picker row tight */
 #controls-date.controls.card{
   justify-content:center;
 }
@@ -1691,20 +1685,38 @@ thead th{
   max-width:360px;
 }
 
+/* keep the green table header pinned directly below the picker */
+#date-table thead th{
+  position:sticky;
+  top:calc(var(--date-sticky-top-desktop) + var(--date-controls-h));
+  z-index:55;
+  background:#0b7a4a;
+  color:#fff;
+  border-bottom:2px solid #064d2f;
+}
+
+/* stop row 1 sitting under the sticky header stack */
+#by-date .table-wrap{
+  margin-top:0;
+}
+
 /* mobile */
 @media (max-width:880px){
-  #by-date #controls-date{
-    top:0;
-    padding:0 0 8px;
+  #controls-date{
+    top:var(--date-sticky-top-mobile);
   }
 
   #date-table thead th{
-    top:52px;
+    top:calc(var(--date-sticky-top-mobile) + var(--date-controls-h));
   }
 }
 
 @media (max-width:360px){
+  #controls-date{
+    top:106px;
+  }
+
   #date-table thead th{
-    top:52px;
+    top:calc(106px + var(--date-controls-h));
   }
 }
