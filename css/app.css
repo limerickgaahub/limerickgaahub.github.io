@@ -1470,15 +1470,15 @@ thead th{
   box-shadow:none;
   padding:0;
   max-width:1100px;
-  margin:2px auto 0;
+  margin:0 auto;
 }
 
 /* Season/archive text kept tight */
 #panel-hurling > #season-banner{
   max-width:1100px;
-  margin:0 auto 6px;
+  margin:0 auto 4px;
   padding:0 2px;
-  min-height:12px;
+  min-height:0;
   line-height:1.1;
 }
 
@@ -1489,7 +1489,7 @@ thead th{
   z-index:95;
 
   max-width:1100px;
-  margin:0 auto 6px;
+  margin:0 auto 4px;
   padding:5px 10px;
 
   background:rgba(255,255,255,.98);
@@ -1587,18 +1587,24 @@ thead th{
 @media (max-width:880px){
 
   #panel-hurling > #season-banner{
-    margin:0 0 6px;
+    margin:0 0 4px;
     padding:0 2px;
-    min-height:12px;
+    min-height:0;
   }
 
   #top-controls.card{
     top:50px;
-    margin:0 0 6px;
+    margin:0 0 4px;
     padding:5px 8px;
     border-radius:12px;
   }
 
+  #season-banner:empty::before{ display:none; }
+  
+  #season-banner[hidden]{
+  display:none !important;
+}
+  
   #top-controls .section-tabs.view-tabs .seg.vt{
     padding:8px 9px;
     font-size:14px;
@@ -1624,51 +1630,5 @@ thead th{
 
   #data-shell.card{
     padding:6px;
-  }
-}
-
-body{
-  margin:58px 12px 20px;
-  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
-}
-
-#top-controls.card{
-  position:sticky;
-  top:44px;
-  z-index:95;
-
-  max-width:1100px;
-  margin:0 auto 8px;
-  padding:5px 10px;
-
-  background:rgba(255,255,255,.98);
-  backdrop-filter:saturate(1.05) blur(6px);
-
-  border:1px solid rgba(16,24,40,.06);
-  border-radius:14px;
-  box-shadow:
-    0 1px 2px rgba(16,24,40,.05),
-    0 4px 12px rgba(16,24,40,.06);
-}
-
-@media (max-width:880px){
-  body{
-    margin:50px 0 10px;
-    padding:0 10px;
-  }
-
-  #top-controls.card{
-    top:42px;
-    margin:0 0 8px;
-    padding:5px 8px;
-    border-radius:12px;
-  }
-}
-
-@media (max-width:360px){
-  #top-controls.card{
-    top:40px;
-    padding:5px 6px;
   }
 }
