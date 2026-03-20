@@ -1415,7 +1415,7 @@ thead th{
 
 #top-controls.card{
   position:fixed;
-  top:74px;
+  top:78px;
   left:50%;
   transform:translateX(-50%);
   z-index:95;
@@ -1526,7 +1526,7 @@ thead th{
   }
 
   #top-controls.card{
-    top:64px;
+    top:68px;
     left:50%;
     transform:translateX(-50%);
     width:calc(100% - 20px);
@@ -1555,7 +1555,7 @@ thead th{
 
 @media (max-width:360px){
 #top-controls.card{
-  top:62px;
+  top:66px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 16px);
@@ -1668,6 +1668,7 @@ thead th{
   background:#fff;
   margin:0;
   padding:0 0 4px;
+  box-shadow:0 2px 0 #fff;
 }
 
 #controls-date::after{
@@ -1705,11 +1706,7 @@ thead th{
   background:#0b7a4a;
   color:#fff;
   border-bottom:2px solid #064d2f;
-
-  font-size:12px;
-  font-weight:850;
-  letter-spacing:.04em;
-  text-transform:uppercase;
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
 }
 
 #date-colhead > span{
@@ -1764,4 +1761,12 @@ thead th{
   #date-colhead > span{
     padding:7px 4px;
   }
+}
+#by-date .table-wrap{
+  position:relative;
+  z-index:1;
+}
+#controls-date,
+#date-colhead{
+  background-clip:padding-box;
 }
