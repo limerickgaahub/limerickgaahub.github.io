@@ -1640,3 +1640,33 @@ thead th{
     padding:6px;
   }
 }
+/* League: dropdown + Matches + Table on one row */
+#controls-league.league-subnav{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:nowrap;
+}
+
+#controls-league .league-division-select-wrap{
+  flex:0 0 auto;
+  width:auto;
+}
+
+#controls-league .league-division-select-wrap select{
+  width:132px;          /* enough for Division 12 */
+  min-width:132px;
+  max-width:132px;
+}
+
+#controls-league .league-view-tabs-inline{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:0 0 auto;
+}
+
+#controls-league .league-view-tabs-inline .seg{
+  flex:0 0 auto;
+  white-space:nowrap;
+}
