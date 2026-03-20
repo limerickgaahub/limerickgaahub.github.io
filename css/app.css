@@ -1571,7 +1571,7 @@ thead th{
     padding:6px;
   }
 }
-/* League only: keep division dropdown inline with Matches/Table */
+/* League only: make division dropdown match Matches/Table pills */
 #controls-league{
   display:flex;
   align-items:center;
@@ -1584,16 +1584,37 @@ thead th{
   padding:0;
 }
 
-#controls-league.league-subnav .league-division-select-wrap{
+#controls-league .league-division-select-wrap{
   flex:0 0 132px;
   width:132px;
   min-width:132px;
   max-width:132px;
   margin:0;
+  align-self:center;
 }
 
-#controls-league.league-subnav .league-division-select-wrap select{
+#controls-league .league-division-select-wrap.pretty-select{
+  border-radius:var(--radius-control);
+  background:transparent;
+  box-shadow:none;
+}
+
+#controls-league .league-division-select-wrap select{
   width:100%;
+  height:37px;
+  min-height:37px;
+  padding:0 2rem 0 12px;
+  line-height:37px;
+  font-size:15px;
+  font-weight:750;
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  color:inherit;
+}
+
+#controls-league .league-division-select-wrap::after{
+  right:.8rem;
+  top:50%;
+  transform:translateY(-55%) rotate(45deg);
 }
 
 #controls-league #league-view-tabs{
