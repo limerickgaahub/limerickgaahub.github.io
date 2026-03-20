@@ -750,8 +750,7 @@ td.match, th.match{ text-align:center; }
 /* Competition home mode */
 body.comp-home .matches-wrap,
 body.comp-home #g-standings,
-body.comp-home #table-footnote,
-body.comp-home #sharebar-main{
+body.comp-home #table-footnote{
   display:none !important;
 }
 
