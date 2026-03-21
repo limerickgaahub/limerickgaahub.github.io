@@ -13,6 +13,8 @@ const err  = (...a) => console.error(...a);
   }
 
   let deferredPrompt = null;
+  let btn = null;
+  let iosHint = null;
 
   const isIos = () =>
     /iphone|ipad|ipod/i.test(navigator.userAgent) ||
@@ -25,19 +27,29 @@ const err  = (...a) => console.error(...a);
   function show(el){ if (el) el.style.display = ''; }
   function hide(el){ if (el) el.style.display = 'none'; }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('a2hs-btn');
-    const iosHint = document.getElementById('a2hs-ios');
+  function refreshA2HSUI(){
+    if (!btn || !iosHint) return;
 
-    if (btn) hide(btn);
-    if (iosHint) hide(iosHint);
+    hide(btn);
+    hide(iosHint);
 
     if (isStandalone()) return;
 
     if (isIos()) {
-      if (iosHint) show(iosHint);
+      show(iosHint);
       return;
     }
+
+    if (deferredPrompt) {
+      show(btn);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    btn = document.getElementById('a2hs-btn');
+    iosHint = document.getElementById('a2hs-ios');
+
+    refreshA2HSUI();
 
     btn?.addEventListener('click', async () => {
       if (!deferredPrompt) return;
@@ -49,7 +61,7 @@ const err  = (...a) => console.error(...a);
         console.error('[LGH] A2HS prompt failed', e);
       } finally {
         deferredPrompt = null;
-        hide(btn);
+        refreshA2HSUI();
       }
     });
   });
@@ -57,17 +69,16 @@ const err  = (...a) => console.error(...a);
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-
-    if (!isIos() && !isStandalone()) {
-      show(document.getElementById('a2hs-btn'));
-    }
+    refreshA2HSUI();
   });
 
   window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
-    hide(document.getElementById('a2hs-btn'));
-    hide(document.getElementById('a2hs-ios'));
+    refreshA2HSUI();
   });
+
+  window.addEventListener('focus', refreshA2HSUI);
+  document.addEventListener('visibilitychange', refreshA2HSUI);
 })();
 
 
