@@ -25,58 +25,22 @@ const err  = (...a) => console.error(...a);
   function show(el){ if (el) el.style.display = ''; }
   function hide(el){ if (el) el.style.display = 'none'; }
 
-  function refreshInstallUI() {
+  document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('a2hs-btn');
     const iosHint = document.getElementById('a2hs-ios');
-    if (!btn) return;
 
-    if (isStandalone()) {
-      hide(btn);
-      hide(iosHint);
+    if (btn) hide(btn);
+    if (iosHint) hide(iosHint);
+
+    if (isStandalone()) return;
+
+    if (isIos()) {
+      if (iosHint) show(iosHint);
       return;
     }
 
-    show(btn);
-
-    if (isIos()) {
-      show(iosHint);
-    } else {
-      hide(iosHint);
-    }
-  }
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    refreshInstallUI();
-  });
-
-  window.addEventListener('appinstalled', () => {
-    deferredPrompt = null;
-    refreshInstallUI();
-  });
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('a2hs-btn');
-    if (!btn) return;
-
-    refreshInstallUI();
-
-    btn.addEventListener('click', async () => {
-      if (isStandalone()) {
-        refreshInstallUI();
-        return;
-      }
-
-      if (isIos()) {
-        const iosHint = document.getElementById('a2hs-ios');
-        if (iosHint) show(iosHint);
-        return;
-      }
-
-      if (!deferredPrompt) {
-        return;
-      }
+    btn?.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
 
       try {
         await deferredPrompt.prompt();
@@ -85,16 +49,24 @@ const err  = (...a) => console.error(...a);
         console.error('[LGH] A2HS prompt failed', e);
       } finally {
         deferredPrompt = null;
-        refreshInstallUI();
+        hide(btn);
       }
     });
+  });
 
-    const mq = window.matchMedia?.('(display-mode: standalone)');
-    mq?.addEventListener?.('change', refreshInstallUI);
-    window.addEventListener('pageshow', refreshInstallUI);
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) refreshInstallUI();
-    });
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+
+    if (!isIos() && !isStandalone()) {
+      show(document.getElementById('a2hs-btn'));
+    }
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    hide(document.getElementById('a2hs-btn'));
+    hide(document.getElementById('a2hs-ios'));
   });
 })();
 
