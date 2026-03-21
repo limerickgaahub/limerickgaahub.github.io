@@ -20,6 +20,8 @@ const err  = (...a) => console.error(...a);
     /iphone|ipad|ipod/i.test(navigator.userAgent) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
+      const isAndroid = () => /android/i.test(navigator.userAgent);
+
   const isStandalone = () =>
     window.matchMedia?.('(display-mode: standalone)').matches ||
     (('standalone' in navigator) && navigator.standalone === true);
@@ -27,9 +29,7 @@ const err  = (...a) => console.error(...a);
   function show(el){ if (el) el.style.display = ''; }
   function hide(el){ if (el) el.style.display = 'none'; }
 
-  function refreshA2HSUI(){
-    if (!btn || !iosHint) return;
-
+    function refreshA2HSUI(){
     hide(btn);
     hide(iosHint);
 
@@ -40,7 +40,7 @@ const err  = (...a) => console.error(...a);
       return;
     }
 
-    if (deferredPrompt) {
+    if (isAndroid()) {
       show(btn);
     }
   }
@@ -52,17 +52,20 @@ const err  = (...a) => console.error(...a);
     refreshA2HSUI();
 
     btn?.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-
-      try {
-        await deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-      } catch (e) {
-        console.error('[LGH] A2HS prompt failed', e);
-      } finally {
-        deferredPrompt = null;
-        refreshA2HSUI();
+      if (deferredPrompt) {
+        try {
+          await deferredPrompt.prompt();
+          await deferredPrompt.userChoice;
+        } catch (e) {
+          console.error('[LGH] A2HS prompt failed', e);
+        } finally {
+          deferredPrompt = null;
+          refreshA2HSUI();
+        }
+        return;
       }
+
+      alert('To install, open the browser menu and choose Add to Home screen.');
     });
   });
 
