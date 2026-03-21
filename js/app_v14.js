@@ -5,20 +5,20 @@ const warn = (...a) => { if (!__PROD__) console.warn(...a); };
 const err  = (...a) => console.error(...a);
 
 // --- PWA / Add to Home Screen (A2HS) ---
+// --- PWA / Add to Home Screen (A2HS) ---
 (function pwaA2HS(){
-  // 1) Service worker registration (required for installability)
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js').catch(console.error);
     });
   }
 
-  // 2) Android/Chrome install prompt handling
   let deferredPrompt = null;
-  
+
   const isIos = () =>
-  /iphone|ipad|ipod/i.test(navigator.userAgent) ||
-  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
   const isStandalone = () =>
     window.matchMedia?.('(display-mode: standalone)').matches ||
     (('standalone' in navigator) && navigator.standalone === true);
@@ -26,37 +26,120 @@ const err  = (...a) => console.error(...a);
   function show(el){ if (el) el.style.display = ''; }
   function hide(el){ if (el) el.style.display = 'none'; }
 
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();                  // critical
-    deferredPrompt = e;
+  function setInstallCopy(mode){
+    const title = document.querySelector('#a2hs-btn .oc-title');
+    const sub   = document.querySelector('#a2hs-btn .oc-sub');
+    if (!title || !sub) return;
 
+    if (mode === 'ios') {
+      title.textContent = 'Add to Home Screen';
+      sub.textContent = 'iPhone/iPad: Share → Add to Home Screen';
+      return;
+    }
+
+    if (mode === 'native') {
+      title.textContent = 'Add to Home Screen';
+      sub.textContent = 'Install the app for faster access';
+      return;
+    }
+
+    title.textContent = 'Add to Home Screen';
+    sub.textContent = 'Open in Chrome or Safari to install';
+  }
+
+  function hideInstallUI(){
+    hide(document.getElementById('a2hs-btn'));
+    hide(document.getElementById('a2hs-ios'));
+  }
+
+  function refreshInstallUI(){
     const btn = document.getElementById('a2hs-btn');
-    if (btn) show(btn);
+    const iosHint = document.getElementById('a2hs-ios');
+
+    if (!btn) return;
+
+    if (isStandalone()) {
+      hideInstallUI();
+      return;
+    }
+
+    hide(iosHint);   // separate hint row no longer needed
+    show(btn);
+
+    if (isIos()) {
+      setInstallCopy('ios');
+      return;
+    }
+
+    if (deferredPrompt) {
+      setInstallCopy('native');
+      return;
+    }
+
+    setInstallCopy('fallback');
+  }
+
+  function showInstallHelp(){
+    const sub = document.querySelector('#a2hs-btn .oc-sub');
+    if (!sub) return;
+
+    if (isIos()) {
+      sub.textContent = 'Tap Share, then Add to Home Screen';
+      return;
+    }
+
+    sub.textContent = 'Install not ready here yet. Try Chrome menu or refresh once.';
+  }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    refreshInstallUI();
   });
 
   window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
-    hide(document.getElementById('a2hs-btn'));
-    hide(document.getElementById('a2hs-ios'));
+    hideInstallUI();
   });
 
   document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('a2hs-btn');
-    const iosHint = document.getElementById('a2hs-ios');
-
-    // iOS: no beforeinstallprompt; show instructions if not installed
-    if (isIos() && !isStandalone()) show(iosHint);
-    else hide(iosHint);
-
     if (!btn) return;
 
-    btn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;       // not eligible / already installed
-      hide(btn);
+    refreshInstallUI();
 
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;   // accepted/dismissed (not always reliable)
-      deferredPrompt = null;
+    btn.addEventListener('click', async () => {
+      if (isStandalone()) {
+        hideInstallUI();
+        return;
+      }
+
+      if (isIos()) {
+        showInstallHelp();
+        return;
+      }
+
+      if (!deferredPrompt) {
+        showInstallHelp();
+        return;
+      }
+
+      try {
+        await deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+      } catch (e) {
+        console.error('[LGH] A2HS prompt failed', e);
+      } finally {
+        deferredPrompt = null;
+        refreshInstallUI();
+      }
+    });
+
+    const mq = window.matchMedia?.('(display-mode: standalone)');
+    mq?.addEventListener?.('change', refreshInstallUI);
+    window.addEventListener('pageshow', refreshInstallUI);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) refreshInstallUI();
     });
   });
 })();
