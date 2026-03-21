@@ -648,6 +648,7 @@ if (LEAGUE_URL) {
 });
 
     MATCHES = mergeById(MATCHES, overrideRows);
+    MATCHES = MATCHES.map(attachScores);
   } catch (e) {
     warn('[LGH] league overrides skipped:', e);
   }
