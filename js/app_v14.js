@@ -5,7 +5,6 @@ const warn = (...a) => { if (!__PROD__) console.warn(...a); };
 const err  = (...a) => console.error(...a);
 
 // --- PWA / Add to Home Screen (A2HS) ---
-// --- PWA / Add to Home Screen (A2HS) ---
 (function pwaA2HS(){
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -26,69 +25,24 @@ const err  = (...a) => console.error(...a);
   function show(el){ if (el) el.style.display = ''; }
   function hide(el){ if (el) el.style.display = 'none'; }
 
-  function setInstallCopy(mode){
-    const title = document.querySelector('#a2hs-btn .oc-title');
-    const sub   = document.querySelector('#a2hs-btn .oc-sub');
-    if (!title || !sub) return;
-
-    if (mode === 'ios') {
-      title.textContent = 'Add to Home Screen';
-      sub.textContent = 'iPhone/iPad: Share → Add to Home Screen';
-      return;
-    }
-
-    if (mode === 'native') {
-      title.textContent = 'Add to Home Screen';
-      sub.textContent = 'Install the app for faster access';
-      return;
-    }
-
-    title.textContent = 'Add to Home Screen';
-    sub.textContent = 'Open in Chrome or Safari to install';
-  }
-
-  function hideInstallUI(){
-    hide(document.getElementById('a2hs-btn'));
-    hide(document.getElementById('a2hs-ios'));
-  }
-
-  function refreshInstallUI(){
+  function refreshInstallUI() {
     const btn = document.getElementById('a2hs-btn');
     const iosHint = document.getElementById('a2hs-ios');
-
     if (!btn) return;
 
     if (isStandalone()) {
-      hideInstallUI();
+      hide(btn);
+      hide(iosHint);
       return;
     }
 
-    hide(iosHint);   // separate hint row no longer needed
     show(btn);
 
     if (isIos()) {
-      setInstallCopy('ios');
-      return;
+      show(iosHint);
+    } else {
+      hide(iosHint);
     }
-
-    if (deferredPrompt) {
-      setInstallCopy('native');
-      return;
-    }
-
-    setInstallCopy('fallback');
-  }
-
-  function showInstallHelp(){
-    const sub = document.querySelector('#a2hs-btn .oc-sub');
-    if (!sub) return;
-
-    if (isIos()) {
-      sub.textContent = 'Tap Share, then Add to Home Screen';
-      return;
-    }
-
-    sub.textContent = 'Install not ready here yet. Try Chrome menu or refresh once.';
   }
 
   window.addEventListener('beforeinstallprompt', (e) => {
@@ -99,7 +53,7 @@ const err  = (...a) => console.error(...a);
 
   window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
-    hideInstallUI();
+    refreshInstallUI();
   });
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -110,17 +64,17 @@ const err  = (...a) => console.error(...a);
 
     btn.addEventListener('click', async () => {
       if (isStandalone()) {
-        hideInstallUI();
+        refreshInstallUI();
         return;
       }
 
       if (isIos()) {
-        showInstallHelp();
+        const iosHint = document.getElementById('a2hs-ios');
+        if (iosHint) show(iosHint);
         return;
       }
 
       if (!deferredPrompt) {
-        showInstallHelp();
         return;
       }
 
@@ -143,6 +97,7 @@ const err  = (...a) => console.error(...a);
     });
   });
 })();
+
 
 log("[LGH] app js evaluating");
 
