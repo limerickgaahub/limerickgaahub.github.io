@@ -523,15 +523,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const btn = document.querySelector('.pretty-input .date-open');
   if (!di || !btn) return;
 
-  const openPicker = () => {
+  const openPicker = (e) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+
     if (typeof di.showPicker === 'function') {
-      di.showPicker();   // Modern Chrome/Android, some Safari
-    } else {
-      di.focus();        // Fallback (opens native picker on mobile)
-      di.click?.();      // iOS Safari needs click
+      di.showPicker();
+      return;
     }
+
+    di.focus();
+    di.click?.();
   };
 
+  btn.addEventListener('pointerdown', openPicker);
   btn.addEventListener('click', openPicker);
 });
 
@@ -2163,6 +2168,7 @@ if (di) {
     LGH_ANALYTICS.viewDate(ymd);
   };
 
+  di.oninput = () => scrollToDate(di.value);
   di.onchange = () => scrollToDate(di.value);
 
   // Deep-link: ?date=YYYY-MM-DD
