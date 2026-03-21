@@ -149,7 +149,8 @@ function renderResults() {
         <div class="pill">${escapeHtml(fixture.group || "")}</div>
       </div>
       <div class="meta">
-        ${escapeHtml(formatDate(fixture.date))}${fixture.time_local ? ` · ${escapeHtml(fixture.time_local)}` : ""}
+      <div class="meta">
+        ${escapeHtml(formatDate(fixture.date))}${fixture.time_local ? ` · ${escapeHtml(fixture.time_local)}` : ""}${fixture.round ? ` · ${escapeHtml(fixture.round)}` : ""}
         <br>
         ${escapeHtml(fixture.venue || "Venue TBC")} · ${escapeHtml(fixture.status || "SCHEDULED")}
       </div>
