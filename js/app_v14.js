@@ -101,6 +101,13 @@ const err  = (...a) => console.error(...a);
 
 log("[LGH] app js evaluating");
 
+(function defaultHomeToLeague(){
+  if (location.pathname !== '/') return;
+  if (location.search || location.hash) return;
+
+  location.replace('/?v=league&div=1');
+})();
+
 window.LGH_V7_3_READY = true;
 window.LGH_V7_3_3_READY = true;
 log("[LGH] flags now:",
@@ -1642,11 +1649,11 @@ th.innerHTML = `<tr>
 
   // Ensure clicking the brand always goes to CURRENT season home
   document.querySelectorAll('a.brand').forEach(a=>{
-  a.addEventListener('click', (e)=>{
-    e.preventDefault();
-    window.location.href = '/';
+    a.addEventListener('click', (e)=>{
+      e.preventDefault();
+      window.location.href = '/?v=league&div=1';
+    });
   });
-});
 
   // Top nav tabs
   $$('.navtab').forEach(tab=>{
