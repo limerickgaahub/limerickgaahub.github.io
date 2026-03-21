@@ -124,6 +124,7 @@ const SEASON_SOURCES = {
   let DATA_URL = SEASON_SOURCES[DEFAULT_SEASON].data;
   let KO_URL   = SEASON_SOURCES[DEFAULT_SEASON].ko;
   let LEAGUE_URL = SEASON_SOURCES[DEFAULT_SEASON].league;
+  let LEAGUE_OVERRIDES_URL = 'data/league_overrides.json';
 
   function isKO(m){
     return (m.stage === 'knockout') || ((m.group || '').toLowerCase() === 'knockout');
@@ -287,6 +288,7 @@ function mapVenue(v){
   DATA_URL = SEASON_SOURCES[state.season].data;
   KO_URL   = SEASON_SOURCES[state.season].ko;
   LEAGUE_URL = SEASON_SOURCES[state.season].league;
+  LEAGUE_OVERRIDES_URL = (state.season === '2026') ? 'data/league_overrides.json' : null;
 
   const seasonIndicator = document.getElementById('season-indicator');
 const season = state.season; // <-- add this
@@ -618,15 +620,42 @@ if (LEAGUE_URL) {
       venue: mapVenue(f.venue),
       home: f.home || '',
       away: f.away || '',
-      status: f.status || 'Fixture',
+      status: f.status || 'SCHEDULED',
       home_goals: f.home_goals ?? null,
       home_points: f.home_points ?? null,
       away_goals: f.away_goals ?? null,
       away_points: f.away_points ?? null
     }));
     MATCHES = mergeById(MATCHES, norm);
+
+    if (LEAGUE_OVERRIDES_URL) {
+  try {
+    const overridesRaw = await fetch(`${LEAGUE_OVERRIDES_URL}${bustL}`, optsL).then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    });
+
+    const overrideMap = overridesRaw?.overrides || {};
+
+    const overrideRows = Object.entries(overrideMap).map(([id, patch]) => {
+  const { time_local, ...rest } = patch || {};
+  return {
+    id,
+    ...(time_local ? { time: time_local } : {}),
+    ...(rest.venue !== undefined ? { venue: mapVenue(rest.venue) } : {}),
+    ...rest
+  };
+});
+
+    MATCHES = mergeById(MATCHES, overrideRows);
+  } catch (e) {
+    warn('[LGH] league overrides skipped:', e);
+  }
+}
+
+    
   } catch(e) {
-    console.warn('[LGH] league.json failed to load', e);
+    warn('[LGH] league.json failed to load', e);
   }
 }
     
