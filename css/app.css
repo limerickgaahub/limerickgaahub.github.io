@@ -699,7 +699,7 @@ td.match, th.match{ text-align:center; }
   border:0;
   background:transparent;
   cursor:pointer;
-  pointer-events:none;  /* do NOT block the input */
+  pointer-events:auto;
 }
 
 @media (max-width:880px){
@@ -1568,7 +1568,7 @@ thead th{
   }
 
   #data-shell.card{
-    margin:48px 0 0;
+    margin:60px 0 0;
     padding:8px;
     border-radius:14px;
   }
@@ -1700,7 +1700,6 @@ thead th{
   padding:0 0 6px;
   box-shadow:none;
   isolation:isolate;
-  pointer-events:none;
 }
 
 #controls-date::before{
