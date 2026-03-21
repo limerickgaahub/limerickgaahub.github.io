@@ -1830,7 +1830,7 @@ function renderLeague(){
 
   
 
-  sel.oninput = draw;
+  sel.onchange = draw;
 
   // Default / deep-link selection
   const wanted = resolveDivValue(state.leagueDiv);
@@ -2016,7 +2016,7 @@ function renderByTeam(){
     LGH_ANALYTICS.viewTeam(team);
   };
 
-  sel.oninput = draw;
+  sel.onchange = draw;
   addEventListener('resize', draw);
 
   const tbl = el('team-table');
@@ -2024,7 +2024,7 @@ function renderByTeam(){
   buildHead(thead, matchMedia('(max-width:880px)').matches, matchMedia('(max-width:400px)').matches);
   tbl.tBodies[0] ? (tbl.tBodies[0].innerHTML='') : tbl.createTBody();
 
-  if (params.team) { sel.value = params.team; sel.dispatchEvent(new Event('input')); }
+  if (params.team) { sel.value = params.team; sel.dispatchEvent(new Event('change')); }
 }
 
 
