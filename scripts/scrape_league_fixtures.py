@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Scrape County Hurling League Division 1–12 fixtures from:
+Scrape County Hurling League Division 1-12 fixtures and results from:
   https://limerickgaa.ie/senior-hurling-fixtures/
+  https://limerickgaa.ie/senior-hurling-results/
 
 Outputs:
   <outdir>/league.json   (default: data/league.json)
@@ -107,7 +108,11 @@ class LeagueFixture:
 
 
 def http_get(url: str, timeout: int = 30) -> requests.Response:
-    r = requests.get(url, timeout=timeout, headers={"User-Agent": "limerickgaahub-league-scraper/1.0"})
+    r = requests.get(
+        url,
+        timeout=timeout,
+        headers={"User-Agent": "limerickgaahub-league-scraper/1.0"},
+    )
     r.raise_for_status()
     return r
 
@@ -134,7 +139,7 @@ def normalize_lines(html: str) -> List[str]:
     """
     Convert HTML to a list of meaningful text lines.
     Also stitches split ordinal dates:
-      "Saturday 23" + "rd" + "August, 2025"  -> "Saturday 23^{rd} August, 2025"
+      "Saturday 23" + "rd" + "August, 2025" -> "Saturday 23^{rd} August, 2025"
     """
     soup = BeautifulSoup(html, "html.parser")
 
@@ -167,19 +172,31 @@ def parse_date_line(s: str) -> Optional[date]:
     m = DATE_RE.match(s.strip())
     if not m:
         return None
+
     day = int(m.group(2))
     month_name = m.group(4)
     year = int(m.group(5))
 
     month_map = {
-        "january": 1, "february": 2, "march": 3, "april": 4,
-        "may": 5, "june": 6, "july": 7, "august": 8,
-        "september": 9, "october": 10, "november": 11, "december": 12
+        "january": 1,
+        "february": 2,
+        "march": 3,
+        "april": 4,
+        "may": 5,
+        "june": 6,
+        "july": 7,
+        "august": 8,
+        "september": 9,
+        "october": 10,
+        "november": 11,
+        "december": 12,
     }
     mm = month_map.get(month_name.lower())
     if not mm:
         return None
+
     return date(year, mm, day)
+
 
 def parse_time_line(s: str) -> Optional[time]:
     m = TIME_RE.search(s)
@@ -195,10 +212,9 @@ def parse_time_line(s: str) -> Optional[time]:
         if not (1 <= hh <= 12 and 0 <= mi <= 59):
             return None
 
-        # Convert to 24-hour clock
         if ap == "a":
             hh = 0 if hh == 12 else hh
-        else:  # pm
+        else:
             hh = 12 if hh == 12 else hh + 12
 
         return time(hh, mi)
@@ -212,6 +228,7 @@ def parse_time_line(s: str) -> Optional[time]:
 
     return time(hh, mi)
 
+
 def slugify_team(s: str) -> str:
     s = s.strip().lower()
     s = re.sub(r"[^a-z0-9]+", "-", s)
@@ -221,34 +238,43 @@ def slugify_team(s: str) -> str:
 def make_id(div: str, round_s: str, d_iso: str, home: str, away: str) -> str:
     return f"league-{div}-{round_s}-{d_iso}-{slugify_team(home)}-vs-{slugify_team(away)}"
 
+
 def parse_division_heading(s: str) -> Optional[str]:
     m = DIV_RE.match(s.strip())
     if not m:
         return None
+
     div = m.group(1)
     if div not in ALLOWED_DIVISIONS:
         return None
+
     return div
 
 
 def parse_result_side(s: str) -> tuple[Optional[str], Optional[int], Optional[int]]:
     s = s.strip()
-
     m = RESULT_TEAM_RE.match(s)
     if m:
         return m.group("team").strip(), int(m.group("g")), int(m.group("p"))
-
     return None, None, None
+
 
 def is_plausible_team(s: str) -> bool:
     t = s.strip()
     if len(t) < 2:
         return False
-    low = t.lower()
 
+    low = t.lower()
     bad = {
-        "venue", "referee", "round", "fixtures", "results",
-        "county hurling league", "walkover", "w/o", "bye"
+        "venue",
+        "referee",
+        "round",
+        "fixtures",
+        "results",
+        "county hurling league",
+        "walkover",
+        "w/o",
+        "bye",
     }
     if low in bad:
         return False
@@ -282,16 +308,12 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
     i = 0
 
     while i < len(lines):
-        div_m = DIV_RE.match(lines[i])
-        if not div_m:
+        div = parse_division_heading(lines[i])
+        if not div:
             i += 1
             continue
 
-        div_no = int(div_m.group(1))
-        if not (1 <= div_no <= 12):
-            i += 1
-            continue
-
+        div_no = int(div)
         group = f"Division {div_no}"
         competition = "County Hurling League"
 
@@ -311,13 +333,13 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
                 round_txt = f"R{rm.group(1)}"
                 j += 1
                 break
-            if DIV_RE.match(lines[j]):
+            if parse_division_heading(lines[j]):
                 break
             j += 1
 
         # date
         while j < len(lines) and j < i + 35 and d is None:
-            if DIV_RE.match(lines[j]):
+            if parse_division_heading(lines[j]):
                 break
             dd = parse_date_line(lines[j])
             if dd:
@@ -328,7 +350,7 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
 
         # teams: locate "V"
         while j < len(lines) and j < i + 55:
-            if DIV_RE.match(lines[j]):
+            if parse_division_heading(lines[j]):
                 break
             if V_RE.match(lines[j]):
                 k = j - 1
@@ -350,7 +372,7 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
 
         # time
         while j < len(lines) and j < i + 70 and t is None:
-            if DIV_RE.match(lines[j]):
+            if parse_division_heading(lines[j]):
                 break
             tt = parse_time_line(lines[j])
             if tt:
@@ -361,13 +383,13 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
 
         # venue/referee
         while j < len(lines) and j < i + 90:
-            if DIV_RE.match(lines[j]):
+            if parse_division_heading(lines[j]):
                 break
 
             vm = VENUE_RE.match(lines[j])
             if vm:
                 v = (vm.group(1) or "").strip()
-                if not v and j + 1 < len(lines) and not REF_RE.match(lines[j + 1]) and not DIV_RE.match(lines[j + 1]):
+                if not v and j + 1 < len(lines) and not REF_RE.match(lines[j + 1]) and not parse_division_heading(lines[j + 1]):
                     v = lines[j + 1].strip()
                     j += 1
                 if v:
@@ -387,7 +409,7 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
             d_iso = d.strftime("%Y-%m-%d")
             time_local = t.strftime("%H:%M") if t else None
             dt_iso = f"{d_iso}T{time_local}:00" if time_local else None
-            fid = make_id(str(div_no), round_txt.replace(" ", ""), d_iso, home, away)
+            fid = make_id(str(div_no), round_txt, d_iso, home, away)
 
             fixtures.append(
                 LeagueFixture(
@@ -403,7 +425,7 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
                     venue=venue,
                     referee=referee,
                     status="SCHEDULED",
-                    source_url=URL,
+                    source_url=FIXTURES_URL,
                     id=fid,
                 )
             )
@@ -411,6 +433,7 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
         i = max(i + 1, j)
 
     return fixtures
+
 
 def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
     fixtures: List[LeagueFixture] = []
@@ -441,8 +464,7 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
         status = "Result"
 
         while j < len(lines):
-            next_div = parse_division_heading(lines[j])
-            if next_div:
+            if parse_division_heading(lines[j]):
                 break
 
             rm = ROUND_RE.match(lines[j])
@@ -494,6 +516,10 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
 
             if WO_RE.match(lines[j].strip()):
                 status = "Walkover"
+                j += 1
+                continue
+
+            if BYE_RE.match(lines[j].strip()):
                 j += 1
                 continue
 
@@ -614,6 +640,7 @@ def write_json(out_path: str, fixtures: List[LeagueFixture]) -> None:
         "updated_at": datetime.now().isoformat(timespec="seconds"),
         "fixtures": [f.to_dict() for f in fixtures],
     }
+
     with open(out_path, "w", encoding="utf-8") as fp:
         json.dump(payload, fp, ensure_ascii=False, indent=2)
 
@@ -625,9 +652,11 @@ def resolve_out_path(args_outdir: str, args_out: Optional[str]) -> str:
     # 3) --outdir/league.json
     if args_out:
         return args_out
+
     env = os.environ.get("LGH_LEAGUE_OUT")
     if env:
         return env
+
     return os.path.join(args_outdir, "league.json")
 
 
@@ -639,20 +668,21 @@ def main() -> None:
 
     out_path = resolve_out_path(args.outdir, args.out)
 
-   fixtures_html = get_page_html(FIXTURES_URL, WP_API_FIXTURES)
+    fixtures_html = get_page_html(FIXTURES_URL, WP_API_FIXTURES)
     results_html = get_page_html(RESULTS_URL, WP_API_RESULTS)
-    
+
     fixture_lines = normalize_lines(fixtures_html)
     result_lines = normalize_lines(results_html)
-    
+
     fixtures = parse_league(fixture_lines)
     results = parse_league_results(result_lines)
-    
+
     merged = merge_fixtures_and_results(fixtures, results)
     merged = [f for f in merged if 1 <= int(f.group.split()[-1]) <= 12]
-    
+
     write_json(out_path, merged)
     print(f"[league] wrote {len(merged)} merged fixtures/results -> {out_path}")
+
 
 if __name__ == "__main__":
     main()
