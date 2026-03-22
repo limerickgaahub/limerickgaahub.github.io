@@ -23,14 +23,24 @@ import requests
 from bs4 import BeautifulSoup
 
 
-URL = "https://limerickgaa.ie/senior-hurling-fixtures/"
-WP_API_PAGE_BY_SLUG = "https://limerickgaa.ie/wp-json/wp/v2/pages?slug=senior-hurling-fixtures"
+FIXTURES_URL = "https://limerickgaa.ie/senior-hurling-fixtures/"
+RESULTS_URL = "https://limerickgaa.ie/senior-hurling-results/"
+
+WP_API_FIXTURES = "https://limerickgaa.ie/wp-json/wp/v2/pages?slug=senior-hurling-fixtures"
+WP_API_RESULTS = "https://limerickgaa.ie/wp-json/wp/v2/pages?slug=senior-hurling-results"
+
 TZ = "Europe/Dublin"
 
-# Matches "County Hurling League Division 7" and also the typo "Divsion 7"
-DIV_RE = re.compile(r"^County Hurling League\s+Div(?:ision|sion)\s*(\d{1,2})\s*$", re.IGNORECASE)
+# Hard limit: County Hurling League Division 1..12 only
+DIV_RE = re.compile(
+    r"^County Hurling League\s+Div(?:ision|sion)\s*(\d{1,2})\s*$",
+    re.IGNORECASE
+)
+ALLOWED_DIVISIONS = {str(i) for i in range(1, 13)}
+
 ROUND_RE = re.compile(r"^Round\s*(\d+)\s*$", re.IGNORECASE)
 V_RE = re.compile(r"^V\s*$", re.IGNORECASE)
+
 TIME_RE = re.compile(
     r"\b(\d{1,2}):(\d{2})\s*([ap])\.?\s*m\.?\b|\b(\d{1,2}):(\d{2})\b",
     re.IGNORECASE
@@ -41,11 +51,15 @@ REF_RE = re.compile(r"^Referee:\s*(.*)\s*$", re.IGNORECASE)
 WEEKDAYS = r"(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)"
 ORD_TOKEN_RE = re.compile(r"^(st|nd|rd|th)$", re.IGNORECASE)
 
-# Example: "Saturday 23^{rd} August, 2025"
 DATE_RE = re.compile(
     rf"^{WEEKDAYS}\s+(\d{{1,2}})(?:\^\{{(st|nd|rd|th)\}})?\s+([A-Za-z]+),\s*(\d{{4}})\s*$",
     re.IGNORECASE
 )
+
+SCORE_ONLY_RE = re.compile(r"^\s*(\d+)\s*-\s*(\d+)\s*$")
+RESULT_TEAM_RE = re.compile(r"^(?P<team>.+?)\s+(?P<g>\d+)\s*-\s*(?P<p>\d+)\s*$")
+WO_RE = re.compile(r"^(W\/O|Walkover)$", re.IGNORECASE)
+BYE_RE = re.compile(r"^BYE$", re.IGNORECASE)
 
 
 @dataclass
@@ -64,6 +78,10 @@ class LeagueFixture:
     status: str
     source_url: str
     id: str
+    home_goals: Optional[int] = None
+    home_points: Optional[int] = None
+    away_goals: Optional[int] = None
+    away_points: Optional[int] = None
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -81,6 +99,10 @@ class LeagueFixture:
             "referee": self.referee,
             "status": self.status,
             "source_url": self.source_url,
+            "home_goals": self.home_goals,
+            "home_points": self.home_points,
+            "away_goals": self.away_goals,
+            "away_points": self.away_points,
         }
 
 
@@ -90,12 +112,12 @@ def http_get(url: str, timeout: int = 30) -> requests.Response:
     return r
 
 
-def get_page_html() -> str:
+def get_page_html(page_url: str, wp_api_slug_url: str) -> str:
     """
     Prefer WP REST (stable, clean HTML in content.rendered). Fall back to direct fetch.
     """
     try:
-        r = http_get(WP_API_PAGE_BY_SLUG)
+        r = http_get(wp_api_slug_url)
         data = r.json()
         if isinstance(data, list) and data:
             rendered = data[0].get("content", {}).get("rendered")
@@ -104,7 +126,7 @@ def get_page_html() -> str:
     except Exception:
         pass
 
-    r = http_get(URL)
+    r = http_get(page_url)
     return r.text
 
 
@@ -199,12 +221,60 @@ def slugify_team(s: str) -> str:
 def make_id(div: str, round_s: str, d_iso: str, home: str, away: str) -> str:
     return f"league-{div}-{round_s}-{d_iso}-{slugify_team(home)}-vs-{slugify_team(away)}"
 
+def parse_division_heading(s: str) -> Optional[str]:
+    m = DIV_RE.match(s.strip())
+    if not m:
+        return None
+    div = m.group(1)
+    if div not in ALLOWED_DIVISIONS:
+        return None
+    return div
+
+
+def parse_result_side(s: str) -> tuple[Optional[str], Optional[int], Optional[int]]:
+    s = s.strip()
+
+    m = RESULT_TEAM_RE.match(s)
+    if m:
+        return m.group("team").strip(), int(m.group("g")), int(m.group("p"))
+
+    return None, None, None
 
 def is_plausible_team(s: str) -> bool:
-    if len(s.strip()) < 2:
+    t = s.strip()
+    if len(t) < 2:
         return False
-    bad = {"venue", "referee", "round", "fixtures", "results"}
-    return s.strip().lower() not in bad
+    low = t.lower()
+
+    bad = {
+        "venue", "referee", "round", "fixtures", "results",
+        "county hurling league", "walkover", "w/o", "bye"
+    }
+    if low in bad:
+        return False
+
+    if DIV_RE.match(t):
+        return False
+    if ROUND_RE.match(t):
+        return False
+    if VENUE_RE.match(t):
+        return False
+    if REF_RE.match(t):
+        return False
+    if TIME_RE.search(t):
+        return False
+    if DATE_RE.match(t):
+        return False
+    if V_RE.match(t):
+        return False
+    if SCORE_ONLY_RE.match(t):
+        return False
+    if WO_RE.match(t):
+        return False
+    if BYE_RE.match(t):
+        return False
+
+    return True
 
 
 def parse_league(lines: List[str]) -> List[LeagueFixture]:
@@ -238,7 +308,7 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
         while j < len(lines) and j < i + 20:
             rm = ROUND_RE.match(lines[j])
             if rm:
-                round_txt = f"R {rm.group(1)}"
+                round_txt = f"R{rm.group(1)}"
                 j += 1
                 break
             if DIV_RE.match(lines[j]):
@@ -342,6 +412,196 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
 
     return fixtures
 
+def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
+    fixtures: List[LeagueFixture] = []
+    i = 0
+
+    while i < len(lines):
+        div = parse_division_heading(lines[i])
+        if not div:
+            i += 1
+            continue
+
+        div_no = int(div)
+        group = f"Division {div_no}"
+        competition = "County Hurling League"
+
+        j = i + 1
+        round_txt: Optional[str] = None
+        d: Optional[date] = None
+        home: Optional[str] = None
+        away: Optional[str] = None
+        t: Optional[time] = None
+        venue: str = "TBC"
+        referee: str = "TBC"
+        home_goals: Optional[int] = None
+        home_points: Optional[int] = None
+        away_goals: Optional[int] = None
+        away_points: Optional[int] = None
+        status = "Result"
+
+        while j < len(lines):
+            next_div = parse_division_heading(lines[j])
+            if next_div:
+                break
+
+            rm = ROUND_RE.match(lines[j])
+            if rm and round_txt is None:
+                round_txt = f"R{rm.group(1)}"
+                j += 1
+                continue
+
+            dd = parse_date_line(lines[j])
+            if dd and d is None:
+                d = dd
+                j += 1
+                continue
+
+            team, g, p = parse_result_side(lines[j])
+            if team and home is None and is_plausible_team(team):
+                home = team
+                home_goals = g
+                home_points = p
+                j += 1
+                continue
+
+            if V_RE.match(lines[j]):
+                j += 1
+                continue
+
+            team, g, p = parse_result_side(lines[j])
+            if team and away is None and is_plausible_team(team):
+                away = team
+                away_goals = g
+                away_points = p
+                j += 1
+                continue
+
+            sm = SCORE_ONLY_RE.match(lines[j].strip())
+            if sm:
+                g = int(sm.group(1))
+                p = int(sm.group(2))
+                if home is not None and home_goals is None:
+                    home_goals = g
+                    home_points = p
+                    j += 1
+                    continue
+                if away is not None and away_goals is None:
+                    away_goals = g
+                    away_points = p
+                    j += 1
+                    continue
+
+            if WO_RE.match(lines[j].strip()):
+                status = "Walkover"
+                j += 1
+                continue
+
+            vm = VENUE_RE.match(lines[j])
+            if vm:
+                v = (vm.group(1) or "").strip()
+                if not v and j + 1 < len(lines):
+                    nxt = lines[j + 1].strip()
+                    if nxt and not REF_RE.match(nxt) and not parse_division_heading(nxt):
+                        v = nxt
+                        j += 1
+                if v:
+                    venue = v
+                j += 1
+                continue
+
+            rf = REF_RE.match(lines[j])
+            if rf:
+                r = (rf.group(1) or "").strip()
+                if r:
+                    referee = r
+                j += 1
+                continue
+
+            tt = parse_time_line(lines[j])
+            if tt and t is None:
+                t = tt
+                j += 1
+                continue
+
+            if home is None and is_plausible_team(lines[j]):
+                home = lines[j].strip()
+                j += 1
+                continue
+
+            if away is None and is_plausible_team(lines[j]):
+                away = lines[j].strip()
+                j += 1
+                continue
+
+            j += 1
+
+        if round_txt and d and home and away:
+            d_iso = d.strftime("%Y-%m-%d")
+            time_local = t.strftime("%H:%M") if t else None
+            dt_iso = f"{d_iso}T{time_local}:00" if time_local else None
+            fid = make_id(str(div_no), round_txt, d_iso, home, away)
+
+            fixtures.append(
+                LeagueFixture(
+                    competition=competition,
+                    group=group,
+                    round=round_txt,
+                    date=d_iso,
+                    time_local=time_local,
+                    tz=TZ,
+                    datetime_iso=dt_iso,
+                    home=home,
+                    away=away,
+                    venue=venue,
+                    referee=referee,
+                    status=status,
+                    source_url=RESULTS_URL,
+                    id=fid,
+                    home_goals=home_goals,
+                    home_points=home_points,
+                    away_goals=away_goals,
+                    away_points=away_points,
+                )
+            )
+
+        i = max(i + 1, j)
+
+    return fixtures
+
+
+def merge_fixtures_and_results(
+    fixtures: List[LeagueFixture],
+    results: List[LeagueFixture],
+) -> List[LeagueFixture]:
+    by_id: Dict[str, LeagueFixture] = {f.id: f for f in fixtures}
+
+    for r in results:
+        if r.id in by_id:
+            f = by_id[r.id]
+
+            f.status = r.status or f.status
+            f.home_goals = r.home_goals
+            f.home_points = r.home_points
+            f.away_goals = r.away_goals
+            f.away_points = r.away_points
+
+            if (not f.time_local) and r.time_local:
+                f.time_local = r.time_local
+                f.datetime_iso = r.datetime_iso
+
+            if (not f.venue or f.venue == "TBC") and r.venue:
+                f.venue = r.venue
+
+            if (not f.referee or f.referee == "TBC") and r.referee:
+                f.referee = r.referee
+        else:
+            by_id[r.id] = r
+
+    merged = list(by_id.values())
+    merged.sort(key=lambda x: (x.date, x.group, x.round, x.home, x.away))
+    return merged
+
 
 def write_json(out_path: str, fixtures: List[LeagueFixture]) -> None:
     parent = os.path.dirname(out_path)
@@ -379,15 +639,20 @@ def main() -> None:
 
     out_path = resolve_out_path(args.outdir, args.out)
 
-    html = get_page_html()
-    lines = normalize_lines(html)
-    fixtures = parse_league(lines)
-
-    fixtures = [f for f in fixtures if 1 <= int(f.group.split()[-1]) <= 12]
-
-    write_json(out_path, fixtures)
-    print(f"[league] wrote {len(fixtures)} fixtures -> {out_path}")
-
+   fixtures_html = get_page_html(FIXTURES_URL, WP_API_FIXTURES)
+    results_html = get_page_html(RESULTS_URL, WP_API_RESULTS)
+    
+    fixture_lines = normalize_lines(fixtures_html)
+    result_lines = normalize_lines(results_html)
+    
+    fixtures = parse_league(fixture_lines)
+    results = parse_league_results(result_lines)
+    
+    merged = merge_fixtures_and_results(fixtures, results)
+    merged = [f for f in merged if 1 <= int(f.group.split()[-1]) <= 12]
+    
+    write_json(out_path, merged)
+    print(f"[league] wrote {len(merged)} merged fixtures/results -> {out_path}")
 
 if __name__ == "__main__":
     main()
