@@ -21,6 +21,8 @@ from datetime import datetime, date, time
 from typing import List, Optional, Dict, Any
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
 
@@ -31,6 +33,18 @@ WP_API_FIXTURES = "https://limerickgaa.ie/wp-json/wp/v2/pages?slug=senior-hurlin
 WP_API_RESULTS = "https://limerickgaa.ie/wp-json/wp/v2/pages?slug=senior-hurling-results"
 
 TZ = "Europe/Dublin"
+
+SESSION = requests.Session()
+RETRY = Retry(
+    total=4,
+    connect=4,
+    read=4,
+    backoff_factor=2,
+    status_forcelist=[429, 500, 502, 503, 504],
+    allowed_methods=["GET"],
+)
+SESSION.mount("https://", HTTPAdapter(max_retries=RETRY))
+SESSION.mount("http://", HTTPAdapter(max_retries=RETRY))
 
 # Hard limit: County Hurling League Division 1..12 only
 DIV_RE = re.compile(
@@ -107,8 +121,8 @@ class LeagueFixture:
         }
 
 
-def http_get(url: str, timeout: int = 30) -> requests.Response:
-    r = requests.get(
+def http_get(url: str, timeout: tuple[int, int] = (20, 90)) -> requests.Response:
+    r = SESSION.get(
         url,
         timeout=timeout,
         headers={"User-Agent": "limerickgaahub-league-scraper/1.0"},
@@ -128,11 +142,16 @@ def get_page_html(page_url: str, wp_api_slug_url: str) -> str:
             rendered = data[0].get("content", {}).get("rendered")
             if rendered and isinstance(rendered, str):
                 return rendered
-    except Exception:
-        pass
+        print(f"[league] WP API returned no usable rendered content: {wp_api_slug_url}")
+    except Exception as e:
+        print(f"[league] WP API fetch failed: {wp_api_slug_url} :: {e}")
 
-    r = http_get(page_url)
-    return r.text
+    try:
+        r = http_get(page_url)
+        return r.text
+    except Exception as e:
+        print(f"[league] Direct page fetch failed: {page_url} :: {e}")
+        raise
 
 
 def normalize_lines(html: str) -> List[str]:
@@ -238,6 +257,7 @@ def slugify_team(s: str) -> str:
 def make_id(div: str, round_s: str, d_iso: str, home: str, away: str) -> str:
     return f"league-{div}-{round_s}-{d_iso}-{slugify_team(home)}-vs-{slugify_team(away)}"
 
+
 def match_key(f: LeagueFixture) -> tuple[str, str, str, str, str]:
     return (
         f.group.strip().lower(),
@@ -246,6 +266,7 @@ def match_key(f: LeagueFixture) -> tuple[str, str, str, str, str]:
         slugify_team(f.home),
         slugify_team(f.away),
     )
+
 
 def parse_division_heading(s: str) -> Optional[str]:
     m = DIV_RE.match(s.strip())
@@ -310,6 +331,16 @@ def is_plausible_team(s: str) -> bool:
 
     return True
 
+
+def has_full_score(f: LeagueFixture) -> bool:
+    return (
+        f.home_goals is not None and
+        f.home_points is not None and
+        f.away_goals is not None and
+        f.away_points is not None
+    )
+
+
 def is_real_result_row(f: LeagueFixture) -> bool:
     if not f.home or not f.away:
         return False
@@ -317,12 +348,8 @@ def is_real_result_row(f: LeagueFixture) -> bool:
         return False
     if f.status == "Walkover":
         return True
-    return (
-        f.home_goals is not None and
-        f.home_points is not None and
-        f.away_goals is not None and
-        f.away_points is not None
-    )
+    return has_full_score(f)
+
 
 def parse_league(lines: List[str]) -> List[LeagueFixture]:
     fixtures: List[LeagueFixture] = []
@@ -633,44 +660,67 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
 
     return fixtures
 
+
 def merge_fixtures_and_results(
     fixtures: List[LeagueFixture],
     results: List[LeagueFixture],
 ) -> List[LeagueFixture]:
     by_id: Dict[str, LeagueFixture] = {f.id: f for f in fixtures}
-    matched = 0
+    by_key: Dict[tuple[str, str, str, str, str], LeagueFixture] = {
+        match_key(f): f for f in fixtures
+    }
+
+    matched_id = 0
+    matched_key = 0
     inserted = 0
     skipped = 0
 
     for r in results:
-        if r.id in by_id:
-            matched += 1
-            f = by_id[r.id]
+        target = by_id.get(r.id)
 
-            f.status = r.status or f.status
-            f.home_goals = r.home_goals
-            f.home_points = r.home_points
-            f.away_goals = r.away_goals
-            f.away_points = r.away_points
-
-            if (not f.time_local) and r.time_local:
-                f.time_local = r.time_local
-                f.datetime_iso = r.datetime_iso
-
-            if (not f.venue or f.venue == "TBC") and r.venue:
-                f.venue = r.venue
-
-            if (not f.referee or f.referee == "TBC") and r.referee:
-                f.referee = r.referee
-        else:
-            if is_real_result_row(r):
+        if target is None:
+            target = by_key.get(match_key(r))
+            if target is not None:
+                matched_key += 1
+            elif is_real_result_row(r):
+                if has_full_score(r):
+                    r.status = "Result"
                 by_id[r.id] = r
                 inserted += 1
+                continue
             else:
                 skipped += 1
                 print(f"[league] unmatched result skipped: {r.id}")
+                continue
+        else:
+            matched_id += 1
 
-    print(f"[league] results matched to fixtures: {matched}")
+        if has_full_score(r):
+            target.status = "Result"
+            target.home_goals = r.home_goals
+            target.home_points = r.home_points
+            target.away_goals = r.away_goals
+            target.away_points = r.away_points
+
+        elif r.status == "Walkover" and not has_full_score(target):
+            target.status = "Walkover"
+            target.home_goals = r.home_goals
+            target.home_points = r.home_points
+            target.away_goals = r.away_goals
+            target.away_points = r.away_points
+
+        if (not target.time_local) and r.time_local:
+            target.time_local = r.time_local
+            target.datetime_iso = r.datetime_iso
+
+        if (not target.venue or target.venue == "TBC") and r.venue:
+            target.venue = r.venue
+
+        if (not target.referee or target.referee == "TBC") and r.referee:
+            target.referee = r.referee
+
+    print(f"[league] results matched by id: {matched_id}")
+    print(f"[league] results matched by key: {matched_key}")
     print(f"[league] results inserted directly: {inserted}")
     print(f"[league] unmatched/skipped: {skipped}")
 
@@ -731,9 +781,12 @@ def main() -> None:
     print(f"[league] raw result rows parsed: {len(results)}")
 
     today = date.today()
-    results = [r for r in results if date.fromisoformat(r.date) <= today]
+    results = [
+        r for r in results
+        if date.fromisoformat(r.date) <= today or r.status == "Walkover"
+    ]
 
-    print(f"[league] result rows after date filter: {len(results)}")
+    print(f"[league] result rows after date/walkover filter: {len(results)}")
 
     merged = merge_fixtures_and_results(fixtures, results)
     merged = [f for f in merged if 1 <= int(f.group.split()[-1]) <= 12]
