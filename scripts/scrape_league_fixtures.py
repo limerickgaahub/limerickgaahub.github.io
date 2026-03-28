@@ -238,6 +238,14 @@ def slugify_team(s: str) -> str:
 def make_id(div: str, round_s: str, d_iso: str, home: str, away: str) -> str:
     return f"league-{div}-{round_s}-{d_iso}-{slugify_team(home)}-vs-{slugify_team(away)}"
 
+def match_key(f: LeagueFixture) -> tuple[str, str, str, str, str]:
+    return (
+        f.group.strip().lower(),
+        f.round.strip().upper(),
+        f.date,
+        slugify_team(f.home),
+        slugify_team(f.away),
+    )
 
 def parse_division_heading(s: str) -> Optional[str]:
     m = DIV_RE.match(s.strip())
@@ -603,35 +611,52 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
 
     return fixtures
 
-
 def merge_fixtures_and_results(
     fixtures: List[LeagueFixture],
     results: List[LeagueFixture],
 ) -> List[LeagueFixture]:
     by_id: Dict[str, LeagueFixture] = {f.id: f for f in fixtures}
+    by_key: Dict[tuple[str, str, str, str, str], LeagueFixture] = {
+        match_key(f): f for f in fixtures
+    }
+
+    matched_id = 0
+    matched_key = 0
+    unmatched = 0
 
     for r in results:
-        if r.id in by_id:
-            f = by_id[r.id]
+        target = by_id.get(r.id)
 
-            f.status = r.status or f.status
-            f.home_goals = r.home_goals
-            f.home_points = r.home_points
-            f.away_goals = r.away_goals
-            f.away_points = r.away_points
-
-            if (not f.time_local) and r.time_local:
-                f.time_local = r.time_local
-                f.datetime_iso = r.datetime_iso
-
-            if (not f.venue or f.venue == "TBC") and r.venue:
-                f.venue = r.venue
-
-            if (not f.referee or f.referee == "TBC") and r.referee:
-                f.referee = r.referee
+        if target is not None:
+            matched_id += 1
         else:
-            print(f"[league] unmatched result skipped: {r.id}")
-            continue
+            target = by_key.get(match_key(r))
+            if target is not None:
+                matched_key += 1
+            else:
+                unmatched += 1
+                print(f"[league] unmatched result skipped: {r.id}")
+                continue
+
+        target.status = r.status or target.status
+        target.home_goals = r.home_goals
+        target.home_points = r.home_points
+        target.away_goals = r.away_goals
+        target.away_points = r.away_points
+
+        if (not target.time_local) and r.time_local:
+            target.time_local = r.time_local
+            target.datetime_iso = r.datetime_iso
+
+        if (not target.venue or target.venue == "TBC") and r.venue:
+            target.venue = r.venue
+
+        if (not target.referee or target.referee == "TBC") and r.referee:
+            target.referee = r.referee
+
+    print(f"[league] results matched by id: {matched_id}")
+    print(f"[league] results matched by key: {matched_key}")
+    print(f"[league] results unmatched: {unmatched}")
 
     merged = list(by_id.values())
     merged.sort(key=lambda x: (x.date, x.group, x.round, x.home, x.away))
@@ -685,8 +710,14 @@ def main() -> None:
 
     fixtures = parse_league(fixture_lines)
     results = parse_league_results(result_lines)
+
+    print(f"[league] fixture rows parsed: {len(fixtures)}")
+    print(f"[league] raw result rows parsed: {len(results)}")
+
     today = date.today()
     results = [r for r in results if date.fromisoformat(r.date) <= today]
+
+    print(f"[league] result rows after date filter: {len(results)}")
 
     merged = merge_fixtures_and_results(fixtures, results)
     merged = [f for f in merged if 1 <= int(f.group.split()[-1]) <= 12]
