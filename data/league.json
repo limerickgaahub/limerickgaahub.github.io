@@ -1,7 +1,7 @@
 {
   "competition": "County Hurling League",
   "season": 2026,
-  "updated_at": "2026-03-28T22:22:45",
+  "updated_at": "2026-03-28T23:15:10",
   "fixtures": [
     {
       "id": "league-10-R1-2026-03-21-ballybrown-vs-na-piarsaigh",
@@ -136,7 +136,7 @@
       "away": "Ballybricken Bohermore",
       "venue": "Athea",
       "referee": "TBC",
-      "status": "Walkover",
+      "status": "Result",
       "source_url": "https://limerickgaa.ie/senior-hurling-results/",
       "home_goals": 0,
       "home_points": 22,
@@ -622,26 +622,6 @@
       "home_points": 23,
       "away_goals": 2,
       "away_points": 16
-    },
-    {
-      "id": "league-10-R2-2026-03-28-patrickswell-vs-ballybrown",
-      "competition": "County Hurling League",
-      "group": "Division 10",
-      "round": "R2",
-      "date": "2026-03-28",
-      "time_local": "14:00",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2026-03-28T14:00:00",
-      "home": "Patrickswell",
-      "away": "Ballybrown",
-      "venue": "Patrickswell",
-      "referee": "TBC",
-      "status": "Walkover",
-      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
-      "home_goals": 0,
-      "home_points": 0,
-      "away_goals": null,
-      "away_points": null
     },
     {
       "id": "league-2-R2-2026-03-28-dromin-athlacca-vs-mungret-st-pauls",
