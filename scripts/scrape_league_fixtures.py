@@ -257,7 +257,6 @@ def slugify_team(s: str) -> str:
 def make_id(div: str, round_s: str, d_iso: str, home: str, away: str) -> str:
     return f"league-{div}-{round_s}-{d_iso}-{slugify_team(home)}-vs-{slugify_team(away)}"
 
-
 def match_key(f: LeagueFixture) -> tuple[str, str, str, str, str]:
     return (
         f.group.strip().lower(),
@@ -266,7 +265,6 @@ def match_key(f: LeagueFixture) -> tuple[str, str, str, str, str]:
         slugify_team(f.home),
         slugify_team(f.away),
     )
-
 
 def parse_division_heading(s: str) -> Optional[str]:
     m = DIV_RE.match(s.strip())
@@ -331,7 +329,6 @@ def is_plausible_team(s: str) -> bool:
 
     return True
 
-
 def has_full_score(f: LeagueFixture) -> bool:
     return (
         f.home_goals is not None and
@@ -349,7 +346,6 @@ def is_real_result_row(f: LeagueFixture) -> bool:
     if f.status == "Walkover":
         return True
     return has_full_score(f)
-
 
 def parse_league(lines: List[str]) -> List[LeagueFixture]:
     fixtures: List[LeagueFixture] = []
@@ -659,7 +655,6 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
         i = max(i + 1, j)
 
     return fixtures
-
 
 def merge_fixtures_and_results(
     fixtures: List[LeagueFixture],
