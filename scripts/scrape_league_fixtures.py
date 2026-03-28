@@ -302,7 +302,6 @@ def is_plausible_team(s: str) -> bool:
 
     return True
 
-
 def parse_league(lines: List[str]) -> List[LeagueFixture]:
     fixtures: List[LeagueFixture] = []
     i = 0
@@ -405,8 +404,7 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
 
             j += 1
 
-
-      if round_txt and d and home and away:
+        if round_txt and d and home and away:
             d_iso = d.strftime("%Y-%m-%d")
             time_local = t.strftime("%H:%M") if t else None
             dt_iso = f"{d_iso}T{time_local}:00" if time_local else None
@@ -416,30 +414,6 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
                 i = max(i + 1, j)
                 continue
 
-            fixtures.append(
-                LeagueFixture(
-                    competition=competition,
-                    group=group,
-                    round=round_txt,
-                    date=d_iso,
-                    time_local=time_local,
-                    tz=TZ,
-                    datetime_iso=dt_iso,
-                    home=home,
-                    away=away,
-                    venue=venue,
-                    referee=referee,
-                    status="SCHEDULED",
-                    source_url=FIXTURES_URL,
-                    id=fid,
-                )
-            )
-
-                
-        if home and away and slugify_team(home) == slugify_team(away):
-            i = max(i + 1, j)
-            continue
-          
             fixtures.append(
                 LeagueFixture(
                     competition=competition,
@@ -592,7 +566,7 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
 
             j += 1
 
-          if round_txt and d and home and away:
+        if round_txt and d and home and away:
             d_iso = d.strftime("%Y-%m-%d")
             time_local = t.strftime("%H:%M") if t else None
             dt_iso = f"{d_iso}T{time_local}:00" if time_local else None
