@@ -515,9 +515,10 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
                     continue
 
             if WO_RE.match(lines[j].strip()):
+            if home is not None and away is not None and d is not None:
                 status = "Walkover"
-                j += 1
-                continue
+            j += 1
+            continue
 
             if BYE_RE.match(lines[j].strip()):
                 j += 1
@@ -676,6 +677,8 @@ def main() -> None:
 
     fixtures = parse_league(fixture_lines)
     results = parse_league_results(result_lines)
+    today = date.today()
+    results = [r for r in results if date.fromisoformat(r.date) <= today]
 
     merged = merge_fixtures_and_results(fixtures, results)
     merged = [f for f in merged if 1 <= int(f.group.split()[-1]) <= 12]
