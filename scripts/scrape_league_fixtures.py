@@ -222,7 +222,6 @@ def parse_time_line(s: str) -> Optional[time]:
     if not m:
         return None
 
-    # Case 1: 12-hour format with am/pm
     if m.group(1) is not None:
         hh = int(m.group(1))
         mi = int(m.group(2))
@@ -238,7 +237,6 @@ def parse_time_line(s: str) -> Optional[time]:
 
         return time(hh, mi)
 
-    # Case 2: 24-hour format
     hh = int(m.group(4))
     mi = int(m.group(5))
 
@@ -257,6 +255,7 @@ def slugify_team(s: str) -> str:
 def make_id(div: str, round_s: str, d_iso: str, home: str, away: str) -> str:
     return f"league-{div}-{round_s}-{d_iso}-{slugify_team(home)}-vs-{slugify_team(away)}"
 
+
 def match_key(f: LeagueFixture) -> tuple[str, str, str, str, str]:
     return (
         f.group.strip().lower(),
@@ -265,6 +264,7 @@ def match_key(f: LeagueFixture) -> tuple[str, str, str, str, str]:
         slugify_team(f.home),
         slugify_team(f.away),
     )
+
 
 def parse_division_heading(s: str) -> Optional[str]:
     m = DIV_RE.match(s.strip())
@@ -329,6 +329,7 @@ def is_plausible_team(s: str) -> bool:
 
     return True
 
+
 def has_full_score(f: LeagueFixture) -> bool:
     return (
         f.home_goals is not None and
@@ -346,6 +347,15 @@ def is_real_result_row(f: LeagueFixture) -> bool:
     if f.status == "Walkover":
         return True
     return has_full_score(f)
+
+
+def row_priority(f: LeagueFixture) -> int:
+    if has_full_score(f):
+        return 3
+    if f.status == "Walkover":
+        return 2
+    return 1
+
 
 def parse_league(lines: List[str]) -> List[LeagueFixture]:
     fixtures: List[LeagueFixture] = []
@@ -370,7 +380,6 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
         venue: str = "TBC"
         referee: str = "TBC"
 
-        # round
         while j < len(lines) and j < i + 20:
             rm = ROUND_RE.match(lines[j])
             if rm:
@@ -381,7 +390,6 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
                 break
             j += 1
 
-        # date
         while j < len(lines) and j < i + 35 and d is None:
             if parse_division_heading(lines[j]):
                 break
@@ -392,7 +400,6 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
                 break
             j += 1
 
-        # teams: locate "V"
         while j < len(lines) and j < i + 55:
             if parse_division_heading(lines[j]):
                 break
@@ -414,7 +421,6 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
                 break
             j += 1
 
-        # time
         while j < len(lines) and j < i + 70 and t is None:
             if parse_division_heading(lines[j]):
                 break
@@ -425,7 +431,6 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
                 break
             j += 1
 
-        # venue/referee
         while j < len(lines) and j < i + 90:
             if parse_division_heading(lines[j]):
                 break
@@ -656,6 +661,7 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
 
     return fixtures
 
+
 def merge_fixtures_and_results(
     fixtures: List[LeagueFixture],
     results: List[LeagueFixture],
@@ -720,6 +726,15 @@ def merge_fixtures_and_results(
     print(f"[league] unmatched/skipped: {skipped}")
 
     merged = list(by_id.values())
+
+    deduped: Dict[tuple[str, str, str, str, str], LeagueFixture] = {}
+    for f in merged:
+        k = match_key(f)
+        existing = deduped.get(k)
+        if existing is None or row_priority(f) > row_priority(existing):
+            deduped[k] = f
+
+    merged = list(deduped.values())
     merged.sort(key=lambda x: (x.date, x.group, x.round, x.home, x.away))
     return merged
 
@@ -741,10 +756,6 @@ def write_json(out_path: str, fixtures: List[LeagueFixture]) -> None:
 
 
 def resolve_out_path(args_outdir: str, args_out: Optional[str]) -> str:
-    # Precedence:
-    # 1) explicit --out
-    # 2) env var LGH_LEAGUE_OUT
-    # 3) --outdir/league.json
     if args_out:
         return args_out
 
