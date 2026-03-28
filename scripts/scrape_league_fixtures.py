@@ -411,6 +411,11 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
             dt_iso = f"{d_iso}T{time_local}:00" if time_local else None
             fid = make_id(str(div_no), round_txt, d_iso, home, away)
 
+                
+        if home and away and slugify_team(home) == slugify_team(away):
+            i = max(i + 1, j)
+            continue
+          
             fixtures.append(
                 LeagueFixture(
                     competition=competition,
@@ -514,11 +519,11 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
                     j += 1
                     continue
 
-            if WO_RE.match(lines[j].strip()):
-            if home is not None and away is not None and d is not None:
-                status = "Walkover"
-            j += 1
-            continue
+                if WO_RE.match(lines[j].strip()):
+                    if home is not None and away is not None and d is not None:
+                        status = "Walkover"
+                    j += 1
+                    continue
 
             if BYE_RE.match(lines[j].strip()):
                 j += 1
@@ -569,6 +574,11 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
             dt_iso = f"{d_iso}T{time_local}:00" if time_local else None
             fid = make_id(str(div_no), round_txt, d_iso, home, away)
 
+        if home and away and slugify_team(home) == slugify_team(away):
+            i = max(i + 1, j)
+            continue
+
+          
             fixtures.append(
                 LeagueFixture(
                     competition=competition,
@@ -622,8 +632,9 @@ def merge_fixtures_and_results(
 
             if (not f.referee or f.referee == "TBC") and r.referee:
                 f.referee = r.referee
-        else:
-            by_id[r.id] = r
+          else:
+            print(f"[league] unmatched result skipped: {r.id}")
+            continue
 
     merged = list(by_id.values())
     merged.sort(key=lambda x: (x.date, x.group, x.round, x.home, x.away))
