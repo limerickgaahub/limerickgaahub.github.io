@@ -405,11 +405,35 @@ def parse_league(lines: List[str]) -> List[LeagueFixture]:
 
             j += 1
 
-        if round_txt and d and home and away:
+
+      if round_txt and d and home and away:
             d_iso = d.strftime("%Y-%m-%d")
             time_local = t.strftime("%H:%M") if t else None
             dt_iso = f"{d_iso}T{time_local}:00" if time_local else None
             fid = make_id(str(div_no), round_txt, d_iso, home, away)
+
+            if slugify_team(home) == slugify_team(away):
+                i = max(i + 1, j)
+                continue
+
+            fixtures.append(
+                LeagueFixture(
+                    competition=competition,
+                    group=group,
+                    round=round_txt,
+                    date=d_iso,
+                    time_local=time_local,
+                    tz=TZ,
+                    datetime_iso=dt_iso,
+                    home=home,
+                    away=away,
+                    venue=venue,
+                    referee=referee,
+                    status="SCHEDULED",
+                    source_url=FIXTURES_URL,
+                    id=fid,
+                )
+            )
 
                 
         if home and away and slugify_team(home) == slugify_team(away):
@@ -519,11 +543,11 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
                     j += 1
                     continue
 
-                if WO_RE.match(lines[j].strip()):
-                    if home is not None and away is not None and d is not None:
-                        status = "Walkover"
-                    j += 1
-                    continue
+            if WO_RE.match(lines[j].strip()):
+                if home is not None and away is not None and d is not None:
+                    status = "Walkover"
+                j += 1
+                continue
 
             if BYE_RE.match(lines[j].strip()):
                 j += 1
@@ -568,17 +592,16 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
 
             j += 1
 
-        if round_txt and d and home and away:
+          if round_txt and d and home and away:
             d_iso = d.strftime("%Y-%m-%d")
             time_local = t.strftime("%H:%M") if t else None
             dt_iso = f"{d_iso}T{time_local}:00" if time_local else None
             fid = make_id(str(div_no), round_txt, d_iso, home, away)
 
-        if home and away and slugify_team(home) == slugify_team(away):
-            i = max(i + 1, j)
-            continue
+            if slugify_team(home) == slugify_team(away):
+                i = max(i + 1, j)
+                continue
 
-          
             fixtures.append(
                 LeagueFixture(
                     competition=competition,
@@ -632,7 +655,7 @@ def merge_fixtures_and_results(
 
             if (not f.referee or f.referee == "TBC") and r.referee:
                 f.referee = r.referee
-          else:
+        else:
             print(f"[league] unmatched result skipped: {r.id}")
             continue
 
