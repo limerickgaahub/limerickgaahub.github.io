@@ -739,7 +739,7 @@ td.match, th.match{ text-align:center; }
   border:0;
   background:transparent;
   cursor:pointer;
-  pointer-events:auto;
+  pointer-events:none;
 }
 
 @media (max-width:880px){
