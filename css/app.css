@@ -1957,29 +1957,29 @@ thead th{
 }
 
 /* =========================================================
-   BURGER MENU — premium final pass
+   BURGER MENU — clearer hierarchy final
    ========================================================= */
 
-/* Drawer body: tighten the space under "Menu" */
 .offcanvas .oc-body{
   padding:4px 10px 12px;
   display:flex;
   flex-direction:column;
   gap:0;
-  background:#ffffff;
+  background:#fff;
 }
 
-/* Section headers: 2026 / Archive */
+/* Section headers: non-clickable */
 .offcanvas .oc-heading{
+  position:relative;
   display:block;
-  margin:2px 0 4px;
-  padding:4px 12px 6px;
-  font-size:13px;
+  margin:2px 0 8px;
+  padding:3px 12px 4px 24px;
+  font-size:12px;
   font-weight:900;
   line-height:1.1;
-  letter-spacing:.08em;
+  letter-spacing:.12em;
   text-transform:uppercase;
-  color:#4b5563;
+  color:#6b7280;
   background:transparent;
   border:0;
   box-shadow:none;
@@ -1987,20 +1987,34 @@ thead th{
   cursor:default;
 }
 
-/* Pull first heading closer to Menu */
-.offcanvas .oc-head + .oc-body .oc-heading:first-child{
-  margin-top:0;
-  padding-top:2px;
+/* green accent marker for headers */
+.offcanvas .oc-heading::before{
+  content:"";
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:6px;
+  height:6px;
+  border-radius:999px;
+  background:var(--accent);
+  opacity:.9;
 }
 
-/* Clear section break before Archive */
+/* First heading sits tighter under Menu */
+.offcanvas .oc-head + .oc-body .oc-heading:first-child{
+  margin-top:0;
+  padding-top:0;
+}
+
+/* Clear separation before Archive */
 .offcanvas .oc-link + .oc-heading{
-  margin-top:14px;
+  margin-top:16px;
   padding-top:12px;
   border-top:1px solid rgba(16,24,40,.08);
 }
 
-/* Base clickable rows */
+/* Main clickable rows */
 .offcanvas .oc-link{
   position:relative;
   display:flex;
@@ -2010,15 +2024,14 @@ thead th{
 
   margin:0;
   padding:12px 12px;
-
-  background:transparent;
   border:0;
   border-radius:12px;
+  background:transparent;
   box-shadow:none;
 
   color:#0f172a;
   font-size:15px;
-  font-weight:780;
+  font-weight:800;
   line-height:1.2;
   text-decoration:none;
   cursor:pointer;
@@ -2029,12 +2042,23 @@ thead th{
     transform .08s ease;
 }
 
-/* Subtle divider rhythm between rows */
+/* subtle line between clickable rows */
+.offcanvas .oc-link::after{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:0;
+  height:1px;
+  background:rgba(16,24,40,.06);
+}
+
+/* keep rows visually linked but not cramped */
 .offcanvas .oc-link + .oc-link{
   margin-top:2px;
 }
 
-/* Premium hover / tap */
+/* interactive feel */
 .offcanvas .oc-link:hover{
   background:rgba(11,122,74,.07);
   color:var(--accent);
@@ -2045,23 +2069,20 @@ thead th{
   transform:translateY(1px);
 }
 
-/* Soft inset line for structure without boxing */
-.offcanvas .oc-link::after{
-  content:"";
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:0;
-  height:1px;
-  background:rgba(16,24,40,.05);
+/* trailing chevron/icon */
+.offcanvas .oc-link .chev,
+.offcanvas .oc-link i:last-child{
+  color:rgba(15,23,42,.34);
+  transition:color .16s ease, transform .16s ease;
 }
 
-/* No divider after last row in a section if About is separated anyway */
-.offcanvas .oc-link.oc-about::after{
-  display:none;
+.offcanvas .oc-link:hover .chev,
+.offcanvas .oc-link:hover i:last-child{
+  color:var(--accent);
+  transform:translateX(1px);
 }
 
-/* Neutralise old special-case box styling */
+/* neutralise all old block/button styling */
 .offcanvas .oc-link[data-season="2026"],
 .offcanvas .oc-link.oc-2026,
 .offcanvas .oc-link.oc-archive,
@@ -2075,10 +2096,11 @@ thead th{
   margin-top:0 !important;
 }
 
-/* About as a lower-priority utility row */
+/* About = separate utility action, still clickable */
 .offcanvas .oc-link.oc-about{
-  margin-top:14px !important;
+  margin-top:18px !important;
   padding-top:14px;
+  font-weight:750;
   color:#374151 !important;
 }
 
@@ -2089,28 +2111,9 @@ thead th{
   right:12px;
   top:0;
   height:1px;
-  background:rgba(16,24,40,.08);
+  background:rgba(16,24,40,.10);
 }
 
-/* Badge styling stays neat if used */
-.offcanvas .oc-badge{
-  font-size:11px;
-  font-weight:800;
-  padding:2px 8px;
-  border-radius:999px;
-  background:rgba(11,122,74,.10);
-  color:var(--accent);
-}
-
-/* Chevron / trailing icon polish */
-.offcanvas .oc-link .chev,
-.offcanvas .oc-link i:last-child{
-  color:rgba(15,23,42,.34);
-  transition:color .16s ease, transform .16s ease;
-}
-
-.offcanvas .oc-link:hover .chev,
-.offcanvas .oc-link:hover i:last-child{
-  color:var(--accent);
-  transform:translateX(1px);
+.offcanvas .oc-link.oc-about::after{
+  background:transparent;
 }
