@@ -295,6 +295,19 @@ function mapVenue(v){
   const params=new Proxy(new URLSearchParams(location.search),{get:(sp,prop)=>sp.get(prop)});
   const state={ season:DEFAULT_SEASON, section:'hurling', view:'matches', comp:null, group:null, team:null, date:null, leagueDiv:null };
 
+  const heroSeasonBadge = document.getElementById('hero-season-badge');
+
+function updateHeroSeasonBadge(){
+  if (!heroSeasonBadge) return;
+
+  if (state.season && state.season !== DEFAULT_SEASON) {
+    heroSeasonBadge.textContent = state.season;
+    heroSeasonBadge.hidden = false;
+  } else {
+    heroSeasonBadge.hidden = true;
+  }
+}
+
   // Read season from URL (?season=2025). Default is 2026 (no query param needed).
   const reqSeason = params.season || DEFAULT_SEASON;
   state.season = SEASON_SOURCES[reqSeason] ? reqSeason : DEFAULT_SEASON;
@@ -304,6 +317,8 @@ function mapVenue(v){
   LEAGUE_URL = SEASON_SOURCES[state.season].league;
   LEAGUE_OVERRIDES_URL = (state.season === '2026') ? 'data/league_overrides.json' : null;
 
+  updateHeroSeasonBadge();
+  
   const seasonIndicator = document.getElementById('season-indicator');
 const season = state.season; // <-- add this
 
