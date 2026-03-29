@@ -1,7 +1,7 @@
 {
   "id": "/",
   "name": "Limerick GAA Hub",
-  "short_name": "LGH",
+  "short_name": "GAA Hub",
   "description": "Fixtures, results and tables for Limerick GAA competitions",
   "start_url": "/",
   "scope": "/",
