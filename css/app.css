@@ -156,7 +156,7 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 /* Hero-bar season badge (shown only for archive / 2025) */
 .hero-season-badge{
   flex:0 0 auto;
-  display:inline-flex;
+  display:none;
   align-items:center;
   justify-content:center;
   margin-left:8px;
@@ -903,7 +903,7 @@ body.comp-home #table-footnote{
   max-width:1100px;
   margin:14px auto 24px;
   text-align:center;
-  color:var(--muted);
+  color:#ffffff;
   font-weight:800;
   font-size:12px;
 }
@@ -915,7 +915,7 @@ body.comp-home #table-footnote{
   width:80px;
   height:3px;
   border-radius:999px;
-  background:rgba(11,122,74,.25);
+  background:rgba(255,255,255,.35);
 }
 
 .scroll-top-btn{
@@ -1865,4 +1865,6 @@ body.is-archive{
   margin-top:18px;
   padding-top:14px;
   border-top:1px solid rgba(16,24,40,.08);
+  border-top-left-radius:0;
+  border-top-right-radius:0;
 }
