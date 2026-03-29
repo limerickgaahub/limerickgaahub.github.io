@@ -1,7 +1,7 @@
 {
   "competition": "County Hurling League",
   "season": 2026,
-  "updated_at": "2026-03-28T23:57:11",
+  "updated_at": "2026-03-29T00:19:18",
   "fixtures": [
     {
       "id": "league-10-R1-2026-03-21-askeaton-ballysteen-kilcornan-vs-patrickswell",
@@ -21,7 +21,8 @@
       "home_goals": 0,
       "home_points": 0,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": "away"
     },
     {
       "id": "league-10-R1-2026-03-21-ballybrown-vs-na-piarsaigh",
@@ -41,7 +42,8 @@
       "home_goals": 5,
       "home_points": 10,
       "away_goals": 2,
-      "away_points": 17
+      "away_points": 17,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R1-2026-03-21-caherline-vs-cappamore",
@@ -61,7 +63,8 @@
       "home_goals": 3,
       "home_points": 17,
       "away_goals": 7,
-      "away_points": 11
+      "away_points": 11,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R1-2026-03-21-fedamore-vs-effin",
@@ -81,7 +84,8 @@
       "home_goals": 1,
       "home_points": 16,
       "away_goals": 3,
-      "away_points": 12
+      "away_points": 12,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R1-2026-03-21-croom-vs-doon",
@@ -101,7 +105,8 @@
       "home_goals": 2,
       "home_points": 17,
       "away_goals": 2,
-      "away_points": 21
+      "away_points": 21,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R1-2026-03-21-monaleen-vs-crecora-manister",
@@ -121,7 +126,8 @@
       "home_goals": 1,
       "home_points": 23,
       "away_goals": 1,
-      "away_points": 16
+      "away_points": 16,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R1-2026-03-21-claughaun-vs-kilmallock",
@@ -141,7 +147,8 @@
       "home_goals": 2,
       "home_points": 7,
       "away_goals": 1,
-      "away_points": 16
+      "away_points": 16,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R1-2026-03-21-ballybrown-vs-ballybricken-bohermore",
@@ -161,7 +168,8 @@
       "home_goals": 0,
       "home_points": 22,
       "away_goals": 0,
-      "away_points": 11
+      "away_points": 11,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R1-2026-03-21-killeedy-vs-rathkeale",
@@ -181,7 +189,8 @@
       "home_goals": 0,
       "home_points": 24,
       "away_goals": 1,
-      "away_points": 15
+      "away_points": 15,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R1-2026-03-21-feenagh-kilmeedy-vs-murroe-boher",
@@ -201,7 +210,8 @@
       "home_goals": 1,
       "home_points": 11,
       "away_goals": 0,
-      "away_points": 20
+      "away_points": 20,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R1-2026-03-22-ahane-vs-monaleen",
@@ -221,7 +231,8 @@
       "home_goals": 1,
       "home_points": 11,
       "away_goals": 4,
-      "away_points": 19
+      "away_points": 19,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R1-2026-03-22-ballybrown-vs-doon",
@@ -241,7 +252,8 @@
       "home_goals": 0,
       "home_points": 20,
       "away_goals": 0,
-      "away_points": 18
+      "away_points": 18,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R1-2026-03-22-kilmallock-vs-patrickswell",
@@ -261,7 +273,8 @@
       "home_goals": 1,
       "home_points": 18,
       "away_goals": 2,
-      "away_points": 22
+      "away_points": 22,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R1-2026-03-22-na-piarsaigh-vs-adare",
@@ -281,7 +294,8 @@
       "home_goals": 1,
       "home_points": 20,
       "away_goals": 1,
-      "away_points": 12
+      "away_points": 12,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R1-2026-03-22-mungret-st-pauls-vs-garryspillane",
@@ -301,7 +315,8 @@
       "home_goals": 1,
       "home_points": 19,
       "away_goals": 0,
-      "away_points": 21
+      "away_points": 21,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R1-2026-03-22-newcastle-west-vs-croagh-kilfinny",
@@ -321,7 +336,8 @@
       "home_goals": 4,
       "home_points": 17,
       "away_goals": 1,
-      "away_points": 19
+      "away_points": 19,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R1-2026-03-22-feohanagh-vs-granagh-ballingarry",
@@ -341,7 +357,8 @@
       "home_goals": 1,
       "home_points": 18,
       "away_goals": 6,
-      "away_points": 14
+      "away_points": 14,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R1-2026-03-22-glenroe-vs-cappamore",
@@ -361,7 +378,8 @@
       "home_goals": 0,
       "home_points": 13,
       "away_goals": 0,
-      "away_points": 10
+      "away_points": 10,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R1-2026-03-22-murroe-boher-vs-south-liberties",
@@ -381,7 +399,8 @@
       "home_goals": 3,
       "home_points": 24,
       "away_goals": 0,
-      "away_points": 16
+      "away_points": 16,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R1-2026-03-22-feenagh-kilmeedy-vs-st-kieran-s",
@@ -401,7 +420,8 @@
       "home_goals": 2,
       "home_points": 21,
       "away_goals": 2,
-      "away_points": 16
+      "away_points": 16,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R1-2026-03-22-knockainey-vs-knockaderry",
@@ -421,7 +441,8 @@
       "home_goals": 0,
       "home_points": 13,
       "away_goals": 1,
-      "away_points": 12
+      "away_points": 12,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R1-2026-03-22-na-piarsaigh-vs-mungret-st-pauls",
@@ -441,7 +462,8 @@
       "home_goals": 2,
       "home_points": 21,
       "away_goals": 0,
-      "away_points": 7
+      "away_points": 7,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R1-2026-03-22-askeaton-ballysteen-kilcornan-vs-tournafulla",
@@ -461,7 +483,8 @@
       "home_goals": 0,
       "home_points": 14,
       "away_goals": 0,
-      "away_points": 14
+      "away_points": 14,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R1-2026-03-22-caherline-vs-kilteely-dromkeen",
@@ -481,7 +504,8 @@
       "home_goals": 0,
       "home_points": 26,
       "away_goals": 1,
-      "away_points": 17
+      "away_points": 17,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R1-2026-03-22-ahane-vs-st-patrick-s",
@@ -501,7 +525,8 @@
       "home_goals": 2,
       "home_points": 14,
       "away_goals": 1,
-      "away_points": 14
+      "away_points": 14,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R1-2026-03-22-castletown-ballyagran-vs-monagea",
@@ -521,7 +546,8 @@
       "home_goals": 1,
       "home_points": 20,
       "away_goals": 3,
-      "away_points": 12
+      "away_points": 12,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R1-2026-03-22-templeglantine-vs-dromcollogher-broadford",
@@ -541,7 +567,8 @@
       "home_goals": 1,
       "home_points": 19,
       "away_goals": 0,
-      "away_points": 16
+      "away_points": 16,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R1-2026-03-22-doon-vs-pallasgreen",
@@ -561,7 +588,8 @@
       "home_goals": 2,
       "home_points": 12,
       "away_goals": 2,
-      "away_points": 18
+      "away_points": 18,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R1-2026-03-22-blackrock-vs-glenroe",
@@ -581,7 +609,8 @@
       "home_goals": 1,
       "home_points": 17,
       "away_goals": 3,
-      "away_points": 9
+      "away_points": 9,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R2-2026-03-27-doon-vs-staker-wallace",
@@ -601,7 +630,8 @@
       "home_goals": 1,
       "home_points": 10,
       "away_goals": 2,
-      "away_points": 11
+      "away_points": 11,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R2-2026-03-28-doon-vs-ahane",
@@ -621,7 +651,8 @@
       "home_goals": 1,
       "home_points": 21,
       "away_goals": 0,
-      "away_points": 17
+      "away_points": 17,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R2-2026-03-28-monaleen-vs-na-piarsaigh",
@@ -641,7 +672,8 @@
       "home_goals": 2,
       "home_points": 23,
       "away_goals": 2,
-      "away_points": 16
+      "away_points": 16,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R2-2026-03-28-patrickswell-vs-ballybrown",
@@ -661,7 +693,8 @@
       "home_goals": 0,
       "home_points": 0,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": "home"
     },
     {
       "id": "league-2-R2-2026-03-28-dromin-athlacca-vs-mungret-st-pauls",
@@ -681,7 +714,8 @@
       "home_goals": 3,
       "home_points": 21,
       "away_goals": 3,
-      "away_points": 21
+      "away_points": 21,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R2-2026-03-28-kildimo-pallaskenry-vs-newcastle-west",
@@ -701,7 +735,8 @@
       "home_goals": 1,
       "home_points": 15,
       "away_goals": 3,
-      "away_points": 9
+      "away_points": 9,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R2-2026-03-28-cappamore-vs-feohanagh",
@@ -721,7 +756,8 @@
       "home_goals": 2,
       "home_points": 14,
       "away_goals": 1,
-      "away_points": 15
+      "away_points": 15,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R2-2026-03-28-granagh-ballingarry-vs-bruff",
@@ -741,7 +777,8 @@
       "home_goals": 0,
       "home_points": 22,
       "away_goals": 1,
-      "away_points": 26
+      "away_points": 26,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R2-2026-03-28-south-liberties-vs-glenroe",
@@ -761,7 +798,8 @@
       "home_goals": 0,
       "home_points": 13,
       "away_goals": 1,
-      "away_points": 23
+      "away_points": 23,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R2-2026-03-28-mungret-st-pauls-vs-knockainey",
@@ -781,7 +819,8 @@
       "home_goals": 1,
       "home_points": 16,
       "away_goals": 3,
-      "away_points": 8
+      "away_points": 8,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R2-2026-03-28-pallasgreen-vs-na-piarsaigh",
@@ -801,7 +840,8 @@
       "home_goals": 2,
       "home_points": 10,
       "away_goals": 1,
-      "away_points": 15
+      "away_points": 15,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R2-2026-03-28-st-kieran-s-vs-hospital-herbertstown",
@@ -821,7 +861,8 @@
       "home_goals": 2,
       "home_points": 14,
       "away_goals": 0,
-      "away_points": 15
+      "away_points": 15,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R2-2026-03-28-crecora-manister-vs-askeaton-ballysteen-kilcornan",
@@ -841,7 +882,8 @@
       "home_goals": 0,
       "home_points": 17,
       "away_goals": 2,
-      "away_points": 9
+      "away_points": 9,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R2-2026-03-28-doon-vs-caherline",
@@ -861,7 +903,8 @@
       "home_goals": 4,
       "home_points": 19,
       "away_goals": 2,
-      "away_points": 15
+      "away_points": 15,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R2-2026-03-28-tournafulla-vs-croom",
@@ -881,7 +924,8 @@
       "home_goals": 3,
       "home_points": 14,
       "away_goals": 2,
-      "away_points": 14
+      "away_points": 14,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R2-2026-03-28-kilmallock-vs-templeglantine",
@@ -901,7 +945,8 @@
       "home_goals": 2,
       "home_points": 14,
       "away_goals": 0,
-      "away_points": 12
+      "away_points": 12,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R2-2026-03-28-monagea-vs-claughaun",
@@ -921,7 +966,8 @@
       "home_goals": 1,
       "home_points": 8,
       "away_goals": 0,
-      "away_points": 8
+      "away_points": 8,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R2-2026-03-28-st-patrick-s-vs-castletown-ballyagran",
@@ -941,7 +987,8 @@
       "home_goals": 0,
       "home_points": 15,
       "away_goals": 0,
-      "away_points": 17
+      "away_points": 17,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R2-2026-03-28-patrickswell-vs-killeedy",
@@ -961,7 +1008,8 @@
       "home_goals": 1,
       "home_points": 16,
       "away_goals": 0,
-      "away_points": 17
+      "away_points": 17,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R2-2026-03-28-adare-vs-feenagh-kilmeedy",
@@ -981,7 +1029,8 @@
       "home_goals": 0,
       "home_points": 15,
       "away_goals": 1,
-      "away_points": 14
+      "away_points": 14,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R2-2026-03-28-glenroe-vs-ahane",
@@ -1001,7 +1050,8 @@
       "home_goals": 0,
       "home_points": 0,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": "away"
     },
     {
       "id": "league-1-R2-2026-03-29-adare-vs-kilmallock",
@@ -1021,7 +1071,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R2-2026-03-29-cappamore-vs-askeaton-ballysteen-kilcornan",
@@ -1041,7 +1092,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R2-2026-03-29-effin-vs-caherline",
@@ -1061,7 +1113,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R2-2026-03-29-croagh-kilfinny-vs-blackrock",
@@ -1081,7 +1134,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R2-2026-03-29-kilteely-dromkeen-vs-monaleen",
@@ -1101,7 +1155,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R2-2026-03-29-dromcollogher-broadford-vs-ahane",
@@ -1121,7 +1176,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R2-2026-03-29-ballybricken-bohermore-vs-bruff",
@@ -1141,7 +1197,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R2-2026-03-29-garryspillane-vs-kildimo-pallaskenry",
@@ -1161,7 +1218,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R2-2026-03-29-pallasgreen-vs-granagh-ballingarry",
@@ -1181,7 +1239,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R2-2026-03-30-na-piarsaigh-vs-fedamore",
@@ -1201,7 +1260,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R1-2026-03-31-croagh-kilfinny-vs-granagh-ballingarry",
@@ -1221,7 +1281,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R1-2026-04-02-blackrock-vs-dromin-athlacca",
@@ -1241,7 +1302,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R2-2026-04-02-bruree-vs-murroe-boher",
@@ -1261,7 +1323,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R2-2026-04-02-murroe-boher-vs-bruree",
@@ -1281,7 +1344,8 @@
       "home_goals": 0,
       "home_points": 0,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": "away"
     },
     {
       "id": "league-9-R2-2026-04-04-feohanagh-vs-blackrock",
@@ -1301,7 +1365,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R1-2026-04-07-effin-vs-kildimo-pallaskenry",
@@ -1321,7 +1386,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R3-2026-04-07-knockainey-vs-feenagh-kilmeedy",
@@ -1341,7 +1407,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R2-2026-04-07-rathkeale-vs-ballybrown",
@@ -1361,7 +1428,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R2-2026-04-07-newcastle-west-vs-croagh-kilfinny",
@@ -1381,7 +1449,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R2-2026-04-09-patrickswell-vs-ballybrown",
@@ -1401,7 +1470,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R3-2026-04-09-mungret-st-pauls-vs-croagh-kilfinny",
@@ -1421,7 +1491,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R2-2026-04-11-knockaderry-vs-feenagh-kilmeedy",
@@ -1441,7 +1512,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R1-2026-04-12-bruree-vs-feohanagh",
@@ -1461,7 +1533,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R6-2026-04-12-feenagh-kilmeedy-vs-bruree",
@@ -1481,7 +1554,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R2-2026-04-14-garryspillane-vs-effin",
@@ -1501,7 +1575,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R1-2026-04-15-hospital-herbertstown-vs-pallasgreen",
@@ -1521,7 +1596,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R3-2026-04-16-na-piarsaigh-vs-doon",
@@ -1541,7 +1617,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R3-2026-04-17-croom-vs-crecora-manister",
@@ -1561,7 +1638,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R3-2026-04-17-castletown-ballyagran-vs-dromcollogher-broadford",
@@ -1581,7 +1659,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R3-2026-04-18-ballybrown-vs-ahane",
@@ -1601,7 +1680,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R3-2026-04-18-kilmallock-vs-monaleen",
@@ -1621,7 +1701,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R3-2026-04-18-patrickswell-vs-adare",
@@ -1641,7 +1722,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R3-2026-04-18-askeaton-ballysteen-kilcornan-vs-effin",
@@ -1661,7 +1743,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R3-2026-04-18-ballybrown-vs-cappamore",
@@ -1681,7 +1764,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R3-2026-04-18-fedamore-vs-caherline",
@@ -1701,7 +1785,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R3-2026-04-18-na-piarsaigh-vs-patrickswell",
@@ -1721,7 +1806,8 @@
       "home_goals": 0,
       "home_points": 0,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": "away"
     },
     {
       "id": "league-2-R3-2026-04-18-effin-vs-dromin-athlacca",
@@ -1741,7 +1827,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R3-2026-04-18-kildimo-pallaskenry-vs-garryspillane",
@@ -1761,7 +1848,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R3-2026-04-18-newcastle-west-vs-blackrock",
@@ -1781,7 +1869,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R3-2026-04-18-cappamore-vs-south-liberties",
@@ -1801,7 +1890,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R3-2026-04-18-feohanagh-vs-bruff",
@@ -1821,7 +1911,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R3-2026-04-18-glenroe-vs-bruree",
@@ -1841,7 +1932,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R3-2026-04-18-murroe-boher-vs-granagh-ballingarry",
@@ -1861,7 +1953,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R3-2026-04-18-hospital-herbertstown-vs-knockaderry",
@@ -1881,7 +1974,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R3-2026-04-18-mungret-st-pauls-vs-pallasgreen",
@@ -1901,7 +1995,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R3-2026-04-18-na-piarsaigh-vs-st-kieran-s",
@@ -1921,7 +2016,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R3-2026-04-18-caherline-vs-tournafulla",
@@ -1941,7 +2037,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R3-2026-04-18-kilteely-dromkeen-vs-doon",
@@ -1961,7 +2058,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R3-2026-04-18-monaleen-vs-askeaton-ballysteen-kilcornan",
@@ -1981,7 +2079,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R3-2026-04-18-claughaun-vs-templeglantine",
@@ -2001,7 +2100,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R3-2026-04-18-monagea-vs-st-patrick-s",
@@ -2021,7 +2121,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R3-2026-04-18-bruff-vs-croagh-kilfinny",
@@ -2041,7 +2142,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R3-2026-04-18-granagh-ballingarry-vs-newcastle-west",
@@ -2061,7 +2163,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R3-2026-04-18-pallasgreen-vs-staker-wallace",
@@ -2081,7 +2184,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R3-2026-04-18-blackrock-vs-ahane",
@@ -2101,7 +2205,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R3-2026-04-18-bruree-vs-adare",
@@ -2121,7 +2226,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R3-2026-04-18-feenagh-kilmeedy-vs-glenroe",
@@ -2141,7 +2247,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R3-2026-04-18-feohanagh-vs-murroe-boher",
@@ -2161,7 +2268,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R1-2026-04-19-ballybricken-bohermore-vs-castletown-ballyagran",
@@ -2181,7 +2289,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R1-2026-04-19-dromin-athlacca-vs-garryspillane",
@@ -2201,7 +2310,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R1-2026-04-19-kildimo-pallaskenry-vs-knockainey",
@@ -2221,7 +2331,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R1-2026-04-19-crecora-manister-vs-staker-wallace",
@@ -2241,7 +2352,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R1-2026-04-19-dromcollogher-broadford-vs-tournafulla",
@@ -2261,7 +2373,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R1-2026-04-19-knockaderry-vs-st-kieran-s",
@@ -2281,7 +2394,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R3-2026-04-19-ahane-vs-kilmallock",
@@ -2301,7 +2415,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R3-2026-04-19-bruff-vs-rathkeale",
@@ -2321,7 +2436,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R3-2026-04-19-kildimo-pallaskenry-vs-ballybricken-bohermore",
@@ -2341,7 +2457,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R3-2026-04-19-killeedy-vs-ballybrown",
@@ -2361,7 +2478,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R3-2026-04-19-patrickswell-vs-garryspillane",
@@ -2381,7 +2499,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R4-2026-04-22-doon-vs-monaleen",
@@ -2401,7 +2520,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R4-2026-04-23-ahane-vs-na-piarsaigh",
@@ -2421,7 +2541,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R4-2026-04-23-pallasgreen-vs-knockainey",
@@ -2441,7 +2562,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R4-2026-04-24-doon-vs-kilmallock",
@@ -2461,7 +2583,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R4-2026-04-25-adare-vs-ballybrown",
@@ -2481,7 +2604,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R4-2026-04-25-monaleen-vs-patrickswell",
@@ -2501,7 +2625,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R4-2026-04-25-caherline-vs-askeaton-ballysteen-kilcornan",
@@ -2521,7 +2646,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R4-2026-04-25-cappamore-vs-na-piarsaigh",
@@ -2541,7 +2667,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R4-2026-04-25-effin-vs-ballybrown",
@@ -2561,7 +2688,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R4-2026-04-25-patrickswell-vs-fedamore",
@@ -2581,7 +2709,8 @@
       "home_goals": 0,
       "home_points": 0,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": "home"
     },
     {
       "id": "league-2-R4-2026-04-25-blackrock-vs-mungret-st-pauls",
@@ -2601,7 +2730,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R4-2026-04-25-croagh-kilfinny-vs-effin",
@@ -2621,7 +2751,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R4-2026-04-25-dromin-athlacca-vs-kildimo-pallaskenry",
@@ -2641,7 +2772,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R4-2026-04-25-garryspillane-vs-newcastle-west",
@@ -2661,7 +2793,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R4-2026-04-25-bruff-vs-murroe-boher",
@@ -2681,7 +2814,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R4-2026-04-25-bruree-vs-cappamore",
@@ -2701,7 +2835,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R4-2026-04-25-granagh-ballingarry-vs-glenroe",
@@ -2721,7 +2856,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R4-2026-04-25-south-liberties-vs-feohanagh",
@@ -2741,7 +2877,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R4-2026-04-25-feenagh-kilmeedy-vs-hospital-herbertstown",
@@ -2761,7 +2898,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R4-2026-04-25-knockaderry-vs-na-piarsaigh",
@@ -2781,7 +2919,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R4-2026-04-25-st-kieran-s-vs-mungret-st-pauls",
@@ -2801,7 +2940,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R4-2026-04-25-askeaton-ballysteen-kilcornan-vs-croom",
@@ -2821,7 +2961,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R4-2026-04-25-crecora-manister-vs-caherline",
@@ -2841,7 +2982,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R4-2026-04-25-tournafulla-vs-kilteely-dromkeen",
@@ -2861,7 +3003,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R4-2026-04-25-dromcollogher-broadford-vs-monagea",
@@ -2881,7 +3024,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R4-2026-04-25-kilmallock-vs-castletown-ballyagran",
@@ -2901,7 +3045,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R4-2026-04-25-st-patrick-s-vs-claughaun",
@@ -2921,7 +3066,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R4-2026-04-25-bruff-vs-granagh-ballingarry",
@@ -2941,7 +3087,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R4-2026-04-25-croagh-kilfinny-vs-doon",
@@ -2961,7 +3108,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R4-2026-04-25-newcastle-west-vs-pallasgreen",
@@ -2981,7 +3129,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R4-2026-04-25-adare-vs-feohanagh",
@@ -3001,7 +3150,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R4-2026-04-25-ahane-vs-feenagh-kilmeedy",
@@ -3021,7 +3171,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R4-2026-04-25-glenroe-vs-bruree",
@@ -3041,7 +3192,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R4-2026-04-25-murroe-boher-vs-blackrock",
@@ -3061,7 +3213,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R2-2026-04-26-castletown-ballyagran-vs-dromin-athlacca",
@@ -3081,7 +3234,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R2-2026-04-26-garryspillane-vs-kildimo-pallaskenry",
@@ -3101,7 +3255,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R2-2026-04-26-knockainey-vs-ballybricken-bohermore",
@@ -3121,7 +3276,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R2-2026-04-26-dromcollogher-broadford-vs-knockaderry",
@@ -3141,7 +3297,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R2-2026-04-26-st-kieran-s-vs-crecora-manister",
@@ -3161,7 +3318,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R2-2026-04-26-tournafulla-vs-staker-wallace",
@@ -3181,7 +3339,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R4-2026-04-26-templeglantine-vs-ahane",
@@ -3201,7 +3360,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R4-2026-04-26-ballybricken-bohermore-vs-patrickswell",
@@ -3221,7 +3381,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R4-2026-04-26-ballybrown-vs-bruff",
@@ -3241,7 +3402,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R4-2026-04-26-garryspillane-vs-killeedy",
@@ -3261,7 +3423,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R4-2026-04-26-rathkeale-vs-kildimo-pallaskenry",
@@ -3281,7 +3444,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R5-2026-05-14-kilmallock-vs-ahane",
@@ -3301,7 +3465,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R5-2026-05-16-adare-vs-monaleen",
@@ -3321,7 +3486,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R5-2026-05-16-ballybrown-vs-na-piarsaigh",
@@ -3341,7 +3507,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R5-2026-05-16-patrickswell-vs-doon",
@@ -3361,7 +3528,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R5-2026-05-16-effin-vs-blackrock",
@@ -3381,7 +3549,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R5-2026-05-16-garryspillane-vs-dromin-athlacca",
@@ -3401,7 +3570,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R5-2026-05-16-kildimo-pallaskenry-vs-croagh-kilfinny",
@@ -3421,7 +3591,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R5-2026-05-16-newcastle-west-vs-mungret-st-pauls",
@@ -3441,7 +3612,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R5-2026-05-16-cappamore-vs-granagh-ballingarry",
@@ -3461,7 +3633,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R5-2026-05-16-feohanagh-vs-murroe-boher",
@@ -3481,7 +3654,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R5-2026-05-16-glenroe-vs-bruff",
@@ -3501,7 +3675,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R5-2026-05-16-south-liberties-vs-bruree",
@@ -3521,7 +3696,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R5-2026-05-16-knockainey-vs-hospital-herbertstown",
@@ -3541,7 +3717,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R5-2026-05-16-mungret-st-pauls-vs-knockaderry",
@@ -3561,7 +3738,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R5-2026-05-16-na-piarsaigh-vs-feenagh-kilmeedy",
@@ -3581,7 +3759,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R5-2026-05-16-pallasgreen-vs-st-kieran-s",
@@ -3601,7 +3780,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R5-2026-05-16-caherline-vs-askeaton-ballysteen-kilcornan",
@@ -3621,7 +3801,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R5-2026-05-16-doon-vs-tournafulla",
@@ -3641,7 +3822,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R5-2026-05-16-kilteely-dromkeen-vs-crecora-manister",
@@ -3661,7 +3843,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R5-2026-05-16-castletown-ballyagran-vs-templeglantine",
@@ -3681,7 +3864,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R5-2026-05-16-monagea-vs-kilmallock",
@@ -3701,7 +3885,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R5-2026-05-16-st-patrick-s-vs-dromcollogher-broadford",
@@ -3721,7 +3906,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R5-2026-05-16-croagh-kilfinny-vs-staker-wallace",
@@ -3741,7 +3927,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R5-2026-05-16-granagh-ballingarry-vs-doon",
@@ -3761,7 +3948,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R5-2026-05-16-newcastle-west-vs-bruff",
@@ -3781,7 +3969,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R5-2026-05-16-blackrock-vs-feenagh-kilmeedy",
@@ -3801,7 +3990,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R5-2026-05-16-bruree-vs-ahane",
@@ -3821,7 +4011,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R5-2026-05-16-feohanagh-vs-glenroe",
@@ -3841,7 +4032,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R5-2026-05-16-murroe-boher-vs-adare",
@@ -3861,7 +4053,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R5-2026-05-17-ballybrown-vs-caherline",
@@ -3881,7 +4074,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R5-2026-05-17-fedamore-vs-askeaton-ballysteen-kilcornan",
@@ -3901,7 +4095,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R5-2026-05-17-na-piarsaigh-vs-effin",
@@ -3921,7 +4116,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R5-2026-05-17-patrickswell-vs-cappamore",
@@ -3941,7 +4137,8 @@
       "home_goals": 0,
       "home_points": 0,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": "home"
     },
     {
       "id": "league-11-R3-2026-05-17-castletown-ballyagran-vs-kildimo-pallaskenry",
@@ -3961,7 +4158,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R3-2026-05-17-dromin-athlacca-vs-ballybricken-bohermore",
@@ -3981,7 +4179,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R3-2026-05-17-garryspillane-vs-knockainey",
@@ -4001,7 +4200,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R3-2026-05-17-crecora-manister-vs-tournafulla",
@@ -4021,7 +4221,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R3-2026-05-17-dromcollogher-broadford-vs-st-kieran-s",
@@ -4041,7 +4242,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R3-2026-05-17-staker-wallace-vs-knockaderry",
@@ -4061,7 +4263,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R5-2026-05-17-monaleen-vs-croom",
@@ -4081,7 +4284,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R5-2026-05-17-claughaun-vs-ahane",
@@ -4101,7 +4305,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R5-2026-05-17-garryspillane-vs-ballybricken-bohermore",
@@ -4121,7 +4326,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R5-2026-05-17-kildimo-pallaskenry-vs-ballybrown",
@@ -4141,7 +4347,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R5-2026-05-17-killeedy-vs-bruff",
@@ -4161,7 +4368,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R5-2026-05-17-patrickswell-vs-rathkeale",
@@ -4181,7 +4389,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R6-2026-05-23-ahane-vs-patrickswell",
@@ -4201,7 +4410,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R6-2026-05-23-doon-vs-adare",
@@ -4221,7 +4431,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R6-2026-05-23-monaleen-vs-ballybrown",
@@ -4241,7 +4452,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R6-2026-05-23-na-piarsaigh-vs-kilmallock",
@@ -4261,7 +4473,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R4-2026-05-23-tournafulla-vs-knockaderry",
@@ -4281,7 +4494,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R6-2026-05-23-blackrock-vs-kildimo-pallaskenry",
@@ -4301,7 +4515,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R6-2026-05-23-croagh-kilfinny-vs-garryspillane",
@@ -4321,7 +4536,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R6-2026-05-23-dromin-athlacca-vs-newcastle-west",
@@ -4341,7 +4557,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R6-2026-05-23-mungret-st-pauls-vs-effin",
@@ -4361,7 +4578,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R6-2026-05-23-bruff-vs-cappamore",
@@ -4381,7 +4599,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R6-2026-05-23-bruree-vs-feohanagh",
@@ -4401,7 +4620,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R6-2026-05-23-granagh-ballingarry-vs-south-liberties",
@@ -4421,7 +4641,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R6-2026-05-23-murroe-boher-vs-glenroe",
@@ -4441,7 +4662,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R6-2026-05-23-feenagh-kilmeedy-vs-mungret-st-pauls",
@@ -4461,7 +4683,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R6-2026-05-23-hospital-herbertstown-vs-na-piarsaigh",
@@ -4481,7 +4704,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R6-2026-05-23-knockaderry-vs-pallasgreen",
@@ -4501,7 +4725,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R6-2026-05-23-st-kieran-s-vs-knockainey",
@@ -4521,7 +4746,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R6-2026-05-23-askeaton-ballysteen-kilcornan-vs-kilteely-dromkeen",
@@ -4541,7 +4767,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R6-2026-05-23-croom-vs-caherline",
@@ -4561,7 +4788,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R6-2026-05-23-ahane-vs-castletown-ballyagran",
@@ -4581,7 +4809,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R6-2026-05-23-dromcollogher-broadford-vs-claughaun",
@@ -4601,7 +4830,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R6-2026-05-23-kilmallock-vs-st-patrick-s",
@@ -4621,7 +4851,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R6-2026-05-23-templeglantine-vs-monagea",
@@ -4641,7 +4872,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R6-2026-05-23-bruff-vs-pallasgreen",
@@ -4661,7 +4893,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R6-2026-05-23-doon-vs-newcastle-west",
@@ -4681,7 +4914,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R6-2026-05-23-staker-wallace-vs-granagh-ballingarry",
@@ -4701,7 +4935,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R6-2026-05-23-adare-vs-blackrock",
@@ -4721,7 +4956,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R6-2026-05-23-ahane-vs-feohanagh",
@@ -4741,7 +4977,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R6-2026-05-23-glenroe-vs-murroe-boher",
@@ -4761,7 +4998,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R6-2026-05-24-askeaton-ballysteen-kilcornan-vs-ballybrown",
@@ -4781,7 +5019,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R6-2026-05-24-caherline-vs-na-piarsaigh",
@@ -4801,7 +5040,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R6-2026-05-24-cappamore-vs-fedamore",
@@ -4821,7 +5061,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R6-2026-05-24-effin-vs-patrickswell",
@@ -4841,7 +5082,8 @@
       "home_goals": 0,
       "home_points": 0,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": "away"
     },
     {
       "id": "league-11-R4-2026-05-24-ballybricken-bohermore-vs-garryspillane",
@@ -4861,7 +5103,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R4-2026-05-24-kildimo-pallaskenry-vs-dromin-athlacca",
@@ -4881,7 +5124,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R4-2026-05-24-knockainey-vs-castletown-ballyagran",
@@ -4901,7 +5145,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R4-2026-05-24-crecora-manister-vs-dromcollogher-broadford",
@@ -4921,7 +5166,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R4-2026-05-24-st-kieran-s-vs-staker-wallace",
@@ -4941,7 +5187,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R6-2026-05-24-crecora-manister-vs-doon",
@@ -4961,7 +5208,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R6-2026-05-24-tournafulla-vs-monaleen",
@@ -4981,7 +5229,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R6-2026-05-24-ballybricken-bohermore-vs-killeedy",
@@ -5001,7 +5250,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R6-2026-05-24-ballybrown-vs-patrickswell",
@@ -5021,7 +5271,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R6-2026-05-24-bruff-vs-kildimo-pallaskenry",
@@ -5041,7 +5292,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R6-2026-05-24-rathkeale-vs-garryspillane",
@@ -5061,7 +5313,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R7-2026-05-30-adare-vs-ahane",
@@ -5081,7 +5334,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R7-2026-05-30-ballybrown-vs-kilmallock",
@@ -5101,7 +5355,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R7-2026-05-30-monaleen-vs-doon",
@@ -5121,7 +5376,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-1-R7-2026-05-30-patrickswell-vs-na-piarsaigh",
@@ -5141,7 +5397,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R7-2026-05-30-dromin-athlacca-vs-croagh-kilfinny",
@@ -5161,7 +5418,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R7-2026-05-30-garryspillane-vs-blackrock",
@@ -5181,7 +5439,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R7-2026-05-30-kildimo-pallaskenry-vs-mungret-st-pauls",
@@ -5201,7 +5460,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-2-R7-2026-05-30-newcastle-west-vs-effin",
@@ -5221,7 +5481,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R7-2026-05-30-bruree-vs-granagh-ballingarry",
@@ -5241,7 +5502,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R7-2026-05-30-cappamore-vs-murroe-boher",
@@ -5261,7 +5523,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R7-2026-05-30-feohanagh-vs-glenroe",
@@ -5281,7 +5544,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-3-R7-2026-05-30-south-liberties-vs-bruff",
@@ -5301,7 +5565,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R7-2026-05-30-knockainey-vs-na-piarsaigh",
@@ -5321,7 +5586,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R7-2026-05-30-mungret-st-pauls-vs-hospital-herbertstown",
@@ -5341,7 +5607,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R7-2026-05-30-pallasgreen-vs-feenagh-kilmeedy",
@@ -5361,7 +5628,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-4-R7-2026-05-30-st-kieran-s-vs-knockaderry",
@@ -5381,7 +5649,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R7-2026-05-30-kilteely-dromkeen-vs-croom",
@@ -5401,7 +5670,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R7-2026-05-30-tournafulla-vs-crecora-manister",
@@ -5421,7 +5691,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R7-2026-05-30-claughaun-vs-castletown-ballyagran",
@@ -5441,7 +5712,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R7-2026-05-30-dromcollogher-broadford-vs-kilmallock",
@@ -5461,7 +5733,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R7-2026-05-30-monagea-vs-ahane",
@@ -5481,7 +5754,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-6-R7-2026-05-30-st-patrick-s-vs-templeglantine",
@@ -5501,7 +5775,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R7-2026-05-30-bruff-vs-doon",
@@ -5521,7 +5796,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R7-2026-05-30-newcastle-west-vs-staker-wallace",
@@ -5541,7 +5817,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-8-R7-2026-05-30-pallasgreen-vs-croagh-kilfinny",
@@ -5561,7 +5838,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R7-2026-05-30-adare-vs-glenroe",
@@ -5581,7 +5859,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R7-2026-05-30-blackrock-vs-bruree",
@@ -5601,7 +5880,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R7-2026-05-30-feohanagh-vs-feenagh-kilmeedy",
@@ -5621,7 +5901,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-9-R7-2026-05-30-murroe-boher-vs-ahane",
@@ -5641,7 +5922,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R7-2026-05-31-cappamore-vs-effin",
@@ -5661,7 +5943,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R7-2026-05-31-fedamore-vs-ballybrown",
@@ -5681,7 +5964,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R7-2026-05-31-na-piarsaigh-vs-askeaton-ballysteen-kilcornan",
@@ -5701,7 +5985,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-10-R7-2026-05-31-patrickswell-vs-caherline",
@@ -5721,7 +6006,8 @@
       "home_goals": 0,
       "home_points": 0,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": "home"
     },
     {
       "id": "league-11-R5-2026-05-31-ballybricken-bohermore-vs-kildimo-pallaskenry",
@@ -5741,7 +6027,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R5-2026-05-31-castletown-ballyagran-vs-garryspillane",
@@ -5761,7 +6048,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-11-R5-2026-05-31-dromin-athlacca-vs-knockainey",
@@ -5781,7 +6069,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R5-2026-05-31-crecora-manister-vs-knockaderry",
@@ -5801,7 +6090,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R5-2026-05-31-staker-wallace-vs-dromcollogher-broadford",
@@ -5821,7 +6111,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-12-R5-2026-05-31-tournafulla-vs-st-kieran-s",
@@ -5841,7 +6132,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R7-2026-05-31-doon-vs-askeaton-ballysteen-kilcornan",
@@ -5861,7 +6153,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-5-R7-2026-05-31-monaleen-vs-caherline",
@@ -5881,7 +6174,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R7-2026-05-31-ballybricken-bohermore-vs-rathkeale",
@@ -5901,7 +6195,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R7-2026-05-31-garryspillane-vs-ballybrown",
@@ -5921,7 +6216,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R7-2026-05-31-killeedy-vs-kildimo-pallaskenry",
@@ -5941,7 +6237,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     },
     {
       "id": "league-7-R7-2026-05-31-patrickswell-vs-bruff",
@@ -5961,7 +6258,8 @@
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
-      "away_points": null
+      "away_points": null,
+      "walkover_winner": null
     }
   ]
 }
