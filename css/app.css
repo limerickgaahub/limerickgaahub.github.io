@@ -173,11 +173,6 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   white-space:nowrap;
 }
 
-/* Keep the brand row stable when the badge appears */
-.brand{
-  min-width:0;
-  gap:10px;
-}
 
 @media (max-width:880px){
   .hero-season-badge{
@@ -201,8 +196,6 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .offcanvas{ position:fixed; inset:0 0 0 auto; width:80%; max-width:320px; background:#fff; box-shadow:-10px 0 24px rgba(0,0,0,.12); transform:translateX(100%); transition:transform .25s ease; z-index:120; }
 .offcanvas.open{ transform:translateX(0); }
 .offcanvas .oc-head{ padding:14px 16px; font-weight:800; border-bottom:1px solid var(--line); }
-.offcanvas .oc-body{ padding:10px; display:flex; flex-direction:column; gap:8px; }
-
 
 .offcanvas .oc-badge{
   font-size:12px;
@@ -212,8 +205,6 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   color:var(--accent);
   font-weight:800;
 }
-
-/* Remove any green tint from the specific 2025 Hurling item */
 
 .oc-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .2s; z-index:110; }
 .oc-backdrop.show{ opacity:1; pointer-events:auto; }
@@ -1774,6 +1765,14 @@ body.is-archive{
    BURGER MENU — final clean version
    ========================================================= */
 
+.offcanvas .oc-head{
+  padding:14px 16px;
+  font-size:16px;
+  font-weight:850;
+  color:#0f172a;
+  border-bottom:1px solid var(--line);
+}
+
 .offcanvas .oc-body{
   padding:4px 10px 12px;
   display:flex;
@@ -1799,8 +1798,10 @@ body.is-archive{
   cursor:default;
 }
 
-
 .offcanvas .oc-head + .oc-body .oc-heading:first-child{
+  margin-top:6px;
+  padding-top:4px;
+}
 
 .offcanvas .oc-link + .oc-heading{
   margin-top:16px;
@@ -1859,6 +1860,7 @@ body.is-archive{
   color:var(--accent);
   transform:translateX(1px);
 }
+
 .offcanvas .oc-link.oc-about{
   margin-top:18px;
   padding-top:14px;
