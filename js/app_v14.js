@@ -549,9 +549,9 @@ if (isWO) {
   // 1) Else prefer explicit W/O tag beside the team name:
   // that side has W/O, so the OTHER side receives the walkover
   else if (homeHasWO) {
-    out.walkover_winner = 'away';
-  } else if (awayHasWO) {
     out.walkover_winner = 'home';
+  } else if (awayHasWO) {
+    out.walkover_winner = 'away';
   } else {
     // 2) Fallback: parse status like "Walkover – Murroe Boher" (giver named in status)
     const s = String(out.status).toLowerCase();
