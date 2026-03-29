@@ -484,6 +484,11 @@
     // Burger
     (function(){
       const burger=document.getElementById('burger'), oc=document.getElementById('offcanvas'), bd=document.getElementById('oc-backdrop');
+    
+      oc.classList.remove('open');
+      bd.classList.remove('show');
+      oc.setAttribute('aria-hidden','true');
+    
       const open=()=>{ oc.classList.add('open'); bd.classList.add('show'); oc.setAttribute('aria-hidden','false'); };
       const close=()=>{ oc.classList.remove('open'); bd.classList.remove('show'); oc.setAttribute('aria-hidden','true'); };
       burger.addEventListener('click', open);
