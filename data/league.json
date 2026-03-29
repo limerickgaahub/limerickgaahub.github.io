@@ -1,7 +1,7 @@
 {
   "competition": "County Hurling League",
   "season": 2026,
-  "updated_at": "2026-03-29T00:19:18",
+  "updated_at": "2026-03-29T01:03:19",
   "fixtures": [
     {
       "id": "league-10-R1-2026-03-21-askeaton-ballysteen-kilcornan-vs-patrickswell",
@@ -22,7 +22,7 @@
       "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": "away"
+      "walkover_winner": "home"
     },
     {
       "id": "league-10-R1-2026-03-21-ballybrown-vs-na-piarsaigh",
@@ -694,7 +694,7 @@
       "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": "home"
+      "walkover_winner": "away"
     },
     {
       "id": "league-2-R2-2026-03-28-dromin-athlacca-vs-mungret-st-pauls",
@@ -1051,7 +1051,7 @@
       "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": "away"
+      "walkover_winner": "home"
     },
     {
       "id": "league-1-R2-2026-03-29-adare-vs-kilmallock",
@@ -1345,7 +1345,7 @@
       "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": "away"
+      "walkover_winner": "home"
     },
     {
       "id": "league-9-R2-2026-04-04-feohanagh-vs-blackrock",
@@ -1807,7 +1807,7 @@
       "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": "away"
+      "walkover_winner": "home"
     },
     {
       "id": "league-2-R3-2026-04-18-effin-vs-dromin-athlacca",
@@ -2710,7 +2710,7 @@
       "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": "home"
+      "walkover_winner": "away"
     },
     {
       "id": "league-2-R4-2026-04-25-blackrock-vs-mungret-st-pauls",
@@ -4138,7 +4138,7 @@
       "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": "home"
+      "walkover_winner": "away"
     },
     {
       "id": "league-11-R3-2026-05-17-castletown-ballyagran-vs-kildimo-pallaskenry",
@@ -5083,7 +5083,7 @@
       "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": "away"
+      "walkover_winner": "home"
     },
     {
       "id": "league-11-R4-2026-05-24-ballybricken-bohermore-vs-garryspillane",
@@ -6007,7 +6007,7 @@
       "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": "home"
+      "walkover_winner": "away"
     },
     {
       "id": "league-11-R5-2026-05-31-ballybricken-bohermore-vs-kildimo-pallaskenry",
