@@ -5,7 +5,7 @@
   --text:#111;
   --muted:#6b7280;
 
-  --accent:#0b7a4a;
+  --accent:#08633c;
   --accent-2:#88C999;
 
   --line:#e6e9ee;                 /* refined border */
@@ -1867,4 +1867,50 @@ body.is-archive{
   border-top:1px solid rgba(16,24,40,.08);
   border-top-left-radius:0;
   border-top-right-radius:0;
+}
+/* =========================================================
+   FINAL PATCH — unify green + desktop spacing
+   Using #08633c as the master site green
+   ========================================================= */
+
+/* make all top/sticky green elements use the same green */
+#top-controls.card::before,
+#date-colhead::before,
+thead th,
+#g-standings-table thead th,
+#league-standings-table thead th,
+#g-standings-table thead th:nth-child(1),
+#g-standings-table thead th:nth-child(2),
+#g-standings-table thead th:nth-child(3),
+#league-standings-table thead th:nth-child(1),
+#league-standings-table thead th:nth-child(2),
+#league-standings-table thead th:nth-child(3){
+  background:var(--accent) !important;
+}
+
+/* where you set green seams on sticky standings headers, match them too */
+#g-standings-table thead th,
+#league-standings-table thead th,
+#g-standings-table thead th:nth-child(1),
+#g-standings-table thead th:nth-child(2),
+#g-standings-table thead th:nth-child(3),
+#league-standings-table thead th:nth-child(1),
+#league-standings-table thead th:nth-child(2),
+#league-standings-table thead th:nth-child(3){
+  border-right-color:var(--accent) !important;
+}
+
+/* desktop only */
+@media (min-width:881px){
+
+  /* make the green mask above the top tabs a bit taller */
+  #top-controls.card::before{
+    top:-14px !important;
+    height:14px !important;
+  }
+
+  /* lower the main content card slightly so it clears the top tab bar */
+  #data-shell.card{
+    margin-top:12px !important;
+  }
 }
