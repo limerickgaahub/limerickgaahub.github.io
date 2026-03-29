@@ -2034,10 +2034,12 @@ function renderByTeam(){
   VIEW_MODE='team';
   const sel = el('team');
 
-  const teamName = s => String(s || '')
-    .replace(/\(\s*W\/\s*O\s*\)/gi, '')
-    .replace(/\bW\/\s*O\b/gi, '')
-    .trim();
+const teamName = s => String(s || '')
+  .replace(/\(\s*W\/\s*O\s*\)/gi, '')
+  .replace(/\bW\s*\/\s*O\b/gi, '')
+  .replace(/\bwalkover\b/gi, '')
+  .replace(/\s+/g, ' ')
+  .trim();
 
   const looksLikeClub = s => {
     const x = teamName(s);
@@ -2071,9 +2073,17 @@ function renderByTeam(){
 
     if (!team) { tbody.innerHTML=''; return; }
 
-    const rows = MATCHES
-      .filter(r => teamName(r.home) === team || teamName(r.away) === team)
-      .sort((a,b) => resultRank(a) - resultRank(b) || sortDateComp(a,b));
+const normTeam = s => teamName(s).toLowerCase();
+
+const rows = MATCHES
+  .filter(r => {
+    const home = normTeam(r.home);
+    const away = normTeam(r.away);
+    const sel  = normTeam(team);
+
+    return home === sel || away === sel;
+  })
+  .sort((a,b) => resultRank(a) - resultRank(b) || sortDateComp(a,b));
 
     tbody.innerHTML = rows.map(r => rowHTML(r, isMobile, isTiny)).join('');
     LGH_ANALYTICS.viewTeam(team);
