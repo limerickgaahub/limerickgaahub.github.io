@@ -2000,3 +2000,78 @@ thead th,
     margin-top:12px !important;
   }
 }
+/* =========================================================
+   iOS SAFARI ONLY — stop default blue control tint
+   Targets actual controls in your HTML:
+   .seg buttons, .burger button, date input, selects
+   ========================================================= */
+@supports (-webkit-touch-callout: none) {
+
+  /* Top-level view tabs and other segmented buttons */
+  .section-tabs .seg,
+  .section-tabs .seg.vt,
+  #view-tabs .seg,
+  #league-view-tabs .seg,
+  #comp-view-tabs .seg,
+  .sportseg button,
+  .burger,
+  .iconbtn {
+    -webkit-appearance: none;
+    appearance: none;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+  }
+
+  /* Active segmented controls stay green */
+  .section-tabs .seg.active,
+  .section-tabs .seg.vt.active,
+  #view-tabs .seg.active,
+  #league-view-tabs .seg.active,
+  #comp-view-tabs .seg.active,
+  .sportseg button.active {
+    color: var(--accent) !important;
+    -webkit-text-fill-color: var(--accent) !important;
+  }
+
+  /* Burger icon */
+  .burger i {
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+  }
+
+  /* Native selects */
+  .pretty-select select,
+  #league-div,
+  #team,
+  #status {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    background: transparent;
+  }
+
+  /* Date input */
+  .pretty-input input[type="date"],
+  #date-input {
+    -webkit-appearance: none;
+    appearance: none;
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    background: transparent;
+  }
+
+  /* iOS Safari internal date parts */
+  .pretty-input input[type="date"]::-webkit-date-and-time-value,
+  .pretty-input input[type="date"]::-webkit-datetime-edit,
+  .pretty-input input[type="date"]::-webkit-datetime-edit-text,
+  .pretty-input input[type="date"]::-webkit-datetime-edit-month-field,
+  .pretty-input input[type="date"]::-webkit-datetime-edit-day-field,
+  .pretty-input input[type="date"]::-webkit-datetime-edit-year-field {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+  }
+
+  /* Keep the calendar icon subtle, not blue-tinted text */
+  .pretty-input input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: .65;
+  }
+}
