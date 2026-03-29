@@ -871,16 +871,6 @@ body.comp-home #table-footnote{
   color:var(--accent);
 }
 
-/* =========================================================
-   ARCHIVE INDICATOR (text only; no pills)
-   ========================================================= */
-
-#season-banner:empty::before{ display:none; }
-
-/* hard-disable any old chip markup if still present */
-#season-banner .season-chips,
-#season-banner .season-chip{ display:none !important; }
-
 
 /* =========================================================
    ABOUT PANEL
@@ -1390,12 +1380,21 @@ body.is-archive{
 }
 
 /* Season/archive text kept tight */
-#panel-hurling > #season-banner{
+#season-banner{
   max-width:1100px;
-  margin:0 auto 4px;
-  padding:0 2px;
-  min-height:0;
-  line-height:1.1;
+  margin:8px auto 6px;
+  padding:0;
+  text-align:center;
+  color:#ffffff;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  line-height:1.2;
+}
+
+#season-banner[hidden]{
+  display:none !important;
 }
 
 
