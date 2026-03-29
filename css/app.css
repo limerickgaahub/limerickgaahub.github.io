@@ -1768,18 +1768,6 @@ body.is-archive{
   cursor:default;
 }
 
-.offcanvas .oc-heading::before{
-  content:"";
-  position:absolute;
-  left:12px;
-  top:50%;
-  transform:translateY(-50%);
-  width:6px;
-  height:6px;
-  border-radius:999px;
-  background:var(--accent);
-  opacity:.9;
-}
 
 .offcanvas .oc-head + .oc-body .oc-heading:first-child{
   margin-top:0;
@@ -1878,16 +1866,15 @@ body.is-archive{
 }
 
 .offcanvas .oc-heading{
-  position:relative;
   display:block;
-  margin:2px 0 8px;
-  padding:3px 12px 4px 24px;
-  font-size:12px;
+  margin:4px 0 8px;
+  padding:6px 12px 4px;
+  font-size:14px;
   font-weight:900;
   line-height:1.1;
-  letter-spacing:.12em;
+  letter-spacing:.04em;
   text-transform:uppercase;
-  color:#6b7280;
+  color:#374151;
   background:transparent;
   border:0;
   box-shadow:none;
@@ -1961,6 +1948,21 @@ body.is-archive{
 .offcanvas .oc-link:hover{
   background:rgba(11,122,74,.07);
   color:var(--accent);
+}
+
+.offcanvas .oc-link.oc-about{
+  margin-top:14px;
+  padding-top:14px;
+}
+
+.offcanvas .oc-link.oc-about::before{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  top:0;
+  height:1px;
+  background:rgba(16,24,40,.10);
 }
 
 .offcanvas .oc-link:active{
