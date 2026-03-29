@@ -161,27 +161,6 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .offcanvas .oc-body{ padding:10px; display:flex; flex-direction:column; gap:8px; }
 
 
-/* Optional: make About feel like a distinct "pill" */
-.offcanvas .oc-link.oc-about{
-  background:var(--surface-3);
-  border:1px solid rgba(16,24,40,.06);
-}
-
-.offcanvas .oc-heading + .oc-link{ margin-top:2px; }
-.offcanvas .oc-link + .oc-heading{ margin-top:10px; }
-
-.offcanvas .oc-link{
-  padding:10px 12px;
-  border-radius:12px;
-  background:#f6f7f8;
-  cursor:pointer;
-  font-weight:700;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
 .offcanvas .oc-badge{
   font-size:12px;
   padding:2px 8px;
@@ -202,16 +181,6 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .offcanvas .oc-link[data-season="2025"][data-sport="hurling"] .oc-badge{
   background:rgba(16,24,40,.08) !important;
   color:var(--text) !important;
-}
-
-
-/* Emphasise 2026 + Archive in burger */
-.offcanvas .oc-link[data-season="2026"],
-.offcanvas .oc-link.oc-2026{
-  font-weight:900;
-  background:var(--surface-3);
-  margin-top:14px;
-  border:1px solid rgba(16,24,40,.10);
 }
 
 .oc-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .2s; z-index:110; }
@@ -955,108 +924,7 @@ body.is-archive{
   background:#f3f4f6; /* slightly cooler grey */
 }
 
-/* =========================================================
-   BURGER MENU TIDY-UPS (exact to your index.html)
-   ========================================================= */
 
-/* 1) Make 2026 + Archive headings more prominent */
-.offcanvas .oc-heading{
-  font-size:13px;              /* was 12px */
-  font-weight:950;             /* was 900 */
-  color:#111;                  /* was muted */
-  letter-spacing:.04em;        /* slightly less spaced */
-  padding:10px 12px 4px;       /* a bit more presence */
-}
-
-/* Optional: add a divider before Archive section */
-.offcanvas .oc-heading:nth-of-type(2){
-  margin-top:10px;
-  padding-top:14px;
-  border-top:1px solid var(--line);
-}
-
-/* 2) 2025 Hurling should NOT be shaded green (you currently tint .oc-archive) */
-.offcanvas .oc-link.oc-archive{
-  background:#f6f7f8;          /* match normal oc-link bg */
-  border:1px solid rgba(16,24,40,.06);
-  color:var(--text);
-}
-
-/* If it has a badge in future, keep it neutral too */
-.offcanvas .oc-link.oc-archive .oc-badge{
-  background:rgba(16,24,40,.08);
-  color:var(--text);
-}
-
-/* 3) About lower down + clearly separated */
-.offcanvas .oc-link.oc-about{
-  margin-top:16px;
-  position:relative;
-}
-
-/* Divider above About */
-.offcanvas .oc-link.oc-about::before{
-  content:"";
-  position:absolute;
-  left:12px;
-  right:12px;
-  top:-10px;
-  height:1px;
-  background:var(--line);
-}
-
-
-/* =========================================================
-   POLISH PASS 1 — append-only overrides
-   ========================================================= */
-
-/* 1) Strong Limerick green outside the main container only */
-body,
-body.is-archive{
-  background:#0b7a4a;
-}
-
-/* Keep the main site header/hero bar white */
-.header{
-  background:rgba(255,255,255,.94);
-  border-bottom:1px solid rgba(16,24,40,.05);
-  box-shadow:0 1px 0 rgba(16,24,40,.04);
-}
-
-.header::before{
-  background:var(--accent);
-}
-
-.header,
-.header h1,
-.header .navtab{
-  color:inherit;
-}
-
-/* 2) Make the main white containers stand out more against green */
-.card{
-  border:1px solid rgba(16,24,40,.06);
-  box-shadow:
-    0 1px 2px rgba(16,24,40,.05),
-    0 10px 28px rgba(16,24,40,.10);
-}
-
-/* 3) Table header row: strong green with white text */
-thead th{
-  background:#0b7a4a;
-  color:#ffffff;
-  font-weight:850;
-  letter-spacing:.04em;
-  border-bottom:1px solid rgba(0,0,0,.16);
-}
-
-/* 4) Team names become the hero */
-.match-team{
-  font-weight:800;
-  font-size:15px;
-  line-height:1.12;
-  color:#0b1320;
-}
 
 /* =========================================================
    POLISH PASS 2 — mobile league spacing + dropdown polish
@@ -1860,104 +1728,10 @@ thead th{
     right:-4px;
   }
 }
-/* =========================================================
-   BURGER MENU — headers vs clickable items
-   ========================================================= */
 
-/* Section headers: 2026 / Archive */
-.offcanvas .oc-heading{
-  display:block;
-  padding:14px 12px 6px;
-  margin:8px 0 2px;
-  font-size:15px;
-  font-weight:900;
-  line-height:1.15;
-  letter-spacing:.02em;
-  text-transform:none;
-  color:#0f172a;
-  background:transparent;
-  border:0;
-  box-shadow:none;
-  pointer-events:none;
-  cursor:default;
-}
-
-/* Archive divider */
-.offcanvas .oc-heading + .oc-heading,
-.offcanvas .oc-link + .oc-heading{
-  margin-top:12px;
-}
-
-.offcanvas .oc-heading:nth-of-type(2){
-  padding-top:14px;
-  border-top:1px solid var(--line);
-}
-
-/* Clickable rows */
-.offcanvas .oc-link{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:12px 12px;
-  margin:0 0 8px;
-  border-radius:12px;
-  background:#f3f4f6;
-  border:1px solid rgba(16,24,40,.06);
-  color:#0f172a;
-  font-size:15px;
-  font-weight:750;
-  line-height:1.2;
-  cursor:pointer;
-  box-shadow:none;
-}
-
-/* Clickable hover/tap feel */
-.offcanvas .oc-link:hover{
-  background:#e9edf1;
-}
-
-.offcanvas .oc-link:active{
-  transform:translateY(1px);
-}
-
-/* Neutralise any old special styling that makes headers/items look wrong */
-.offcanvas .oc-link[data-season="2026"],
-.offcanvas .oc-link.oc-2026{
-  background:#f3f4f6 !important;
-  border:1px solid rgba(16,24,40,.06) !important;
-  font-weight:750 !important;
-  margin-top:0 !important;
-  color:#0f172a !important;
-}
-
-/* Keep archive item clickable, but not green or special */
-.offcanvas .oc-link.oc-archive,
-.offcanvas .oc-link.oc-2025-hurling,
-.offcanvas .oc-link[data-season="2025"][data-sport="hurling"]{
-  background:#f3f4f6 !important;
-  border:1px solid rgba(16,24,40,.06) !important;
-  color:#0f172a !important;
-}
-
-/* About separated slightly from the season groups */
-.offcanvas .oc-link.oc-about{
-  margin-top:14px;
-  position:relative;
-}
-
-.offcanvas .oc-link.oc-about::before{
-  content:"";
-  position:absolute;
-  left:12px;
-  right:12px;
-  top:-8px;
-  height:1px;
-  background:var(--line);
-}
 
 /* =========================================================
-   BURGER MENU — clearer hierarchy final
+   BURGER MENU — hierarchy fix for button-based rows
    ========================================================= */
 
 .offcanvas .oc-body{
@@ -1968,7 +1742,6 @@ thead th{
   background:#fff;
 }
 
-/* Section headers: non-clickable */
 .offcanvas .oc-heading{
   position:relative;
   display:block;
@@ -1987,7 +1760,6 @@ thead th{
   cursor:default;
 }
 
-/* green accent marker for headers */
 .offcanvas .oc-heading::before{
   content:"";
   position:absolute;
@@ -2001,48 +1773,46 @@ thead th{
   opacity:.9;
 }
 
-/* First heading sits tighter under Menu */
 .offcanvas .oc-head + .oc-body .oc-heading:first-child{
   margin-top:0;
   padding-top:0;
 }
 
-/* Clear separation before Archive */
 .offcanvas .oc-link + .oc-heading{
   margin-top:16px;
   padding-top:12px;
   border-top:1px solid rgba(16,24,40,.08);
 }
 
-/* Main clickable rows */
 .offcanvas .oc-link{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
   position:relative;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
-
   margin:0;
   padding:12px 12px;
   border:0;
   border-radius:12px;
   background:transparent;
   box-shadow:none;
-
   color:#0f172a;
   font-size:15px;
   font-weight:800;
   line-height:1.2;
+  text-align:left;
   text-decoration:none;
   cursor:pointer;
-
-  transition:
-    background-color .16s ease,
-    color .16s ease,
-    transform .08s ease;
+  transition:background-color .16s ease,color .16s ease,transform .08s ease;
 }
 
-/* subtle line between clickable rows */
+.offcanvas .oc-link + .oc-link{
+  margin-top:2px;
+}
+
 .offcanvas .oc-link::after{
   content:"";
   position:absolute;
@@ -2053,12 +1823,6 @@ thead th{
   background:rgba(16,24,40,.06);
 }
 
-/* keep rows visually linked but not cramped */
-.offcanvas .oc-link + .oc-link{
-  margin-top:2px;
-}
-
-/* interactive feel */
 .offcanvas .oc-link:hover{
   background:rgba(11,122,74,.07);
   color:var(--accent);
@@ -2069,51 +1833,145 @@ thead th{
   transform:translateY(1px);
 }
 
-/* trailing chevron/icon */
-.offcanvas .oc-link .chev,
-.offcanvas .oc-link i:last-child{
+.offcanvas .oc-link-text{
+  flex:1 1 auto;
+  min-width:0;
+}
+
+.offcanvas .oc-link-right{
+  flex:0 0 auto;
   color:rgba(15,23,42,.34);
   transition:color .16s ease, transform .16s ease;
 }
 
-.offcanvas .oc-link:hover .chev,
-.offcanvas .oc-link:hover i:last-child{
+.offcanvas .oc-link:hover .oc-link-right{
   color:var(--accent);
   transform:translateX(1px);
 }
 
-/* neutralise all old block/button styling */
-.offcanvas .oc-link[data-season="2026"],
-.offcanvas .oc-link.oc-2026,
-.offcanvas .oc-link.oc-archive,
-.offcanvas .oc-link.oc-2025-hurling,
-.offcanvas .oc-link[data-season="2025"][data-sport="hurling"],
 .offcanvas .oc-link.oc-about{
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-  color:#0f172a !important;
   margin-top:0 !important;
 }
 
-/* About = separate utility action, still clickable */
-.offcanvas .oc-link.oc-about{
-  margin-top:18px !important;
-  padding-top:14px;
-  font-weight:750;
-  color:#374151 !important;
+.offcanvas .oc-link.oc-about::after{
+  background:rgba(16,24,40,.06);
 }
 
-.offcanvas .oc-link.oc-about::before{
+/* =========================================================
+   BURGER MENU — final clean version
+   ========================================================= */
+
+.offcanvas .oc-body{
+  padding:4px 10px 12px;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  background:#fff;
+}
+
+.offcanvas .oc-heading{
+  position:relative;
+  display:block;
+  margin:2px 0 8px;
+  padding:3px 12px 4px 24px;
+  font-size:12px;
+  font-weight:900;
+  line-height:1.1;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#6b7280;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  pointer-events:none;
+  cursor:default;
+}
+
+.offcanvas .oc-heading::before{
+  content:"";
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:6px;
+  height:6px;
+  border-radius:999px;
+  background:var(--accent);
+  opacity:.9;
+}
+
+.offcanvas .oc-head + .oc-body .oc-heading:first-child{
+  margin-top:0;
+  padding-top:0;
+}
+
+.offcanvas .oc-link + .oc-heading{
+  margin-top:16px;
+  padding-top:12px;
+  border-top:1px solid rgba(16,24,40,.08);
+}
+
+.offcanvas .oc-link{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:0;
+  padding:12px 12px;
+  border:0;
+  border-radius:12px;
+  background:transparent;
+  box-shadow:none;
+  color:#0f172a;
+  font-size:15px;
+  font-weight:800;
+  line-height:1.2;
+  text-align:left;
+  text-decoration:none;
+  cursor:pointer;
+  transition:background-color .16s ease,color .16s ease,transform .08s ease;
+}
+
+.offcanvas .oc-link + .oc-link{
+  margin-top:2px;
+}
+
+.offcanvas .oc-link::after{
   content:"";
   position:absolute;
   left:12px;
   right:12px;
-  top:0;
+  bottom:0;
   height:1px;
-  background:rgba(16,24,40,.10);
+  background:rgba(16,24,40,.06);
 }
 
-.offcanvas .oc-link.oc-about::after{
-  background:transparent;
+.offcanvas .oc-link:hover{
+  background:rgba(11,122,74,.07);
+  color:var(--accent);
+}
+
+.offcanvas .oc-link:active{
+  background:rgba(11,122,74,.11);
+  transform:translateY(1px);
+}
+
+.offcanvas .oc-link-text{
+  flex:1 1 auto;
+  min-width:0;
+}
+
+.offcanvas .oc-link-right{
+  flex:0 0 auto;
+  color:rgba(15,23,42,.34);
+  transition:color .16s ease, transform .16s ease;
+}
+
+.offcanvas .oc-link:hover .oc-link-right{
+  color:var(--accent);
+  transform:translateX(1px);
 }
