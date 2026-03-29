@@ -2030,31 +2030,29 @@ tbody.innerHTML = sorted.map(r => `
   if (showTable) renderLeagueStandings();
 }
 
-
 function renderByTeam(){
   VIEW_MODE='team';
   const sel = el('team');
 
-  const cleanName = s => String(s || '')
+  const teamName = s => String(s || '')
     .replace(/\(\s*W\/\s*O\s*\)/gi, '')
     .replace(/\bW\/\s*O\b/gi, '')
-    .replace(/\s{2,}/g,' ')
     .trim();
 
   const looksLikeClub = s => {
-    const x = (s || '').trim();
+    const x = teamName(s);
     if (!x) return false;
-    if (/\bgroup\b/i.test(x)) return false;                                
+    if (/\bgroup\b/i.test(x)) return false;
     if (/^(winner|winners|runner|runners-?up|loser|losers)\b/i.test(x)) return false;
-    if (TEAM_EXCLUDE_RE.test(x)) return false;   // NEW: hide QF/SF placeholders
+    if (TEAM_EXCLUDE_RE.test(x)) return false;
     if (/^(tbc|bye)$/i.test(x)) return false;
     if (CLUB_EXCLUDE.has(x)) return false;
     return true;
   };
 
   const teams = [...new Set(
-    MATCHES.flatMap(r => [cleanName(r.home), cleanName(r.away)]).filter(looksLikeClub)
-  )].sort();
+    MATCHES.flatMap(r => [teamName(r.home), teamName(r.away)]).filter(looksLikeClub)
+  )].sort((a,b) => a.localeCompare(b, undefined, { numeric:true, sensitivity:'base' }));
 
   sel.innerHTML = '<option value="">Select club…</option>' +
                   teams.map(t => `<option>${esc(t)}</option>`).join('');
@@ -2074,8 +2072,8 @@ function renderByTeam(){
     if (!team) { tbody.innerHTML=''; return; }
 
     const rows = MATCHES
-      .filter(r => cleanName(r.home) === team || cleanName(r.away) === team)
-      .sort((a,b) => resultRank(a) - resultRank(b) || sortRoundDate(a,b));
+      .filter(r => teamName(r.home) === team || teamName(r.away) === team)
+      .sort((a,b) => resultRank(a) - resultRank(b) || sortDateComp(a,b));
 
     tbody.innerHTML = rows.map(r => rowHTML(r, isMobile, isTiny)).join('');
     LGH_ANALYTICS.viewTeam(team);
@@ -2091,7 +2089,6 @@ function renderByTeam(){
 
   if (params.team) { sel.value = params.team; sel.dispatchEvent(new Event('change')); }
 }
-
 
 function renderByDate(){
   VIEW_MODE='date';
