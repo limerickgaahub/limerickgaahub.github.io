@@ -295,18 +295,6 @@ function mapVenue(v){
   const params=new Proxy(new URLSearchParams(location.search),{get:(sp,prop)=>sp.get(prop)});
   const state={ season:DEFAULT_SEASON, section:'hurling', view:'matches', comp:null, group:null, team:null, date:null, leagueDiv:null };
 
-  const heroSeasonBadge = document.getElementById('hero-season-badge');
-
-function updateHeroSeasonBadge(){
-  if (!heroSeasonBadge) return;
-
-  if (state.season && state.season !== DEFAULT_SEASON) {
-    heroSeasonBadge.textContent = state.season;
-    heroSeasonBadge.hidden = false;
-  } else {
-    heroSeasonBadge.hidden = true;
-  }
-}
 
   // Read season from URL (?season=2025). Default is 2026 (no query param needed).
   const reqSeason = params.season || DEFAULT_SEASON;
@@ -315,45 +303,31 @@ function updateHeroSeasonBadge(){
   DATA_URL = SEASON_SOURCES[state.season].data;
   KO_URL   = SEASON_SOURCES[state.season].ko;
   LEAGUE_URL = SEASON_SOURCES[state.season].league;
-  LEAGUE_OVERRIDES_URL = (state.season === '2026') ? 'data/league_overrides.json' : null;
-
-  updateHeroSeasonBadge();
-  
-  const seasonIndicator = document.getElementById('season-indicator');
-const season = state.season; // <-- add this
-
-if (season !== '2026' && seasonIndicator) {
-  seasonIndicator.textContent = `${season} Season · Archive`;
-} else if (seasonIndicator) {
-  seasonIndicator.textContent = '';
-}
-  
+  LEAGUE_OVERRIDES_URL = (state.season === '2026') ? 'data/league_overrides.json' : null; 
   
   // ---------- Season UI (chips/banner + hide League pill in archive) ----------
-  function ensureSeasonBanner(){
-    let b = document.getElementById('season-banner');
-    if (!b) {
-      b = document.createElement('div');
-      b.id = 'season-banner';
-      b.className = 'season-banner';
-      // Put it just under the view tabs if possible, else at top of hurling panel
-      const viewTabs = document.querySelector('#panel-hurling .section-tabs.view-tabs');
-      if (viewTabs && viewTabs.parentElement) viewTabs.insertAdjacentElement('afterend', b);
-      else document.querySelector('#panel-hurling')?.prepend(b);
-    }
-    return b;
-  }
+function ensureSeasonBanner(){
+  let b = document.getElementById('season-banner');
+  if (!b) return null;
+  return b;
+}
 
-  function setSeasonBanner(){
-    const b = ensureSeasonBanner();
-  
+function setSeasonBanner(){
+  const b = ensureSeasonBanner();
+  if (!b) return;
+
+  const showArchiveBanner =
+    state.section === 'hurling' &&
+    state.season === '2025';
+
+  if (showArchiveBanner) {
     b.hidden = false;
-    b.innerHTML = `
-      <div class="season-chips" role="status" aria-label="Season indicator">
-        <span class="season-chip" data-season="${esc(state.season)}">${esc(state.season)}</span>
-      </div>
-    `;
+    b.textContent = '2025 SEASON · ARCHIVE';
+  } else {
+    b.hidden = true;
+    b.textContent = '';
   }
+}
 
   function toggleLeaguePillForSeason(){
     const isArchive = (state.season === '2025');
