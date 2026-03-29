@@ -1955,3 +1955,162 @@ thead th{
   height:1px;
   background:var(--line);
 }
+
+/* =========================================================
+   BURGER MENU — premium final pass
+   ========================================================= */
+
+/* Drawer body: tighten the space under "Menu" */
+.offcanvas .oc-body{
+  padding:4px 10px 12px;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  background:#ffffff;
+}
+
+/* Section headers: 2026 / Archive */
+.offcanvas .oc-heading{
+  display:block;
+  margin:2px 0 4px;
+  padding:4px 12px 6px;
+  font-size:13px;
+  font-weight:900;
+  line-height:1.1;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#4b5563;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  pointer-events:none;
+  cursor:default;
+}
+
+/* Pull first heading closer to Menu */
+.offcanvas .oc-head + .oc-body .oc-heading:first-child{
+  margin-top:0;
+  padding-top:2px;
+}
+
+/* Clear section break before Archive */
+.offcanvas .oc-link + .oc-heading{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid rgba(16,24,40,.08);
+}
+
+/* Base clickable rows */
+.offcanvas .oc-link{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+
+  margin:0;
+  padding:12px 12px;
+
+  background:transparent;
+  border:0;
+  border-radius:12px;
+  box-shadow:none;
+
+  color:#0f172a;
+  font-size:15px;
+  font-weight:780;
+  line-height:1.2;
+  text-decoration:none;
+  cursor:pointer;
+
+  transition:
+    background-color .16s ease,
+    color .16s ease,
+    transform .08s ease;
+}
+
+/* Subtle divider rhythm between rows */
+.offcanvas .oc-link + .oc-link{
+  margin-top:2px;
+}
+
+/* Premium hover / tap */
+.offcanvas .oc-link:hover{
+  background:rgba(11,122,74,.07);
+  color:var(--accent);
+}
+
+.offcanvas .oc-link:active{
+  background:rgba(11,122,74,.11);
+  transform:translateY(1px);
+}
+
+/* Soft inset line for structure without boxing */
+.offcanvas .oc-link::after{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:0;
+  height:1px;
+  background:rgba(16,24,40,.05);
+}
+
+/* No divider after last row in a section if About is separated anyway */
+.offcanvas .oc-link.oc-about::after{
+  display:none;
+}
+
+/* Neutralise old special-case box styling */
+.offcanvas .oc-link[data-season="2026"],
+.offcanvas .oc-link.oc-2026,
+.offcanvas .oc-link.oc-archive,
+.offcanvas .oc-link.oc-2025-hurling,
+.offcanvas .oc-link[data-season="2025"][data-sport="hurling"],
+.offcanvas .oc-link.oc-about{
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  color:#0f172a !important;
+  margin-top:0 !important;
+}
+
+/* About as a lower-priority utility row */
+.offcanvas .oc-link.oc-about{
+  margin-top:14px !important;
+  padding-top:14px;
+  color:#374151 !important;
+}
+
+.offcanvas .oc-link.oc-about::before{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  top:0;
+  height:1px;
+  background:rgba(16,24,40,.08);
+}
+
+/* Badge styling stays neat if used */
+.offcanvas .oc-badge{
+  font-size:11px;
+  font-weight:800;
+  padding:2px 8px;
+  border-radius:999px;
+  background:rgba(11,122,74,.10);
+  color:var(--accent);
+}
+
+/* Chevron / trailing icon polish */
+.offcanvas .oc-link .chev,
+.offcanvas .oc-link i:last-child{
+  color:rgba(15,23,42,.34);
+  transition:color .16s ease, transform .16s ease;
+}
+
+.offcanvas .oc-link:hover .chev,
+.offcanvas .oc-link:hover i:last-child{
+  color:var(--accent);
+  transform:translateX(1px);
+}
