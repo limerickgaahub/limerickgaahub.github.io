@@ -1794,9 +1794,13 @@ $$('.view-tabs .vt').forEach(seg=>{
     // KO footnote only on Competition view (and only when Knockout + Matches)
     toggleKOFootnote(target==='group-panel' && state.group==='Knockout');
 
-    // 🔼 Back-to-top button: show only on Date panel
-    const btnTop = el('scroll-top-btn');
-    if (btnTop) btnTop.style.display = (target === 'by-date') ? 'inline-flex' : 'none';
+const btnTop = el('scroll-top-btn');
+if (btnTop) {
+  const showTop =
+    target === 'by-date' ||
+    (target === 'league-panel' && !el('league-table-tab')?.classList.contains('active'));
+  btnTop.style.display = showTop ? 'inline-flex' : 'none';
+}
 
     syncURL(true);
   });
@@ -1851,9 +1855,7 @@ function renderLeague(){
     return na - nb || a.localeCompare(b);
   });
 
-  sel.innerHTML =
-    '<option value="">Select division…</option>' +
-    divs.map(d => `<option>${esc(d)}</option>`).join('');
+sel.innerHTML = divs.map(d => `<option>${esc(d)}</option>`).join('');
 
   // Map a requested div param (e.g. "7" or "Division 7") to an option value
   const resolveDivValue = (v) => {
@@ -1874,15 +1876,15 @@ function renderLeague(){
   state.leagueDiv = n || null;
   syncURL();
 
+const draw = () => {
+  const divLabel = sel.value;
+  const n = divLabel.match(/\d+/)?.[0] || '';
+  state.leagueDiv = n || null;
+  syncURL();
+
   const isMobileNow = matchMedia('(max-width:880px)').matches;
   const isTinyNow   = matchMedia('(max-width:400px)').matches;
   buildHead(thead, isMobileNow, isTinyNow);
-
-  if (!divLabel) {
-    tbody.innerHTML = '';
-    renderLeagueStandings();
-    return;
-  }
 
   const rows = leagueRows
     .filter(r => String(r.group||'') === divLabel)
@@ -1893,7 +1895,6 @@ function renderLeague(){
   renderLeagueStandings();
 };
 
-  
 
   sel.onchange = draw;
 
@@ -2028,6 +2029,9 @@ tbody.innerHTML = sorted.map(r => `
   standings.style.display = showTable ? '' : 'none';
 
   if (showTable) renderLeagueStandings();
+
+  const btnTop = el('scroll-top-btn');
+  if (btnTop) btnTop.style.display = showTable ? 'none' : 'inline-flex';
 }
 
 function renderByTeam(){
@@ -2210,10 +2214,13 @@ if (di) {
     });
   })();
 
-  // Initial visibility based on current panel
-  const datePanel = el('by-date');
-  const visible = datePanel && getComputedStyle(datePanel).display !== 'none';
-  btn.style.display = visible ? 'inline-flex' : 'none';
+const datePanel = el('by-date');
+const leaguePanel = el('league-panel');
+const dateVisible = datePanel && getComputedStyle(datePanel).display !== 'none';
+const leagueVisible = leaguePanel && getComputedStyle(leaguePanel).display !== 'none';
+const leagueTableActive = el('league-table-tab')?.classList.contains('active');
+
+btn.style.display = (dateVisible || (leagueVisible && !leagueTableActive)) ? 'inline-flex' : 'none';
 })();
 
    (async function(){
