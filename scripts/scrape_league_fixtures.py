@@ -97,6 +97,7 @@ class LeagueFixture:
     home_points: Optional[int] = None
     away_goals: Optional[int] = None
     away_points: Optional[int] = None
+    walkover_winner: Optional[str] = None  # "home" or "away"
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -118,6 +119,7 @@ class LeagueFixture:
             "home_points": self.home_points,
             "away_goals": self.away_goals,
             "away_points": self.away_points,
+            "walkover_winner": self.walkover_winner,
         }
 
 
@@ -514,6 +516,7 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
         home_points: Optional[int] = None
         away_goals: Optional[int] = None
         away_points: Optional[int] = None
+        walkover_winner: Optional[str] = None
         status = "Result"
 
         while j < len(lines):
@@ -579,6 +582,15 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
                     )
                 ):
                     status = "Walkover"
+
+                    # Decide which side conceded the walkover
+                    if away is not None and away_goals is None and away_points is None:
+                        # away side has the W/O marker, so home receives the walkover
+                        walkover_winner = "home"
+                    elif home_goals is None and home_points is None:
+                        # home side has the W/O marker, so away receives the walkover
+                        walkover_winner = "away"
+
                 j += 1
                 continue
 
@@ -655,6 +667,7 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
                     home_points=home_points,
                     away_goals=away_goals,
                     away_points=away_points,
+                    walkover_winner=walkover_winner,
                 )
             )
 
@@ -703,6 +716,7 @@ def merge_fixtures_and_results(
             target.home_points = r.home_points
             target.away_goals = r.away_goals
             target.away_points = r.away_points
+            target.walkover_winner = None
 
         elif r.status == "Walkover" and not has_full_score(target):
             target.status = "Walkover"
@@ -710,6 +724,7 @@ def merge_fixtures_and_results(
             target.home_points = r.home_points
             target.away_goals = r.away_goals
             target.away_points = r.away_points
+            target.walkover_winner = r.walkover_winner
 
         if (not target.time_local) and r.time_local:
             target.time_local = r.time_local
