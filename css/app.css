@@ -1805,20 +1805,6 @@ body.is-archive{
   transition:background-color .16s ease,color .16s ease,transform .08s ease;
 }
 
-.offcanvas .oc-link + .oc-link{
-  margin-top:2px;
-}
-
-.offcanvas .oc-link::after{
-  content:"";
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:0;
-  height:1px;
-  background:rgba(16,24,40,.06);
-}
-
 .offcanvas .oc-link:hover{
   background:rgba(11,122,74,.07);
   color:var(--accent);
@@ -1845,14 +1831,12 @@ body.is-archive{
   transform:translateX(1px);
 }
 
-.offcanvas .oc-link.oc-about{
-  margin-top:0 !important;
-}
 
 .offcanvas .oc-link.oc-about::after{
   background:rgba(16,24,40,.06);
 }
 
+v
 /* =========================================================
    BURGER MENU — final clean version
    ========================================================= */
@@ -1882,18 +1866,6 @@ body.is-archive{
   cursor:default;
 }
 
-.offcanvas .oc-heading::before{
-  content:"";
-  position:absolute;
-  left:12px;
-  top:50%;
-  transform:translateY(-50%);
-  width:6px;
-  height:6px;
-  border-radius:999px;
-  background:var(--accent);
-  opacity:.9;
-}
 
 .offcanvas .oc-head + .oc-body .oc-heading:first-child{
   margin-top:0;
@@ -1931,38 +1903,9 @@ body.is-archive{
   transition:background-color .16s ease,color .16s ease,transform .08s ease;
 }
 
-.offcanvas .oc-link + .oc-link{
-  margin-top:2px;
-}
-
-.offcanvas .oc-link::after{
-  content:"";
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:0;
-  height:1px;
-  background:rgba(16,24,40,.06);
-}
-
 .offcanvas .oc-link:hover{
   background:rgba(11,122,74,.07);
   color:var(--accent);
-}
-
-.offcanvas .oc-link.oc-about{
-  margin-top:14px;
-  padding-top:14px;
-}
-
-.offcanvas .oc-link.oc-about::before{
-  content:"";
-  position:absolute;
-  left:12px;
-  right:12px;
-  top:0;
-  height:1px;
-  background:rgba(16,24,40,.10);
 }
 
 .offcanvas .oc-link:active{
