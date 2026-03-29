@@ -942,6 +942,22 @@ body.comp-home #table-footnote{
   text-align:center;
   font-size:16px;
   line-height:1;
+  display:inline-block;
+  color:var(--accent);
+  transition:color .15s ease;
+}
+
+/* brand-colour hover only */
+.social-link[href*="instagram.com"]:hover i{
+  color:#E1306C;
+}
+
+.social-link[href*="x.com"]:hover i{
+  color:#000000;
+}
+
+.social-link[href^="mailto:"]:hover i{
+  color:var(--accent);
 }
 
 @media (max-width:880px){
