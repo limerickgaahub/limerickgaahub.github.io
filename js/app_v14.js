@@ -504,19 +504,20 @@ async function load(){
     // 1) Base dataset
     MATCHES = (j.matches || j || []).map(r => {
       const out = {
-        competition: r.competition || '',
-        group:       r.group || '',
-        round:       r.round || '',
-        date:        r.date || '',
-        time:        r.time || '',
-        home:        r.home || '',
-        away:        r.away || '',
-        venue:       mapVenue(r.venue),
-        status:      r.status || '',
-        home_goals:  r.home_goals,
-        home_points: r.home_points,
-        away_goals:  r.away_goals,
-        away_points: r.away_points,
+        competition:     r.competition || '',
+        group:           r.group || '',
+        round:           r.round || '',
+        date:            r.date || '',
+        time:            r.time || '',
+        home:            r.home || '',
+        away:            r.away || '',
+        venue:           mapVenue(r.venue),
+        status:          r.status || '',
+        home_goals:      r.home_goals,
+        home_points:     r.home_points,
+        away_goals:      r.away_goals,
+        away_points:     r.away_points,
+        walkover_winner: r.walkover_winner || null,
       };
 
       // ↓ normalize short codes (e.g. "PIHC") to full names once, in memory
@@ -535,24 +536,31 @@ const isWO = WO_STATUS.test(out.status) || WO_TAG.test(out.home) || WO_TAG.test(
 if (isWO) {
   out.is_walkover = true;
 
+  const homeHasWO = WO_TAG.test(String(out.home));
+  const awayHasWO = WO_TAG.test(String(out.away));
+
   out.home = out.home.replace(/\s*\bW\s*\/\s*O\b/i, '').trim();
   out.away = out.away.replace(/\s*\bW\s*\/\s*O\b/i, '').trim();
 
-  // 1) Prefer the explicit tag beside the team name: that side RECEIVED the W/O
-  if (WO_TAG.test(String(out.home))) {
-    out.walkover_winner = 'home';
-  } else if (WO_TAG.test(String(out.away))) {
+  // Preserve explicit value from JSON first
+  if (out.walkover_winner === 'home' || out.walkover_winner === 'away') {
+    // keep it
+  }
+  // 1) Else prefer explicit W/O tag beside the team name:
+  // that side has W/O, so the OTHER side receives the walkover
+  else if (homeHasWO) {
     out.walkover_winner = 'away';
+  } else if (awayHasWO) {
+    out.walkover_winner = 'home';
   } else {
     // 2) Fallback: parse status like "Walkover – Murroe Boher" (giver named in status)
     const s = String(out.status).toLowerCase();
     const homeName = String(out.home).toLowerCase();
     const awayName = String(out.away).toLowerCase();
 
-    // If status mentions the HOME club, they conceded → AWAY wins.
     if (s.includes(homeName))      out.walkover_winner = 'away';
     else if (s.includes(awayName)) out.walkover_winner = 'home';
-    else                           out.walkover_winner = null; // unknown
+    else                           out.walkover_winner = null;
   }
 }
 
@@ -638,7 +646,8 @@ if (LEAGUE_URL) {
       home_goals: f.home_goals ?? null,
       home_points: f.home_points ?? null,
       away_goals: f.away_goals ?? null,
-      away_points: f.away_points ?? null
+      away_points: f.away_points ?? null,
+      walkover_winner: f.walkover_winner || null
     }));
     MATCHES = mergeById(MATCHES, norm);
 
@@ -687,13 +696,14 @@ err('[LGH] Data load threw error:', e);
 // Optional but recommended fail-soft if the outer try trips:
 showWarn('Live data is slow — showing last verified snapshot.');
 const j = window.__LGH_BOOTSTRAP__ || {};
-MATCHES = (j.matches || j || []).map(r => attachScores({
-competition: r.competition, group: r.group, round: r.round,
-date: r.date, time: r.time, home: r.home, away: r.away,
-venue: r.venue, status: r.status,
-home_goals: r.home_goals, home_points: r.home_points,
-away_goals: r.away_goals, away_points: r.away_points
-}));    
+  MATCHES = (j.matches || j || []).map(r => attachScores({
+  competition: r.competition, group: r.group, round: r.round,
+  date: r.date, time: r.time, home: r.home, away: r.away,
+  venue: r.venue, status: r.status,
+  home_goals: r.home_goals, home_points: r.home_points,
+  away_goals: r.away_goals, away_points: r.away_points,
+  walkover_winner: r.walkover_winner || null
+})); 
   }
 }
 
