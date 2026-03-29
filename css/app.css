@@ -99,7 +99,7 @@ body{
   /* keep your new margins */
   margin:70px 12px 20px;
   font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
+  background:#08633c; color:var(--text); -webkit-font-smoothing:antialiased;
 }
 h1{ margin:0; font-weight:800; font-size:20px; }
 h2{ margin:0 0 8px; font-size:16px; }
@@ -295,8 +295,10 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 .card{
   background:var(--surface);
   border-radius:var(--radius-card);
-  border:1px solid rgba(16,24,40,.04);
-  box-shadow:var(--shadow-sm);
+  border:1px solid rgba(16,24,40,.06);
+  box-shadow:
+    0 1px 2px rgba(16,24,40,.05),
+    0 10px 28px rgba(16,24,40,.10);
   padding:16px;
   max-width:1100px;
   margin:0 auto;
@@ -416,12 +418,12 @@ thead th{
   position:sticky;
   top:0;
   z-index:1;
-  background:linear-gradient(to bottom, #fafcfb, #f4f7f5);
-  border-bottom:1px solid rgba(16,24,40,.08);
-  color:#0f172a;
+  background:#0b7a4a;
+  border-bottom:1px solid rgba(0,0,0,.16);
+  color:#ffffff;
   font-size:12px;
-  font-weight:800;
-  letter-spacing:.02em;
+  font-weight:850;
+  letter-spacing:.04em;
   text-transform:uppercase;
   text-align:left;
   padding:12px 12px;
@@ -465,7 +467,13 @@ td.match, th.match{ text-align:center; }
   row-gap:3px;
   justify-items:center;
 }
-.match-team{ display:block; line-height:1.15; }
+.match-team{
+  display:block;
+  line-height:1.12;
+  font-weight:800;
+  font-size:15px;
+  color:#0b1320;
+}
 
 /* Score pill */
 .match-score{
@@ -1635,7 +1643,7 @@ body.is-archive{
   content:"";
   position:absolute;
   inset:0 -8px 0 -8px;
-  background:#0b7a4a;
+  background:#08633c;
   border-top-left-radius:12px;
   border-top-right-radius:12px;
   border-bottom:1px solid rgba(0,0,0,.16);
