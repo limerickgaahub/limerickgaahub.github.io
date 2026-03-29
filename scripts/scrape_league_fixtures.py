@@ -570,27 +570,27 @@ def parse_league_results(lines: List[str]) -> List[LeagueFixture]:
                     j += 1
                     continue
 
-          if WO_RE.match(lines[j].strip()):
-              if (
-                  home is not None and
-                  d is not None and
-                  not (
-                      home_goals is not None and
-                      home_points is not None and
-                      away_goals is not None and
-                      away_points is not None
-                  )
-              ):
-                  status = "Walkover"
-          
-                  # In this source, the side with W/O is the winner
-                  if away is not None and away_goals is None and away_points is None:
-                      walkover_winner = "away"
-                  elif home_goals is None and home_points is None:
-                      walkover_winner = "home"
-          
-              j += 1
-              continue
+            if WO_RE.match(lines[j].strip()):
+                if (
+                    home is not None and
+                    d is not None and
+                    not (
+                        home_goals is not None and
+                        home_points is not None and
+                        away_goals is not None and
+                        away_points is not None
+                    )
+                ):
+                    status = "Walkover"
+
+                    # In this source, the side with W/O is the winner
+                    if away is not None and away_goals is None and away_points is None:
+                        walkover_winner = "away"
+                    elif home_goals is None and home_points is None:
+                        walkover_winner = "home"
+
+                j += 1
+                continue
 
             if BYE_RE.match(lines[j].strip()):
                 j += 1
