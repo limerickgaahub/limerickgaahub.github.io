@@ -153,6 +153,49 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
   text-overflow:ellipsis;              /* safety on tiny widths */
 }
 
+/* Hero-bar season badge (shown only for archive / 2025) */
+.hero-season-badge{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:8px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:rgba(11,122,74,.10);
+  border:1px solid rgba(11,122,74,.22);
+  color:var(--accent);
+  font-size:11px;
+  font-weight:900;
+  line-height:1;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+/* Keep the brand row stable when the badge appears */
+.brand{
+  min-width:0;
+  gap:10px;
+}
+
+@media (max-width:880px){
+  .hero-season-badge{
+    margin-left:6px;
+    padding:3px 7px;
+    font-size:10px;
+    letter-spacing:.05em;
+  }
+}
+
+@media (max-width:360px){
+  .hero-season-badge{
+    padding:3px 6px;
+    font-size:9px;
+    letter-spacing:.04em;
+  }
+}
+
 /* Burger / offcanvas */
 .burger{ display:none; background:none; border:none; font-size:20px; padding:8px; }
 .offcanvas{ position:fixed; inset:0 0 0 auto; width:80%; max-width:320px; background:#fff; box-shadow:-10px 0 24px rgba(0,0,0,.12); transform:translateX(100%); transition:transform .25s ease; z-index:120; }
@@ -171,17 +214,6 @@ td.tcol, th.tcol { text-align: left; }            /* Date/Time left */
 }
 
 /* Remove any green tint from the specific 2025 Hurling item */
-.offcanvas .oc-link.oc-2025-hurling,
-.offcanvas .oc-link[data-season="2025"][data-sport="hurling"]{
-  background:#f6f7f8 !important;
-  border:0 !important;
-  color:var(--text) !important;
-}
-.offcanvas .oc-link.oc-2025-hurling .oc-badge,
-.offcanvas .oc-link[data-season="2025"][data-sport="hurling"] .oc-badge{
-  background:rgba(16,24,40,.08) !important;
-  color:var(--text) !important;
-}
 
 .oc-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .2s; z-index:110; }
 .oc-backdrop.show{ opacity:1; pointer-events:auto; }
@@ -1739,105 +1771,6 @@ body.is-archive{
 
 
 /* =========================================================
-   BURGER MENU — hierarchy fix for button-based rows
-   ========================================================= */
-
-.offcanvas .oc-body{
-  padding:4px 10px 12px;
-  display:flex;
-  flex-direction:column;
-  gap:0;
-  background:#fff;
-}
-
-.offcanvas .oc-heading{
-  position:relative;
-  display:block;
-  margin:2px 0 8px;
-  padding:3px 12px 4px 24px;
-  font-size:12px;
-  font-weight:900;
-  line-height:1.1;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:#6b7280;
-  background:transparent;
-  border:0;
-  box-shadow:none;
-  pointer-events:none;
-  cursor:default;
-}
-
-
-.offcanvas .oc-head + .oc-body .oc-heading:first-child{
-  margin-top:0;
-  padding-top:0;
-}
-
-.offcanvas .oc-link + .oc-heading{
-  margin-top:16px;
-  padding-top:12px;
-  border-top:1px solid rgba(16,24,40,.08);
-}
-
-.offcanvas .oc-link{
-  -webkit-appearance:none;
-  appearance:none;
-  width:100%;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin:0;
-  padding:12px 12px;
-  border:0;
-  border-radius:12px;
-  background:transparent;
-  box-shadow:none;
-  color:#0f172a;
-  font-size:15px;
-  font-weight:800;
-  line-height:1.2;
-  text-align:left;
-  text-decoration:none;
-  cursor:pointer;
-  transition:background-color .16s ease,color .16s ease,transform .08s ease;
-}
-
-.offcanvas .oc-link:hover{
-  background:rgba(11,122,74,.07);
-  color:var(--accent);
-}
-
-.offcanvas .oc-link:active{
-  background:rgba(11,122,74,.11);
-  transform:translateY(1px);
-}
-
-.offcanvas .oc-link-text{
-  flex:1 1 auto;
-  min-width:0;
-}
-
-.offcanvas .oc-link-right{
-  flex:0 0 auto;
-  color:rgba(15,23,42,.34);
-  transition:color .16s ease, transform .16s ease;
-}
-
-.offcanvas .oc-link:hover .oc-link-right{
-  color:var(--accent);
-  transform:translateX(1px);
-}
-
-
-.offcanvas .oc-link.oc-about::after{
-  background:rgba(16,24,40,.06);
-}
-
-v
-/* =========================================================
    BURGER MENU — final clean version
    ========================================================= */
 
@@ -1851,12 +1784,12 @@ v
 
 .offcanvas .oc-heading{
   display:block;
-  margin:4px 0 8px;
-  padding:6px 12px 4px;
-  font-size:14px;
+  margin:6px 0 8px;
+  padding:7px 12px 4px;
+  font-size:15px;
   font-weight:900;
   line-height:1.1;
-  letter-spacing:.04em;
+  letter-spacing:.035em;
   text-transform:uppercase;
   color:#374151;
   background:transparent;
@@ -1868,9 +1801,6 @@ v
 
 
 .offcanvas .oc-head + .oc-body .oc-heading:first-child{
-  margin-top:0;
-  padding-top:0;
-}
 
 .offcanvas .oc-link + .oc-heading{
   margin-top:16px;
@@ -1888,11 +1818,12 @@ v
   justify-content:space-between;
   gap:12px;
   margin:0;
-  padding:12px 12px;
+  padding:11px 12px;
   border:0;
   border-radius:12px;
   background:transparent;
   box-shadow:none;
+  font-family:inherit;
   color:#0f172a;
   font-size:15px;
   font-weight:800;
@@ -1927,4 +1858,9 @@ v
 .offcanvas .oc-link:hover .oc-link-right{
   color:var(--accent);
   transform:translateX(1px);
+}
+.offcanvas .oc-link.oc-about{
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid rgba(16,24,40,.08);
 }
