@@ -882,6 +882,77 @@ body.comp-home #table-footnote{
 #season-banner .season-chip{ display:none !important; }
 
 
+/* =========================================================
+   ABOUT PANEL
+   ========================================================= */
+#panel-about{
+  line-height:1.55;
+}
+
+#panel-about p{
+  margin:0 0 12px;
+}
+
+#panel-about p:last-child{
+  margin-bottom:0;
+}
+
+#panel-about p a{
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:700;
+}
+
+#panel-about p a:hover{
+  text-decoration:underline;
+}
+
+.social-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px 18px;
+  align-items:center;
+  margin:14px 0 0;
+}
+
+.social-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text);
+  text-decoration:none;
+  font-weight:700;
+  line-height:1.2;
+}
+
+.social-link:visited,
+.social-link:active{
+  color:var(--text);
+  text-decoration:none;
+}
+
+.social-link:hover{
+  color:var(--accent);
+  text-decoration:none;
+}
+
+.social-link i{
+  width:16px;
+  min-width:16px;
+  text-align:center;
+  font-size:16px;
+  line-height:1;
+}
+
+@media (max-width:880px){
+  .social-list{
+    gap:10px 14px;
+  }
+
+  .social-link{
+    font-size:14px;
+  }
+}
 
 /* =========================================================
    FOOTNOTE + SHAREBAR
