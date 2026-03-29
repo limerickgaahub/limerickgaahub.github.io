@@ -1855,7 +1855,7 @@ function renderLeague(){
     return na - nb || a.localeCompare(b);
   });
 
-sel.innerHTML = divs.map(d => `<option>${esc(d)}</option>`).join('');
+sel.innerHTML = divs.map(d => `<option value="${esc(d)}">${esc(d)}</option>`).join('');
 
   // Map a requested div param (e.g. "7" or "Division 7") to an option value
   const resolveDivValue = (v) => {
@@ -1871,29 +1871,23 @@ sel.innerHTML = divs.map(d => `<option>${esc(d)}</option>`).join('');
   };
 
   const draw = () => {
-  const divLabel = sel.value || '';
-  const n = divLabel.match(/\d+/)?.[0] || '';
-  state.leagueDiv = n || null;
-  syncURL();
+    const divLabel = sel.value || '';
+    const n = divLabel.match(/\d+/)?.[0] || '';
+    state.leagueDiv = n || null;
+    syncURL();
 
-const draw = () => {
-  const divLabel = sel.value;
-  const n = divLabel.match(/\d+/)?.[0] || '';
-  state.leagueDiv = n || null;
-  syncURL();
+    const isMobileNow = matchMedia('(max-width:880px)').matches;
+    const isTinyNow   = matchMedia('(max-width:400px)').matches;
+    buildHead(thead, isMobileNow, isTinyNow);
 
-  const isMobileNow = matchMedia('(max-width:880px)').matches;
-  const isTinyNow   = matchMedia('(max-width:400px)').matches;
-  buildHead(thead, isMobileNow, isTinyNow);
+    const rows = leagueRows
+      .filter(r => String(r.group || '') === divLabel)
+      .sort(sortRoundDate);
 
-  const rows = leagueRows
-    .filter(r => String(r.group||'') === divLabel)
-    .sort(sortRoundDate);
+    tbody.innerHTML = rows.map(r => rowHTML(r, isMobileNow, isTinyNow)).join('');
 
-  tbody.innerHTML = rows.map(r => rowHTML(r, isMobileNow, isTinyNow)).join('');
-
-  renderLeagueStandings();
-};
+    renderLeagueStandings();
+  };
 
 
   sel.onchange = draw;
