@@ -1,7 +1,7 @@
 {
   "competition": "County Hurling League",
   "season": 2026,
-  "updated_at": "2026-05-16T20:29:34",
+  "updated_at": "2026-05-17T10:46:03",
   "fixtures": [
     {
       "id": "league-10-R1-2026-03-21-askeaton-ballysteen-kilcornan-vs-patrickswell",
@@ -3985,12 +3985,12 @@
       "away": "Kilmallock",
       "venue": "Monagea",
       "referee": "TBC",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null,
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 2,
+      "home_points": 19,
+      "away_goals": 1,
+      "away_points": 12,
       "walkover_winner": null
     },
     {
@@ -4048,13 +4048,13 @@
       "away": "Tournafulla",
       "venue": "Crecora Manister GAA",
       "referee": "TBC",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/",
-      "home_goals": null,
-      "home_points": null,
+      "status": "Walkover",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 0,
+      "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": null
+      "walkover_winner": "home"
     },
     {
       "id": "league-12-R3-2026-05-17-dromcollogher-broadford-vs-st-kieran-s",
@@ -4069,13 +4069,13 @@
       "away": "St Kieran's",
       "venue": "Coolcappa",
       "referee": "TBC",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/",
-      "home_goals": null,
-      "home_points": null,
+      "status": "Walkover",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 0,
+      "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": null
+      "walkover_winner": "away"
     },
     {
       "id": "league-6-R5-2026-05-17-claughaun-vs-ahane",
