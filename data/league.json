@@ -1,7 +1,7 @@
 {
   "competition": "County Hurling League",
   "season": 2026,
-  "updated_at": "2026-05-22T21:35:34",
+  "updated_at": "2026-05-23T12:49:30",
   "fixtures": [
     {
       "id": "league-10-R1-2026-03-21-askeaton-ballysteen-kilcornan-vs-patrickswell",
@@ -4636,12 +4636,12 @@
       "away": "Adare",
       "venue": "Doon",
       "referee": "TBC",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null,
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 1,
+      "home_points": 19,
+      "away_goals": 3,
+      "away_points": 16,
       "walkover_winner": null
     },
     {
@@ -4930,13 +4930,13 @@
       "away": "Newcastle West",
       "venue": "Doon",
       "referee": "TBC",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/",
-      "home_goals": null,
-      "home_points": null,
+      "status": "Walkover",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 0,
+      "home_points": 0,
       "away_goals": null,
       "away_points": null,
-      "walkover_winner": null
+      "walkover_winner": "home"
     },
     {
       "id": "league-9-R6-2026-05-23-glenroe-vs-murroe-boher",
