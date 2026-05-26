@@ -5266,12 +5266,12 @@
       "away": "Ahane",
       "venue": "Adare",
       "referee": "TBC",
-      "status": "SCHEDULED",
+      "status": "Result",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null,
+      "home_goals": 5,
+      "home_points": 20,
+      "away_goals" 1,
+      "away_points": 12,
       "walkover_winner": null
     },
     {
