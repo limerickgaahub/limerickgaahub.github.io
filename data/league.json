@@ -5476,12 +5476,12 @@
       "away": "Kilmallock",
       "venue": "BALLYBROWN GAA",
       "referee": "TBC",
-      "status": "SCHEDULED",
+      "status": "Result",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null,
+      "home_goals": 3,
+      "home_points": 24,
+      "away_goals": 0,
+      "away_points": 14,
       "walkover_winner": null
     },
     {
