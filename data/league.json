@@ -5520,10 +5520,10 @@
       "referee": "TBC",
       "status": "Result",
       "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/",
-      "home_goals": 4,
-      "home_points": 20,
-      "away_goals": 0,
-      "away_points": 24,
+      "home_goals": 0,
+      "home_points": 24,
+      "away_goals": 4,
+      "away_points": 20,
       "walkover_winner": null
     },
     {
