@@ -273,6 +273,7 @@ const compCode=name=>
   const VENUE_MAP = {
   "BALLYBROWN GAA": "Ballybrown",
   "Caherdavin": "Páirc Uí Dromgúil",
+  "Drumgoole Park, Caherdavin": "Páirc Uí Dromgúil",
   "Dromin/Athlacca": "Dromin / Athlacca",
   "Round 5 Winners": "Askeaton Ballysteen Kilcornan"
 };
