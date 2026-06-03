@@ -125,12 +125,14 @@ const SEASON_SOURCES = {
   '2026': {
     data:   'data/hurling_2026.json',
     ko:     null,                  // no knockout_2026.json in repo
-    league: 'data/league.json'
+    league: 'data/league.json',
+    divisional: 'data/divisional_championship.json'
   },
   '2025': {
     data:   'data/hurling_2025.json',
     ko:     'datastatic/knockout_2025.json',
-    league: null
+    league: null,
+    divisional: null
   }
 };
 
@@ -138,6 +140,7 @@ const SEASON_SOURCES = {
   let DATA_URL = SEASON_SOURCES[DEFAULT_SEASON].data;
   let KO_URL   = SEASON_SOURCES[DEFAULT_SEASON].ko;
   let LEAGUE_URL = SEASON_SOURCES[DEFAULT_SEASON].league;
+  let DIVISIONAL_URL = SEASON_SOURCES[DEFAULT_SEASON].divisional;
   let LEAGUE_OVERRIDES_URL = 'data/league_overrides.json';
 
   function isKO(m){
@@ -226,6 +229,103 @@ const DISPLAY_NAMES = {
   }
 };
 
+Object.assign(DISPLAY_NAMES, {
+  "City Senior Hurling Championship": {
+    label: "City Senior",
+    long: "City Senior Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+  "South Senior Hurling Championship": {
+    label: "South Senior",
+    long: "South Senior Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+  "East Senior Hurling Championship": {
+    label: "East Senior",
+    long: "East Senior Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+
+  "City Intermediate Hurling Championship": {
+    label: "City Intermediate",
+    long: "City Intermediate Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+  "East Intermediate Hurling Championship": {
+    label: "East Intermediate",
+    long: "East Intermediate Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+  "South Intermediate Hurling Championship": {
+    label: "South Intermediate",
+    long: "South Intermediate Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+  "West Intermediate Hurling Championship": {
+    label: "West Intermediate",
+    long: "West Intermediate Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+
+  "City Junior A Hurling Championship": {
+    label: "City Junior A",
+    long: "City Junior A Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+  "East Junior A Hurling Championship": {
+    label: "East Junior A",
+    long: "East Junior A Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+  "South Junior A Hurling Championship": {
+    label: "South Junior A",
+    long: "South Junior A Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+  "West Junior A Hurling Championship": {
+    label: "West Junior A",
+    long: "West Junior A Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+
+  "City Junior B Hurling Championship": {
+    label: "City Junior B",
+    long: "City Junior B Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+  "East Junior B Hurling Championship": {
+    label: "East Junior B",
+    long: "East Junior B Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+  "South Junior B Hurling Championship": {
+    label: "South Junior B",
+    long: "South Junior B Hurling Championship",
+    divisional: true,
+    noTable: true
+  },
+  "West Junior B Hurling Championship": {
+    label: "West Junior B",
+    long: "West Junior B Hurling Championship",
+    divisional: true,
+    noTable: true
+  }
+});
+
+  
 // ---- Sort helpers (date-first + stable comp order) ----
 const COMP_RANK = (() => {
   // Order we want in "By Date" when dates are equal
@@ -304,6 +404,7 @@ function mapVenue(v){
   DATA_URL = SEASON_SOURCES[state.season].data;
   KO_URL   = SEASON_SOURCES[state.season].ko;
   LEAGUE_URL = SEASON_SOURCES[state.season].league;
+  DIVISIONAL_URL = SEASON_SOURCES[state.season].divisional;
   LEAGUE_OVERRIDES_URL = (state.season === '2026') ? 'data/league_overrides.json' : null; 
   
   // ---------- Season UI (chips/banner + hide League pill in archive) ----------
@@ -672,6 +773,49 @@ if (LEAGUE_URL) {
     warn('[LGH] league.json failed to load', e);
   }
 }
+
+    // Load divisional championship fixtures/results
+if (DIVISIONAL_URL) {
+  try {
+    const bustD = (state.season === '2026') ? `?t=${Date.now()}` : '';
+    const optsD = (state.season === '2026') ? { cache:'no-store' } : { cache:'force-cache' };
+
+    const divRaw = await fetch(`${DIVISIONAL_URL}${bustD}`, optsD).then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    });
+
+    const fixtures = divRaw?.fixtures || [];
+
+    const norm = fixtures.map((f, i) => ({
+      id:              f.id || `divisional_${i}`,
+      season:          f.season || state.season,
+      section:         f.section || 'Championship',
+      subsection:      f.subsection || 'Divisional',
+      division:        f.division || '',
+      grade:           f.grade || '',
+      competition_key: f.competition_key || '',
+      competition:     f.competition || '',
+      group:           f.group || f.division || '',
+      round:           f.round || '',
+      date:            f.date || '',
+      time:            f.time || f.time_local || (f.datetime_iso ? String(f.datetime_iso).slice(11,16) : ''),
+      venue:           mapVenue(f.venue),
+      home:            f.home || '',
+      away:            f.away || '',
+      status:          f.status || 'SCHEDULED',
+      home_goals:      f.home_goals ?? null,
+      home_points:     f.home_points ?? null,
+      away_goals:      f.away_goals ?? null,
+      away_points:     f.away_points ?? null,
+      walkover_winner: f.walkover_winner || null
+    }));
+
+    MATCHES = mergeById(MATCHES, norm.map(attachScores));
+  } catch (e) {
+    warn('[LGH] divisional championship file skipped:', e);
+  }
+}
     
     if (!MATCHES.length) {
       showWarn(
@@ -838,10 +982,24 @@ const dtHTML = `<div class="dt3">
     });
   }
 
-/* Show Competition list instead of dropping straight into Senior Group 1 */
+/* Toggle Championship competition list view */
 function setCompetitionHomeMode(on){
   document.body.classList.toggle('comp-home', !!on);
   const list = el('comp-list');
+  if (list) {
+    list.innerHTML =
+      listBlock('County Championships', COUNTY_ALL) +
+      listBlock('Divisional Championships', DIVISIONAL_ALL);
+  
+    list.addEventListener('click', (e) => {
+      const row = e.target.closest('.comp-row');
+      if (!row) return;
+  
+      const comp = row.getAttribute('data-comp');
+      setCompetition(comp, true);
+    });
+  }
+                  
   const selected = el('comp-selected');
   const tabs = document.querySelector('#group-panel > .section-tabs');
   const matchesMenu = el('matches-menu');
@@ -863,28 +1021,64 @@ function setCompetitionHomeMode(on){
 }
   
 function buildCompetitionMenu(){
-  // Limit to the seven comps (order preserved)
-  const ALL = [
-    "Senior Hurling Championship",
-    "Premier Intermediate Hurling Championship",
-    "Intermediate Hurling Championship",
-    "Premier Junior A Hurling Championship",
-    "Junior A Hurling Championship",
-    "Junior B Hurling Championship",
-    "Junior C Hurling Championship"
-  ];
+  // County and divisional championship competition lists
+const COUNTY_ALL = [
+  "Senior Hurling Championship",
+  "Premier Intermediate Hurling Championship",
+  "Intermediate Hurling Championship",
+  "Premier Junior A Hurling Championship",
+  "Junior A Hurling Championship",
+  "Junior B Hurling Championship",
+  "Junior C Hurling Championship"
+];
 
+const DIVISIONAL_ALL = [
+  "City Senior Hurling Championship",
+  "South Senior Hurling Championship",
+  "East Senior Hurling Championship",
+
+  "City Intermediate Hurling Championship",
+  "East Intermediate Hurling Championship",
+  "South Intermediate Hurling Championship",
+  "West Intermediate Hurling Championship",
+
+  "City Junior A Hurling Championship",
+  "East Junior A Hurling Championship",
+  "South Junior A Hurling Championship",
+  "West Junior A Hurling Championship",
+
+  "City Junior B Hurling Championship",
+  "East Junior B Hurling Championship",
+  "South Junior B Hurling Championship",
+  "West Junior B Hurling Championship"
+];
+
+// Only show competitions that either exist in data or are core county competitions
+const ALL = [...COUNTY_ALL, ...DIVISIONAL_ALL].filter(c =>
+  COUNTY_ALL.includes(c) || MATCHES.some(m => m.competition === c)
+);
 
   // Build menu items (no groups here)
     // Build menu items
   const menu = el('comp-menu');
   if (!menu) return;
-  menu.innerHTML = ALL.map(c => {
-    const dn = DISPLAY_NAMES[c];
-    // Use short label (dn.label) for dropdown; fallback to c
-    const label = (dn && dn.label) ? dn.label : c;
-    return `<div class="item" data-comp="${esc(c)}">${esc(label)}</div>`;
-  }).join('');
+  const menuBlock = (title, comps) => {
+  const visible = comps.filter(c => ALL.includes(c));
+  if (!visible.length) return '';
+
+  return `
+    <div class="menu-heading">${esc(title)}</div>
+    ${visible.map(c => {
+      const dn = DISPLAY_NAMES[c];
+      const label = (dn && dn.label) ? dn.label : c;
+      return `<div class="item" data-comp="${esc(c)}">${esc(label)}</div>`;
+    }).join('')}
+  `;
+};
+
+menu.innerHTML =
+  menuBlock('County Championships', COUNTY_ALL) +
+  menuBlock('Divisional Championships', DIVISIONAL_ALL);
 
 
   // Desired default: Senior -> Group 1
@@ -951,9 +1145,9 @@ function buildCompetitionMenu(){
     menu.setAttribute('aria-hidden','true');
   };
 
-  compTab.addEventListener('click', (e)=>{ 
+  compTab.addEventListener('click', (e) => { 
   e.preventDefault();
-  goCompHome();
+  setCompetition("Senior Hurling Championship", true, false, "Group 1");
 });
 
   menu.addEventListener('click', (e)=>{
@@ -975,42 +1169,40 @@ function buildCompetitionMenu(){
   window.addEventListener('scroll', closeMenu, {passive:true});
 
     // Render Competition home list (Senior / PI / …)
-    const list = el('comp-list');
-    if (list) {
-      list.innerHTML = ALL.map(c => {
-        const dn = DISPLAY_NAMES[c] || {};
-        const title = dn.label || c;
-        const sub = dn.long || '';
-        return `
-          <div class="comp-row comp-card" data-comp="${esc(c)}">
-            <div class="left comp-left">
-              <div class="title comp-title">${esc(title)}</div>
-              <div class="sub comp-subtitle">${esc(sub)}</div>
-            </div>
-            <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
+  const listBlock = (title, comps) => {
+  const visible = comps.filter(c => ALL.includes(c));
+  if (!visible.length) return '';
+
+  return `
+    <div class="comp-section-heading">${esc(title)}</div>
+    ${visible.map(c => {
+      const dn = DISPLAY_NAMES[c] || {};
+      const cardTitle = dn.label || c;
+      const sub = dn.long || '';
+
+      return `
+        <div class="comp-row comp-card" data-comp="${esc(c)}">
+          <div class="left comp-left">
+            <div class="title comp-title">${esc(cardTitle)}</div>
+            <div class="sub comp-subtitle">${esc(sub)}</div>
           </div>
-        `;
-      }).join('');
-  
-      // bind ONCE (outside the map)
-      list.addEventListener('click', (e) => {
-        const row = e.target.closest('.comp-row');
-        if (!row) return;
-        const comp = row.getAttribute('data-comp');
-        setCompetition(comp, true);
-      });
-    }
+          <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+      `;
+    }).join('')}
+  `;
+};
 
+list.innerHTML =
+  listBlock('County Championships', COUNTY_ALL) +
+  listBlock('Divisional Championships', DIVISIONAL_ALL);
 
-  // Initial: if URL has comp, enter it; otherwise show competition list
+  // Initial: if URL has comp, enter it; otherwise default to Senior Group 1
   let initialComp = (params.comp && ALL.includes(params.comp)) ? params.comp : null;
   if(initialComp){
     setCompetition(initialComp, false, FIRST_LOAD_NO_QUERY, params.group || null);
   } else {
-    state.comp = null;
-    state.group = null;
-    setCompetitionHomeMode(true);
-    if (!FIRST_LOAD_NO_QUERY) syncURL(false);
+    setCompetition("Senior Hurling Championship", false, FIRST_LOAD_NO_QUERY, "Group 1");
   }
 }
 
@@ -1058,9 +1250,13 @@ function setMatchesLabel(){
     matchesLabel.textContent = 'PIHC';
   } else if (meta.divisions?.length) {
     matchesLabel.textContent = state.group || meta.divisions[0];
-  } else {
-    matchesLabel.textContent = state.group || 'Group 1';
-  }
+    } else {
+  matchesLabel.textContent =
+    state.group ||
+    meta.matchLabel ||
+    meta.label ||
+    'Matches';
+}
 }
 
 function updateTableTabVisibility(){
@@ -1068,7 +1264,8 @@ function updateTableTabVisibility(){
   const matchesSeg = document.querySelector('#group-panel .section-tabs .seg[data-view="matches"]');
   if (!tableSeg) return;
 
-  const hide = (state.group === 'Knockout');
+  const meta = DISPLAY_NAMES[state.comp] || {};
+  const hide = (state.group === 'Knockout') || !!meta.noTable;
   tableSeg.style.display = hide ? 'none' : '';
 
   // If Table was active and we’re hiding it, switch back to Matches
@@ -1121,14 +1318,15 @@ function rebuildMatchesMenu(){
   const mm = el('matches-menu');
   if (!mm) return;
 
+  const meta = DISPLAY_NAMES[state.comp] || {};
   const groups = getGroupsForComp(state.comp);
   mm.innerHTML = '';
 
   if (!groups.length){
-    // PIHC base item
+  // Single matches item for no-group competitions
     const b = document.createElement('div');
     b.className = 'item';
-    b.textContent = 'PIHC';
+    b.textContent = meta.matchLabel || meta.label || 'Matches';
     b.addEventListener('click', ()=>{
       state.group = null;
       setMatchesLabel();
@@ -1755,14 +1953,23 @@ $$('.view-tabs .vt').forEach(seg=>{
     $$('#panel-hurling .panel').forEach(p=>p.style.display='none');
     el(target).style.display='';
 
-    // Render target view
-    if (target==='group-panel'){
+    if (target === 'group-panel') {
       VIEW_MODE = 'competition';
-
-    // New behaviour: Competition button always goes to Competition Home (list)
-    goCompHome();
+    
+      if (!state.comp) {
+        state.comp = "Senior Hurling Championship";
+        state.group = "Group 1";
+      }
+    
+      setCompetitionHomeMode(false);
+      rebuildMatchesMenu();
+      updateTableTabVisibility();
+      renderGroupTable();
+      syncURL(true);
       return;
     }
+
+    
 
     if (target==='league-panel'){
       VIEW_MODE='league';
