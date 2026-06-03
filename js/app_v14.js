@@ -2176,7 +2176,8 @@ sel.innerHTML = divs.map(d => `<option value="${esc(d)}">${esc(d)}</option>`).jo
 
   const fixtures = MATCHES.filter(r =>
     r.competition === 'County Hurling League' &&
-    (r.group || '') === divLabel
+    (r.group || '') === divLabel &&
+    /^R\d+$/i.test(String(r.round || '').trim())
   );
 
   const teams = new Map();
