@@ -1,0 +1,39 @@
+name: Scrape Divisional Championship
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 7 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 urllib3
+
+      - name: Run divisional championship scraper
+        run: |
+          python scripts/scrape_divisional_hurling_championship.py --skip-results
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/divisional_championship.json
+          git diff --cached --quiet || git commit -m "Update divisional championship fixtures"
+          git push
