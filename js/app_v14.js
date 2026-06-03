@@ -985,21 +985,8 @@ const dtHTML = `<div class="dt3">
 /* Toggle Championship competition list view */
 function setCompetitionHomeMode(on){
   document.body.classList.toggle('comp-home', !!on);
+
   const list = el('comp-list');
-  if (list) {
-    list.innerHTML =
-      listBlock('County Championships', COUNTY_ALL) +
-      listBlock('Divisional Championships', DIVISIONAL_ALL);
-  
-    list.addEventListener('click', (e) => {
-      const row = e.target.closest('.comp-row');
-      if (!row) return;
-  
-      const comp = row.getAttribute('data-comp');
-      setCompetition(comp, true);
-    });
-  }
-                  
   const selected = el('comp-selected');
   const tabs = document.querySelector('#group-panel > .section-tabs');
   const matchesMenu = el('matches-menu');
@@ -1009,15 +996,15 @@ function setCompetitionHomeMode(on){
   const foot = el('table-footnote');
   const share = el('sharebar-comp');
 
-  if(list) list.style.display = on ? '' : 'none';
-  if(selected) selected.style.display = on ? 'none' : '';
-  if(tabs) tabs.style.display = on ? 'none' : '';
-  if(matchesMenu) matchesMenu.style.display = on ? 'none' : '';
-  if(controlsMatches) controlsMatches.style.display = on ? 'none' : '';
-  if(matchesWrap) matchesWrap.style.display = on ? 'none' : '';
-  if(standings) standings.style.display = on ? 'none' : 'none'; // stays hidden until Table view
-  if(foot) foot.style.display = 'none';
-  if(share) share.style.display = on ? 'none' : '';
+  if (list) list.style.display = on ? '' : 'none';
+  if (selected) selected.style.display = on ? 'none' : '';
+  if (tabs) tabs.style.display = on ? 'none' : '';
+  if (matchesMenu) matchesMenu.style.display = on ? 'none' : '';
+  if (controlsMatches) controlsMatches.style.display = on ? 'none' : '';
+  if (matchesWrap) matchesWrap.style.display = on ? 'none' : '';
+  if (standings) standings.style.display = 'none';
+  if (foot) foot.style.display = 'none';
+  if (share) share.style.display = on ? 'none' : '';
 }
   
 function buildCompetitionMenu(){
@@ -1131,24 +1118,42 @@ menu.innerHTML =
     LGH_ANALYTICS.viewCompetition(state.comp, state.group, onTable ? 'table' : 'matches');
   }
 
-  // Click binding
+    // Click binding
   const compTab = el('comp-tab');
-  const openMenu = ()=>{
-    const rect = compTab.getBoundingClientRect();
+  const selectedComp = el('comp-selected');
+  
+  const openMenu = () => {
+    const anchor = selectedComp || compTab;
+    if (!anchor) return;
+  
+    const rect = anchor.getBoundingClientRect();
+  
     menu.style.top = `${rect.bottom + window.scrollY + 6}px`;
     menu.style.left = `${rect.left + window.scrollX}px`;
     menu.classList.add('open');
-    menu.setAttribute('aria-hidden','false');
+    menu.setAttribute('aria-hidden', 'false');
   };
-  const closeMenu = ()=>{
+  
+  const closeMenu = () => {
     menu.classList.remove('open');
-    menu.setAttribute('aria-hidden','true');
+    menu.setAttribute('aria-hidden', 'true');
   };
-
-  compTab.addEventListener('click', (e) => { 
-  e.preventDefault();
-  setCompetition("Senior Hurling Championship", true, false, "Group 1");
-});
+  
+  if (selectedComp) {
+    selectedComp.style.cursor = 'pointer';
+    selectedComp.title = 'Change competition';
+  
+    selectedComp.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+  
+      if (menu.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+  }
 
   menu.addEventListener('click', (e)=>{
     const it = e.target.closest('.item');
@@ -1160,11 +1165,17 @@ menu.innerHTML =
     closeMenu();
   });
 
-  document.addEventListener('click', (e)=>{
-    if(menu.classList.contains('open') && !menu.contains(e.target) && !compTab.contains(e.target)){
+    document.addEventListener('click', (e)=>{
+    if (
+      menu.classList.contains('open') &&
+      !menu.contains(e.target) &&
+      !compTab?.contains(e.target) &&
+      !selectedComp?.contains(e.target)
+    ) {
       closeMenu();
     }
   });
+
   window.addEventListener('resize', closeMenu, {passive:true});
   window.addEventListener('scroll', closeMenu, {passive:true});
 
@@ -1193,9 +1204,21 @@ menu.innerHTML =
   `;
 };
 
-list.innerHTML =
-  listBlock('County Championships', COUNTY_ALL) +
-  listBlock('Divisional Championships', DIVISIONAL_ALL);
+const list = el('comp-list');
+
+  if (list) {
+    list.innerHTML =
+      listBlock('County Championships', COUNTY_ALL) +
+      listBlock('Divisional Championships', DIVISIONAL_ALL);
+  
+    list.addEventListener('click', (e) => {
+      const row = e.target.closest('.comp-row');
+      if (!row) return;
+  
+      const comp = row.getAttribute('data-comp');
+      setCompetition(comp, true);
+    });
+  }
 
   // Initial: if URL has comp, enter it; otherwise default to Senior Group 1
   let initialComp = (params.comp && ALL.includes(params.comp)) ? params.comp : null;
