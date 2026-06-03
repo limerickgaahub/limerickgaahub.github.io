@@ -995,6 +995,7 @@ function setCompetitionHomeMode(on){
   const standings = el('g-standings');
   const foot = el('table-footnote');
   const share = el('sharebar-comp');
+  const competitionSelectWrap = el('competition-select-wrap');
 
   if (list) list.style.display = on ? '' : 'none';
   if (selected) selected.style.display = on ? 'none' : '';
@@ -1005,6 +1006,7 @@ function setCompetitionHomeMode(on){
   if (standings) standings.style.display = 'none';
   if (foot) foot.style.display = 'none';
   if (share) share.style.display = on ? 'none' : '';
+  if (competitionSelectWrap) competitionSelectWrap.style.display = on ? 'none' : '';
 }
   
 function buildCompetitionMenu(){
@@ -1040,6 +1042,7 @@ const DIVISIONAL_ALL = [
   "West Junior B Hurling Championship"
 ];
 
+
 // Only show competitions that either exist in data or are core county competitions
 const ALL = [...COUNTY_ALL, ...DIVISIONAL_ALL].filter(c =>
   COUNTY_ALL.includes(c) || MATCHES.some(m => m.competition === c)
@@ -1067,6 +1070,63 @@ menu.innerHTML =
   menuBlock('County Championships', COUNTY_ALL) +
   menuBlock('Divisional Championships', DIVISIONAL_ALL);
 
+function ensureCompetitionSelect(){
+  let wrap = el('competition-select-wrap');
+
+  if (!wrap) {
+    wrap = document.createElement('div');
+    wrap.id = 'competition-select-wrap';
+    wrap.className = 'competition-select-wrap';
+
+    const groupPanel = el('group-panel');
+    const matchesSeg = el('matches-seg');
+    const sectionTabs = document.querySelector('#group-panel > .section-tabs');
+
+    if (groupPanel && matchesSeg) {
+      matchesSeg.parentElement.insertAdjacentElement('beforebegin', wrap);
+    } else if (groupPanel && sectionTabs) {
+      sectionTabs.insertAdjacentElement('beforebegin', wrap);
+    } else if (groupPanel) {
+      groupPanel.prepend(wrap);
+    }
+  }
+
+  const optionBlock = (title, comps) => {
+    const visible = comps.filter(c => ALL.includes(c));
+    if (!visible.length) return '';
+
+    return `
+      <optgroup label="${esc(title)}">
+        ${visible.map(c => {
+          const dn = DISPLAY_NAMES[c] || {};
+          const label = dn.label || c;
+          return `<option value="${esc(c)}">${esc(label)}</option>`;
+        }).join('')}
+      </optgroup>
+    `;
+  };
+
+  wrap.innerHTML = `
+    <label class="competition-select-label" for="competition-select">
+      Competition
+    </label>
+    <select id="competition-select" class="competition-select">
+      ${optionBlock('County Championships', COUNTY_ALL)}
+      ${optionBlock('Divisional Championships', DIVISIONAL_ALL)}
+    </select>
+  `;
+
+  const sel = el('competition-select');
+  if (sel) {
+    sel.value = state.comp || "Senior Hurling Championship";
+
+    sel.addEventListener('change', () => {
+      setCompetition(sel.value, true);
+    });
+  }
+}
+
+  
 
   // Desired default: Senior -> Group 1
     function setCompetition(comp, push=false, suppressUrl=false, groupOverride=null){
@@ -1097,6 +1157,8 @@ menu.innerHTML =
     // Selected header
     const dn = DISPLAY_NAMES[state.comp];
     el('comp-selected').textContent = (dn && dn.long) ? dn.long : state.comp;
+    const compSelect = el('competition-select');
+    if (compSelect) compSelect.value = state.comp;
 
     // Rebuild matches menu/label for this comp
     rebuildMatchesMenu();
@@ -1220,6 +1282,8 @@ const list = el('comp-list');
     });
   }
 
+  ensureCompetitionSelect();
+  
   // Initial: if URL has comp, enter it; otherwise default to Senior Group 1
   let initialComp = (params.comp && ALL.includes(params.comp)) ? params.comp : null;
   if(initialComp){
