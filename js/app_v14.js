@@ -391,10 +391,7 @@ const compCode=name=>
     // other labels have spaces removed, as before
     return s.replace(/^Round\s*/i, 'R').replace(/\s+/g, '') || '—';
   }
-
-const VENUE_MAP = {
-
-  
+ 
   const VENUE_MAP = {
   "BALLYBROWN GAA": "Ballybrown",
   "Caherdavin": "Páirc Uí Dromgúil",
