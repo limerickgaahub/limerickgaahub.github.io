@@ -1,7 +1,7 @@
 {
   "competition": "County Hurling League",
   "season": 2026,
-  "updated_at": "2026-06-03T14:00:22",
+  "updated_at": "2026-06-03T21:20:14",
   "fixtures": [
     {
       "id": "league-10-R1-2026-03-21-askeaton-ballysteen-kilcornan-vs-patrickswell",
@@ -6316,12 +6316,12 @@
       "away": "Askeaton Ballysteen Kilcornan",
       "venue": "Caherdavin",
       "referee": "TBC",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/senior-hurling-fixtures/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null,
+      "status": "Result",
+      "source_url": "https://limerickgaa.ie/senior-hurling-results/",
+      "home_goals": 3,
+      "home_points": 11,
+      "away_goals": 2,
+      "away_points": 15,
       "walkover_winner": null
     }
   ]
