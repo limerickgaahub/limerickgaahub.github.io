@@ -369,7 +369,32 @@ const compCode=name=>
     : (COMP_CODES[name] || (name ? name.split(/\s+/).map(w=>w[0]).join('').toUpperCase() : '?'));
   const toInt=v=>v==null||v===''?null:(Number(v)||0);
   const parseRoundNum=r=>{ const m=String(r||'').match(/(\d+)/); return m?Number(m[1]):999; };
+  
+  function shortRoundLabel(round){
+    const s = String(round || '').trim();
+    if (!s) return '—';
+  
+    const compact = s.replace(/[\s-]+/g, '').toLowerCase();
+  
+    const knockoutMap = {
+      quarterfinal: 'QF',
+      semifinal: 'SF',
+      final: 'F',
+      knockout: 'KO'
+    };
+  
+    if (knockoutMap[compact]) return knockoutMap[compact];
+  
+    // Preserve existing mobile behaviour:
+    // "Round 1" -> "R1"
+    // "Round 10" -> "R10"
+    // other labels have spaces removed, as before
+    return s.replace(/^Round\s*/i, 'R').replace(/\s+/g, '') || '—';
+  }
 
+const VENUE_MAP = {
+
+  
   const VENUE_MAP = {
   "BALLYBROWN GAA": "Ballybrown",
   "Caherdavin": "Páirc Uí Dromgúil",
@@ -877,7 +902,7 @@ const j = window.__LGH_BOOTSTRAP__ || {};
 
 
   function rowHTML(r,isMobile,isTiny){
-    const rShort=(r.round||'').replace(/^Round\s*/i,'R').replace(/\s+/g,'')||'—';
+    const rShort = shortRoundLabel(r.round);
     const dShort = (
   state.season === '2026' &&
   r.competition !== 'County Hurling League' &&
@@ -1139,8 +1164,8 @@ menu.innerHTML =
     if (!anchor) return;
   
     const rect = anchor.getBoundingClientRect();
-  
-    menu.style.top = `${rect.bottom + window.scrollY + 6}px`;
+    const desktopOnlyOffset = window.matchMedia('(min-width: 881px)').matches ? 22 : 6;
+    menu.style.top = `${rect.bottom + window.scrollY + desktopOnlyOffset}px`;
     menu.style.left = `${rect.left + window.scrollX}px`;
     menu.classList.add('open');
     menu.setAttribute('aria-hidden', 'false');
