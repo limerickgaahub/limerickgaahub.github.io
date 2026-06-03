@@ -1096,7 +1096,19 @@ menu.innerHTML =
       
     // Selected header
     const dn = DISPLAY_NAMES[state.comp];
-    el('comp-selected').textContent = (dn && dn.long) ? dn.long : state.comp;
+    const compSelected = el('comp-selected');
+    if (compSelected) {
+      const title = (dn && dn.long) ? dn.long : state.comp;
+    
+      compSelected.innerHTML = `
+        <span class="comp-selected-text">${esc(title)}</span>
+        <span class="comp-selected-chevron" aria-hidden="true">▾</span>
+      `;
+    
+      compSelected.setAttribute('role', 'button');
+      compSelected.setAttribute('tabindex', '0');
+      compSelected.setAttribute('aria-haspopup', 'listbox');
+    }
 
     // Rebuild matches menu/label for this comp
     rebuildMatchesMenu();
@@ -1140,20 +1152,32 @@ menu.innerHTML =
   };
   
   if (selectedComp) {
-    selectedComp.style.cursor = 'pointer';
-    selectedComp.title = 'Change competition';
-  
-    selectedComp.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-  
-      if (menu.classList.contains('open')) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    });
-  }
+  selectedComp.style.cursor = 'pointer';
+  selectedComp.title = 'Change competition';
+
+  selectedComp.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (menu.classList.contains('open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  selectedComp.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+
+    e.preventDefault();
+
+    if (menu.classList.contains('open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+}
 
   menu.addEventListener('click', (e)=>{
     const it = e.target.closest('.item');
