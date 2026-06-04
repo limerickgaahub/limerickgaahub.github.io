@@ -2192,3 +2192,16 @@ thead th,
 #comp-menu .item:hover {
   background: rgba(0,0,0,0.06);
 }
+@media (min-width: 881px) {
+  #league-panel #league-div,
+  #league-panel #league-matches-tab,
+  #league-panel #league-table-tab {
+    transform: translateY(6px);
+  }
+
+  #league-panel .table-wrap,
+  #league-panel .matches-wrap,
+  #league-panel #league-matches-wrap {
+    margin-top: 8px;
+  }
+}
