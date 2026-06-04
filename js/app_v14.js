@@ -400,6 +400,23 @@ const compCode=name=>
   "Round 5 Winners": "Askeaton Ballysteen Kilcornan"
 };
 
+  
+function isPlaceholderChampionshipDateTime(r){
+  if (!r?.date) return false;
+
+  const d = new Date(r.date + 'T00:00:00');
+  const isThursday = d.getDay() === 4;
+
+  const time = String(r.time || '').trim().toLowerCase();
+  const isNoon =
+    time === '12:00' ||
+    time === '12:00pm' ||
+    time === '12:00 pm' ||
+    time === '12:00:00';
+
+  return isThursday && isNoon;
+}
+
 function mapVenue(v){
   if (!v) return '';
   const key = String(v).trim();
@@ -900,24 +917,33 @@ const j = window.__LGH_BOOTSTRAP__ || {};
 
   function rowHTML(r,isMobile,isTiny){
     const rShort = shortRoundLabel(r.round);
-    const dShort = (
-  state.season === '2026' &&
-  r.competition !== 'County Hurling League' &&
-  r.date
-)
-  ? (() => {
-      const d = new Date(r.date + 'T00:00:00');
-      const mon3 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      return `w/c ${day3[d.getDay()]} ${pad2(d.getDate())} ${mon3[d.getMonth()]}`;
-    })()
-  : fmtDateShort(r.date),
-tShort = fmtTimeShort(r.time || '');
+    
+  const useWcDate =
+    state.season === '2026' &&
+    r.competition !== 'County Hurling League' &&
+    isPlaceholderChampionshipDateTime(r) &&
+    !!r.date;
+  
+  const dShort = useWcDate
+    ? (() => {
+        const d = new Date(r.date + 'T00:00:00');
+        const mon3 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return `w/c ${day3[d.getDay()]} ${pad2(d.getDate())} ${mon3[d.getMonth()]}`;
+      })()
+    : fmtDateShort(r.date);
+  
+  const tShort = useWcDate
+    ? ''
+    : fmtTimeShort(r.time || '');
+  
+      const stShort=isResult(r.status)?'R':'F';
+      const scoreMid = (/^walkover$/i.test(r.status))
+    ? 'W/O'
+    : ((r._homeMid && r._awayMid) ? `${r._homeMid} - ${r._awayMid}` : '—');
 
-    const stShort=isResult(r.status)?'R':'F';
-    const scoreMid = (/^walkover$/i.test(r.status))
-  ? 'W/O'
-  : ((r._homeMid && r._awayMid) ? `${r._homeMid} - ${r._awayMid}` : '—');
-
+  const desktopDate = useWcDate ? dShort : (r.date || '');
+  const desktopTime = useWcDate ? '' : (r.time || '');
+    
   const showMeta = (VIEW_MODE !== 'competition');
 
 let metaText = '';
@@ -968,8 +994,8 @@ const dtHTML = `<div class="dt3">
 } else {
   return `<tr ${trAttr}>
             <td>${esc(r.round||'')}</td>
-            <td class="dcol">${esc(r.date||'')}</td>
-            <td class="tcol">${esc(r.time||'')}</td>
+            <td class="dcol">${esc(desktopDate)}</td>
+            <td class="tcol">${esc(desktopTime)}</td>
             <td class="match">${matchCell}</td>
             <td>${esc(r.venue||'')}</td>
             <td><span class="status-badge status-${esc(r.status||'')}">${esc(r.status||'')}</span></td>
