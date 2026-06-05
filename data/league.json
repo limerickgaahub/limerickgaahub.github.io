@@ -6403,7 +6403,7 @@
       "status": "Result",
       "source_url": "manual",
       "home_goals": 0,
-      "home_points": 18,
+      "home_points": 16,
       "away_goals": 3,
       "away_points": 24,
       "walkover_winner": null
@@ -6484,12 +6484,12 @@
       "away": "Staker Wallace",
       "venue": "Hospital",
       "referee": "TBC",
-      "status": "SCHEDULED",
+      "status": "Result",
       "source_url": "manual",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null,
+      "home_goals": 1,
+      "home_points": 16,
+      "away_goals": 0,
+      "away_points": 16,
       "walkover_winner": null
     },
     {
