@@ -6358,12 +6358,12 @@
       "away": "Newcastle West",
       "venue": "Sean Finn Park, Rathkeale",
       "referee": "TBC",
-      "status": "SCHEDULED",
+      "status": "Result",
       "source_url": "manual",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null,
+      "home_goals": 0,
+      "home_points": 20,
+      "away_goals": 2,
+      "away_points": 8,
       "walkover_winner": null
     },
     {
