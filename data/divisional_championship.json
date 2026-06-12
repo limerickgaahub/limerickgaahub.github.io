@@ -3,7 +3,7 @@
   "section": "Championship",
   "subsection": "Divisional",
   "season": 2026,
-  "updated_at": "2026-06-09T10:40:47",
+  "updated_at": "2026-06-12T11:08:55",
   "fixtures": [
     {
       "id": "championship-divisional-west-junior-a-hurling-championship-quarter-final-2026-06-12-monagea-vs-croagh-kilfinny",
@@ -47,7 +47,7 @@
       "datetime_iso": "2026-06-12T19:30:00",
       "home": "Ahane",
       "away": "Ballybricken Bohermore",
-      "venue": "Ballybricken Bohermore",
+      "venue": "Cappamore",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/",
