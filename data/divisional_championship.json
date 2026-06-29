@@ -3,7 +3,7 @@
   "section": "Championship",
   "subsection": "Divisional",
   "season": 2026,
-  "updated_at": "2026-06-28T10:08:01",
+  "updated_at": "2026-06-29T12:07:26",
   "fixtures": [
     {
       "id": "championship-divisional-east-junior-b-hurling-championship-final-2026-06-29-cappamore-vs-murroe-boher",
@@ -21,7 +21,7 @@
       "datetime_iso": "2026-06-29T19:30:00",
       "home": "Cappamore",
       "away": "Murroe Boher",
-      "venue": "Caherconlish",
+      "venue": "Doon",
       "referee": "TBC",
       "status": "SCHEDULED",
       "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/",
