@@ -3,7 +3,7 @@
   "section": "Championship",
   "subsection": "Divisional",
   "season": 2026,
-  "updated_at": "2026-07-17T09:20:17",
+  "updated_at": "2026-07-18T08:57:38",
   "fixtures": [
     {
       "id": "championship-divisional-west-junior-a-hurling-championship-final-2026-07-22-killeedy-vs-templeglantine",
@@ -16,9 +16,9 @@
       "group": "West",
       "round": "Final",
       "date": "2026-07-22",
-      "time_local": "18:30",
+      "time_local": "19:30",
       "tz": "Europe/Dublin",
-      "datetime_iso": "2026-07-22T18:30:00",
+      "datetime_iso": "2026-07-22T19:30:00",
       "home": "Killeedy",
       "away": "Templeglantine",
       "venue": "Tournfulla",
