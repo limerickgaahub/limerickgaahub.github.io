@@ -3,33 +3,6 @@
   "section": "Championship",
   "subsection": "Divisional",
   "season": 2026,
-  "updated_at": "2026-07-22T09:37:07",
-  "fixtures": [
-    {
-      "id": "championship-divisional-west-junior-a-hurling-championship-final-2026-07-22-killeedy-vs-templeglantine",
-      "competition": "West Junior A Hurling Championship",
-      "competition_key": "west-junior-a-hurling-championship",
-      "section": "Championship",
-      "subsection": "Divisional",
-      "division": "West",
-      "grade": "Junior A",
-      "group": "West",
-      "round": "Final",
-      "date": "2026-07-22",
-      "time_local": "19:30",
-      "tz": "Europe/Dublin",
-      "datetime_iso": "2026-07-22T19:30:00",
-      "home": "Killeedy",
-      "away": "Templeglantine",
-      "venue": "Tournfulla",
-      "referee": "TBC",
-      "status": "SCHEDULED",
-      "source_url": "https://limerickgaa.ie/junior-hurling-fixtures/",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null,
-      "walkover_winner": null
-    }
-  ]
+  "updated_at": "2026-07-23T09:34:14",
+  "fixtures": []
 }
