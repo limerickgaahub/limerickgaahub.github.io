@@ -176,24 +176,26 @@
    <div class="top-controls card" id="top-controls">
     <div class="section-tabs view-tabs" id="view-tabs" role="tablist" aria-label="View selector">
 
-        <button class="seg vt active"
+
+        <button class="seg vt"
             role="tab"
-            aria-selected="true"
+            aria-selected="false"
             data-target="league-panel"
             id="league-tab"
             type="button">
       League
     </button>
     
-    <button class="seg vt"
+    <button class="seg vt active"
             role="tab"
-            aria-selected="false"
+            aria-selected="true"
             data-target="group-panel"
             id="comp-tab"
             type="button">
       Championship
     </button>
-      
+
+    
       <button class="seg vt"
               role="tab"
               aria-selected="false"
@@ -218,7 +220,7 @@
 
   <!-- Main data container -->
   <div class="data-shell card" id="data-shell">
-    <div class="panel card" id="group-panel" style="display:none;">
+    <div class="panel card" id="group-panel">
 
         <div id="comp-list" class="comp-list" style="display:none;"></div>
         <div class="comp-selected" id="comp-selected" aria-live="polite"></div>
@@ -291,7 +293,7 @@
 
     </div>
 
-  <div class="panel card" id="league-panel">
+  <div class="panel card" id="league-panel" style="display:none;">
   <div class="controls card league-subnav" id="controls-league" style="margin-top:6px;">
     <label for="league-div" class="sr-only">Select division</label>
 
@@ -464,7 +466,7 @@
   <footer class="site-footer">Limerick GAA Hub · 2026</footer>
 
   <!-- JS -->
-  <script src="/js/app_v14.js?v=20260604" defer></script>
+  <script src="/js/app_v14.js?v=20260726" defer></script>
   <script>
     // Inline logger to confirm flags at load
     window.addEventListener('load', () => {
