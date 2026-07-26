@@ -4,6 +4,7 @@ This folder contains:
 - `scripts/scrape_fixtures.py` — a simple scraper stub for limerickgaa.ie
 - `.github/workflows/update-fixtures.yml` — GitHub Action to run the scraper and commit updates
 
+
 ## How it works
 1. The site loads `data/hurling_2025.json` at runtime.
 2. The Action runs on a schedule and updates that JSON if new fixtures are detected.
