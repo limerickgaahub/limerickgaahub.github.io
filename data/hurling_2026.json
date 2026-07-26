@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-26T12:47:11Z",
+  "updated": "2026-07-26T19:44:04Z",
   "matches": [
     {
       "competition": "Junior C Hurling Championship",
@@ -55,11 +55,11 @@
       "home": "Croagh Kilfinny",
       "away": "Effin",
       "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 17,
+      "away_goals": 0,
+      "away_points": 17
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -70,11 +70,11 @@
       "home": "Castletown Ballyagran",
       "away": "Athea",
       "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 18,
+      "away_goals": 0,
+      "away_points": 10
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -100,11 +100,11 @@
       "home": "Kilteely Dromkeen",
       "away": "Killeedy",
       "venue": "Kilteely",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 20,
+      "away_goals": 2,
+      "away_points": 19
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -115,11 +115,11 @@
       "home": "Glenroe",
       "away": "Dromin Athlacca",
       "venue": "Knocklong",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 16,
+      "away_goals": 1,
+      "away_points": 25
     },
     {
       "competition": "Junior C Hurling Championship",
