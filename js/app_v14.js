@@ -87,12 +87,6 @@ const err  = (...a) => console.error(...a);
 
 log("[LGH] app js evaluating");
 
-(function defaultHomeToLeague(){
-  if (location.pathname !== '/') return;
-  if (location.search || location.hash) return;
-
-  location.replace('/?v=league&div=1');
-})();
 
 window.LGH_V7_3_READY = true;
 window.LGH_V7_3_3_READY = true;
