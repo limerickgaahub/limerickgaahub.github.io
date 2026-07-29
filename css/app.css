@@ -2547,3 +2547,32 @@ body.match-detail-open {
 
   border-top: 1px dashed var(--line);
 }
+
+/* Mobile-browser fix for Senior match-details modal */
+@media (max-width: 600px) {
+  .match-detail-modal {
+    display: block;
+    box-sizing: border-box;
+
+    height: 100vh;
+    height: 100dvh;
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+
+    padding:
+      max(10px, env(safe-area-inset-top))
+      10px
+      max(10px, env(safe-area-inset-bottom));
+  }
+
+  .match-detail-card {
+    width: 100%;
+    max-height: none;
+    min-height: 0;
+    margin: 0 auto;
+
+    border-radius: 16px;
+  }
+}
