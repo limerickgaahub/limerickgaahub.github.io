@@ -2446,3 +2446,104 @@ body.match-detail-open {
     font-size: 12px;
   }
 }
+
+/* =========================================================
+   SENIOR MATCH REFEREE AND TEAMS
+   ========================================================= */
+
+.match-detail-referee {
+  margin-top: 8px;
+
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.match-detail-teams {
+  margin-top: 18px;
+  padding-top: 16px;
+
+  border-top: 1px solid var(--line);
+}
+
+.match-detail-teams > h3 {
+  margin: 0 0 10px;
+
+  color: var(--text);
+  font-size: 15px;
+}
+
+.match-detail-team-dropdown {
+  margin-top: 8px;
+
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+}
+
+.match-detail-team-dropdown[hidden] {
+  display: none !important;
+}
+
+.match-detail-team-dropdown summary {
+  position: relative;
+
+  padding: 12px 38px 12px 13px;
+
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 750;
+
+  cursor: pointer;
+  list-style: none;
+}
+
+.match-detail-team-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.match-detail-team-dropdown summary::after {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+
+  content: "\f078";
+
+  color: var(--accent);
+  font-family: "Font Awesome 6 Free";
+  font-size: 12px;
+  font-weight: 900;
+
+  transform: translateY(-50%);
+  transition: transform 0.18s ease;
+}
+
+.match-detail-team-dropdown[open] summary::after {
+  transform:
+    translateY(-50%)
+    rotate(180deg);
+}
+
+.match-detail-team-dropdown[open] summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.match-detail-team-list {
+  margin: 0;
+  padding: 12px 16px 14px 42px;
+
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.match-detail-team-list li {
+  padding: 2px 0 2px 4px;
+}
+
+.match-detail-team-list li:nth-child(16) {
+  margin-top: 8px;
+  padding-top: 9px;
+
+  border-top: 1px dashed var(--line);
+}
