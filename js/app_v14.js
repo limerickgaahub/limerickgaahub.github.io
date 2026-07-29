@@ -159,31 +159,36 @@ const COMP_CODES = {
   "Intermediate Hurling Championship": "IHC",
   "Premier Junior A Hurling Championship": "PJAHC",
   "Junior A Hurling Championship": "JAHC",
+  "Premier Junior B Hurling Championship": "PJBHC",
   "Junior B Hurling Championship": "JBHC",
+  "Premier Junior C Hurling Championship": "PJCHC",
   "Junior C Hurling Championship": "JCHC",
 };
 
 const INV_COMP_CODES = {
-  SHC:  'Senior Hurling Championship',
-  PIHC: 'Premier Intermediate Hurling Championship',
-  IHC:  'Intermediate Hurling Championship',
-  PJAHC:'Premier Junior A Hurling Championship',
-  JAHC: 'Junior A Hurling Championship',
-  JBHC: 'Junior B Hurling Championship',
-  JCHC: 'Junior C Hurling Championship'
+  SHC:   'Senior Hurling Championship',
+  PIHC:  'Premier Intermediate Hurling Championship',
+  IHC:   'Intermediate Hurling Championship',
+  PJAHC: 'Premier Junior A Hurling Championship',
+  JAHC:  'Junior A Hurling Championship',
+  PJBHC: 'Premier Junior B Hurling Championship',
+  JBHC:  'Junior B Hurling Championship',
+  PJCHC: 'Premier Junior C Hurling Championship',
+  JCHC:  'Junior C Hurling Championship'
 };
 
-
-// Optional, if you have an explicit display/order list:
 const COMPETITION_ORDER = [
   "Senior",
   "Premier Intermediate",
   "Intermediate",
   "Premier Junior A",
   "Junior A",
+  "Premier Junior B",
   "Junior B",
+  "Premier Junior C",
   "Junior C",
 ];
+
 
 // Display labels used for dropdown pills and expanded headers
 const DISPLAY_NAMES = {
@@ -203,24 +208,35 @@ const DISPLAY_NAMES = {
     groups:["Group 1","Group 2"]
   },
   "Premier Junior A Hurling Championship": {
-    label: "Premier Junior A",
-    long:  "Woodlands House Hotel County Premier Junior A Hurling Championship",
-    groups:["Group 1","Group 2"]
-  },
-  "Junior A Hurling Championship": {
-    label: "Junior A",
-    long:  "Woodlands House Hotel County Junior A Hurling Championship",
-    groups:["Group 1","Group 2"]
-  },
-  "Junior B Hurling Championship": {
-    label: "Junior B",
-    long:  "Woodlands House Hotel Junior B Hurling Championship",
-  },
-  "Junior C Hurling Championship": {
-    label: "Junior C",
-    long:  "Woodlands House Hotel County Junior C Hurling Championship",
-    groups:["Group 1","Group 2"]
-  }
+  label: "Premier Junior A",
+  long: "Woodlands House Hotel County Premier Junior A Hurling Championship",
+  groups: ["Group 1", "Group 2"]
+},
+"Junior A Hurling Championship": {
+  label: "Junior A",
+  long: "Woodlands House Hotel County Junior A Hurling Championship",
+  groups: ["Group 1", "Group 2"]
+},
+"Premier Junior B Hurling Championship": {
+  label: "Premier Junior B",
+  long: "Woodlands House Hotel County Premier Junior B Hurling Championship",
+  groups: ["Group 1", "Group 2"]
+},
+"Junior B Hurling Championship": {
+  label: "Junior B",
+  long: "County Junior B Hurling Championship",
+  groups: ["Group 1", "Group 2"]
+},
+"Premier Junior C Hurling Championship": {
+  label: "Premier Junior C",
+  long: "County Premier Junior C Hurling Championship",
+  groups: ["Group 1", "Group 2"]
+},
+"Junior C Hurling Championship": {
+  label: "Junior C",
+  long: "County Junior C Hurling Championship",
+  groups: ["Group 1", "Group 2"]
+}
 };
 
 Object.assign(DISPLAY_NAMES, {
@@ -324,9 +340,17 @@ Object.assign(DISPLAY_NAMES, {
 const COMP_RANK = (() => {
   // Order we want in "By Date" when dates are equal
   const ORDER = [
-    "Senior", "Premier Intermediate", "Intermediate",
-    "Premier Junior A", "Junior A", "Junior B", "Junior C"
-  ];
+  "Senior",
+  "Premier Intermediate",
+  "Intermediate",
+  "Premier Junior A",
+  "Junior A",
+  "Premier Junior B",
+  "Junior B",
+  "Premier Junior C",
+  "Junior C"
+];
+  
   const rank = {};
   // Map full competition name -> rank using DISPLAY_NAMES.label
   for (const [full, meta] of Object.entries(DISPLAY_NAMES)) {
@@ -1057,7 +1081,9 @@ const COUNTY_ALL = [
   "Intermediate Hurling Championship",
   "Premier Junior A Hurling Championship",
   "Junior A Hurling Championship",
+  "Premier Junior B Hurling Championship",
   "Junior B Hurling Championship",
+  "Premier Junior C Hurling Championship",
   "Junior C Hurling Championship"
 ];
 
