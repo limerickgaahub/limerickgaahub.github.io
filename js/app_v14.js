@@ -1952,12 +1952,13 @@ th.innerHTML = `<tr>
 
   // Ensure clicking the brand always goes to CURRENT season home
   document.querySelectorAll('a.brand').forEach(a=>{
-    a.addEventListener('click', (e)=>{
-      e.preventDefault();
-      window.location.href = '/?v=league&div=1';
-    });
+  a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    window.location.href = '/';
   });
+});
 
+  
   // Top nav tabs
   $$('.navtab').forEach(tab=>{
     tab.addEventListener('click',()=>{
@@ -2536,18 +2537,18 @@ updateScrollTopVisibility();
     // renderLeague() will map numeric div to the correct option value
     setTimeout(()=>{ try{ renderLeague(); }catch(e){} }, 0);
   }   
-    } else {
-      // Clean homepage: show the Competition list (your intended default)
-      // If a specific competition is deep-linked, buildCompetitionMenu() already handled it.
-      if (!params.comp && FIRST_LOAD_NO_QUERY) {
-        goCompHome();
-      } else if (params.comp) {
-        // do nothing: buildCompetitionMenu() already called setCompetition()
       } else {
-        // non-empty query but no explicit view; safe fallback
-        renderGroupTable();
-      }
+    // Clean homepage: default to Senior Championship, Group 1.
+    // buildCompetitionMenu() has already selected and rendered it.
+    if (!params.comp && FIRST_LOAD_NO_QUERY) {
+      setCompetitionHomeMode(false);
+      renderGroupTable();
+    } else if (params.comp) {
+      // Deep link already handled by buildCompetitionMenu().
+    } else {
+      renderGroupTable();
     }
+  }
   })();
 
   // --- LGH Share Card: tiny public, read-only API ---
