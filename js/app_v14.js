@@ -653,11 +653,12 @@ function formatSeniorDetailDate(isoDate) {
 }
 
 function safeReportUrl(value) {
+  const rawUrl = String(value || '').trim();
+
+  if (!rawUrl) return '';
+
   try {
-    const url = new URL(
-      String(value || ''),
-      location.href
-    );
+    const url = new URL(rawUrl, location.href);
 
     if (
       url.protocol !== 'http:' &&
@@ -671,6 +672,27 @@ function safeReportUrl(value) {
     return '';
   }
 }
+
+function renderSeniorTeamList(listElement, players) {
+  if (!listElement) return 0;
+
+  listElement.replaceChildren();
+
+  const cleanPlayers = Array.isArray(players)
+    ? players
+        .map(player => String(player || '').trim())
+        .filter(Boolean)
+    : [];
+
+  cleanPlayers.forEach(player => {
+    const item = document.createElement('li');
+    item.textContent = player;
+    listElement.appendChild(item);
+  });
+
+  return cleanPlayers.length;
+}
+
 
 function closeSeniorMatchDetails() {
   const modal = el('senior-detail-modal');
@@ -723,6 +745,18 @@ function openSeniorMatchDetails(detailsId, trigger) {
   el('senior-detail-meta').textContent =
     metaParts.join(' · ');
 
+  const refereeElement =
+  el('senior-detail-referee');
+  
+  const referee =
+    String(details.referee || '').trim();
+  
+  if (refereeElement) {
+    refereeElement.hidden = !referee;
+    refereeElement.textContent =
+      referee ? `Referee: ${referee}` : '';
+}
+
   el('senior-detail-home-name').textContent =
     details.home;
 
@@ -749,6 +783,63 @@ function openSeniorMatchDetails(detailsId, trigger) {
 
   el('senior-detail-away-scorers').textContent =
     awayScorers;
+
+  const teamsSection =
+  el('senior-detail-teams');
+
+const homeTeamDetails =
+  el('senior-detail-home-team');
+
+const awayTeamDetails =
+  el('senior-detail-away-team');
+
+const homeTeamName =
+  el('senior-detail-home-team-name');
+
+const awayTeamName =
+  el('senior-detail-away-team-name');
+
+const homeTeamList =
+  el('senior-detail-home-team-list');
+
+const awayTeamList =
+  el('senior-detail-away-team-list');
+
+const homeTeamCount =
+  renderSeniorTeamList(
+    homeTeamList,
+    details.home_team
+  );
+
+const awayTeamCount =
+  renderSeniorTeamList(
+    awayTeamList,
+    details.away_team
+  );
+
+if (homeTeamName) {
+  homeTeamName.textContent = details.home;
+}
+
+if (awayTeamName) {
+  awayTeamName.textContent = details.away;
+}
+
+if (homeTeamDetails) {
+  homeTeamDetails.hidden = homeTeamCount === 0;
+  homeTeamDetails.open = false;
+}
+
+if (awayTeamDetails) {
+  awayTeamDetails.hidden = awayTeamCount === 0;
+  awayTeamDetails.open = false;
+}
+
+if (teamsSection) {
+  teamsSection.hidden =
+    homeTeamCount === 0 &&
+    awayTeamCount === 0;
+}
 
   const reportsSection =
     el('senior-detail-reports');
