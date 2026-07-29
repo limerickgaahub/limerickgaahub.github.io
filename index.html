@@ -391,6 +391,82 @@
     </div> <!-- end of #data-shell -->
   </div>    <!-- end of #panel-hurling -->
 
+  <div
+  id="senior-detail-modal"
+  class="match-detail-modal"
+  hidden>
+
+  <div
+    class="match-detail-backdrop"
+    data-senior-detail-close
+    aria-hidden="true">
+  </div>
+
+  <section
+    class="match-detail-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="senior-detail-title">
+
+    <button
+      id="senior-detail-close"
+      class="match-detail-close"
+      type="button"
+      data-senior-detail-close
+      aria-label="Close match details">
+      <i
+        class="fa-solid fa-xmark"
+        aria-hidden="true">
+      </i>
+    </button>
+
+    <header class="match-detail-header">
+      <h2 id="senior-detail-title"></h2>
+
+      <div
+        id="senior-detail-score"
+        class="match-detail-score">
+      </div>
+
+      <div
+        id="senior-detail-meta"
+        class="match-detail-meta">
+      </div>
+    </header>
+
+    <div class="match-detail-scorers">
+
+      <section
+        id="senior-detail-home-section"
+        class="match-detail-team-section">
+
+        <h3 id="senior-detail-home-name"></h3>
+
+        <p id="senior-detail-home-scorers"></p>
+      </section>
+
+      <section
+        id="senior-detail-away-section"
+        class="match-detail-team-section">
+
+        <h3 id="senior-detail-away-name"></h3>
+
+        <p id="senior-detail-away-scorers"></p>
+      </section>
+
+    </div>
+
+    <section
+      id="senior-detail-reports"
+      class="match-detail-reports">
+
+      <h3>Match reports</h3>
+
+      <div id="senior-detail-report-links"></div>
+    </section>
+
+  </section>
+</div>
       
   <!-- Reserved for future use -->
   <div id="panel-football"
