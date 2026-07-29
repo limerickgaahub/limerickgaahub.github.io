@@ -117,26 +117,32 @@ const DEFAULT_SEASON = '2026';
 
 const SEASON_SOURCES = {
   '2026': {
-    data:   'data/hurling_2026.json',
-    ko:     null,                  // no knockout_2026.json in repo
+    data: 'data/hurling_2026.json',
+    ko: null,
     league: 'data/league.json',
-    divisional: 'data/divisional_championship.json'
+    divisional: 'data/divisional_championship.json',
+    seniorDetails: 'data/senior_match_details_2026.json'
   },
   '2025': {
-    data:   'data/hurling_2025.json',
-    ko:     'datastatic/knockout_2025.json',
+    data: 'data/hurling_2025.json',
+    ko: 'datastatic/knockout_2025.json',
     league: null,
-    divisional: null
+    divisional: null,
+    seniorDetails: null
   }
 };
 
+  
   // These are reassigned once we read URL params
   let DATA_URL = SEASON_SOURCES[DEFAULT_SEASON].data;
-  let KO_URL   = SEASON_SOURCES[DEFAULT_SEASON].ko;
+  let KO_URL = SEASON_SOURCES[DEFAULT_SEASON].ko;
   let LEAGUE_URL = SEASON_SOURCES[DEFAULT_SEASON].league;
   let DIVISIONAL_URL = SEASON_SOURCES[DEFAULT_SEASON].divisional;
+  let SENIOR_DETAILS_URL = SEASON_SOURCES[DEFAULT_SEASON].seniorDetails;
   let LEAGUE_OVERRIDES_URL = 'data/league_overrides.json';
 
+
+  
   function isKO(m){
     return (m.stage === 'knockout') || ((m.group || '').toLowerCase() === 'knockout');
   }
@@ -459,10 +465,14 @@ function mapVenue(v){
   state.season = SEASON_SOURCES[reqSeason] ? reqSeason : DEFAULT_SEASON;
 
   DATA_URL = SEASON_SOURCES[state.season].data;
-  KO_URL   = SEASON_SOURCES[state.season].ko;
+  KO_URL = SEASON_SOURCES[state.season].ko;
   LEAGUE_URL = SEASON_SOURCES[state.season].league;
   DIVISIONAL_URL = SEASON_SOURCES[state.season].divisional;
-  LEAGUE_OVERRIDES_URL = (state.season === '2026') ? 'data/league_overrides.json' : null; 
+  SENIOR_DETAILS_URL = SEASON_SOURCES[state.season].seniorDetails;
+  LEAGUE_OVERRIDES_URL =
+    state.season === '2026'
+      ? 'data/league_overrides.json'
+      : null;
   
   // ---------- Season UI (chips/banner + hide League pill in archive) ----------
 function ensureSeasonBanner(){
@@ -513,8 +523,316 @@ function setSeasonBanner(){
   
   const FIRST_LOAD_NO_QUERY = !location.search;   // true if user landed without query params
 
-  let MATCHES=[];
-  let VIEW_MODE='competition';
+  let MATCHES = [];
+let VIEW_MODE = 'competition';
+
+let SENIOR_DETAILS_BY_ID = new Map();
+let SENIOR_DETAILS_BY_MATCH = new Map();
+let lastSeniorDetailTrigger = null;
+
+function normaliseSeniorMatchPart(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
+function seniorDetailKey(date, home, away) {
+  return [
+    String(date || '').trim(),
+    normaliseSeniorMatchPart(home),
+    normaliseSeniorMatchPart(away)
+  ].join('|');
+}
+
+function getPublishedSeniorDetails(match) {
+  if (state.season !== '2026') return null;
+
+  if (
+    String(match?.competition || '') !==
+    'Senior Hurling Championship'
+  ) {
+    return null;
+  }
+
+  const key = seniorDetailKey(
+    match.date,
+    match.home,
+    match.away
+  );
+
+  return SENIOR_DETAILS_BY_MATCH.get(key) || null;
+}
+
+async function loadSeniorMatchDetails() {
+  SENIOR_DETAILS_BY_ID.clear();
+  SENIOR_DETAILS_BY_MATCH.clear();
+
+  if (!SENIOR_DETAILS_URL) return;
+
+  try {
+    const response = await fetch(
+      `${SENIOR_DETAILS_URL}?t=${Date.now()}`,
+      { cache: 'no-store' }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const json = await response.json();
+
+    const records = Array.isArray(json)
+      ? json
+      : (json.matches || []);
+
+    records.forEach((record, index) => {
+      if (!record || record.published !== true) return;
+      if (!record.date || !record.home || !record.away) return;
+
+      const id = `senior-detail-${index}`;
+
+      const storedRecord = {
+        ...record,
+        _id: id
+      };
+
+      const key = seniorDetailKey(
+        record.date,
+        record.home,
+        record.away
+      );
+
+      SENIOR_DETAILS_BY_ID.set(id, storedRecord);
+      SENIOR_DETAILS_BY_MATCH.set(key, storedRecord);
+    });
+  } catch (error) {
+    warn(
+      '[LGH] Senior match details skipped:',
+      error
+    );
+  }
+}
+
+function findSeniorMatchForDetails(details) {
+  const key = seniorDetailKey(
+    details.date,
+    details.home,
+    details.away
+  );
+
+  return MATCHES.find(match =>
+    match.competition === 'Senior Hurling Championship' &&
+    seniorDetailKey(
+      match.date,
+      match.home,
+      match.away
+    ) === key
+  ) || null;
+}
+
+function formatSeniorDetailDate(isoDate) {
+  if (!isoDate) return '';
+
+  try {
+    const parsed = new Date(`${isoDate}T12:00:00`);
+
+    return new Intl.DateTimeFormat('en-IE', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    }).format(parsed);
+  } catch {
+    return isoDate;
+  }
+}
+
+function safeReportUrl(value) {
+  try {
+    const url = new URL(
+      String(value || ''),
+      location.href
+    );
+
+    if (
+      url.protocol !== 'http:' &&
+      url.protocol !== 'https:'
+    ) {
+      return '';
+    }
+
+    return url.href;
+  } catch {
+    return '';
+  }
+}
+
+function closeSeniorMatchDetails() {
+  const modal = el('senior-detail-modal');
+  if (!modal || modal.hidden) return;
+
+  modal.hidden = true;
+  document.body.classList.remove('match-detail-open');
+
+  if (lastSeniorDetailTrigger) {
+    lastSeniorDetailTrigger.focus();
+  }
+
+  lastSeniorDetailTrigger = null;
+}
+
+function openSeniorMatchDetails(detailsId, trigger) {
+  const details = SENIOR_DETAILS_BY_ID.get(detailsId);
+  const modal = el('senior-detail-modal');
+
+  if (!details || !modal) return;
+
+  const match = findSeniorMatchForDetails(details);
+
+  lastSeniorDetailTrigger = trigger || null;
+
+  el('senior-detail-title').textContent =
+    `${details.home} v ${details.away}`;
+
+  const scoreElement = el('senior-detail-score');
+
+  if (
+    match?._homeMid &&
+    match?._awayMid
+  ) {
+    scoreElement.textContent =
+      `${match.home} ${match._homeMid} — ` +
+      `${match._awayMid} ${match.away}`;
+  } else {
+    scoreElement.textContent =
+      `${details.home} v ${details.away}`;
+  }
+
+  const metaParts = [
+    formatSeniorDetailDate(details.date),
+    match?.round || '',
+    match?.group || '',
+    match?.venue || ''
+  ].filter(Boolean);
+
+  el('senior-detail-meta').textContent =
+    metaParts.join(' · ');
+
+  el('senior-detail-home-name').textContent =
+    details.home;
+
+  el('senior-detail-away-name').textContent =
+    details.away;
+
+  const homeScorers =
+    String(details.home_scorers || '').trim();
+
+  const awayScorers =
+    String(details.away_scorers || '').trim();
+
+  const homeSection =
+    el('senior-detail-home-section');
+
+  const awaySection =
+    el('senior-detail-away-section');
+
+  homeSection.hidden = !homeScorers;
+  awaySection.hidden = !awayScorers;
+
+  el('senior-detail-home-scorers').textContent =
+    homeScorers;
+
+  el('senior-detail-away-scorers').textContent =
+    awayScorers;
+
+  const reportsSection =
+    el('senior-detail-reports');
+
+  const reportsList =
+    el('senior-detail-report-links');
+
+  reportsList.replaceChildren();
+
+  const reports = Array.isArray(details.reports)
+    ? details.reports.slice(0, 2)
+    : [];
+
+  reports.forEach((report, index) => {
+    const safeUrl = safeReportUrl(report?.url);
+    if (!safeUrl) return;
+
+    const link = document.createElement('a');
+
+    link.className = 'match-detail-report-link';
+    link.href = safeUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+
+    link.textContent =
+      String(report?.label || '').trim() ||
+      `Match report ${index + 1}`;
+
+    const icon = document.createElement('i');
+    icon.className =
+      'fa-solid fa-arrow-up-right-from-square';
+    icon.setAttribute('aria-hidden', 'true');
+
+    link.appendChild(icon);
+    reportsList.appendChild(link);
+  });
+
+  reportsSection.hidden =
+    reportsList.children.length === 0;
+
+  modal.hidden = false;
+  document.body.classList.add('match-detail-open');
+
+  el('senior-detail-close')?.focus();
+}
+
+document.addEventListener('click', event => {
+  const closeControl =
+    event.target.closest(
+      '[data-senior-detail-close]'
+    );
+
+  if (closeControl) {
+    closeSeniorMatchDetails();
+    return;
+  }
+
+  const trigger =
+    event.target.closest(
+      '.match-detail-trigger' +
+      '[data-senior-detail-id]'
+    );
+
+  if (!trigger) return;
+
+  openSeniorMatchDetails(
+    trigger.dataset.seniorDetailId,
+    trigger
+  );
+});
+
+document.addEventListener('keydown', event => {
+  const modal = el('senior-detail-modal');
+
+  if (
+    event.key === 'Escape' &&
+    modal &&
+    !modal.hidden
+  ) {
+    closeSeniorMatchDetails();
+  }
+});
+
+  
 
   const attachScores=m=>{
     m.home_goals=toInt(m.home_goals); m.home_points=toInt(m.home_points);
@@ -870,9 +1188,16 @@ if (DIVISIONAL_URL) {
 
     MATCHES = mergeById(MATCHES, norm.map(attachScores));
   } catch (e) {
-    warn('[LGH] divisional championship file skipped:', e);
+    warn(
+      '[LGH] divisional championship file skipped:',
+      e
+    );
   }
 }
+
+await loadSeniorMatchDetails();
+
+if (!MATCHES.length) {
     
     if (!MATCHES.length) {
       showWarn(
@@ -977,12 +1302,51 @@ const meta = showMeta && metaText
   ? `<div class="match-meta">${esc(metaText)}</div>`
   : '';
 
-    const homeHTML=`<span class="match-team">${esc(r.home||'')}</span>`;
-    const scoreHTML=`<span class="match-score">${esc(scoreMid)}</span>`;
-    const awayHTML=`<span class="match-team">${esc(r.away||'')}</span>`;
-    const matchCell=`<div class="match-block">${homeHTML}${scoreHTML}${awayHTML}${meta}</div>`;
+  const homeHTML =
+  `<span class="match-team">` +
+  `${esc(r.home || '')}` +
+  `</span>`;
 
-    const trAttr=`data-date="${esc(r.date||'')}"`;
+const scoreHTML =
+  `<span class="match-score">` +
+  `${esc(scoreMid)}` +
+  `</span>`;
+
+const awayHTML =
+  `<span class="match-team">` +
+  `${esc(r.away || '')}` +
+  `</span>`;
+
+const baseMatchBlock =
+  `<div class="match-block">` +
+    homeHTML +
+    scoreHTML +
+    awayHTML +
+    meta +
+  `</div>`;
+
+const publishedDetails =
+  getPublishedSeniorDetails(r);
+
+const matchCell = publishedDetails
+  ? `
+    <button
+      type="button"
+      class="match-detail-trigger"
+      data-senior-detail-id="${esc(publishedDetails._id)}"
+      aria-label="Open match details for ${esc(r.home || '')} versus ${esc(r.away || '')}">
+      ${baseMatchBlock}
+      <span
+        class="match-detail-chevron"
+        aria-hidden="true">
+        <i class="fa-solid fa-chevron-right"></i>
+      </span>
+    </button>
+  `
+  : baseMatchBlock;
+
+const trAttr =
+  `data-date="${esc(r.date || '')}"`;
 
     if(isMobile){
   // Three-line Date/Time: day, date, time — centred via CSS
