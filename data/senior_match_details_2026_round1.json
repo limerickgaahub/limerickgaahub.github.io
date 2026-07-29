@@ -4,13 +4,16 @@
       "date": "2026-07-30",
       "home": "Na Piarsaigh",
       "away": "Kilmallock",
-      "published": true,
+      "published": false,
+      "referee": "",
       "home_scorers": "",
       "away_scorers": "",
+      "home_team": [],
+      "away_team": [],
       "reports": [
         {
-          "label": "Irish Examiner",
-          "url": "https://www.irishexaminer.com/sport/gaa/arid-41888062.html"
+          "label": "",
+          "url": ""
         },
         {
           "label": "",
@@ -23,8 +26,11 @@
       "home": "Patrickswell",
       "away": "Newcastle West",
       "published": false,
+      "referee": "",
       "home_scorers": "",
       "away_scorers": "",
+      "home_team": [],
+      "away_team": [],
       "reports": [
         {
           "label": "",
@@ -41,8 +47,11 @@
       "home": "Doon",
       "away": "Ballybrown",
       "published": false,
+      "referee": "",
       "home_scorers": "",
       "away_scorers": "",
+      "home_team": [],
+      "away_team": [],
       "reports": [
         {
           "label": "",
@@ -59,8 +68,11 @@
       "home": "Kildimo Pallaskenry",
       "away": "Mungret St Pauls",
       "published": false,
+      "referee": "",
       "home_scorers": "",
       "away_scorers": "",
+      "home_team": [],
+      "away_team": [],
       "reports": [
         {
           "label": "",
@@ -77,8 +89,11 @@
       "home": "Garryspillane",
       "away": "Adare",
       "published": false,
+      "referee": "",
       "home_scorers": "",
       "away_scorers": "",
+      "home_team": [],
+      "away_team": [],
       "reports": [
         {
           "label": "",
@@ -95,8 +110,11 @@
       "home": "Ahane",
       "away": "Monaleen",
       "published": false,
+      "referee": "",
       "home_scorers": "",
       "away_scorers": "",
+      "home_team": [],
+      "away_team": [],
       "reports": [
         {
           "label": "",
