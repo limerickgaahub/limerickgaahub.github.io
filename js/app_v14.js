@@ -3083,3 +3083,15 @@ document.querySelectorAll('[data-nav="archive"]').forEach(link=>{
 window.addEventListener('hashchange', updateMatchFilterVisibility);
 updateMatchFilterVisibility();
 })();
+/* Always open Senior match details at the top */
+document.addEventListener('click', event => {
+  if (!event.target.closest('.match-detail-trigger')) return;
+
+  requestAnimationFrame(() => {
+    const modal = document.getElementById('senior-detail-modal');
+
+    if (modal) {
+      modal.scrollTop = 0;
+    }
+  });
+});
