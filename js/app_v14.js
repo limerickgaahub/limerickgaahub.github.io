@@ -1195,18 +1195,17 @@ if (DIVISIONAL_URL) {
   }
 }
 
+
 await loadSeniorMatchDetails();
 
 if (!MATCHES.length) {
-    
-    if (!MATCHES.length) {
-      showWarn(
-        state.season === '2026'
-          ? '2026 data not loaded yet — open Menu → 2025 Championship (Archive) for last season.'
-          : 'No matches found for this season.'
-      );
-    }
-    
+  showWarn(
+    state.season === '2026'
+      ? '2026 data not loaded yet — open Menu → 2025 Championship (Archive) for last season.'
+      : 'No matches found for this season.'
+  );
+}
+
 } catch (e) {
 err('[LGH] Data load threw error:', e);
 // Optional but recommended fail-soft if the outer try trips:
