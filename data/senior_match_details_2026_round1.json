@@ -4,16 +4,18 @@
       "date": "2026-07-30",
       "home": "Na Piarsaigh",
       "away": "Kilmallock",
-      "published": false,
-      "referee": "",
-      "home_scorers": "",
-      "away_scorers": "",
-      "home_team": [],
-      "away_team": [],
+      "published": true,
+      "referee": "Kieran Guina (Feohanagh-Castlemahon)",
+      "home_scorers": "Kevin Downes 0-7 (7fs), Adrian Breen 1-2, Conor Boylan 1-1,, Peter Casey and Daithi Dempsey 0-3 each, Ronan Lynch (2fs), Keith Dempsey (1f), Mike Foley, and William O’Donoghue 0-2 each, and Will Henn 0-1",
+      "away_scorers": "Adam English 0-10 (6fs), Dean Coleman 1-2, Darragh O’Donovan 1-2 (1 sideline), Eddie Stokes 0-2, Pat Ryan and Donal Coughlan 0-1 each",
+      "home_team": [Shane Dowling, Jerome Boylan (Capt), Mike Casey, Vince Harrington, Mike Foley, Ronan Lynch, Emmet McEvoy, William O’Donoghue, JJ Carey; Kevin Downes, Peter Casey, Daithí Dempsey, Will Henn, Dylan Lynch, Adrian Breen.
+Subs: Keith Dempsey for Dylan Lynch (30 minutes), Conor Boylan for Henn (49 minutes), Tommy Grimes for Foley (53 minutes), James Finn for Downes (60 minutes), Cathall King for Jerome Boylan (66 minutes), Will Henn for Ronan Lynch (72 minutes), Wayne Kearns for Carey (80 minutes)],
+      "away_team": [Darragh Stapleton; Cian O’Donovan, Tommy Hayes, Mikey O’Brien; Chris Thomas, Barry Murphy, Richie English; Darragh O’Donovan (Capt), Jack Ryan; Dean Coleman, Adam English, Eddie Stokes; Donal Coughlan, Kevin Maher, Pat Ryan.
+Subs: Aidan O’Connell for Richie English (40 minutes), Gareth Thomas for Coughlan (55 minutes), Cormac Ryan for Coleman (58 minutes), Donal Coughlan for Pat Ryan (60 minutes), Dean Coleman for Chris Thomas (63 minutes), Eoin Fitzgibbon for O’Brien (67 minutes), Pat Ryan for Coleman (70 minutes)],
       "reports": [
         {
-          "label": "",
-          "url": ""
+          "label": "Irish Examiner",
+          "url": "https://munster.gaa.ie/event/2025-limerick-senior-hurling-championship-final/"
         },
         {
           "label": "",
