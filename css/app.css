@@ -2576,3 +2576,12 @@ body.match-detail-open {
     border-radius: 16px;
   }
 }
+/* Remove artificial numbering from match team lists */
+.match-detail-team-list {
+  list-style: none;
+  padding-left: 16px;
+}
+
+.match-detail-team-list li {
+  padding-left: 0;
+}
