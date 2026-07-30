@@ -51,12 +51,12 @@
   ],
   "reports": [
     {
-      "label": "Irish Examiner",
-      "url": ""
-    },
-    {
       "label": "Limerick Leader",
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/kilmallock-edge-na-piarsaigh-in-limerick-shc-thriller-8831573"
+    },
+    {
+      "label": "Irish Examiner",
+      "url": "https://www.irishexaminer.com/sport/gaa/arid-41888752.html"
     }
   ]
 },
@@ -108,12 +108,12 @@
   ],
   "reports": [
     {
-      "label": "Irish Examiner",
-      "url": ""
-    },
-    {
       "label": "Limerick Leader",
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/cian-lynch-on-form-as-patrickswell-open-hurling-championship-campaign-with-win-8831677"
+    },
+    {
+      "label": "Irish Examiner",
+      "url": "https://www.irishexaminer.com/sport/gaa/arid-41888752.html"
     }
   ]
 },
