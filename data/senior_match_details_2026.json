@@ -6,12 +6,48 @@
   "away": "Kilmallock",
   "published": true,
   "referee": "John O'Halloran (Bruree)",
-  "home_scorers": "",
-  "away_scorers": "",
+  "home_scorers": "Keith Dempsey 0-10 (7f), Ronan Lynch 0-4 (3f), Peter Casey 0-3, Conor Boylan 0-2, David Dempsey, Eoin Brosnan, JJ Carey, Emmet McEvoy and Kevin Downes 0-1 each.",
+  "away_scorers": "Michael Houlihan 0-7 (7f), Pierce Connery 0-5, Shane O’Brien 1-1, Conor Hanley Clarke 0-2 (2f), Steven Quirke, Mark O’Loughlin, Oisín Enright, Graeme Mulcahy, Phelim O’Reilly and Oisín O’Reilly 0-1 each.",
   "home_team": [
+    "Shane Dowling",
+    "Mark O’Connor",
+    "Mike Casey",
+    "Ronan Lynch",
+    "Mike Foley",
+    "Will O’Donoghue",
+    "Emmet McEvoy",
+    "JJ Carey",
+    "Keith Dempsey",
+    "Kevin Downes",
+    "Peter Casey",
+    "Daithí Dempsey",
+    "Will Henn",
+    "Conor Boylan",
+    "Eoin Brosnan",
+    "James Finn for Kevin Downes (39 minutes)",
+    "Vince Harrington for Will Henn (50 minutes)",
+    "David Lynch for Eoin Brosnan (53 minutes)",
+    "Tommy Grimes for JJ Carey (57 minutes)"
   ],
   "away_team": [
-
+    "Conor Hanley Clarke",
+    "Aaron Costelloe",
+    "Robbie Egan",
+    "Jackie Dwane",
+    "Mark O’Loughlin",
+    "Ciaran O’Connor",
+    "Killian Hayes",
+    "Michael Houlihan",
+    "Steven Quirke",
+    "Oisín Enright",
+    "Shane O’Brien",
+    "Graeme Mulcahy",
+    "Pierce Connery",
+    "Phelim O’Reilly",
+    "Oisín O’Reilly",
+    "Gearoid Enright for Oisín Enright (38 minutes)",
+    "Conor Staunton for Steven Quirke (51 minutes)",
+    "Dylan O’Brien for Mark O’Loughlin (54 minutes)"
   ],
   "reports": [
     {
@@ -20,7 +56,7 @@
     },
     {
       "label": "Limerick Leader",
-      "url": ""
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/kilmallock-edge-na-piarsaigh-in-limerick-shc-thriller-8831573"
     }
   ]
 },
