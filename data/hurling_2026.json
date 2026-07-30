@@ -160,11 +160,11 @@
       "home": "Na Piarsaigh",
       "away": "Kilmallock",
       "venue": "TUS Gaelic Grounds",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Resukt",
+      "home_goals": 0,
+      "home_points": 24,
+      "away_goals": 1,
+      "away_points": 22
     },
     {
       "competition": "Senior Hurling Championship",
@@ -175,11 +175,11 @@
       "home": "Patrickswell",
       "away": "Newcastle West",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 21,
+      "away_goals": 0,
+      "away_points": 20
     },
     {
       "competition": "Junior C Hurling Championship",
