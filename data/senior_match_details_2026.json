@@ -5,89 +5,82 @@
   "home": "Na Piarsaigh",
   "away": "Kilmallock",
   "published": false,
-  "referee": "Kieran Guina (Feohanagh-Castlemahon)",
-  "home_scorers": "Kevin Downes 0-7 (7fs), Adrian Breen 1-2, Conor Boylan 1-1, Peter Casey and Daithi Dempsey 0-3 each, Ronan Lynch (2fs), Keith Dempsey (1f), Mike Foley and William O’Donoghue 0-2 each, and Will Henn 0-1",
-  "away_scorers": "Adam English 0-10 (6fs), Dean Coleman 1-2, Darragh O’Donovan 1-2 (1 sideline), Eddie Stokes 0-2, and Pat Ryan and Donal Coughlan 0-1 each",
+  "referee": "John O'Halloran (Bruree)",
+  "home_scorers": "",
+  "away_scorers": ",
   "home_team": [
-    "Shane Dowling",
-    "Jerome Boylan (captain)",
-    "Mike Casey",
-    "Vince Harrington",
-    "Mike Foley",
-    "Ronan Lynch",
-    "Emmet McEvoy",
-    "William O’Donoghue",
-    "JJ Carey",
-    "Kevin Downes",
-    "Peter Casey",
-    "Daithí Dempsey",
-    "Will Henn",
-    "Dylan Lynch",
-    "Adrian Breen",
-    "Keith Dempsey for Dylan Lynch (30 minutes)",
-    "Conor Boylan for Will Henn (49 minutes)",
-    "Tommy Grimes for Mike Foley (53 minutes)",
-    "James Finn for Kevin Downes (60 minutes)",
-    "Cathall King for Jerome Boylan (66 minutes)",
-    "Will Henn for Ronan Lynch (72 minutes)",
-    "Wayne Kearns for JJ Carey (80 minutes)"
   ],
   "away_team": [
-    "Darragh Stapleton",
-    "Cian O’Donovan",
-    "Tommy Hayes",
-    "Mikey O’Brien",
-    "Chris Thomas",
-    "Barry Murphy",
-    "Richie English",
-    "Darragh O’Donovan (captain)",
-    "Jack Ryan",
-    "Dean Coleman",
-    "Adam English",
-    "Eddie Stokes",
-    "Donal Coughlan",
-    "Kevin Maher",
-    "Pat Ryan",
-    "Aidan O’Connell for Richie English (40 minutes)",
-    "Gareth Thomas for Donal Coughlan (55 minutes)",
-    "Cormac Ryan for Dean Coleman (58 minutes)",
-    "Donal Coughlan for Pat Ryan (60 minutes)",
-    "Dean Coleman for Chris Thomas (63 minutes)",
-    "Eoin Fitzgibbon for Mikey O’Brien (67 minutes)",
-    "Pat Ryan for Dean Coleman (70 minutes)"
+
   ],
   "reports": [
     {
       "label": "Irish Examiner",
-      "url": "https://munster.gaa.ie/event/2025-limerick-senior-hurling-championship-final/"
+      "url": ""
     },
     {
-      "label": "",
+      "label": "Limerick Leader",
       "url": ""
     }
   ]
 },
+{
+  "date": "2026-07-30",
+  "home": "Patrickswell",
+  "away": "Newcastle West",
+  "published": true,
+  "referee": "Liam Berkery (Ahane)",
+  "home_scorers": "Jason Gillane 1-9 (7f); Cian Lynch and John Kirby 0-3 each; Patrick Kirby and Diarmaid Byrnes 0-2 each; Aaron Gillane and Hughie Maher 0-1 each.",
+  "away_scorers": "Ethan Hurley 0-8 (5f); Con Hayes 0-4; Cathal Hayes 0-3 (3f); Mike Dee 0-2; Bryan Nix, Mike McMahon and Eoin Hurley 0-1 each.",
+  "home_team": [
+    "Adam Carrig",
+    "Eoin Harmon",
+    "Cian Fitzgerald",
+    "Billy Earls",
+    "Evan Fitzgerald",
+    "Diarmaid Byrnes",
+    "Mark Carmody",
+    "Patrick Kirby",
+    "John Murray",
+    "Jason Gillane",
+    "Cian Lynch",
+    "John Kirby",
+    "Kevin O’Brien",
+    "Aaron Gillane",
+    "Liam Fitzgerald",
+    "Hughie Maher for John Murray (40 mins)",
+    "Andrew Carroll for Liam Fitzgerald (60 mins)"
+  ],
+  "away_team": [
+    "Mike Quilligan",
+    "Jody Woulfe",
+    "Michael Cremin",
+    "Steven Brosnan",
+    "Aaron Neville",
+    "Diarmuid Lyons",
+    "Ruadhan O’Connor",
+    "Eoin Hurley",
+    "Ethan Hurley",
+    "Brian Foley",
+    "Con Hayes",
+    "Mike Dee",
+    "Bryan Nix",
+    "Mike McMahon",
+    "Cathal Hayes",
+    "Hughie Maher for Murray (40 mins)",
+    "Andrew Carroll for Liam Fitzgerald (60 mins)"
+  ],
+  "reports": [
     {
-      "date": "2026-07-30",
-      "home": "Patrickswell",
-      "away": "Newcastle West",
-      "published": false,
-      "referee": "",
-      "home_scorers": "",
-      "away_scorers": "",
-      "home_team": [],
-      "away_team": [],
-      "reports": [
-        {
-          "label": "",
-          "url": ""
-        },
-        {
-          "label": "",
-          "url": ""
-        }
-      ]
+      "label": "Irish Examiner",
+      "url": ""
     },
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/cian-lynch-on-form-as-patrickswell-open-hurling-championship-campaign-with-win-8831677"
+    }
+  ]
+},
     {
       "date": "2026-07-31",
       "home": "Doon",
