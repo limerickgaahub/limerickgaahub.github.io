@@ -235,11 +235,11 @@
       "home": "Na Piarsaigh",
       "away": "Bruree",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 20,
+      "away_goals": 1,
+      "away_points": 25
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -310,11 +310,11 @@
       "home": "Doon",
       "away": "Ballybrown",
       "venue": "Claughaun GAA, Childers Rd",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 21,
+      "away_goals": 2,
+      "away_points":16
     },
     {
       "competition": "Senior Hurling Championship",
@@ -325,11 +325,11 @@
       "home": "Kildimo Pallaskenry",
       "away": "Mungret St Pauls",
       "venue": "Sean Finn Park, Rathkeale",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": Result",
+      "home_goals": 4,
+      "home_points": 7,
+      "away_goals": 0,
+      "away_points": 23
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
