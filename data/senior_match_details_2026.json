@@ -175,48 +175,63 @@
     }
   ]
 },
+{
+  "date": "2026-07-31",
+  "home": "Kildimo Pallaskenry",
+  "away": "Mungret St Pauls",
+  "published": true,
+  "referee": "Kieran Guina (Feohanagh-Castlemahon)",
+  "home_scorers": "Jack O’Keeffe 2-0; Robert O’Farrell 0-5 (1f, 1 s/l); Davy Fitzgerald and Paudi Hartigan 1-0 each; Ciarán McMahon and Cathal Downes 0-1 each.",
+  "away_scorers": "Liam Lynch 0-10 (6f); Fintan Fitzgerald and Cian Moloney 0-3 each; Paul O’Brien 0-2; Barry Duff, Killian Begley, Mark O’Brien (1f), Rory O’Callaghan and Niall Mulcahy 0-1 each.",
+  "home_team": [
+    "James Mason",
+    "Shane Carroll",
+    "Luke O’Keeffe",
+    "Luke Guinane",
+    "Sean Kavanagh",
+    "Jose Azzopardi",
+    "Cathal Downes",
+    "Tony McCarthy",
+    "Davy Fitzgerald",
+    "Peter Nash",
+    "Ciarán McMahon",
+    "Kyle Hayes",
+    "Conor McMahon",
+    "Jack O’Keeffe",
+    "Robert O’Farrell",
+    "Dylan Moloney for Conor McMahon (50 mins)",
+    "Paudi Hartigan for Jose Azzopardi (57 mins)"
+  ],
+  "away_team": [
+    "Conor O’Brien",
+    "Billy Molyneaux",
+    "Eoin O’Doherty",
+    "Sean Duff",
+    "Matt O’Sullivan",
+    "Brian O’Meara",
+    "Rory O’Callaghan",
+    "Cian Moloney",
+    "Mark O’Brien",
+    "Rory Gleeson",
+    "Barry Duff",
+    "Fintan Fitzgerald",
+    "Killian Begley",
+    "Liam Lynch",
+    "Paul O’Brien",
+    "Niall Mulcahy for Mark O’Brien (38 mins)",
+    "Brian Barry for Paul O’Brien (48 mins)"
+  ],
+  "reports": [
     {
-      "date": "2026-07-31",
-      "home": "Kildimo Pallaskenry",
-      "away": "Mungret St Pauls",
-      "published": false,
-      "referee": "",
-      "home_scorers": "",
-      "away_scorers": "",
-      "home_team": [],
-      "away_team": [],
-      "reports": [
-        {
-          "label": "",
-          "url": ""
-        },
-        {
-          "label": "",
-          "url": ""
-        }
-      ]
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/mungret-produce-solid-second-half-to-overcome-kildimo-pallaskenry-8833642"
     },
     {
-      "date": "2026-08-01",
-      "home": "Garryspillane",
-      "away": "Adare",
-      "published": false,
-      "referee": "",
-      "home_scorers": "",
-      "away_scorers": "",
-      "home_team": [],
-      "away_team": [],
-      "reports": [
-        {
-          "label": "",
-          "url": ""
-        },
-        {
-          "label": "",
-          "url": ""
-        }
-      ]
-    },
+      "label": "",
+      "url": ""
+    }
+  ]
+},
     {
       "date": "2026-08-01",
       "home": "Ahane",
