@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-29T20:08:00Z",
+  "updated": "2026-07-31T11:29:51Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -108,21 +108,6 @@
     },
     {
       "competition": "Intermediate Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 1",
-      "date": "2026-07-30",
-      "time": "19:00",
-      "home": "St Kieran's",
-      "away": "Feenagh Kilmeedy",
-      "venue": "Knockaderry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Intermediate Hurling Championship",
       "group": "Group 2",
       "round": "Round 1",
       "date": "2026-07-30",
@@ -130,11 +115,11 @@
       "home": "Mungret St Pauls",
       "away": "Knockainey",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 19,
+      "away_goals": 1,
+      "away_points": 19
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -145,11 +130,11 @@
       "home": "Rathkeale",
       "away": "Garryspillane",
       "venue": "Bruree",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 18,
+      "away_goals": 2,
+      "away_points": 11
     },
     {
       "competition": "Senior Hurling Championship",
@@ -160,7 +145,7 @@
       "home": "Na Piarsaigh",
       "away": "Kilmallock",
       "venue": "TUS Gaelic Grounds",
-      "status": "Resukt",
+      "status": "Result",
       "home_goals": 0,
       "home_points": 24,
       "away_goals": 1,
@@ -190,11 +175,11 @@
       "home": "Dromin Athlacca",
       "away": "Croagh Kilfinny",
       "venue": "Athlacca",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 12,
+      "away_goals": 0,
+      "away_points": 9
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -205,11 +190,26 @@
       "home": "Cappamore",
       "away": "Pallasgreen",
       "venue": "Doon",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 13,
+      "away_goals": 0,
+      "away_points": 15
+    },
+    {
+      "competition": "Intermediate Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 1",
+      "date": "2026-07-30",
+      "time": "19:30",
+      "home": "St Kieran's",
+      "away": "Feenagh Kilmeedy",
+      "venue": "Knockaderry",
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 16,
+      "away_goals": 0,
+      "away_points": 18
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -1657,21 +1657,6 @@
       "round": "Round 2",
       "date": "2026-08-09",
       "time": "19:00",
-      "home": "Hospital Herbertstown",
-      "away": "Ballybricken Bohermore",
-      "venue": "St Johns Park",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Junior C Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 2",
-      "date": "2026-08-09",
-      "time": "19:00",
       "home": "Monagea",
       "away": "Garryspillane",
       "venue": "Monagea",
@@ -1690,6 +1675,21 @@
       "home": "St Patrick's",
       "away": "Knockaderry",
       "venue": "St Patrick's G.A.A Club",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Premier Junior C Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 2",
+      "date": "2026-08-10",
+      "time": "19:00",
+      "home": "Hospital Herbertstown",
+      "away": "Ballybricken Bohermore",
+      "venue": "St Johns Park",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
