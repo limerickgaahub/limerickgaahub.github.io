@@ -5,9 +5,9 @@
   "home": "Na Piarsaigh",
   "away": "Kilmallock",
   "published": true,
-  "referee": "John O'Halloran (Bruree)",
-  "home_scorers": "Keith Dempsey 0-10 (7f), Ronan Lynch 0-4 (3f), Peter Casey 0-3, Conor Boylan 0-2, David Dempsey, Eoin Brosnan, JJ Carey, Emmet McEvoy and Kevin Downes 0-1 each.",
-  "away_scorers": "Michael Houlihan 0-7 (7f), Pierce Connery 0-5, Shane O’Brien 1-1, Conor Hanley Clarke 0-2 (2f), Steven Quirke, Mark O’Loughlin, Oisín Enright, Graeme Mulcahy, Phelim O’Reilly and Oisín O’Reilly 0-1 each.",
+  "referee": "John O’Halloran (Bruree)",
+  "home_scorers": "Keith Dempsey 0-10 (7f), Ronan Lynch 0-4 (3f, 1 65), Peter Casey 0-3, Conor Boylan 0-2, Daithí Dempsey, Eoin Brosnan, JJ Carey, Emmet McEvoy and Kevin Downes 0-1 each.",
+  "away_scorers": "Michael Houlihan 0-8 (7f), Pierce Connery 0-5, Shane O’Brien 1-1, Conor Hanley Clarke 0-2 (2f), Steven Quirke, Mark O’Loughlin, Oisín Enright, Graeme Mulcahy, Phelim O’Reilly and Oisín O’Reilly 0-1 each.",
   "home_team": [
     "Shane Dowling",
     "Mark O’Connor",
@@ -104,7 +104,7 @@
     "Mike McMahon",
     "Cathal Hayes",
     "Brian Hurley for Brian Foley (temporary 42-46 mins)",
-    "Brian Hurley for Hayes (46 mins)"
+    "Brian Hurley for Cathal Hayes (46 mins)"
   ],
   "reports": [
     {
@@ -295,7 +295,7 @@
   "away": "Monaleen",
   "published": true,
   "referee": "Mike Sexton (Bruree)",
-  "home_scorers": "Tom Morrissey 1-7 (6f); Mark Donnellan 0-4; Conor Ryan 0-3; Jack Cosgrove, John O’Connor and Ciaran Barry (1f) 0-2 each; Ronan Fox, Gavin Rowsome and Kevin Morrissey 0-1 each.",
+  "home_scorers": "Tom Morrissey 1-7 (6f); Mark Donnellan 0-4; Conor Ryan 0-3; Jack Cosgrove, John O’Connor and Ciaran Barry (1f) 0-2 each; Ronan Fox, Gavin Rowesome and Kevin Morrissey 0-1 each.",
   "away_scorers": "Shane Hassett 0-5 (3f); Dara Ferland 1-1; Eoghan O’Driscoll 1-0; Andrew La Touche Cosgrave 0-3; Lochlann McHale and Lorcan Lyons (f) 0-2 each; Donncha O Dalaigh, Ronan Lyons, Matthew Fitzgerald and Eoghan Maher 0-1 each.",
   "home_team": [
     "Cathal Ryan",
