@@ -232,26 +232,102 @@
     }
   ]
 },
+{
+  "date": "2026-08-01",
+  "home": "Garryspillane",
+  "away": "Adare",
+  "published": true,
+  "referee": "John O’Halloran (Bruree)",
+  "home_scorers": "Hugh Flanagan 0-9 (9f); Cian Ryan 1-0; Bryan Heavey 0-3; John English 0-2.",
+  "away_scorers": "",
+  "home_team": [
+    "Adam Sheehan",
+    "James O’Sullivan",
+    "Robert Sampson",
+    "Ryan Tobin",
+    "Declan Heavey",
+    "Dylan O'Shea",
+    "Eoin O’Mahony",
+    "Jamie Morrissey",
+    "Josh Dineen",
+    "Bryan Heavey",
+    "John English",
+    "Colin Ryan",
+    "Cian Ryan",
+    "Hugh Flanagan",
+    "Peter Morrissey",
+    "Shane Ryan for Josh Dineen (42 mins)",
+    "Tiernan Ryan for Peter Morrissey (42 mins)"
+  ],
+  "away_team": [
+    "Brian Curtin",
+    "James Gahan",
+    "Joe Sweeney",
+    "Conor Ryan",
+    "John McSweeney",
+    "Wayne McNamara",
+    "Darragh Gleeson",
+    "David O’Mahony",
+    "Ronan Connolly",
+    "Shane Gleeson",
+    "John Fitzgibbon",
+    "Sean Connolly",
+    "Willie Griffin",
+    "Brendan O'Connor",
+    "Patrick Kearney",
+    "Jack Doran for John McSweeney (49 mins)",
+    "Charlie McCarthy for Willie Griffin (52 mins)"
+  ],
+  "reports": [
     {
-      "date": "2026-08-01",
-      "home": "Ahane",
-      "away": "Monaleen",
-      "published": false,
-      "referee": "",
-      "home_scorers": "",
-      "away_scorers": "",
-      "home_team": [],
-      "away_team": [],
-      "reports": [
-        {
-          "label": "",
-          "url": ""
-        },
-        {
-          "label": "",
-          "url": ""
-        }
-      ]
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/five-star-adare-power-to-win-over-garryspillane-in-limerick-shc-8834515"
+    },
+    {
+      "label": "Irish Examiner",
+      "url": "https://www.irishexaminer.com/sport/gaa/arid-41889409.html"
     }
+  ]
+},
+{
+  "date": "2026-08-01",
+  "home": "Ahane",
+  "away": "Monaleen",
+  "published": true,
+  "referee": "Mike Sexton (Bruree)",
+  "home_scorers": "Tom Morrissey 1-7 (6f); Mark Donnellan 0-4; Conor Ryan 0-3; Jack Cosgrove, John O’Connor and Ciaran Barry (1f) 0-2 each; Ronan Fox, Gavin Rowsome and Kevin Morrissey 0-1 each.",
+  "away_scorers": "Shane Hassett 0-5 (3f); Dara Ferland 1-1; Eoghan O’Driscoll 1-0; Andrew La Touche Cosgrave 0-3; Lochlann McHale and Lorcan Lyons (f) 0-2 each; Donncha O Dalaigh, Ronan Lyons, Matthew Fitzgerald and Eoghan Maher 0-1 each.",
+  "home_team": [
+    "Cathal Ryan",
+    "Peter O’Grady",
+    "Padraig Harnett",
+    "Conor Heffernan",
+    "Ciaran Barry",
+    "Dan Morrissey",
+    "Dan Minihan",
+    "Conor Ryan",
+    "Evan O'Leary",
+    "Cathal O'Mara",
+    "Tom Morrissey",
+    "Jack Cosgrove",
+    "Mark Donnellan",
+    "Ronan Fox",
+    "John O'Connor",
+    "Gavin Rowesome for Peter O’Grady (half-time)",
+    "Peter Donohue for Ronan Fox (55 mins)",
+    "Kevin Morrissey for Mark Donnellan (56 mins)"
+  ],
+  "away_team": [],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/tom-morrissey-wonder-goal-helps-ahane-get-off-to-winning-start-8834599"
+    },
+    {
+      "label": "",
+      "url": ""
+    }
+  ]
+}
   ]
 }
