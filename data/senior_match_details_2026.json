@@ -239,7 +239,7 @@
   "published": true,
   "referee": "John O’Halloran (Bruree)",
   "home_scorers": "Hugh Flanagan 0-9 (9f); Cian Ryan 1-0; Bryan Heavey 0-3; John English 0-2.",
-  "away_scorers": "",
+  "away_scorers": "John Fitzgibbon 2-5 (1-0 pen, 2f); Patrick Kearney 2-3; Willie Griffin 0-6 (3f); Brendan O’Connor 1-2; Ronan Connolly and Darragh Gleeson 0-2 each; Sean Connolly and Shane Gleeson 0-1 each.",
   "home_team": [
     "Adam Sheehan",
     "James O’Sullivan",
@@ -285,7 +285,7 @@
     },
     {
       "label": "Irish Examiner",
-      "url": "https://www.irishexaminer.com/sport/gaa/arid-41889409.html"
+      "url": "https://www.irishexaminer.com/sport/gaa/arid-41889640.html"
     }
   ]
 },
@@ -324,8 +324,8 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/tom-morrissey-wonder-goal-helps-ahane-get-off-to-winning-start-8834599"
     },
     {
-      "label": "",
-      "url": ""
+      "label": "Irish Examiner",
+      "url": "https://www.irishexaminer.com/sport/gaa/arid-41889640.html"
     }
   ]
 }
