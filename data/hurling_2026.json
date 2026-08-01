@@ -325,11 +325,11 @@
       "home": "Blackrock",
       "away": "Murroe Boher",
       "venue": "Bruff",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 17,
+      "away_goals": 1,
+      "away_points": 28
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -340,11 +340,11 @@
       "home": "Dromin Athlacca",
       "away": "Croagh Kilfinny",
       "venue": "Ballingarry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 22,
+      "away_goals": 0,
+      "away_points": 18
     },
     {
       "competition": "Senior Hurling Championship",
