@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-02T18:08:11Z",
+  "updated": "2026-08-02T19:45:28Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -640,11 +640,11 @@
       "home": "Bruree",
       "away": "South Liberties",
       "venue": "Bruff",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 27,
+      "away_goals": 0,
+      "away_points": 14
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -655,11 +655,11 @@
       "home": "Monaleen",
       "away": "Doon",
       "venue": "Ballybricken Bohermore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 17,
+      "away_goals": 3,
+      "away_points": 11
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -670,11 +670,11 @@
       "home": "Mungret St Pauls",
       "away": "Ahane",
       "venue": "St Patrick's GAA, Rhebogue",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 16,
+      "away_goals": 0,
+      "away_points": 16
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -685,11 +685,11 @@
       "home": "Adare",
       "away": "Caherline",
       "venue": "Adare",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 22
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -715,11 +715,11 @@
       "home": "Kildimo Pallaskenry",
       "away": "Murroe Boher",
       "venue": "Pallaskenry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 5,
+      "home_points": 20,
+      "away_goals": 2,
+      "away_points": 15
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -730,11 +730,11 @@
       "home": "Castletown Ballyagran",
       "away": "Tournafulla",
       "venue": "Quaid Park, Coolyroe",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 22,
+      "away_goals": 3,
+      "away_points": 19
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -760,11 +760,11 @@
       "home": "Pallasgreen",
       "away": "Staker Wallace",
       "venue": "Hospital",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 3,
+      "away_goals": 7,
+      "away_points": 25
     },
     {
       "competition": "Premier Junior C Hurling Championship",
