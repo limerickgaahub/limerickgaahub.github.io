@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-02T10:29:24Z",
+  "updated": "2026-08-02T18:08:11Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -475,11 +475,11 @@
       "home": "Ahane",
       "away": "Ballybricken Bohermore",
       "venue": "Caherconlish",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 13,
+      "away_goals": 3,
+      "away_points": 14
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -490,11 +490,11 @@
       "home": "Bruff",
       "away": "Kildimo Pallaskenry",
       "venue": "Adare",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 21,
+      "away_goals": 1,
+      "away_points": 10
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -520,11 +520,11 @@
       "home": "Feohanagh",
       "away": "Murroe Boher",
       "venue": "Ballybrown",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 12,
+      "away_goals": 1,
+      "away_points": 19
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -535,11 +535,11 @@
       "home": "Monaleen",
       "away": "Kilmallock",
       "venue": "Bruff",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 26,
+      "away_goals": 1,
+      "away_points": 12
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -550,11 +550,11 @@
       "home": "Blackrock",
       "away": "Croagh Kilfinny",
       "venue": "Croom",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 13,
+      "away_goals": 0,
+      "away_points": 19
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -580,11 +580,11 @@
       "home": "Patrickswell",
       "away": "Doon",
       "venue": "St Patrick's GAA, Rhebogue",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 17,
+      "away_goals": 5,
+      "away_points": 13
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -595,11 +595,11 @@
       "home": "Adare",
       "away": "Na Piarsaigh",
       "venue": "Pairc de Paor, Rathbane",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 13,
+      "away_goals": 0,
+      "away_points": 24
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -610,11 +610,11 @@
       "home": "Croagh Kilfinny",
       "away": "Effin",
       "venue": "Croagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 9,
+      "away_goals": 4,
+      "away_points": 14
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -625,11 +625,11 @@
       "home": "Crecora Manister",
       "away": "Dromcollogher Broadford",
       "venue": "Crecora Manister GAA",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 12,
+      "away_goals": 5,
+      "away_points": 16
     },
     {
       "competition": "Junior B Hurling Championship",
