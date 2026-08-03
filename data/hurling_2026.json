@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-02T19:45:28Z",
+  "updated": "2026-08-03T07:31:53Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -498,21 +498,6 @@
     },
     {
       "competition": "Junior B Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 1",
-      "date": "2026-08-02",
-      "time": "12:00",
-      "home": "Feenagh Kilmeedy",
-      "away": "Knockainey",
-      "venue": "Bruree",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior B Hurling Championship",
       "group": "Group 2",
       "round": "Round 1",
       "date": "2026-08-02",
@@ -555,21 +540,6 @@
       "home_points": 13,
       "away_goals": 0,
       "away_points": 19
-    },
-    {
-      "competition": "Premier Junior B Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 1",
-      "date": "2026-08-02",
-      "time": "12:00",
-      "home": "Newcastle West",
-      "away": "Granagh Ballingarry",
-      "venue": "Quaid Park, Coolyroe",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -700,11 +670,11 @@
       "home": "Ballybrown",
       "away": "Croom",
       "venue": "BALLYBROWN GAA",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 18,
+      "away_goals": 0,
+      "away_points": 15
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -742,21 +712,6 @@
       "round": "Round 1",
       "date": "2026-08-02",
       "time": "19:00",
-      "home": "Glenroe",
-      "away": "Bruff",
-      "venue": "Knocklong",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Junior B Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 1",
-      "date": "2026-08-02",
-      "time": "19:00",
       "home": "Pallasgreen",
       "away": "Staker Wallace",
       "venue": "Hospital",
@@ -787,44 +742,14 @@
       "round": "Round 1",
       "date": "2026-08-02",
       "time": "19:00",
-      "home": "Ballybricken Bohermore",
-      "away": "St Patrick's",
-      "venue": "Ballybricken",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Junior C Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 1",
-      "date": "2026-08-02",
-      "time": "19:00",
-      "home": "Garryspillane",
-      "away": "Hospital Herbertstown",
-      "venue": "Knocklong",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Junior C Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 1",
-      "date": "2026-08-02",
-      "time": "19:00",
       "home": "Knockaderry",
       "away": "Monagea",
       "venue": "Knockaderry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 10,
+      "away_goals": 0,
+      "away_points": 12
     },
     {
       "competition": "Junior C Hurling Championship",
