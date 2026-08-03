@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-03T13:03:38Z",
+  "updated": "2026-08-03T20:58:51Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -760,11 +760,11 @@
       "home": "Staker Wallace",
       "away": "Castletown Ballyagran",
       "venue": "Staker Wallace GAA, Kilbreedy",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 10,
+      "away_goals": 1,
+      "away_points": 10
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -775,11 +775,11 @@
       "home": "St Kieran's",
       "away": "Patrickswell",
       "venue": "St Kieran's GAA",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 4,
+      "home_points": 15,
+      "away_goals": 2,
+      "away_points": 5
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -1007,6 +1007,21 @@
       "away_points": null
     },
     {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 3",
+      "date": "2026-08-08",
+      "time": "19:00",
+      "home": "Ballybrown",
+      "away": "Adare",
+      "venue": "Clarina",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
       "competition": "Premier Intermediate Hurling Championship",
       "group": null,
       "round": "Round 3",
@@ -1060,6 +1075,21 @@
       "home": "Mungret St Pauls",
       "away": "Patrickswell",
       "venue": "Claughaun GAA, Childers Rd",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior B Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 2",
+      "date": "2026-08-09",
+      "time": "11:30",
+      "home": "Fedamore",
+      "away": "Feohanagh",
+      "venue": "Killmallock",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -1307,21 +1337,6 @@
       "away_points": null
     },
     {
-      "competition": "Junior B Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 2",
-      "date": "2026-08-09",
-      "time": "19:00",
-      "home": "Fedamore",
-      "away": "Feohanagh",
-      "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
       "competition": "Junior C Hurling Championship",
       "group": "Group 1",
       "round": "Round 3",
@@ -1360,21 +1375,6 @@
       "home": "Kilteely Dromkeen",
       "away": "Staker Wallace",
       "venue": "Kilteely",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 3",
-      "date": "2026-08-09",
-      "time": "19:00",
-      "home": "Ballybrown",
-      "away": "Adare",
-      "venue": "Clarina",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
