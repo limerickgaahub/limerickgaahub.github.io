@@ -790,11 +790,11 @@
       "home": "Kildimo Pallaskenry",
       "away": "Templeglantine",
       "venue": "Knockaderry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 15,
+      "away_goals": ,1
+      "away_points": 25
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -805,11 +805,11 @@
       "home": "Killeedy",
       "away": "Claughaun",
       "venue": "Feenagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 15,
+      "away_goals": 0,
+      "away_points": 14
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -820,11 +820,11 @@
       "home": "Caherline",
       "away": "St Patrick's",
       "venue": "Claughaun GAA, Childers Rd",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 29,
+      "away_goals": 0,
+      "away_points": 18
     },
     {
       "competition": "Senior Hurling Championship",
