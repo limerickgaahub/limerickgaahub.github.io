@@ -850,11 +850,11 @@
       "home": "Pallasgreen",
       "away": "St Kieran's",
       "venue": "Mungret",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 17,
+      "away_goals": 1,
+      "away_points": 12
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -865,11 +865,11 @@
       "home": "Knockainey",
       "away": "Knockaderry",
       "venue": "Ballybrown",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 15,
+      "away_goals": 3,
+      "away_points": 16
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -880,11 +880,11 @@
       "home": "Croagh Kilfinny",
       "away": "Granagh Ballingarry",
       "venue": "Sean Finn Park, Rathkeale",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 19,
+      "away_goals": 2,
+      "away_points": 17
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -895,11 +895,11 @@
       "home": "Glenroe",
       "away": "Blackrock",
       "venue": "Knocklong",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 14,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -910,11 +910,11 @@
       "home": "Dromcollogher Broadford",
       "away": "Doon",
       "venue": "Bruff",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 16,
+      "away_goals": 1,
+      "away_points": 28
     },
     {
       "competition": "Senior Hurling Championship",
@@ -940,11 +940,11 @@
       "home": "Newcastle West",
       "away": "Garryspillane",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 13,
+      "away_goals": 4,
+      "away_points": 12
     },
     {
       "competition": "Senior Hurling Championship",
