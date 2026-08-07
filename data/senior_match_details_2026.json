@@ -347,6 +347,66 @@
       "url": "https://www.irishexaminer.com/sport/gaa/arid-41889640.html"
     }
   ]
-}
+},
+{
+  "date": "2026-08-06",
+  "home": "Kilmallock",
+  "away": "Doon",
+  "published": true,
+  "referee": "Kieran Guina (Feohanagh-Castlemahon)",
+  "home_scorers": "Michael Houlihan 1-9 (4f, 2 65s); Shane O’Brien 1-4; Pierce Connery 0-4; Oisín O’Reilly 1-1; Gearoid Enright 0-2; Conor Hanley Clarke 0-2 (2f); Ciaran O’Connor and Graeme Mulcahy 0-1 each.",
+  "away_scorers": "Adam English 0-10 (7f); Cian O’Donovan 0-4; Donal Coughlan 1-0; Pat Ryan 0-2; Dean Coleman 0-1.",
+  "home_team": [
+    "Conor Hanley Clarke",
+    "Aaron Costello",
+    "Robbie Egan",
+    "Jackie Dwane",
+    "Mark O’Loughlin",
+    "Ciaran O’Connor",
+    "Killian Hayes",
+    "Michael Houlihan",
+    "Steven Quirke",
+    "Oisín Enright",
+    "Shane O’Brien",
+    "Graeme Mulcahy",
+    "Pierce Connery",
+    "Phelim O’Reilly",
+    "Oisín O’Reilly",
+    "Gearoid Enright for Oisín Enright (42 mins)",
+    "Conor Staunton for Steven Quirke (49 mins)",
+    "Dylan O’Brien for Killian Hayes (49 mins)"
+  ],
+  "away_team": [
+    "Tomás Lynch",
+    "Cormac Ryan",
+    "Tommy Hayes",
+    "Cian O’Donovan",
+    "Aidan O’Connell",
+    "Mikey O’Brien",
+    "Richie English",
+    "Darragh O’Donovan",
+    "Chris Thomas",
+    "Sean McDonnell",
+    "Adam English",
+    "Eamonn Richardson",
+    "Dean Coleman",
+    "Donal Coughlan",
+    "Pat Ryan",
+    "Gareth Thomas for Eamonn Richardson (36 mins)",
+    "Darragh Coughlan for Sean McDonnell (48 mins)",
+    "Kevin Maher for Dean Coleman (48 mins)",
+    "Jack Ryan for Adam English (55 mins, inj)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/kilmallock-power-to-limerick-shc-win-over-doon-at-tus-gaelic-grounds-8840758"
+    },
+    {
+      "label": "Irish Examiner",
+      "url": "https://www.irishexaminer.com/sport/gaa/arid-41892373.html"
+    }
   ]
+}
+]
 }
