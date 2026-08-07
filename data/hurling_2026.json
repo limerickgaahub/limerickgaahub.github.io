@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-05T18:41:25Z",
+  "updated": "2026-08-07T12:02:12Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -793,7 +793,7 @@
       "status": "Result",
       "home_goals": 0,
       "home_points": 15,
-      "away_goals": ,1
+      "away_goals": 1,
       "away_points": 25
     },
     {
@@ -804,7 +804,7 @@
       "time": "19:00",
       "home": "Killeedy",
       "away": "Claughaun",
-      "venue": "Feenagh",
+      "venue": "Mick Neville Park",
       "status": "Result",
       "home_goals": 3,
       "home_points": 15,
@@ -819,7 +819,7 @@
       "time": "19:00",
       "home": "Caherline",
       "away": "St Patrick's",
-      "venue": "Claughaun GAA,Childers Rd",
+      "venue": "Claughaun GAA, Childers Rd",
       "status": "Result",
       "home_goals": 3,
       "home_points": 29,
@@ -963,6 +963,21 @@
     },
     {
       "competition": "Senior Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 2",
+      "date": "2026-08-08",
+      "time": "17:00",
+      "home": "Mungret St Pauls",
+      "away": "Patrickswell",
+      "venue": "Claughaun GAA, Childers Rd",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Senior Hurling Championship",
       "group": "Group 1",
       "round": "Round 2",
       "date": "2026-08-08",
@@ -1075,21 +1090,6 @@
       "home": "Crecora Manister",
       "away": "Kilteely Dromkeen",
       "venue": "Hospital",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Senior Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 2",
-      "date": "2026-08-08",
-      "time": "19:00",
-      "home": "Mungret St Pauls",
-      "away": "Patrickswell",
-      "venue": "Claughaun GAA, Childers Rd",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
