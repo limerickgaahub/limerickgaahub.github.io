@@ -466,8 +466,8 @@
 },
 {
   "date": "2026-08-07",
-  "home": "Garryspillane",
-  "away": "Newcastle West",
+  "home": "Newcastle West",
+  "away": "Garryspillane",
   "published": true,
   "referee": "Eamonn Stapleton (Doon)",
   "home_scorers": "John English 2-0; Colin Ryan 1-2; Hugh Flanagan 0-5 (2f); Peter Morrissey 1-1; Callum Sheehan 0-2; Tiernan Ryan and Jamie Morrissey 0-1 each.",
@@ -519,6 +519,5 @@
     }
   ]
 }
-
 ]
 }
