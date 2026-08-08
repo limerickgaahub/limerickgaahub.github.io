@@ -1015,11 +1015,11 @@
       "home": "South Liberties",
       "away": "Cappamore",
       "venue": "Doon",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 14
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -1060,11 +1060,11 @@
       "home": "Bruff",
       "away": "Murroe Boher",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 17,
+      "away_goals": 1,
+      "away_points": 15
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1075,11 +1075,11 @@
       "home": "Effin",
       "away": "Dromin Athlacca",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 17,
+      "away_goals": 3,
+      "away_points": 18
     },
     {
       "competition": "Premier Junior A Hurling Championship",
