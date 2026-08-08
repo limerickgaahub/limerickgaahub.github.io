@@ -407,6 +407,62 @@
       "url": "https://www.irishexaminer.com/sport/gaa/arid-41892373.html"
     }
   ]
+},
+{
+  "date": "2026-08-07",
+  "home": "Adare",
+  "away": "Kildimo-Pallaskenry",
+  "published": true,
+  "referee": "Liam Berkery (Ahane)",
+  "home_scorers": "John Fitzgibbon 0-9 (4f, 3 65s); Willie Griffin 0-6 (4f); Brendan O’Connor 0-3; David O’Mahoney and Wayne McNamara 0-1 each.",
+  "away_scorers": "Robert O’Farrell 1-5 (3f); Jack O’Keeffe 1-2; Paidi Hartigan 0-2; Davy Fitzgerald, Ciaran McMahon and Conor McMahon 0-1 each.",
+  "home_team": [
+    "Bryan Curtin",
+    "James Gahan",
+    "Joe Sweeney",
+    "Conor Ryan",
+    "John McSweeney",
+    "Wayne McNamara",
+    "Darragh Gleeson",
+    "David O’Mahoney",
+    "Ronan Connolly",
+    "Shane Gleeson",
+    "John Fitzgibbon",
+    "Sean Connolly",
+    "Willie Griffin",
+    "Brendan O’Connor",
+    "Patrick Kearney",
+    "Charlie McCarthy for Shane Gleeson (h-t)",
+    "Jack Doran for Ronan Connolly (45 mins)",
+    "Alfie Fitzpatrick for Wayne McNamara (57 mins, inj)",
+    "Sean Connolly for Brendan O’Connor (60 mins, inj)"
+  ],
+  "away_team": [
+    "James Mason",
+    "Shane Carroll",
+    "Luke O’Keeffe",
+    "Jose Azzopardi",
+    "Sean Kavanagh",
+    "Kyle Hayes",
+    "Cathal Downes",
+    "Tony McCarthy",
+    "Davy Fitzgerald",
+    "Paidi Hartigan",
+    "Ciaran McMahon",
+    "Dylan Moloney",
+    "Shaun Barry",
+    "Jack O’Keeffe",
+    "Robert O’Farrell",
+    "Conor McMahon for Shaun Barry (38 mins)",
+    "Luke Guinane for Robert O’Farrell (47 mins, inj)",
+    "Shaun Barry for Paidi Hartigan (56 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/second-half-rally-sees-adare-beat-kildimo-pallaskenry-in-limerick-shc-8846307"
+    }
+  ]
 }
 ]
 }
