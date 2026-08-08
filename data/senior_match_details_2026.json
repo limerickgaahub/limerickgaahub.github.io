@@ -516,8 +516,116 @@
     {
       "label": "Limerick Leader",
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/garryspillane-bounce-back-with-limerick-shc-win-over-newcastle-west-8846244"
-    }
-  ]
-}
+    },
+[
+  {
+    "date": "2026-08-08",
+    "home": "Ballybrown",
+    "away": "Ahane",
+    "published": true,
+    "referee": "John O’Halloran (Bruree)",
+    "home_scorers": "Aidan O’Connor 0-11 (6f); Mikey Gavin 0-5; Luke O’Connor 0-4; David Hall 0-2; Barry Adams, Ross Kenny, Josh Adams and Killian Gavin 0-1 each.",
+    "away_scorers": "Tom Morrissey 0-11 (8f); Ronan Fox 0-4; Cathal O’Mara and Jack Cosgrove 0-2 each; Gavin Rowsome, Conor Ryan and John O’Connor 0-1 each.",
+    "home_team": [
+      "Cian Hedderman",
+      "Keith Punch",
+      "Josh Adams",
+      "David Hartnett",
+      "Ross Griffin",
+      "James Coughlan",
+      "Mikey Kiely",
+      "Killian Gavin",
+      "Leigh Doolan",
+      "Ross Kenny",
+      "Aidan O’Connor",
+      "Mikey Gavin",
+      "Luke O’Connor",
+      "Barry Adams",
+      "Bobby Smith",
+      "David Hall for Leigh Doolan (41 mins)",
+      "Bryan Griffin for Bobby Smith (50 mins)"
+    ],
+    "away_team": [
+      "Cathal Ryan",
+      "Gavin Rowsome",
+      "Padraig Harnett",
+      "Conor Heffernan",
+      "Ciaran Barry",
+      "Dan Morrissey",
+      "Dan Minihan",
+      "Conor Ryan",
+      "Evan O’Leary",
+      "John O’Connor",
+      "Tom Morrissey",
+      "Mark Donnellan",
+      "Jack Cosgrove",
+      "Ronan Fox",
+      "Cathal O’Mara",
+      "Peter O’Grady for Gavin Rowsome (7 mins, inj)",
+      "Jack Butler for Peter O’Grady (41 mins)",
+      "Kevin Morrissey for Mark Donnellan (49 mins)",
+      "Adam Murrihy for Cathal O’Mara (58 mins)",
+      "Peter Donohue for Ronan Fox (58 mins)"
+    ],
+    "reports": [
+      {
+        "label": "Limerick Leader",
+        "url": "https://www.limerickleader.ie/sport/hurling/ballybrown-return-to-form-with-limerick-shc-win-over-ahane-8846969"
+      }
+    ]
+  },
+  {
+    "date": "2026-08-08",
+    "home": "Mungret St Pauls",
+    "away": "Patrickswell",
+    "published": true,
+    "referee": "Mike Sexton (Bruree)",
+    "home_scorers": "Liam Lynch 1-7 (6f, 1 65); Paul O’Brien 1-1; Fintan Fitzgerald 0-3; Rory Gleeson and Barry Duff 0-2 each; Rory O’Callaghan, Mark O’Brien, Brian O’Meara and Killian Begley 0-1 each.",
+    "away_scorers": "Jason Gillane 0-12 (9f); John Kirby 0-4; Aaron Gillane 0-2; Patrick Kirby, Cian Lynch and Hughie Maher 0-1 each.",
+    "home_team": [
+      "Conor O’Brien",
+      "Billy Molyneaux",
+      "Eoin O’Doherty",
+      "Sean Duff",
+      "Rory O’Callaghan",
+      "Brian O’Meara",
+      "Matt O’Sullivan",
+      "Cian Moloney",
+      "Barry Duff",
+      "Mark O’Brien",
+      "Fintan Fitzgerald",
+      "Rory Gleeson",
+      "Killian Begley",
+      "Liam Lynch",
+      "Paul O’Brien",
+      "Niall Mulcahy for Paul O’Brien (36 mins)",
+      "Rory Duff for Mark O’Brien (45 mins)",
+      "Brian Barry for Rory Gleeson (49 mins)"
+    ],
+    "away_team": [
+      "Adam Carrig",
+      "Eoin Harmon",
+      "Cian Fitzgerald",
+      "Billy Earls",
+      "Evan Fitzgerald",
+      "Diarmaid Byrnes",
+      "Mark Carmody",
+      "Patrick Kirby",
+      "John Murray",
+      "Aaron Gillane",
+      "Cian Lynch",
+      "John Kirby",
+      "Kevin O’Brien",
+      "Jason Gillane",
+      "Liam Fitzgerald",
+      "Andrew Carroll for Liam Fitzgerald (49 mins)",
+      "Hughie Maher for Mark Carmody (52 mins)"
+    ],
+    "reports": [
+      {
+        "label": "Limerick Leader",
+        "url": "https://www.limerickleader.ie/sport/hurling/mungret-st-pauls-make-history-with-limerick-shc-win-over-patrickswell-8846944"
+      }
+    ]
+  }
 ]
-}
