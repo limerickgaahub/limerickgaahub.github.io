@@ -970,11 +970,11 @@
       "home": "Mungret St Pauls",
       "away": "Patrickswell",
       "venue": "Claughaun GAA, Childers Rd",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 19,
+      "away_goals": 0,
+      "away_points": 21
     },
     {
       "competition": "Senior Hurling Championship",
@@ -985,11 +985,11 @@
       "home": "Monaleen",
       "away": "Na Piarsaigh",
       "venue": "TUS Gaelic Grounds",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 18,
+      "away_goals": 4,
+      "away_points": 25
     },
     {
       "competition": "Intermediate Hurling Championship",
