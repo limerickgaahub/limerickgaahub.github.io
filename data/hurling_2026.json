@@ -955,11 +955,11 @@
       "home": "Ballybrown",
       "away": "Ahane",
       "venue": "TUS Gaelic Grounds",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 26,
+      "away_goals": 0,
+      "away_points": 22
     },
     {
       "competition": "Senior Hurling Championship",
