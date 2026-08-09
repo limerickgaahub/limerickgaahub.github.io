@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-09T08:11:53Z",
+  "updated": "2026-08-09T18:03:00Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1105,11 +1105,11 @@
       "home": "Murroe Boher",
       "away": "Mungret St Pauls",
       "venue": "Pairc de Paor, Rathbane",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 4,
+      "home_points": 20,
+      "away_goals": 0,
+      "away_points": 8
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -1120,11 +1120,11 @@
       "home": "Fedamore",
       "away": "Feohanagh",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 15,
+      "away_goals": 3,
+      "away_points": 18
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -1135,11 +1135,11 @@
       "home": "Ballybricken Bohermore",
       "away": "Bruff",
       "venue": "Hospital",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 19,
+      "away_goals": 1,
+      "away_points": 16
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -1150,11 +1150,11 @@
       "home": "Old Christians",
       "away": "Ahane",
       "venue": "St Patrick's GAA, Rhebogue",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 8,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -1165,11 +1165,11 @@
       "home": "Garryspillane",
       "away": "Ballybrown",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 10,
+      "away_goals": 3,
+      "away_points": 17
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -1180,11 +1180,11 @@
       "home": "South Liberties",
       "away": "Feenagh Kilmeedy",
       "venue": "Adare",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 17,
+      "away_goals": 2,
+      "away_points": 18
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1195,11 +1195,11 @@
       "home": "Askeaton Ballysteen Kilcornan",
       "away": "Monaleen",
       "venue": "Crecora",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 12,
+      "away_goals": 2,
+      "away_points": 24
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1210,11 +1210,11 @@
       "home": "Kilmallock",
       "away": "Castletown Ballyagran",
       "venue": "Bruff",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 11,
+      "away_goals": 3,
+      "away_points": 21
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1225,11 +1225,11 @@
       "home": "Tournafulla",
       "away": "Croom",
       "venue": "Newcastle West",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 19,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -1240,11 +1240,11 @@
       "home": "Doon",
       "away": "Glenroe",
       "venue": "Kilteely",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 22,
+      "away_goals": 1,
+      "away_points": 14
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -1259,7 +1259,7 @@
       "home_goals": 1,
       "home_points": 18,
       "away_goals": 2,
-      "away_points":22
+      "away_points": 22
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -1270,11 +1270,11 @@
       "home": "Bruree",
       "away": "Mungret St Pauls",
       "venue": "Ballingarry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 23,
+      "away_goals": 1,
+      "away_points": 14
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -1285,11 +1285,11 @@
       "home": "Staker Wallace",
       "away": "Patrickswell",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 14,
+      "away_goals": 3,
+      "away_points": 11
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -1300,11 +1300,11 @@
       "home": "Effin",
       "away": "Castletown Ballyagran",
       "venue": "Effin",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 18,
+      "away_goals": 1,
+      "away_points": 17
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -1315,11 +1315,11 @@
       "home": "Monagea",
       "away": "Rathkeale",
       "venue": "Newcastle West",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 10,
+      "away_goals": 0,
+      "away_points": 18
     },
     {
       "competition": "Junior B Hurling Championship",
