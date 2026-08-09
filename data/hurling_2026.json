@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-09T18:03:00Z",
+  "updated": "2026-08-09T21:16:11Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1330,11 +1330,11 @@
       "home": "Ahane",
       "away": "Cappamore",
       "venue": "Ballybricken Bohermore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 12,
+      "away_goals": 4,
+      "away_points": 22
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -1345,11 +1345,11 @@
       "home": "Doon",
       "away": "Bruree",
       "venue": "Hospital",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 11,
+      "away_goals": 0,
+      "away_points": 15
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -1360,41 +1360,11 @@
       "home": "Knockainey",
       "away": "Monaleen",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 3",
-      "date": "2026-08-09",
-      "time": "19:00",
-      "home": "Dromin Athlacca",
-      "away": "Athea",
-      "venue": "Athlacca",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 3",
-      "date": "2026-08-09",
-      "time": "19:00",
-      "home": "Kilteely Dromkeen",
-      "away": "Staker Wallace",
-      "venue": "Kilteely",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 13,
+      "away_goals": 2,
+      "away_points": 26
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -1405,11 +1375,11 @@
       "home": "Caherline",
       "away": "Kildimo Pallaskenry",
       "venue": "Fr. Hayes Memorial Park",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 7,
+      "away_goals": 2,
+      "away_points": 17
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -1420,11 +1390,11 @@
       "home": "Croom",
       "away": "Askeaton Ballysteen Kilcornan",
       "venue": "Croom",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 16,
+      "away_goals": 3,
+      "away_points": 17
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -1450,11 +1420,11 @@
       "home": "Croagh Kilfinny",
       "away": "Adare",
       "venue": "Ballingarry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 21,
+      "away_goals": 1,
+      "away_points": 11
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -1465,11 +1435,11 @@
       "home": "Granagh Ballingarry",
       "away": "Blackrock",
       "venue": "Bruree",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 13,
+      "away_goals": 2,
+      "away_points": 22
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -1480,11 +1450,11 @@
       "home": "Na Piarsaigh",
       "away": "Newcastle West",
       "venue": "Sean Finn Park, Rathkeale",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 13,
+      "away_goals": 0,
+      "away_points": 13
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -1495,11 +1465,11 @@
       "home": "Bruff",
       "away": "Pallasgreen",
       "venue": "Kilteely",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 17,
+      "away_goals": 1,
+      "away_points": 11
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -1525,11 +1495,11 @@
       "home": "Dromcollogher Broadford",
       "away": "St Kieran's",
       "venue": "St Kierans, Ardagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 8,
+      "away_goals": 5,
+      "away_points": 21
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -1540,11 +1510,11 @@
       "home": "Na Piarsaigh",
       "away": "Crecora Manister",
       "venue": "Caherdavin",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 9,
+      "away_goals": 2,
+      "away_points": 19
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -1570,11 +1540,11 @@
       "home": "Monagea",
       "away": "Garryspillane",
       "venue": "Monagea",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 14,
+      "away_goals": 1,
+      "away_points": 8
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -1585,11 +1555,11 @@
       "home": "St Patrick's",
       "away": "Knockaderry",
       "venue": "St Patrick's G.A.A Club",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 11,
+      "away_goals": 2,
+      "away_points": 7
     },
     {
       "competition": "Premier Junior C Hurling Championship",
