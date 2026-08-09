@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-07T12:02:12Z",
+  "updated": "2026-08-09T08:11:53Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -867,9 +867,9 @@
       "venue": "Ballybrown",
       "status": "Result",
       "home_goals": 0,
-      "home_points": 15,
+      "home_points": 16,
       "away_goals": 3,
-      "away_points": 16
+      "away_points": 15
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -929,7 +929,7 @@
       "home_goals": 0,
       "home_points": 20,
       "away_goals": 2,
-      "away_points":12
+      "away_points": 12
     },
     {
       "competition": "Senior Hurling Championship",
@@ -1000,11 +1000,11 @@
       "home": "Feenagh Kilmeedy",
       "away": "Feohanagh",
       "venue": "Knockaderry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 26,
+      "away_goals": 2,
+      "away_points": 18
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -1019,7 +1019,7 @@
       "home_goals": 1,
       "home_points": 15,
       "away_goals": 1,
-      "away_points": 14
+      "away_points": 18
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -1030,11 +1030,11 @@
       "home": "Croagh Kilfinny",
       "away": "Killeedy",
       "venue": "Croagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 13,
+      "away_goals": 2,
+      "away_points": 16
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -1045,11 +1045,11 @@
       "home": "Ballybrown",
       "away": "Adare",
       "venue": "Clarina",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 19,
+      "away_goals": 1,
+      "away_points": 6
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1090,6 +1090,21 @@
       "home": "Crecora Manister",
       "away": "Kilteely Dromkeen",
       "venue": "Hospital",
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 20,
+      "away_goals": 2,
+      "away_points": 11
+    },
+    {
+      "competition": "Junior B Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 2",
+      "date": "2026-08-09",
+      "time": "11:00",
+      "home": "Murroe Boher",
+      "away": "Mungret St Pauls",
+      "venue": "Pairc de Paor, Rathbane",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -1165,21 +1180,6 @@
       "home": "South Liberties",
       "away": "Feenagh Kilmeedy",
       "venue": "Adare",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior B Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 2",
-      "date": "2026-08-09",
-      "time": "12:00",
-      "home": "Murroe Boher",
-      "away": "Mungret St Pauls",
-      "venue": "Pairc de Paor, Rathbane",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -1329,7 +1329,7 @@
       "time": "18:00",
       "home": "Ahane",
       "away": "Cappamore",
-      "venue": "Caherconlish",
+      "venue": "Ballybricken Bohermore",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -1359,7 +1359,7 @@
       "time": "19:00",
       "home": "Knockainey",
       "away": "Monaleen",
-      "venue": "Caherconlish",
+      "venue": "Killmallock",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -1502,6 +1502,21 @@
       "away_points": null
     },
     {
+      "competition": "Premier Junior B Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 1",
+      "date": "2026-08-09",
+      "time": "19:00",
+      "home": "Glenroe",
+      "away": "Bruff",
+      "venue": "Knocklong",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
       "competition": "Premier Junior C Hurling Championship",
       "group": "Group 1",
       "round": "Round 2",
@@ -1509,7 +1524,7 @@
       "time": "19:00",
       "home": "Dromcollogher Broadford",
       "away": "St Kieran's",
-      "venue": "Coolcappa",
+      "venue": "St Kierans, Ardagh",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -1596,7 +1611,7 @@
       "group": "Group 2",
       "round": "Round 1",
       "date": "2026-08-11",
-      "time": "19:00",
+      "time": "19:30",
       "home": "Murroe Boher",
       "away": "Adare",
       "venue": "Boher",
@@ -1626,7 +1641,7 @@
       "group": "Group 1",
       "round": "Round 2",
       "date": "2026-08-13",
-      "time": "19:00",
+      "time": "19:15",
       "home": "Killeedy",
       "away": "Dromin Athlacca",
       "venue": "Killeedy",
@@ -1652,11 +1667,26 @@
       "away_points": null
     },
     {
+      "competition": "Premier Intermediate Hurling Championship",
+      "group": null,
+      "round": "Round 2",
+      "date": "2026-08-17",
+      "time": "19:00",
+      "home": "Granagh Ballingarry",
+      "away": "Glenroe",
+      "venue": "Killmallock",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
       "competition": "Junior C Hurling Championship",
       "group": "Group 1",
       "round": "Round 1",
       "date": "2026-08-23",
-      "time": "19:00",
+      "time": "18:30",
       "home": "Effin",
       "away": "Staker Wallace",
       "venue": "Effin",
