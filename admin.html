@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Limerick GAA Hub · Championship Quick Scores</title>
+  <meta name="theme-color" content="#006B3C" />
+  <style>
+    :root{
+      --bg:#f4f6f5;
+      --card:#fff;
+      --text:#111827;
+      --muted:#6b7280;
+      --line:#dfe5e1;
+      --accent:#087443;
+      --accent-dark:#075b36;
+      --accent-soft:#eaf6ee;
+      --danger:#b42318;
+      --warning:#9a6700;
+      --radius:16px;
+      --shadow:0 8px 24px rgba(0,0,0,.07);
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    html,body{
+      margin:0;
+      padding:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    }
+    body{ padding:12px 12px calc(20px + env(safe-area-inset-bottom)); }
+
+    .wrap{
+      width:min(100%,760px);
+      margin:0 auto;
+      display:grid;
+      gap:12px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:14px;
+    }
+
+    .header-row,
+    .section-head,
+    .match-top,
+    .pending-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    h1{
+      margin:0 0 5px;
+      font-size:22px;
+      line-height:1.15;
+    }
+
+    .sub,
+    .meta{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .season-pill,
+    .pill,
+    .pending-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      padding:5px 9px;
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+      background:var(--accent-soft);
+      color:var(--accent-dark);
+      border:1px solid rgba(8,116,67,.18);
+    }
+
+    .pending-pill{
+      background:#fff8e6;
+      color:var(--warning);
+      border-color:#f1d18a;
+    }
+
+    .grid{ display:grid; gap:10px; }
+    .filters{ grid-template-columns:1fr 1.25fr; }
+    .search-field{ grid-column:1 / -1; }
+
+    label{
+      display:block;
+      margin:0 0 6px;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    input,
+    select,
+    button{
+      width:100%;
+      min-height:46px;
+      border-radius:12px;
+      font:inherit;
+    }
+
+    input,
+    select{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      padding:11px 12px;
+    }
+
+    input:focus,
+    select:focus,
+    button:focus-visible{
+      outline:3px solid rgba(8,116,67,.2);
+      outline-offset:1px;
+      border-color:var(--accent);
+    }
+
+    button{
+      border:0;
+      padding:11px 13px;
+      font-weight:800;
+      cursor:pointer;
+      touch-action:manipulation;
+    }
+
+    button:disabled{ opacity:.5; cursor:not-allowed; }
+    .btn{ background:var(--accent); color:#fff; }
+    .btn:active{ background:var(--accent-dark); }
+    .btn-secondary{
+      background:var(--accent-soft);
+      color:var(--accent-dark);
+      border:1px solid rgba(8,116,67,.18);
+    }
+    .btn-danger{
+      background:#fff1f2;
+      color:var(--danger);
+      border:1px solid #fecdd3;
+    }
+    .btn-small{
+      width:auto;
+      min-height:34px;
+      padding:6px 10px;
+      font-size:12px;
+    }
+
+    .results{
+      display:grid;
+      gap:9px;
+      margin-top:10px;
+      max-height:48vh;
+      overflow:auto;
+      overscroll-behavior:contain;
+    }
+
+    .match{
+      display:block;
+      width:100%;
+      min-height:0;
+      padding:12px;
+      text-align:left;
+      color:var(--text);
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+    }
+
+    .match.active{
+      border-color:var(--accent);
+      box-shadow:0 0 0 2px rgba(8,116,67,.12);
+      background:#f9fffb;
+    }
+
+    .match.edited{ border-left:5px solid #d59a16; padding-left:9px; }
+    .match-title{ font-size:16px; font-weight:850; line-height:1.3; }
+    .match-score{ margin-top:5px; font-size:18px; font-weight:900; color:var(--accent-dark); }
+
+    .editor-title{
+      margin:0;
+      font-size:19px;
+      font-weight:900;
+      line-height:1.25;
+    }
+
+    .score-board{
+      display:grid;
+      gap:12px;
+      margin:14px 0;
+    }
+
+    .team-score{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background:#fafcfb;
+    }
+
+    .team-name{
+      margin-bottom:10px;
+      font-size:17px;
+      font-weight:900;
+      line-height:1.25;
+    }
+
+    .score-fields{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .number-wrap{
+      display:grid;
+      grid-template-columns:40px minmax(58px,1fr) 40px;
+      gap:5px;
+      align-items:center;
+    }
+
+    .stepper{
+      min-height:48px;
+      padding:0;
+      font-size:24px;
+      line-height:1;
+      background:var(--accent-soft);
+      color:var(--accent-dark);
+      border:1px solid rgba(8,116,67,.18);
+    }
+
+    .score-input{
+      min-width:0;
+      padding:7px 3px;
+      text-align:center;
+      font-size:27px;
+      font-weight:900;
+      appearance:textfield;
+    }
+    .score-input::-webkit-inner-spin-button,
+    .score-input::-webkit-outer-spin-button{ appearance:none; margin:0; }
+
+    .total-line{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:10px;
+      padding-top:9px;
+      border-top:1px dashed var(--line);
+      font-size:13px;
+      color:var(--muted);
+    }
+    .total-line strong{ color:var(--text); }
+
+    .editor-options{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:12px;
+    }
+
+    .actions{ display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+    .actions .wide{ grid-column:1 / -1; }
+
+    .notice{
+      min-height:20px;
+      margin:9px 0 0;
+      font-size:13px;
+      font-weight:750;
+      color:var(--accent-dark);
+    }
+    .notice.error{ color:var(--danger); }
+
+    .hidden{ display:none !important; }
+
+    @media (min-width:680px){
+      body{ padding:18px; }
+      .filters{ grid-template-columns:1fr 1.35fr 1fr; }
+      .search-field{ grid-column:auto; }
+      .score-board{ grid-template-columns:1fr 1fr; }
+    }
+
+    @media (max-width:390px){
+      .card{ padding:12px; }
+      .number-wrap{ grid-template-columns:36px minmax(52px,1fr) 36px; }
+      .stepper{ min-height:46px; }
+      .score-input{ font-size:24px; }
+      .actions{ grid-template-columns:1fr; }
+      .actions .wide{ grid-column:auto; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="header-row">
+        <div>
+          <h1>Championship Quick Scores</h1>
+          <div class="sub">Enter results on your phone and download the updated data file.</div>
+        </div>
+        <span class="season-pill">2026</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="grid filters">
+        <div>
+          <label for="filter-date">Date</label>
+          <input id="filter-date" type="date" />
+        </div>
+        <div>
+          <label for="filter-competition">Championship</label>
+          <select id="filter-competition">
+            <option value="">All championships</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label for="filter-search">Team</label>
+          <input id="filter-search" type="search" placeholder="e.g. Doon" autocomplete="off" />
+        </div>
+      </div>
+      <div style="margin-top:9px;">
+        <button id="toggle-all-dates" class="btn-secondary btn-small" type="button">Show all dates</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div id="results-count" class="sub" aria-live="polite">Loading Championship 2026…</div>
+        <span id="pending-top" class="pending-pill hidden">0 edits</span>
+      </div>
+      <div id="results" class="results"></div>
+    </section>
+
+    <section id="editor-card" class="card hidden">
+      <div id="selected-summary"></div>
+
+      <div class="score-board">
+        <div class="team-score">
+          <div id="home-team" class="team-name">Home</div>
+          <div class="score-fields">
+            <div>
+              <label for="home-goals">Goals</label>
+              <div class="number-wrap">
+                <button class="stepper" type="button" data-target="home-goals" data-delta="-1" aria-label="Subtract home goal">−</button>
+                <input id="home-goals" class="score-input" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1" />
+                <button class="stepper" type="button" data-target="home-goals" data-delta="1" aria-label="Add home goal">+</button>
+              </div>
+            </div>
+            <div>
+              <label for="home-points">Points</label>
+              <div class="number-wrap">
+                <button class="stepper" type="button" data-target="home-points" data-delta="-1" aria-label="Subtract home point">−</button>
+                <input id="home-points" class="score-input" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1" />
+                <button class="stepper" type="button" data-target="home-points" data-delta="1" aria-label="Add home point">+</button>
+              </div>
+            </div>
+          </div>
+          <div class="total-line"><span>Score</span><strong id="home-display">—</strong><span>Total: <strong id="home-total">—</strong></span></div>
+        </div>
+
+        <div class="team-score">
+          <div id="away-team" class="team-name">Away</div>
+          <div class="score-fields">
+            <div>
+              <label for="away-goals">Goals</label>
+              <div class="number-wrap">
+                <button class="stepper" type="button" data-target="away-goals" data-delta="-1" aria-label="Subtract away goal">−</button>
+                <input id="away-goals" class="score-input" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1" />
+                <button class="stepper" type="button" data-target="away-goals" data-delta="1" aria-label="Add away goal">+</button>
+              </div>
+            </div>
+            <div>
+              <label for="away-points">Points</label>
+              <div class="number-wrap">
+                <button class="stepper" type="button" data-target="away-points" data-delta="-1" aria-label="Subtract away point">−</button>
+                <input id="away-points" class="score-input" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1" />
+                <button class="stepper" type="button" data-target="away-points" data-delta="1" aria-label="Add away point">+</button>
+              </div>
+            </div>
+          </div>
+          <div class="total-line"><span>Score</span><strong id="away-display">—</strong><span>Total: <strong id="away-total">—</strong></span></div>
+        </div>
+      </div>
+
+      <div class="editor-options">
+        <div>
+          <label for="edit-status">Status</label>
+          <select id="edit-status">
+            <option value="Result">Result</option>
+            <option value="Fixture">Fixture</option>
+            <option value="Walkover">Walkover</option>
+            <option value="Postponed">Postponed</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Abandoned">Abandoned</option>
+          </select>
+        </div>
+        <div>
+          <label for="edit-time">Throw-in</label>
+          <input id="edit-time" type="time" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="save-next" class="btn wide" type="button">Save score &amp; next match</button>
+        <button id="save-score" class="btn-secondary" type="button">Save score</button>
+        <button id="undo-match" class="btn-danger" type="button">Undo this edit</button>
+      </div>
+      <div id="editor-notice" class="notice" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="download-card" class="card hidden">
+      <div class="pending-row">
+        <div>
+          <div style="font-weight:900;">Ready to publish</div>
+          <div id="pending-summary" class="sub">0 matches edited</div>
+        </div>
+        <button id="clear-edits" class="btn-danger btn-small" type="button">Clear edits</button>
+      </div>
+      <div class="actions" style="margin-top:12px;">
+        <button id="download-json" class="btn wide" type="button">Download updated hurling_2026.json</button>
+        <button id="copy-match" class="btn-secondary" type="button">Copy selected match</button>
+        <button id="copy-full" class="btn-secondary" type="button">Copy full JSON</button>
+      </div>
+      <div id="download-notice" class="notice" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="/admin.js"></script>
+</body>
+</html>
