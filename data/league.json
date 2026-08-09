@@ -6442,12 +6442,12 @@
       "away": "Monagea",
       "venue": "Quaid Park, Coolyroe",
       "referee": "TBC",
-      "status": "SCHEDULED",
+      "status": "Result",
       "source_url": "manual",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null,
+      "home_goals": 2,
+      "home_points": 32,
+      "away_goals": 2,
+      "away_points": 27,
       "walkover_winner": null
     },
     {
@@ -6463,12 +6463,12 @@
       "away": "Ballybricken Bohermore",
       "venue": "Pairc de Paor, Rathbane",
       "referee": "TBC",
-      "status": "SCHEDULED",
+      "status": "Result",
       "source_url": "manual",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null,
+      "home_goals": 1,
+      "home_points": 20,
+      "away_goals": 1,
+      "away_points": 12,
       "walkover_winner": null
     },
     {
@@ -6505,12 +6505,12 @@
       "away": "Tournafulla",
       "venue": "Newcastle West",
       "referee": "TBC",
-      "status": "SCHEDULED",
+      "status": "Result",
       "source_url": "manual",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null,
+      "home_goals": 2,
+      "home_points": 10,
+      "away_goals": 0,
+      "away_points": 14,
       "walkover_winner": null
     }
   ]
