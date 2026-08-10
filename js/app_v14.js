@@ -2096,6 +2096,58 @@ const MANUAL_JC_POINTS = {
   ]
 };
 
+// ---- TEMP PATCH: Tournafulla withdrawal, Junior C Group 2 (2026 only) ----
+if (
+  state.season === "2026" &&
+  state.comp === "Junior C Hurling Championship" &&
+  state.group === "Group 2"
+) {
+  const tournafulla = teams.get("Tournafulla");
+
+  // These five walkover fixtures already exist in the scraped data,
+  // so Played has already been counted for both teams.
+  const existingWalkoverOpponents = [
+    "Murroe Boher",
+    "Caherline",
+    "Ballybrown",
+    "Adare",
+    "Kildimo Pallaskenry"
+  ];
+
+  for (const teamName of existingWalkoverOpponents) {
+    const row = teams.get(teamName);
+
+    if (row) {
+      row.w   += 1;
+      row.pts += 2;
+    }
+  }
+
+  // These two fixtures are completely missing from the scraped data,
+  // so Played must also be added.
+  const missingFixtureOpponents = [
+    "Croom",
+    "Askeaton Ballysteen Kilcornan"
+  ];
+
+  for (const teamName of missingFixtureOpponents) {
+    const row = teams.get(teamName);
+
+    if (row) {
+      row.p   += 1;
+      row.w   += 1;
+      row.pts += 2;
+    }
+  }
+
+  if (tournafulla) {
+    // Five matches were already counted as played; add the two missing ones.
+    tournafulla.p        += 2;
+    tournafulla.l        += 7;
+    tournafulla.wo_given += 7;
+  }
+}
+
   
 // Return the winner’s team name for a scored match (null for draw/unknown)
 function _winnerOf(m){
