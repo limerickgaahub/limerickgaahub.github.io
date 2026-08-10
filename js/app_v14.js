@@ -2096,23 +2096,6 @@ const MANUAL_JC_POINTS = {
   ]
 };
 
-// ---- TEMP PATCH: Tournafulla withdrawal, Junior C Group 2 (2026 only) ----
-if (
-  state.season === "2026" &&
-  state.comp === "Junior C Hurling Championship" &&
-  state.group === "Group 2"
-) {
-  const tournafulla = teams.get("Tournafulla");
-
-  // These five walkover fixtures already exist in the scraped data,
-  // so Played has already been counted for both teams.
-  const existingWalkoverOpponents = [
-    "Murroe Boher",
-    "Caherline",
-    "Ballybrown",
-    "Adare",
-    "Kildimo Pallaskenry"
-  ];
 
   for (const teamName of existingWalkoverOpponents) {
     const row = teams.get(teamName);
@@ -2309,7 +2292,56 @@ if (
 }
 
   
+// ---- TEMP PATCH: Tournafulla withdrawal, Junior C Group 2 (2026 only) ----
+if (
+  state.season === "2026" &&
+  state.comp === "Junior C Hurling Championship" &&
+  state.group === "Group 2"
+) {
+  const existingWalkoverOpponents = [
+    "Murroe Boher",
+    "Caherline",
+    "Ballybrown",
+    "Adare",
+    "Kildimo Pallaskenry"
+  ];
 
+  // These five fixtures already exist and have already counted as Played.
+  for (const teamName of existingWalkoverOpponents) {
+    const row = teams.get(teamName);
+
+    if (row) {
+      row.w   += 1;
+      row.pts += 2;
+    }
+  }
+
+  const missingFixtureOpponents = [
+    "Croom",
+    "Askeaton Ballysteen Kilcornan"
+  ];
+
+  // These two fixtures are absent, so Played must also be added.
+  for (const teamName of missingFixtureOpponents) {
+    const row = teams.get(teamName);
+
+    if (row) {
+      row.p   += 1;
+      row.w   += 1;
+      row.pts += 2;
+    }
+  }
+
+  const tournafulla = teams.get("Tournafulla");
+
+  if (tournafulla) {
+    // Five existing walkovers already counted as Played.
+    // Add the two missing fixtures and record all seven losses.
+    tournafulla.p        += 2;
+    tournafulla.l        += 7;
+    tournafulla.wo_given += 7;
+  }
+}
   
   // ---- Sort with Head-to-Head rule (two-team ties only) ----
   const all = [...teams.values()];
