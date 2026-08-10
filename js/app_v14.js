@@ -2096,41 +2096,6 @@ const MANUAL_JC_POINTS = {
   ]
 };
 
-
-  for (const teamName of existingWalkoverOpponents) {
-    const row = teams.get(teamName);
-
-    if (row) {
-      row.w   += 1;
-      row.pts += 2;
-    }
-  }
-
-  // These two fixtures are completely missing from the scraped data,
-  // so Played must also be added.
-  const missingFixtureOpponents = [
-    "Croom",
-    "Askeaton Ballysteen Kilcornan"
-  ];
-
-  for (const teamName of missingFixtureOpponents) {
-    const row = teams.get(teamName);
-
-    if (row) {
-      row.p   += 1;
-      row.w   += 1;
-      row.pts += 2;
-    }
-  }
-
-  if (tournafulla) {
-    // Five matches were already counted as played; add the two missing ones.
-    tournafulla.p        += 2;
-    tournafulla.l        += 7;
-    tournafulla.wo_given += 7;
-  }
-}
-
   
 // Return the winner’s team name for a scored match (null for draw/unknown)
 function _winnerOf(m){
