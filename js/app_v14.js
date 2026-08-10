@@ -2239,17 +2239,24 @@ if (isWalkover(m)) {
     else { H.d++; A.d++; H.pts++; A.pts++; }
   }
 
-    // ---- TEMP PATCH: add manual walkovers for Junior C ----
-  if (state.comp === "Junior C Hurling Championship") {
-    const groupFix = MANUAL_JC_POINTS[state.group] || [];
-    for (const teamName of groupFix) {
-      const row = teams.get(teamName);
-      if (row) {
-        row.pts += 2;  // each entry = +2 points
-        row.w   += 1;  // and +1 win
-      }
+  // ---- TEMP PATCH: add manual walkovers for Junior C (2025 only) ----
+if (
+  state.season === "2025" &&
+  state.comp === "Junior C Hurling Championship"
+) {
+  const groupFix = MANUAL_JC_POINTS[state.group] || [];
+
+  for (const teamName of groupFix) {
+    const row = teams.get(teamName);
+
+    if (row) {
+      row.pts += 2;
+      row.w   += 1;
     }
   }
+}
+
+  
 
   
   // ---- Sort with Head-to-Head rule (two-team ties only) ----
