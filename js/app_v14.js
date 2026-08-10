@@ -1036,7 +1036,32 @@ document.addEventListener('DOMContentLoaded', () => {
   btn.addEventListener('click', openPicker);
 });
 
-  
+function renderHomepageEarly() {
+  // Only apply to the clean 2026 homepage
+  if (!FIRST_LOAD_NO_QUERY || state.season !== '2026') return;
+
+  state.comp = 'Senior Hurling Championship';
+  state.group = 'Group 1';
+  state.view = 'matches';
+  VIEW_MODE = 'competition';
+
+  const selected = el('comp-selected');
+
+  if (selected) {
+    selected.innerHTML = `
+      <span class="comp-selected-text">
+        WhiteBox County Senior Hurling Championship
+      </span>
+      <span class="comp-selected-chevron" aria-hidden="true">▾</span>
+    `;
+  }
+
+  setCompetitionHomeMode(false);
+  rebuildMatchesMenu();
+  updateTableTabVisibility();
+  renderGroupTable();
+}
+
 async function load(){
   try {
     let j = null;
@@ -1137,6 +1162,10 @@ if (isWO) {
     });
 
     const baseCount = MATCHES.length;
+
+// Paint the homepage now. League, divisional and match-detail
+// data can continue loading afterwards.
+renderHomepageEarly();
 
 // 2) Manual Knockout overlay (OUTSIDE the map)
 if (KO_URL) {
