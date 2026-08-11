@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-11T07:53:03Z",
+  "updated": "2026-08-11T12:23:46Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1580,21 +1580,6 @@
       "competition": "Junior C Hurling Championship",
       "group": "Group 2",
       "round": "Round 1",
-      "date": "2026-08-11",
-      "time": "19:30",
-      "home": "Murroe Boher",
-      "away": "Adare",
-      "venue": "Boher",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 1",
       "date": "2026-08-12",
       "time": "19:00",
       "home": "Askeaton Ballysteen Kilcornan",
@@ -1645,6 +1630,21 @@
       "home": "Granagh Ballingarry",
       "away": "Glenroe",
       "venue": "Killmallock",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 1",
+      "date": "2026-08-18",
+      "time": "19:30",
+      "home": "Murroe Boher",
+      "away": "Adare",
+      "venue": "Boher",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
