@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-09T21:16:11Z",
+  "updated": "2026-08-11T07:53:03Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1472,21 +1472,6 @@
       "away_points": 11
     },
     {
-      "competition": "Premier Junior B Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 1",
-      "date": "2026-08-09",
-      "time": "19:00",
-      "home": "Glenroe",
-      "away": "Bruff",
-      "venue": "Knocklong",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
       "competition": "Premier Junior C Hurling Championship",
       "group": "Group 1",
       "round": "Round 2",
@@ -1562,6 +1547,21 @@
       "away_points": 7
     },
     {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 3",
+      "date": "2026-08-10",
+      "time": "19:00",
+      "home": "Kilteely Dromkeen",
+      "away": "Staker Wallace",
+      "venue": "Kilteely",
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 15,
+      "away_goals": 2,
+      "away_points": 16
+    },
+    {
       "competition": "Premier Junior C Hurling Championship",
       "group": "Group 2",
       "round": "Round 2",
@@ -1570,11 +1570,11 @@
       "home": "Hospital Herbertstown",
       "away": "Ballybricken Bohermore",
       "venue": "St Johns Park",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 8,
+      "away_goals": 2,
+      "away_points": 13
     },
     {
       "competition": "Junior C Hurling Championship",
