@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-18T21:20:15Z",
+  "updated": "2026-08-19T20:38:05Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2064,7 +2064,7 @@
       "time": "18:30",
       "home": "Ballybrown",
       "away": "Rathkeale",
-      "venue": "TBC",
+      "venue": "Croagh",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -2964,7 +2964,7 @@
       "time": "18:30",
       "home": "Ahane",
       "away": "Templeglantine",
-      "venue": "TBC",
+      "venue": "Knockaderry",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -3249,7 +3249,7 @@
       "time": "13:00",
       "home": "Monaleen",
       "away": "Croom",
-      "venue": "TBC",
+      "venue": "Fedamore",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -3294,7 +3294,7 @@
       "time": "14:00",
       "home": "Claughaun",
       "away": "Ballybrown",
-      "venue": "TBC",
+      "venue": "Drumgoole Park, Caherdavin",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
