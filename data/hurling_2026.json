@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-21T16:10:29Z",
+  "updated": "2026-08-23T20:07:47Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1660,11 +1660,11 @@
       "home": "Effin",
       "away": "Staker Wallace",
       "venue": "Effin",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 17,
+      "away_goals": 0,
+      "away_points": 12
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -1674,7 +1674,7 @@
       "time": "18:30",
       "home": "Garryspillane",
       "away": "Hospital Herbertstown",
-      "venue": "Knocklong",
+      "venue": "Hospital",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
