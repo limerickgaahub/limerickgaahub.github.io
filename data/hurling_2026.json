@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-25T18:19:26Z",
+  "updated": "2026-08-25T20:29:51Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1690,11 +1690,11 @@
       "home": "Staker Wallace",
       "away": "Doon",
       "venue": "Knocklong",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 14,
+      "away_goals": 3,
+      "away_points": 10
     },
     {
       "competition": "Premier Junior A Hurling Championship",
