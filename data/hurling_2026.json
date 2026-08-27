@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-26T20:49:21Z",
+  "updated": "2026-08-27T19:42:40Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1794,7 +1794,7 @@
       "time": "18:30",
       "home": "St Kieran's",
       "away": "Cappamore",
-      "venue": "Newcastle West",
+      "venue": "Drumgoole Park, Caherdavin",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -1855,11 +1855,11 @@
       "home": "Murroe Boher",
       "away": "Glenroe",
       "venue": "Hospital",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 20,
+      "away_goals": 0,
+      "away_points": 10
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1870,11 +1870,11 @@
       "home": "Croom",
       "away": "Castletown Ballyagran",
       "venue": "Ballingarry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 19,
+      "away_goals": 3,
+      "away_points": 17
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1885,11 +1885,11 @@
       "home": "Caherline",
       "away": "Crecora Manister",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 27,
+      "away_goals": 1,
+      "away_points": 20
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1899,7 +1899,7 @@
       "time": "18:30",
       "home": "Dromcollogher Broadford",
       "away": "St Patrick's",
-      "venue": "Killmallock",
+      "venue": "Kildimo",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -2140,21 +2140,6 @@
       "home": "Monagea",
       "away": "Ballybricken Bohermore",
       "venue": "Monagea",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 4",
-      "date": "2026-08-30",
-      "time": "12:30",
-      "home": "Killeedy",
-      "away": "Effin",
-      "venue": "Killeedy",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -2417,6 +2402,21 @@
       "away_points": null
     },
     {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 4",
+      "date": "2026-08-31",
+      "time": "06:30",
+      "home": "Killeedy",
+      "away": "Effin",
+      "venue": "Killeedy",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
       "competition": "Junior B Hurling Championship",
       "group": "Group 1",
       "round": "Round 3",
@@ -2567,21 +2567,6 @@
       "away_points": null
     },
     {
-      "competition": "Premier Junior A Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 4",
-      "date": "2026-09-03",
-      "time": "18:30",
-      "home": "St Patrick's",
-      "away": "Doon",
-      "venue": "Pallasgreen",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
       "competition": "Intermediate Hurling Championship",
       "group": "Group 1",
       "round": "Round 4",
@@ -2695,6 +2680,21 @@
       "home": "Kilteely Dromkeen",
       "away": "Caherline",
       "venue": "Ballybricken Bohermore",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Premier Junior A Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 4",
+      "date": "2026-09-04",
+      "time": "18:30",
+      "home": "St Patrick's",
+      "away": "Doon",
+      "venue": "Pallasgreen",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
