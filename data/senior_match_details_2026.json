@@ -411,7 +411,7 @@
 {
   "date": "2026-08-07",
   "home": "Adare",
-  "away": "Kildimo-Pallaskenry",
+  "away": "Kildimo Pallaskenry",
   "published": true,
   "referee": "Liam Berkery (Ahane)",
   "home_scorers": "John Fitzgibbon 0-9 (4f, 3 65s); Willie Griffin 0-6 (4f); Brendan O’Connor 0-3; David O’Mahoney and Wayne McNamara 0-1 each.",
@@ -470,29 +470,9 @@
   "away": "Garryspillane",
   "published": true,
   "referee": "Eamonn Stapleton (Doon)",
-  "home_scorers": "John English 2-0; Colin Ryan 1-2; Hugh Flanagan 0-5 (2f); Peter Morrissey 1-1; Callum Sheehan 0-2; Tiernan Ryan and Jamie Morrissey 0-1 each.",
-  "away_scorers": "Con Hayes 1-4; Cathal Hayes 0-4 (2f); Bryan Nix 1-0; Ethan Hurley 0-2 (1f); Michael Dee, Brian Foley and Brian Hurley 0-1 each.",
+  "home_scorers": "Con Hayes 1-4; Cathal Hayes 0-4 (2f); Bryan Nix 1-0; Ethan Hurley 0-2 (1f); Michael Dee, Brian Foley and Brian Hurley 0-1 each.",
+  "away_scorers": "John English 2-0; Colin Ryan 1-2; Hugh Flanagan 0-5 (2f); Peter Morrissey 1-1; Callum Sheehan 0-2; Tiernan Ryan and Jamie Morrissey 0-1 each.",
   "home_team": [
-    "Ciaran Hyland",
-    "James O’Sullivan",
-    "Declan Heavey",
-    "Ryan Tobin",
-    "Eoin O’Mahony",
-    "Robert Sampson",
-    "Bryan Heavey",
-    "Josh Dineen",
-    "Jamie Morrissey",
-    "Colin Ryan",
-    "Peter Morrissey",
-    "Tiernan Ryan",
-    "Hugh Flanagan",
-    "John English",
-    "Callum Sheehan",
-    "Dylan O’Shea for Bryan Heavey (47 mins)",
-    "Cian Ryan for Josh Dineen (55 mins)",
-    "Shane Ryan for Callum Sheehan (62 mins)"
-  ],
-  "away_team": [
     "Mike Quilligan",
     "Jody Woulfe",
     "Mike Cremin",
@@ -512,12 +492,32 @@
     "Brian Hurley for Brian Foley (39 mins)",
     "Michael Blashkiv for Jody Woulfe (55 mins)"
   ],
+  "away_team": [
+    "Ciaran Hyland",
+    "James O’Sullivan",
+    "Declan Heavey",
+    "Ryan Tobin",
+    "Eoin O’Mahony",
+    "Robert Sampson",
+    "Bryan Heavey",
+    "Josh Dineen",
+    "Jamie Morrissey",
+    "Colin Ryan",
+    "Peter Morrissey",
+    "Tiernan Ryan",
+    "Hugh Flanagan",
+    "John English",
+    "Callum Sheehan",
+    "Dylan O’Shea for Bryan Heavey (47 mins)",
+    "Cian Ryan for Josh Dineen (55 mins)",
+    "Shane Ryan for Callum Sheehan (62 mins)"
+  ],
   "reports": [
     {
       "label": "Limerick Leader",
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/garryspillane-bounce-back-with-limerick-shc-win-over-newcastle-west-8846244"
     }
-]
+  ]
 },
   {
     "date": "2026-08-08",
