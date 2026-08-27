@@ -685,7 +685,7 @@
       "url": "https://www.limerickleader.ie/sport/hurling/na-piarsaigh-hit-four-goals-in-routine-limerick-shc-win-over-monaleen-8846995"
     }
   ]
-}
+},
 {
   "date": "2026-08-27",
   "home": "Na Piarsaigh",
@@ -738,6 +738,64 @@
     {
       "label": "Limerick Leader",
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/classy-na-piarsaigh-overcome-ahane-and-the-elements-in-big-victory-8946620"
+    }
+  ]
+},
+{
+  "date": "2026-08-27",
+  "home": "Monaleen",
+  "away": "Doon",
+  "published": true,
+  "referee": "Johnny Murphy (Ballylanders)",
+  "home_scorers": "Shane Hassett 1-9 (7f, 1 65); Lorcan Lyons 0-3 (1f); Dara Ferland and Donnacha Ó Dálaigh 0-3 each; Darragh Langan 0-2; Mark O’Dwyer, Joseph Fitzgerald, Lochlann McHale and Eoghan Maher 0-1 each.",
+  "away_scorers": "Adam English 1-5 (4f); Dean Coleman 1-2; Own goal 1-0; Barry Murphy 0-3; Donal Coughlan and Pat Ryan 0-2 each; Jack Ryan, Darragh O’Donovan (1f) and Eamonn Richardson 0-1 each.",
+  "home_team": [
+    "Jamie Power",
+    "Matthew Fitzgerald",
+    "Bryan Canny",
+    "Noel Clancy",
+    "Ronan Lyons",
+    "Darragh Langan",
+    "Lorcan Lyons",
+    "Joseph Fitzgerald",
+    "Lochlann McHale",
+    "Eoghan O’Driscoll",
+    "Shane Hassett",
+    "Luke Murphy",
+    "Mark O’Dwyer",
+    "Donnacha Ó Dálaigh",
+    "Dara Ferland",
+    "Andrew La Touche Cosgrave for Luke Murphy (50 mins)",
+    "Ben Hayes for Mark O’Dwyer (52 mins)",
+    "Eoghan Maher for Donnacha Ó Dálaigh (57 mins)",
+    "Donnacha Ó Dálaigh for Eoghan O’Driscoll (60 mins)",
+    "Tom McCarthy for Lochlann McHale (64 mins)"
+  ],
+  "away_team": [
+    "Tomás Lynch",
+    "Aidan O’Connell",
+    "Tommy Hayes",
+    "Cian O’Donovan",
+    "Chris Thomas",
+    "Barry Murphy",
+    "Richie English",
+    "Darragh O’Donovan",
+    "Adam English",
+    "Jack Ryan",
+    "Gareth Thomas",
+    "Pat Ryan",
+    "Eamonn Richardson",
+    "Dean Coleman",
+    "Donal Coughlan",
+    "Seán McDonnell for Donal Coughlan (half-time)",
+    "Kevin Maher for Gareth Thomas (46 mins)",
+    "Darragh Coughlan for Jack Ryan (55 mins)",
+    "Mikey O’Brien for Eamonn Richardson (55 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/monaleen-prevail-against-doon-in-enthralling-limerick-shc-contest-8946619"
     }
   ]
 }
