@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-27T19:42:40Z",
+  "updated": "2026-08-27T20:27:05Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1757,66 +1757,6 @@
       "away_points": null
     },
     {
-      "competition": "Intermediate Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 3",
-      "date": "2026-08-27",
-      "time": "18:30",
-      "home": "Feenagh Kilmeedy",
-      "away": "South Liberties",
-      "venue": "Adare",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Intermediate Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 3",
-      "date": "2026-08-27",
-      "time": "18:30",
-      "home": "Pallasgreen",
-      "away": "Feohanagh",
-      "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Intermediate Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 3",
-      "date": "2026-08-27",
-      "time": "18:30",
-      "home": "St Kieran's",
-      "away": "Cappamore",
-      "venue": "Drumgoole Park, Caherdavin",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Intermediate Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 3",
-      "date": "2026-08-27",
-      "time": "18:30",
-      "home": "Knockainey",
-      "away": "Na Piarsaigh",
-      "venue": "Ballybricken Bohermore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
       "competition": "Junior A Hurling Championship",
       "group": "Group 2",
       "round": "Round 3",
@@ -1840,11 +1780,11 @@
       "home": "Killeedy",
       "away": "Monagea",
       "venue": "Tournfulla",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 11,
+      "away_goals": 2,
+      "away_points": 24
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1900,11 +1840,11 @@
       "home": "Dromcollogher Broadford",
       "away": "St Patrick's",
       "venue": "Kildimo",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 20,
+      "away_goals": 0,
+      "away_points": 19
     },
     {
       "competition": "Senior Hurling Championship",
@@ -1915,11 +1855,11 @@
       "home": "Monaleen",
       "away": "Doon",
       "venue": "Cappamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 24,
+      "away_goals": 3,
+      "away_points": 17
     },
     {
       "competition": "Senior Hurling Championship",
@@ -1930,11 +1870,11 @@
       "home": "Na Piarsaigh",
       "away": "Ahane",
       "venue": "Claughaun GAA, Childers Rd",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 17,
+      "away_goals": 0,
+      "away_points": 10
     },
     {
       "competition": "Senior Hurling Championship",
@@ -1945,11 +1885,11 @@
       "home": "Newcastle West",
       "away": "Kildimo Pallaskenry",
       "venue": "Mick Neville Park",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 21,
+      "away_goals": 2,
+      "away_points": 11
     },
     {
       "competition": "Intermediate Hurling Championship",
