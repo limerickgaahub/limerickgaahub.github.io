@@ -686,5 +686,60 @@
     }
   ]
 }
+{
+  "date": "2026-08-27",
+  "home": "Na Piarsaigh",
+  "away": "Ahane",
+  "published": true,
+  "referee": "Jonathon Hayes (St Senan’s)",
+  "home_scorers": "Peter Casey 0-5; Daithi Dempsey 1-2; Ronan Lynch 0-4 (4f); Dylan Lynch 1-1; Keith Dempsey 0-3 (2f); Eoin Brosnan 1-0; JJ Carey and James Finn 0-1 each.",
+  "away_scorers": "Tom Morrissey 0-4 (2f, 1 65); Mark Donnellan 0-2; Conor Ryan, Jack Cosgrave, Kevin Morrissey and John O’Connor (1 65) 0-1 each.",
+  "home_team": [
+    "Shane Dowling",
+    "Jerome Boylan",
+    "Vince Harrington",
+    "Emmett McEvoy",
+    "Ronan Lynch",
+    "Mike Casey",
+    "James Finn",
+    "William O’Donoghue",
+    "JJ Carey",
+    "Keith Dempsey",
+    "Peter Casey",
+    "Daithi Dempsey",
+    "Eoin Brosnan",
+    "Will Henn",
+    "Conor Boylan",
+    "Dylan Lynch for Will Henn (42 mins)",
+    "Mark O’Connor for Jerome Boylan (45 mins)",
+    "Mike Foley for Mike Casey (45 mins)",
+    "John Fitzgerald for Conor Boylan (50 mins)",
+    "Kevin Downes for Peter Casey (50 mins)"
+  ],
+  "away_team": [
+    "Cathal Ryan",
+    "Evan O’Leary",
+    "Ciaran Barry",
+    "Conor Heffernan",
+    "Padraig Harnett",
+    "Dan Morrissey",
+    "Dan Minihan",
+    "Conor Ryan",
+    "Mark Donnellan",
+    "John O’Connor",
+    "Tom Morrissey",
+    "Cathal O’Mara",
+    "Jack Cosgrave",
+    "Peter Donohue",
+    "Kevin Morrissey",
+    "Peter O’Grady for Dan Minihan (45 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/classy-na-piarsaigh-overcome-ahane-and-the-elements-in-big-victory-8946620"
+    }
+  ]
+}
 ]
 }
