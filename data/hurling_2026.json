@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-27T21:06:11Z",
+  "updated": "2026-08-28T21:10:04Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1822,21 +1822,6 @@
       "round": "Round 3",
       "date": "2026-08-27",
       "time": "18:30",
-      "home": "Ballybrown",
-      "away": "Rathkeale",
-      "venue": "Kildimo",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior A Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 3",
-      "date": "2026-08-27",
-      "time": "18:30",
       "home": "Killeedy",
       "away": "Monagea",
       "venue": "Tournfulla",
@@ -1960,11 +1945,11 @@
       "home": "Hospital Herbertstown",
       "away": "Bruree",
       "venue": "KIlfinane",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 18,
+      "away_goals": 3,
+      "away_points": 30
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -1975,11 +1960,11 @@
       "home": "Dromin Athlacca",
       "away": "Bruff",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 14,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -1990,11 +1975,11 @@
       "home": "Askeaton Ballysteen Kilcornan",
       "away": "Kilmallock",
       "venue": "Quaid Park, Coolyroe",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 4,
+      "home_points": 17,
+      "away_goals": 4,
+      "away_points": 17
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -2005,11 +1990,11 @@
       "home": "Tournafulla",
       "away": "Monaleen",
       "venue": "Sean Finn Park, Rathkeale",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 11,
+      "away_goals": 1,
+      "away_points": 21
     },
     {
       "competition": "Senior Hurling Championship",
@@ -2020,11 +2005,11 @@
       "home": "Adare",
       "away": "Mungret St Pauls",
       "venue": "Ballybrown",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 16,
+      "away_goals": 2,
+      "away_points": 20
     },
     {
       "competition": "Senior Hurling Championship",
@@ -2035,11 +2020,11 @@
       "home": "Garryspillane",
       "away": "Patrickswell",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 4,
+      "home_points": 23,
+      "away_goals": 2,
+      "away_points": 18
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -2065,21 +2050,6 @@
       "home": "Blackrock",
       "away": "Croagh Kilfinny",
       "venue": "Feenagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Intermediate Hurling Championship",
-      "group": null,
-      "round": "Round 4",
-      "date": "2026-08-29",
-      "time": "17:00",
-      "home": "Granagh Ballingarry",
-      "away": "Effin",
-      "venue": "Ballyagran",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -2282,21 +2252,6 @@
       "away_points": null
     },
     {
-      "competition": "Premier Junior C Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 3",
-      "date": "2026-08-30",
-      "time": "13:00",
-      "home": "Hospital Herbertstown",
-      "away": "St Patrick's",
-      "venue": "St Johns Park",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
       "competition": "Premier Junior B Hurling Championship",
       "group": "Group 2",
       "round": "Round 3",
@@ -2432,6 +2387,21 @@
       "away_points": null
     },
     {
+      "competition": "Premier Intermediate Hurling Championship",
+      "group": null,
+      "round": "Round 4",
+      "date": "2026-08-31",
+      "time": "18:15",
+      "home": "Granagh Ballingarry",
+      "away": "Effin",
+      "venue": "Ballyagran",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
       "competition": "Junior B Hurling Championship",
       "group": "Group 2",
       "round": "Round 3",
@@ -2439,6 +2409,21 @@
       "time": "18:30",
       "home": "Cappamore",
       "away": "Mungret St Pauls",
+      "venue": "St Patrick's GAA, Rhebogue",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Premier Junior C Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 3",
+      "date": "2026-08-31",
+      "time": "18:45",
+      "home": "Hospital Herbertstown",
+      "away": "St Patrick's",
       "venue": "St Patrick's GAA, Rhebogue",
       "status": "Fixture",
       "home_goals": null,
@@ -2466,7 +2451,7 @@
       "group": "Group 1",
       "round": "Round 3",
       "date": "2026-09-02",
-      "time": "13:00",
+      "time": "18:00",
       "home": "Newcastle West",
       "away": "Adare",
       "venue": "Sean Finn Park, Rathkeale",
