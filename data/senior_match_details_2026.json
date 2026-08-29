@@ -853,6 +853,66 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/jason-gillane-scores-hat-trick-as-patrickswell-romp-to-win-over-garryspillane-8948902"
     }
   ]
+},
+{
+  "date": "2026-08-28",
+  "home": "Adare",
+  "away": "Mungret St Pauls",
+  "published": true,
+  "referee": "Eamonn Stapleton (Doon)",
+  "home_scorers": "Willie Griffin 1-5 (3f); John Fitzgibbon 1-2 (2f); Patrick Kearney 0-3; Conor Ryan, Sean Connolly, Darragh Gleeson, Sam Hickey, David O’Mahoney and Shane Gleeson 0-1 each.",
+  "away_scorers": "Liam Lynch 1-6 (1 65, 1f); Mark O’Brien 1-3 (1-0 s/l); Fintan Fitzgerald 0-3; Brian O’Meara and Barry Duff 0-2 each; Killian Begley, Niall Mulcahy, Rory Duff and Conor O’Halloran 0-1 each.",
+  "home_team": [
+    "Brian Curtin",
+    "James Gahan",
+    "Joe Sweeney",
+    "Conor Ryan",
+    "Mike Keane",
+    "Ronan Connolly",
+    "Darragh Gleeson",
+    "David O’Mahoney",
+    "Wayne McNamara",
+    "Sam Hickey",
+    "John Fitzgibbon",
+    "Sean Connolly",
+    "Willie Griffin",
+    "Brendan O’Connor",
+    "Charlie McCarthy",
+    "James Canty for Mike Keane (20 mins, inj)",
+    "Patrick Kearney for Ronan Connolly (half-time)",
+    "Declan Hannon for James Gahan (42 mins)",
+    "Shane Gleeson for Brendan O’Connor (46 mins)",
+    "Jack Doran for Charlie McCarthy (50 mins)"
+  ],
+  "away_team": [
+    "Conor O’Brien",
+    "Billy Molyneaux",
+    "Eoin O’Doherty",
+    "Seán Duff",
+    "Rory O’Callaghan",
+    "Brian O’Meara",
+    "Matt O’Sullivan",
+    "Cian Moloney",
+    "Rory Gleeson",
+    "Rory Gleeson",
+    "Barry Duff",
+    "Fintan Fitzgerald",
+    "Killian Begley",
+    "Liam Lynch",
+    "Mark O’Brien",
+    "John Wright for Eoin O’Doherty (25 mins, inj)",
+    "Niall Mulcahy for Rory Gleeson (44 mins)",
+    "Conor O’Halloran for Mark O’Brien (58 mins)",
+    "Liam Harrington for Billy Molyneaux (60 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/mungret-take-big-step-towards-knockouts-with-victory-over-adare-in-limerick-shc-8948856"
+    }
+  ]
 }
+
+
 ]
 }
