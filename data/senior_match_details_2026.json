@@ -911,8 +911,58 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/mungret-take-big-step-towards-knockouts-with-victory-over-adare-in-limerick-shc-8948856"
     }
   ]
+},
+{
+  "date": "2026-08-27",
+  "home": "Newcastle West",
+  "away": "Kildimo Pallaskenry",
+  "published": true,
+  "referee": "Liam Berkery (Ahane)",
+  "home_scorers": "Cathal Hayes 1-7 (7f); Con Hayes 0-5; Mike Dee 0-3; Bryan Nix 0-2 (1 s/l); Ethan Hurley 0-2 (1f); Diarmuid Lyons and Mike Quilligan (1f) 0-1 each.",
+  "away_scorers": "Shaun Barry 1-7 (6f, 1-0 pen); Páidí Hartigan 1-1; Jack O’Keeffe 0-3.",
+  "home_team": [
+    "Mike Quilligan",
+    "Jody Woulfe",
+    "Michael Cremin",
+    "Aaron Neville",
+    "Eoin Hurley",
+    "Diarmuid Lyons",
+    "Ruadhán O’Connor",
+    "Ethan Hurley",
+    "Brian Hurley",
+    "Brian Foley",
+    "Con Hayes",
+    "Mike Dee",
+    "Bryan Nix",
+    "Mike McMahon",
+    "Cathal Hayes",
+    "Michael Blashkiv for Cathal Hayes (60 mins)"
+  ],
+  "away_team": [
+    "James Mason",
+    "Shane Carroll",
+    "Luke O’Keeffe",
+    "Luke Guinane",
+    "Seán Kavanagh",
+    "Kyle Hayes",
+    "Jose Azzopardi",
+    "Tony McCarthy",
+    "Davy Fitzgerald",
+    "Shaun Barry",
+    "Páidí Hartigan",
+    "Dylan Moloney",
+    "Ciarán McMahon",
+    "Jack O’Keeffe",
+    "Peter Nash",
+    "Conor Staff for Dylan Moloney (half-time)",
+    "Seanie Hartigan for Páidí Hartigan (48 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/newcastle-west-earn-first-limerick-shc-win-since-1988-8946685"
+    }
+  ]
 }
-
-
 ]
 }
