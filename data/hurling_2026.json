@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-29T19:09:55Z",
+  "updated": "2026-08-29T20:36:05Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2027,6 +2027,36 @@
       "away_points": 23
     },
     {
+      "competition": "Premier Intermediate Hurling Championship",
+      "group": null,
+      "round": "Round 4",
+      "date": "2026-08-29",
+      "time": "15:00",
+      "home": "Blackrock",
+      "away": "Croagh Kilfinny",
+      "venue": "Feenagh",
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 19,
+      "away_goals": 2,
+      "away_points": 16
+    },
+    {
+      "competition": "Senior Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 3",
+      "date": "2026-08-29",
+      "time": "17:00",
+      "home": "Kilmallock",
+      "away": "Ballybrown",
+      "venue": "Newcastle West",
+      "status": "Result",
+      "home_goals": 5,
+      "home_points": 17,
+      "away_goals": 0,
+      "away_points": 18
+    },
+    {
       "competition": "Intermediate Hurling Championship",
       "group": "Group 2",
       "round": "Round 3",
@@ -2035,11 +2065,11 @@
       "home": "Knockaderry",
       "away": "Mungret St Pauls",
       "venue": "Croagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 22,
+      "away_goals": 0,
+      "away_points": 13
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -2050,11 +2080,11 @@
       "home": "Garryspillane",
       "away": "Claughaun",
       "venue": "Caherconlish",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 13,
+      "away_goals": 1,
+      "away_points": 21
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -2065,11 +2095,11 @@
       "home": "Monagea",
       "away": "Ballybricken Bohermore",
       "venue": "Monagea",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 15,
+      "away_goals": 2,
+      "away_points": 9
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -2186,6 +2216,21 @@
       "away": "Glenroe",
       "venue": "Knocklong",
       "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior B Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 3",
+      "date": "2026-08-30",
+      "time": "18:00",
+      "home": "Knockainey",
+      "away": "Bruree",
+      "venue": "Bruff",
+      "status": "Walkover",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
