@@ -798,6 +798,61 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/monaleen-prevail-against-doon-in-enthralling-limerick-shc-contest-8946619"
     }
   ]
+},
+{
+  "date": "2026-08-28",
+  "home": "Garryspillane",
+  "away": "Patrickswell",
+  "published": true,
+  "referee": "Kieran Guina (Feohanagh)",
+  "home_scorers": "Hugh Flanagan 1-11 (1-0 pen, 8f); Dylan O’Shea 1-1; Colin Ryan 0-2; John English, Calum Sheehan, Peter Morrissey and Bryan Heavey 0-1 each.",
+  "away_scorers": "Jason Gillane 3-2 (1f); Patrick Kirby 1-3; Aaron Gillane 0-5; Diarmaid Byrnes 0-4 (1 65); Cian Lynch 0-3; Evan Fitzgerald and Andrew Carroll 0-2 each; Liam Fitzgerald and John Kirby 0-1 each.",
+  "home_team": [
+    "Ciarán Hyland",
+    "James O’Sullivan",
+    "Declan Heavey",
+    "Ryan Tobin",
+    "Eoin O’Mahony",
+    "Robert Sampson",
+    "Jamie Morrissey",
+    "Bryan Heavey",
+    "Josh Dineen",
+    "Colin Ryan",
+    "Hugh Flanagan",
+    "Tiernan Ryan",
+    "Calum Sheehan",
+    "John English",
+    "Peter Morrissey",
+    "Ciarán Sheehan for Josh Dineen (22 mins)",
+    "Dylan O’Shea for Tiernan Ryan (half-time)",
+    "Dylan Moriarty for James Morrissey (48 mins)",
+    "Shane Ryan for Peter Morrissey (56 mins)"
+  ],
+  "away_team": [
+    "Jack Kelleher",
+    "Eoin Harmon",
+    "Cian Fitzgerald",
+    "Billy Earls",
+    "Evan Fitzgerald",
+    "Diarmaid Byrnes",
+    "Hughie Maher",
+    "Patrick Kirby",
+    "Cian Lynch",
+    "Jason Gillane",
+    "John Murray",
+    "John Kirby",
+    "Andrew Carroll",
+    "Aaron Gillane",
+    "Liam Fitzgerald",
+    "Kevin O’Brien for John Kirby (40 mins)",
+    "Rory O’Brien for Jason Gillane (56 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/jason-gillane-scores-hat-trick-as-patrickswell-romp-to-win-over-garryspillane-8948902"
+    }
+  ]
 }
 ]
 }
