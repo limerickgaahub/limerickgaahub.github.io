@@ -2050,11 +2050,11 @@
       "home": "Kilmallock",
       "away": "Ballybrown",
       "venue": "Newcastle West",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 5,
+      "home_points": 17,
+      "away_goals": 0,
+      "away_points": 18
     },
     {
       "competition": "Intermediate Hurling Championship",
