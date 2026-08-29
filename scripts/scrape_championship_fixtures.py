@@ -743,18 +743,24 @@ def main() -> None:
     merged = merge_matches(fixtures, results)
 
     # One-off override: Garryspillane v Patrickswell, Round 3
-    for match in merged:
+    merged = [
+        replace(
+            match,
+            status="Result",
+            home_goals=2,
+            home_points=18,
+            away_goals=4,
+            away_points=23,
+        )
         if (
             match.competition == "Senior Hurling Championship"
             and match.date == "2026-08-28"
             and match.home == "Garryspillane"
             and match.away == "Patrickswell"
-        ):
-            match.status = "Result"
-            match.home_goals = 2
-            match.home_points = 18
-            match.away_goals = 4
-            match.away_points = 23
+        )
+        else match
+        for match in merged
+    ]
 
     print(f"[championship] fixture rows: {len(fixtures)}", flush=True)
     print(f"[championship] result rows: {len(results)}", flush=True)
