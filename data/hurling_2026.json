@@ -2035,11 +2035,11 @@
       "home": "Blackrock",
       "away": "Croagh Kilfinny",
       "venue": "Feenagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 19,
+      "away_goals": 2,
+      "away_points": 16
     },
     {
       "competition": "Senior Hurling Championship",
