@@ -742,19 +742,19 @@ def main() -> None:
     results = merge_matches([], all_results)
     merged = merge_matches(fixtures, results)
 
-# One-off override: Garryspillane v Patrickswell, Round 3
-for match in matches:
-    if (
-        match.competition == "Senior Hurling Championship"
-        and match.date == "2026-08-28"
-        and match.home == "Garryspillane"
-        and match.away == "Patrickswell"
-    ):
-        match.status = "Result"
-        match.home_goals = 2
-        match.home_points = 18
-        match.away_goals = 4
-        match.away_points = 23
+    # One-off override: Garryspillane v Patrickswell, Round 3
+    for match in merged:
+        if (
+            match.competition == "Senior Hurling Championship"
+            and match.date == "2026-08-28"
+            and match.home == "Garryspillane"
+            and match.away == "Patrickswell"
+        ):
+            match.status = "Result"
+            match.home_goals = 2
+            match.home_points = 18
+            match.away_goals = 4
+            match.away_points = 23
 
     print(f"[championship] fixture rows: {len(fixtures)}", flush=True)
     print(f"[championship] result rows: {len(results)}", flush=True)
@@ -779,3 +779,4 @@ for match in matches:
 
 if __name__ == "__main__":
     main()
+
