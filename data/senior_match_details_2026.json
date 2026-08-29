@@ -963,6 +963,63 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/newcastle-west-earn-first-limerick-shc-win-since-1988-8946685"
     }
   ]
+},
+{
+  "date": "2026-08-29",
+  "home": "Kilmallock",
+  "away": "Ballybrown",
+  "published": true,
+  "referee": "Donnacha O’Callaghan (Feohanagh)",
+  "home_scorers": "Gearoid Enright 2-1; Phelim O’Reilly 1-3; Pierce Connery 1-2; Shane O’Brien 1-1; Michael Houlihan 0-3 (2f); Oisin O’Reilly 0-2; Steven Quirke, Graeme Mulcahy, Ciaran O’Connor, Conor Staunton and Jackie Dwan 0-1 each.",
+  "away_scorers": "Killian Gavin 0-7 (5f); Barry Adams 0-3 (1f, 1 s/l); Mikey Kiely and Mikey Gavin 0-2 each; Luke O’Connor, Ross Kenny, Lee Doolan and Colin Coughlan 0-1 each.",
+  "home_team": [
+    "Conor Hanley Clarke",
+    "Aaron Costello",
+    "Robbie Egan",
+    "Jackie Dwan",
+    "Mark O’Loughlin",
+    "Ciaran O’Connor",
+    "Killian Hayes",
+    "Michael Houlihan",
+    "Steven Quirke",
+    "Gearoid Enright",
+    "Shane O’Brien",
+    "Graeme Mulcahy",
+    "Pierce Connery",
+    "Phelim O’Reilly",
+    "Oisin O’Reilly",
+    "Conor Staunton for Steven Quirke (half-time)",
+    "Dylan O’Brien for Mark O’Loughlin (53 mins)",
+    "Sean Carroll for Killian Hayes (53 mins)",
+    "Paudie O’Brien for Graeme Mulcahy (58 mins)",
+    "Eoin Ryan for Phelim O’Reilly (60 mins)"
+  ],
+  "away_team": [
+    "Cian Hedderman",
+    "Ned Quinn",
+    "David Hartnett",
+    "Keith Punch",
+    "Colin Coughlan",
+    "Josh Adams",
+    "James Coughlan",
+    "Killian Gavin",
+    "Mikey Kiely",
+    "Ross Kenny",
+    "David Hall",
+    "Ross Griffin",
+    "Mikey Gavin",
+    "Luke O’Connor",
+    "Barry Adams",
+    "Lee Doolan for David Hall (28 mins)",
+    "Brian Griffin for Ned Quinn (40 mins)",
+    "Bobby Smyth for Mikey Gavin (52 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/ruthless-kilmallock-blast-five-goals-past-ballybrown-in-limerick-shc-rout-8949587"
+    }
+  ]
 }
 ]
 }
