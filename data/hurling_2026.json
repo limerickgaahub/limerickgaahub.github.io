@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-28T21:10:04Z",
+  "updated": "2026-08-29T10:13:13Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2021,25 +2021,10 @@
       "away": "Patrickswell",
       "venue": "Fedamore",
       "status": "Result",
-      "home_goals": 2,
-      "home_points": 18,
-      "away_goals": 4,
-      "away_points": 23
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 4",
-      "date": "2026-08-28",
-      "time": "19:00",
-      "home": "Castletown Ballyagran",
-      "away": "Kilteely Dromkeen",
-      "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "home_goals": 4,
+      "home_points": 23,
+      "away_goals": 2,
+      "away_points": 18
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
