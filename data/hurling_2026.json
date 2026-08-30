@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-30T16:54:57Z",
+  "updated": "2026-08-30T23:49:26Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2185,11 +2185,11 @@
       "home": "Bruff",
       "away": "Patrickswell",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 9,
+      "away_goals": 5,
+      "away_points": 26
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -2200,11 +2200,11 @@
       "home": "Pallasgreen",
       "away": "Glenroe",
       "venue": "Knocklong",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 12,
+      "away_goals": 3,
+      "away_points": 22
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -2230,11 +2230,11 @@
       "home": "Athea",
       "away": "Croagh Kilfinny",
       "venue": "Athea",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 10,
+      "away_goals": 1,
+      "away_points": 9
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -2245,11 +2245,11 @@
       "home": "Staker Wallace",
       "away": "Dromin Athlacca",
       "venue": "Staker Wallace",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 10,
+      "away_goals": 1,
+      "away_points": 19
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -2275,11 +2275,11 @@
       "home": "Askeaton Ballysteen Kilcornan",
       "away": "Murroe Boher",
       "venue": "Askeaton",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 18,
+      "away_goals": 2,
+      "away_points": 17
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -2290,11 +2290,11 @@
       "home": "Kildimo Pallaskenry",
       "away": "Ahane",
       "venue": "Claughaun GAA, Childers Rd",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 15,
+      "away_goals": 5,
+      "away_points": 17
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -2334,7 +2334,7 @@
       "time": "18:15",
       "home": "Ballybrown",
       "away": "Rathkeale",
-      "venue": "Kilcornan",
+      "venue": "Foynes",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -3007,21 +3007,6 @@
       "round": "Round 4",
       "date": "2026-09-06",
       "time": "13:00",
-      "home": "Ballybricken Bohermore",
-      "away": "Garryspillane",
-      "venue": "Ballybricken",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Junior C Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 4",
-      "date": "2026-09-06",
-      "time": "13:00",
       "home": "Knockaderry",
       "away": "Hospital Herbertstown",
       "venue": "Knockaderry",
@@ -3265,6 +3250,21 @@
       "home": "Patrickswell",
       "away": "Pallasgreen",
       "venue": "Fedamore",
+      "status": "Walkover",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Premier Junior C Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 4",
+      "date": "2026-09-08",
+      "time": "18:15",
+      "home": "Ballybricken Bohermore",
+      "away": "Garryspillane",
+      "venue": "Ballybricken",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -3925,7 +3925,7 @@
       "home": "Pallasgreen",
       "away": "Doon",
       "venue": "TBC",
-      "status": "Fixture",
+      "status": "Walkover",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
