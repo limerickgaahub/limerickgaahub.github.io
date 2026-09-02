@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-01T22:06:49Z",
+  "updated": "2026-09-02T21:18:45Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2440,11 +2440,11 @@
       "home": "St Patrick's",
       "away": "Doon",
       "venue": "Kilteely",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 17,
+      "away_goals": 1,
+      "away_points": 24
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -2829,7 +2829,7 @@
       "time": "18:30",
       "home": "Feenagh Kilmeedy",
       "away": "Doon",
-      "venue": "KIlfinane",
+      "venue": "Pairc de Paor, Rathbane",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -3055,7 +3055,7 @@
       "home": "South Liberties",
       "away": "Knockainey",
       "venue": "Ballybricken Bohermore",
-      "status": "Fixture",
+      "status": "Walkover",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
