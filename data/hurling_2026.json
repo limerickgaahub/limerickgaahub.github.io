@@ -2485,11 +2485,11 @@
       "home": "Doon",
       "away": "Na Piarsaigh",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 20,
+      "away_goals": 2,
+      "away_points": 20
     },
     {
       "competition": "Intermediate Hurling Championship",
