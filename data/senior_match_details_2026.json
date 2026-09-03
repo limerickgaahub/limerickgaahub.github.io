@@ -1020,6 +1020,59 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/ruthless-kilmallock-blast-five-goals-past-ballybrown-in-limerick-shc-rout-8949587"
     }
   ]
+},
+{
+  "date": "2026-09-03",
+  "home": "Doon",
+  "away": "Na Piarsaigh",
+  "published": true,
+  "referee": "Michael Sexton (Bruree)",
+  "home_scorers": "Adam English 0-9 (7f); Pat Ryan 1-3; Dean Coleman 1-1 (1-0f); Donal Coughlan 0-2; Barry Murphy, Cian O’Donovan, Jack Ryan, Aidan O’Connell and Darragh O’Donovan 0-1 each.",
+  "away_scorers": "Keith Dempsey 0-8 (8f); Peter Casey 2-1; Ronan Lynch 0-3 (2f); Mike Casey 0-2; William O’Donoghue, Conor Boylan, Dylan Lynch, Mike Foley, Eoin Brosnan and Kevin Downes 0-1 each.",
+  "home_team": [
+    "Thomas Lynch",
+    "Mikey O’Brien",
+    "Tommy Hayes",
+    "Cian O’Donovan",
+    "Aidan O’Connell",
+    "Barry Murphy",
+    "Richie English",
+    "Darragh O’Donovan",
+    "Chris Thomas",
+    "Jack Ryan",
+    "Adam English",
+    "Kevin Maher",
+    "Dean Coleman",
+    "Daniel Coughlan",
+    "Pat Ryan",
+    "Garret Thomas for Kevin Maher (43 mins)",
+    "Sean McDonnell for Daniel Coughlan (53 mins)",
+    "Eamonn Richardson for Mikey O’Brien (temp 56 mins - ft)"
+  ],
+  "away_team": [
+    "Shane Dowling",
+    "Jerome Boylan",
+    "Vince Harrington",
+    "Emmett McEvoy",
+    "Ronan Lynch",
+    "Mike Casey",
+    "Mike Foley",
+    "William O’Donoghue",
+    "JJ Carey",
+    "Keith Dempsey",
+    "Peter Casey",
+    "Daithi Dempsey",
+    "Eoin Brosnan",
+    "Dylan Lynch",
+    "Conor Boylan",
+    "Kevin Downes for Eoin Brosnan (54 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/last-gasp-peter-casey-goal-earns-na-piarsaigh-limerick-shc-draw-with-doon-8959327"
+    }
+  ]
 }
 ]
 }
