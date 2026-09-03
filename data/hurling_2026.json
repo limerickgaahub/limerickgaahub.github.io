@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-02T21:18:45Z",
+  "updated": "2026-09-03T20:00:59Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2500,11 +2500,11 @@
       "home": "South Liberties",
       "away": "Pallasgreen",
       "venue": "Cappamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 23,
+      "away_goals": 1,
+      "away_points": 10
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2515,11 +2515,11 @@
       "home": "Dromin Athlacca",
       "away": "Granagh Ballingarry",
       "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 16,
+      "away_goals": 0,
+      "away_points": 10
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -2530,11 +2530,11 @@
       "home": "Rathkeale",
       "away": "Killeedy",
       "venue": "Newcastle West",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 13,
+      "away_goals": 0,
+      "away_points": 17
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -2706,10 +2706,10 @@
       "group": "Group 2",
       "round": "Round 4",
       "date": "2026-09-05",
-      "time": "14:00",
+      "time": "15:00",
       "home": "Monagea",
       "away": "Garryspillane",
-      "venue": "Feenagh",
+      "venue": "Ballyagran",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -2874,7 +2874,7 @@
       "time": "13:00",
       "home": "Bruff",
       "away": "Old Christians",
-      "venue": "Drumgoole Park, Caherdavin",
+      "venue": "Fedamore",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
