@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-04T11:37:54Z",
+  "updated": "2026-09-04T20:23:31Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2545,11 +2545,11 @@
       "home": "Cappamore",
       "away": "Feenagh Kilmeedy",
       "venue": "Drumgoole Park, Caherdavin",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 23,
+      "away_goals": 1,
+      "away_points": 11
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2560,11 +2560,11 @@
       "home": "Bruff",
       "away": "Glenroe",
       "venue": "KIlfinane",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 19,
+      "away_goals": 0,
+      "away_points": 13
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2575,11 +2575,11 @@
       "home": "Effin",
       "away": "Blackrock",
       "venue": "Knocklong",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 14,
+      "away_goals": 0,
+      "away_points": 16
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -2590,11 +2590,11 @@
       "home": "Ahane",
       "away": "Templeglantine",
       "venue": "Mungret",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 18,
+      "away_goals": 0,
+      "away_points": 21
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -2605,11 +2605,11 @@
       "home": "Castletown Ballyagran",
       "away": "Askeaton Ballysteen Kilcornan",
       "venue": "Ballingarry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 4,
+      "home_points": 16,
+      "away_goals": 0,
+      "away_points": 13
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -2620,11 +2620,11 @@
       "home": "Kilmallock",
       "away": "Tournafulla",
       "venue": "Feenagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 10,
+      "away_goals": 0,
+      "away_points": 18
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -2635,11 +2635,11 @@
       "home": "Crecora Manister",
       "away": "Dromcollogher Broadford",
       "venue": "Sean Finn Park, Rathkeale",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 18,
+      "away_goals": 2,
+      "away_points": 19
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -2650,11 +2650,11 @@
       "home": "Kilteely Dromkeen",
       "away": "Caherline",
       "venue": "Doon",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 11,
+      "away_goals": 2,
+      "away_points": 18
     },
     {
       "competition": "Senior Hurling Championship",
@@ -2665,11 +2665,11 @@
       "home": "Kildimo Pallaskenry",
       "away": "Garryspillane",
       "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 16,
+      "away_goals": 0,
+      "away_points": 17
     },
     {
       "competition": "Senior Hurling Championship",
@@ -2680,11 +2680,11 @@
       "home": "Mungret St Pauls",
       "away": "Newcastle West",
       "venue": "Mick Neville Park",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 17,
+      "away_goals": 0,
+      "away_points": 17
     },
     {
       "competition": "Intermediate Hurling Championship",
