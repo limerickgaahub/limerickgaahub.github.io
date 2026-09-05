@@ -2800,11 +2800,11 @@
       "home": "Ahane",
       "away": "Kilmallock",
       "venue": "Bruff",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 20,
+      "away_goals": 1,
+      "away_points": 21
     },
     {
       "competition": "Intermediate Hurling Championship",
