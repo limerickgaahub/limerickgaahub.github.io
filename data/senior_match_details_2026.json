@@ -1182,7 +1182,7 @@
   ]
 },
 {
-  "date": "2026-09-05",
+  "date": "2026-09-04",
   "home": "Kildimo Pallaskenry",
   "away": "Garryspillane",
   "published": true,
@@ -1231,6 +1231,60 @@
     {
       "label": "Limerick Leader",
       "url": "https://www.limerickleader.ie/sport/hurling/garryspillane-secure-senior-status-with-win-over-kildimo-pallaskenry-8961727"
+    }
+  ]
+},
+{
+  "date": "2026-09-04",
+  "home": "Mungret St Pauls",
+  "away": "Newcastle West",
+  "published": true,
+  "referee": "Timmy McGrath (Oola)",
+  "home_scorers": "Liam Lynch 1-7 (6f); Fintan Fitzgerald 1-3; Mark O’Brien 1-1; Barry Duff 0-2; Rory Duff, Rory O’Callaghan, Cian Moloney and Killian Begley 0-1 each.",
+  "away_scorers": "Cathal Hayes 0-9 (7f); Bryan Nix 0-3; Con Hayes 0-2; Ethan Hurley, Brian Foley and Mike Quilligan (1f) 0-1 each.",
+  "home_team": [
+    "Conor O’Brien",
+    "John Wright",
+    "Eoin O’Doherty",
+    "Sean Duff",
+    "Rory O’Callaghan",
+    "Brian O’Meara",
+    "Matt O’Sullivan",
+    "Cian Moloney",
+    "Rory Duff",
+    "Rory Gleeson",
+    "Barry Duff",
+    "Fintan Fitzgerald",
+    "Killian Begley",
+    "Liam Lynch",
+    "Mark O’Brien",
+    "Niall Mulcahy for Rory Gleeson (46 mins)",
+    "Shane Barry for John Wright (49 mins)",
+    "Liam Harrington for Eoin O’Doherty (54 mins)",
+    "Conor O’Halloran for Rory Duff (58 mins)"
+  ],
+  "away_team": [
+    "Mike Quilligan",
+    "Jody Woulfe",
+    "Michael Cremin",
+    "Aaron Neville",
+    "Eoin Hurley",
+    "Diarmuid Lyons",
+    "Ruadhan O’Connor",
+    "Brian Hurley",
+    "Ethan Hurley",
+    "Con Hayes",
+    "Brian Foley",
+    "Mike Dee",
+    "Bryan Nix",
+    "Mike McMahon",
+    "Cathal Hayes",
+    "Michael Blashkiv for Jody Woulfe (41 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/hurling/mungret-confirm-promotion-to-top-table-with-win-over-newcastle-west-8961755"
     }
   ]
 }
