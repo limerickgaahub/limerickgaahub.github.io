@@ -1180,6 +1180,59 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/kilmallock-book-semi-final-spot-after-late-aaron-costello-goal-breaks-ahane-hearts-8962543"
     }
   ]
+},
+{
+  "date": "2026-09-05",
+  "home": "Kildimo Pallaskenry",
+  "away": "Garryspillane",
+  "published": true,
+  "referee": "Jonathan Hayes (St. Senan’s)",
+  "home_scorers": "Shaun Barry 0-7 (7f); Conor Staff, Paudi Hartigan and Jack O’Keeffe 0-2 each; Davy Fitzgerald and Peter Nash 0-1 each.",
+  "away_scorers": "Hugh Flanagan 0-9 (4f, 2 65s); John English 0-3; Tiernan Ryan, Colin Ryan, Bryan Heavey, Dylan O’Shea (1f) and Callum Sheehan 0-1 each.",
+  "home_team": [
+    "James Mason",
+    "Shane Carroll",
+    "Ciaran Barry",
+    "José Azzopardi",
+    "Seán Kavanagh",
+    "Kyle Hayes",
+    "Davy Fitzgerald",
+    "Tony McCarthy",
+    "Ciaran McMahon",
+    "Shaun Barry",
+    "Peter Nash",
+    "Conor Staff",
+    "Seánie Hartigan",
+    "Jack O’Keeffe",
+    "Paudi Hartigan",
+    "Conor McMahon for Paudi Hartigan (54 mins)",
+    "Jack Mullane for Ciaran Barry (61 mins, blood)"
+  ],
+  "away_team": [
+    "Adam Sheehan",
+    "James O’Sullivan",
+    "Declan Heavey",
+    "Ciaran Sheehan",
+    "Eoin O’Mahony",
+    "Robert Sampson",
+    "Ryan Tobin",
+    "Dylan O’Shea",
+    "Jamie Morrissey",
+    "Bryan Heavey",
+    "Colin Ryan",
+    "Hugh Flanagan",
+    "Tiernan Ryan",
+    "Calum Sheehan",
+    "John English",
+    "Peter Morrissey for Calum Sheehan (46 mins)",
+    "Josh Dineen for Jamie Morrissey (49 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/hurling/garryspillane-secure-senior-status-with-win-over-kildimo-pallaskenry-8961727"
+    }
+  ]
 }
 ]
 }
