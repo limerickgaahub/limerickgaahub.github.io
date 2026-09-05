@@ -1127,6 +1127,59 @@
       "url": "https://www.limerickleader.ie/sport/hurling/ballybrown-and-monaleen-play-out-entertaining-limerick-shc-draw-8962348"
     }
   ]
+},
+{
+  "date": "2026-09-05",
+  "home": "Ahane",
+  "away": "Kilmallock",
+  "published": true,
+  "referee": "Michael Sexton (Bruree)",
+  "home_scorers": "Tom Morrissey 0-9 (7f); Ciaran Barry 0-5 (5f); Mark Donnellan 0-2; Dan Morrissey, Gavin Rowesome, John O’Connor and Jack Cosgrave 0-1 each.",
+  "away_scorers": "Micheal Houlihan 0-8 (6f, 1 65); Aaron Costello 1-2; Conor Hanley Clarke 0-3 (3f); Oisin O’Reilly 0-3; Pierce Connery and Conor Staunton 0-2 each; Paudie O’Brien 0-1.",
+  "home_team": [
+    "Cathal Ryan",
+    "Evan O’Leary",
+    "Padraig Harnett",
+    "Conor Heffernan",
+    "Ciaran Barry",
+    "Dan Morrissey",
+    "Dan Minihan",
+    "Conor Ryan",
+    "Gavin Rowesome",
+    "John O’Connor",
+    "Tom Morrissey",
+    "Mark Donnellan",
+    "Jack Cosgrave",
+    "Donal Dawson",
+    "Cathal O’Mara",
+    "James Rennison for Donal Dawson (53 mins)"
+  ],
+  "away_team": [
+    "Conor Hanley Clarke",
+    "Aaron Costello",
+    "Robbie Egan",
+    "Jackie Dwane",
+    "Mark O’Loughlin",
+    "Ciaran O’Connor",
+    "Killian Hayes",
+    "Micheal Houlihan",
+    "Steven Quirke",
+    "Gearoid Enright",
+    "Conor Staunton",
+    "Graeme Mulcahy",
+    "Pierce Connery",
+    "Phelim O’Reilly",
+    "Oisin O’Reilly",
+    "Paudie O’Brien for Steven Quirke (41 mins)",
+    "Dylan O’Brien for Conor Staunton (50 mins)",
+    "Robbie Hanley for Mark O’Loughlin (56 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/kilmallock-book-semi-final-spot-after-late-aaron-costello-goal-breaks-ahane-hearts-8962543"
+    }
+  ]
 }
 ]
 }
