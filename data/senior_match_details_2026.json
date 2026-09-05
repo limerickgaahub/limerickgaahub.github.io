@@ -1073,6 +1073,60 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/last-gasp-peter-casey-goal-earns-na-piarsaigh-limerick-shc-draw-with-doon-8959327"
     }
   ]
+},
+{
+  "date": "2026-09-05",
+  "home": "Ballybrown",
+  "away": "Monaleen",
+  "published": true,
+  "referee": "Kieran Guina (Feohanagh-Castlemahon)",
+  "home_scorers": "Killian Gavin 0-5 (5f); Mikey Kiely and Luke O’Connor 0-3 each; Barry Adams 0-2 (1f, 1 s/l); James Coughlan, Ross Kenny, Leigh Doolan, Colin Coughlan, Josh Adams, Andrew Cliffe (1f) and Bobby Smith 0-1 each.",
+  "away_scorers": "Shane Hassett 0-7 (5f); Donnacha Ó Dálaigh 0-6; Mark O’Dwyer 0-4 (1f, 1 s/l); Andrew La Touche Cosgrave 0-2; Dara Ferland 0-1.",
+  "home_team": [
+    "Josh O’Reilly",
+    "James Coughlan",
+    "David Hartnett",
+    "Keith Punch",
+    "Colin Coughlan",
+    "Josh Adams",
+    "Jamie Behan",
+    "Killian Gavin",
+    "Mikey Kiely",
+    "Ross Kenny",
+    "Leigh Doolan",
+    "Luke O’Connor",
+    "Mikey Gavin",
+    "Bryan Griffin",
+    "Barry Adams",
+    "Ross Griffin for Mikey Gavin (47 mins)",
+    "Andrew Cliffe for Bryan Griffin (55 mins)",
+    "Bobby Smith for Leigh Doolan (59 mins)"
+  ],
+  "away_team": [
+    "Jamie Power",
+    "Matthew Fitzgerald",
+    "Bryan Canny",
+    "Noel Clancy",
+    "Darragh Langan",
+    "Lorcan Lyons",
+    "Ronan Lyons",
+    "Lochlann McHale",
+    "Eoghan O’Driscoll",
+    "Joe Fitzgerald",
+    "Mark O’Dwyer",
+    "Donnacha Ó Dálaigh",
+    "Luke Murphy",
+    "Dara Ferland",
+    "Shane Hassett",
+    "Andrew La Touche Cosgrave for Luke Murphy (41 mins)",
+    "Ben Hayes for Shane Hassett (53 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/hurling/ballybrown-and-monaleen-play-out-entertaining-limerick-shc-draw-8962348"
+    }
+  ]
 }
 ]
 }
