@@ -2755,11 +2755,11 @@
       "home": "Patrickswell",
       "away": "Adare",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 18,
+      "away_goals": 2,
+      "away_points": 16
     },
     {
       "competition": "Intermediate Hurling Championship",
