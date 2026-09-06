@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-05T19:47:09Z",
+  "updated": "2026-09-06T14:42:38Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2845,11 +2845,11 @@
       "home": "Bruree",
       "away": "Knockainey",
       "venue": "Bruff",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 24,
+      "away_goals": 1,
+      "away_points": 13
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -2860,11 +2860,11 @@
       "home": "Ballybricken Bohermore",
       "away": "Kildimo Pallaskenry",
       "venue": "Pairc de Paor, Rathbane",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 15,
+      "away_goals": 0,
+      "away_points": 15
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -2890,11 +2890,11 @@
       "home": "Murroe Boher",
       "away": "Ahane",
       "venue": "Cappamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 19,
+      "away_goals": 1,
+      "away_points": 6
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -2905,11 +2905,11 @@
       "home": "Monaleen",
       "away": "Croom",
       "venue": "Ballybricken Bohermore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 25,
+      "away_goals": 4,
+      "away_points": 13
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -2920,11 +2920,11 @@
       "home": "Adare",
       "away": "Granagh Ballingarry",
       "venue": "Sean Finn Park, Rathkeale",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 5,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 13
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -2935,26 +2935,11 @@
       "home": "Blackrock",
       "away": "Newcastle West",
       "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Junior C Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 4",
-      "date": "2026-09-06",
-      "time": "13:00",
-      "home": "Knockaderry",
-      "away": "Hospital Herbertstown",
-      "venue": "Knockaderry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 4,
+      "home_points": 17,
+      "away_goals": 2,
+      "away_points": 10
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -2965,11 +2950,11 @@
       "home": "St Patrick's",
       "away": "Monagea",
       "venue": "St Patrick's G.A.A Club",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 10,
+      "away_goals": 4,
+      "away_points": 13
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -3017,14 +3002,14 @@
       "away_points": null
     },
     {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 5",
+      "competition": "Premier Junior C Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 4",
       "date": "2026-09-06",
-      "time": "17:30",
-      "home": "Croagh Kilfinny",
-      "away": "Staker Wallace",
-      "venue": "Croagh",
+      "time": "17:00",
+      "home": "Knockaderry",
+      "away": "Hospital Herbertstown",
+      "venue": "Knockaderry",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -3127,21 +3112,6 @@
       "round": "Round 5",
       "date": "2026-09-06",
       "time": "18:00",
-      "home": "Adare",
-      "away": "Kildimo Pallaskenry",
-      "venue": "Adare",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 5",
-      "date": "2026-09-06",
-      "time": "18:00",
       "home": "Caherline",
       "away": "Askeaton Ballysteen Kilcornan",
       "venue": "Caherconlish",
@@ -3220,6 +3190,21 @@
       "home": "Glenroe",
       "away": "Staker Wallace",
       "venue": "KIlfinane",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 5",
+      "date": "2026-09-07",
+      "time": "20:00",
+      "home": "Adare",
+      "away": "Kildimo Pallaskenry",
+      "venue": "Adare",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -4285,6 +4270,21 @@
       "home": "Granagh Ballingarry",
       "away": "Blackrock",
       "venue": "TBC",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 5",
+      "date": "2026-09-25",
+      "time": "17:30",
+      "home": "Croagh Kilfinny",
+      "away": "Staker Wallace",
+      "venue": "Croagh",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
