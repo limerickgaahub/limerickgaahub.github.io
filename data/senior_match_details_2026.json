@@ -1287,6 +1287,63 @@
       "url": "https://www.limerickleader.ie/sport/hurling/mungret-confirm-promotion-to-top-table-with-win-over-newcastle-west-8961755"
     }
   ]
+},
+{
+  "date": "2026-09-05",
+  "home": "Adare",
+  "away": "Patrickswell",
+  "published": true,
+  "referee": "Johnny Murphy (Glenroe)",
+  "home_scorers": "Willie Griffin 0-8 (5f); Patrick Kearney 1-3 (1f); Sam Hickey 1-0; Brendan O’Connor 0-2; David O’Mahony, Darragh Gleeson and Mark Connolly 0-1 each.",
+  "away_scorers": "Diarmaid Byrnes 1-3; Aaron Gillane and Jason Gillane 0-5 each (Jason Gillane 5f); Cian Fitzgerald, Evan Fitzgerald and Patrick Kirby 0-1 each.",
+  "home_team": [
+    "Brian Curtin",
+    "John McSweeney",
+    "Joe Sweeney",
+    "Conor Ryan",
+    "Ronan Connolly",
+    "Wayne McNamara",
+    "Darragh Gleeson",
+    "Declan Hannon",
+    "David O’Mahony",
+    "Sam Hickey",
+    "John Fitzgibbon",
+    "James Canty",
+    "Willie Griffin",
+    "Brendan O’Connor",
+    "Patrick Kearney",
+    "Charlie McCarthy for David O’Mahony (49 mins)",
+    "Mark Connolly for Willie Griffin (49 mins)",
+    "Sean Connolly for John Fitzgibbon (55 mins)",
+    "Jack Doran for Wayne McNamara (55 mins)"
+  ],
+  "away_team": [
+    "Jack Kelleher",
+    "Eoin Harmon",
+    "Cian Fitzgerald",
+    "Billy Early",
+    "John Murray",
+    "Diarmaid Byrnes",
+    "Hughie Maher",
+    "Cian Lynch",
+    "Evan Fitzgerald",
+    "Liam Fitzgerald",
+    "Patrick Kirby",
+    "John Kirby",
+    "Aaron Gillane",
+    "Jason Gillane",
+    "Andrew Carroll",
+    "Mark Carmody for Eoin Harmon (half-time)",
+    "Rory Foley for Andrew Carroll (45 mins)",
+    "Tom O’Brien for Kevin O’Brien (51 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/late-drama-sees-adare-secure-crucial-limerick-shc-win-over-patrickswell-8962567"
+    }
+  ]
 }
+
 ]
 }
