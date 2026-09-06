@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-06T18:39:24Z",
+  "updated": "2026-09-06T21:05:16Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3025,11 +3025,11 @@
       "home": "Bruree",
       "away": "Monaleen",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 18,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -3085,11 +3085,11 @@
       "home": "Effin",
       "away": "Kilteely Dromkeen",
       "venue": "Effin",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 20,
+      "away_goals": 1,
+      "away_points": 7
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -3134,7 +3134,7 @@
       "home_goals": 4,
       "home_points": 21,
       "away_goals": 0,
-      "away_points": 9
+      "away_points": 10
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -3160,11 +3160,11 @@
       "home": "Dromcollogher Broadford",
       "away": "Patrickswell",
       "venue": "Dromcollogher/ Broadford GAA",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 7,
+      "home_points": 12,
+      "away_goals": 9,
+      "away_points": 11
     },
     {
       "competition": "Premier Junior B Hurling Championship",
