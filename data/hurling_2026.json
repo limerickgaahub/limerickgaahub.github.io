@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-06T17:57:35Z",
+  "updated": "2026-09-06T18:39:24Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3055,11 +3055,11 @@
       "home": "Feohanagh",
       "away": "Cappamore",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 9,
+      "away_goals": 2,
+      "away_points": 20
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -3070,11 +3070,11 @@
       "home": "Mungret St Pauls",
       "away": "Fedamore",
       "venue": "Crecora",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 14,
+      "away_goals": 2,
+      "away_points": 10
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -3097,14 +3097,29 @@
       "round": "Round 5",
       "date": "2026-09-06",
       "time": "18:00",
+      "home": "Caherline",
+      "away": "Askeaton Ballysteen Kilcornan",
+      "venue": "Caherconlish",
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 16,
+      "away_goals": 0,
+      "away_points": 14
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 5",
+      "date": "2026-09-06",
+      "time": "18:00",
       "home": "Croom",
       "away": "Murroe Boher",
       "venue": "Croom",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 23,
+      "away_goals": 1,
+      "away_points": 19
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -3115,11 +3130,11 @@
       "home": "Doon",
       "away": "Bruff",
       "venue": "Kilteely",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 4,
+      "home_points": 21,
+      "away_goals": 0,
+      "away_points": 9
     },
     {
       "competition": "Premier Junior B Hurling Championship",
