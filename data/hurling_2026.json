@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-06T14:42:38Z",
+  "updated": "2026-09-06T16:21:27Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2875,11 +2875,11 @@
       "home": "Bruff",
       "away": "Old Christians",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 21,
+      "away_goals": 0,
+      "away_points": 13
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -2965,11 +2965,11 @@
       "home": "Claughaun",
       "away": "Ballybrown",
       "venue": "Drumgoole Park, Caherdavin",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 9,
+      "away_goals": 0,
+      "away_points": 15
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -2980,11 +2980,11 @@
       "home": "Croagh Kilfinny",
       "away": "Na Piarsaigh",
       "venue": "Ballybrown",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 19,
+      "away_goals": 3,
+      "away_points": 12
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -3189,7 +3189,7 @@
       "time": "18:00",
       "home": "Glenroe",
       "away": "Staker Wallace",
-      "venue": "KIlfinane",
+      "venue": "Staker Wallace",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
