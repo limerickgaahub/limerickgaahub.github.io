@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-06T16:21:27Z",
+  "updated": "2026-09-06T17:57:35Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -2995,11 +2995,11 @@
       "home": "St Kieran's",
       "away": "Na Piarsaigh",
       "venue": "St Kieran's GAA",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 15,
+      "away_goals": 0,
+      "away_points": 13
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -3010,11 +3010,11 @@
       "home": "Knockaderry",
       "away": "Hospital Herbertstown",
       "venue": "Knockaderry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 5
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -3085,36 +3085,6 @@
       "home": "Effin",
       "away": "Kilteely Dromkeen",
       "venue": "Effin",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 5",
-      "date": "2026-09-06",
-      "time": "18:00",
-      "home": "Killeedy",
-      "away": "Athea",
-      "venue": "Pairc Ide Naofa",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 5",
-      "date": "2026-09-06",
-      "time": "18:00",
-      "home": "Caherline",
-      "away": "Askeaton Ballysteen Kilcornan",
-      "venue": "Caherconlish",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -4090,6 +4060,21 @@
       "home": "Patrickswell",
       "away": "Kildimo Pallaskenry",
       "venue": "TBC",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 5",
+      "date": "2026-09-18",
+      "time": "18:00",
+      "home": "Killeedy",
+      "away": "Athea",
+      "venue": "Pairc Ide Naofa",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
