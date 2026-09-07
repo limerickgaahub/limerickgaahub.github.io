@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-07T14:02:40Z",
+  "updated": "2026-09-07T19:25:29Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3175,11 +3175,11 @@
       "home": "Glenroe",
       "away": "Staker Wallace",
       "venue": "Staker Wallace",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 16,
+      "away_goals": 5,
+      "away_points": 25
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -3190,7 +3190,7 @@
       "home": "Adare",
       "away": "Kildimo Pallaskenry",
       "venue": "Adare",
-      "status": "Fixture",
+      "status": "Walkover",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
@@ -3245,11 +3245,11 @@
       "competition": "Junior B Hurling Championship",
       "group": "Group 2",
       "round": "Round 3",
-      "date": "2026-09-14",
-      "time": "18:30",
+      "date": "2026-09-11",
+      "time": "18:00",
       "home": "Ahane",
       "away": "Feohanagh",
-      "venue": "Adare",
+      "venue": "Croom",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -3475,7 +3475,7 @@
       "home": "Knockainey",
       "away": "Doon",
       "venue": "TBC",
-      "status": "Fixture",
+      "status": "Walkover",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
