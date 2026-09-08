@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-08T15:57:44Z",
+  "updated": "2026-09-08T20:17:02Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3205,11 +3205,11 @@
       "home": "Ballybricken Bohermore",
       "away": "Garryspillane",
       "venue": "Ballybricken",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 19,
+      "away_goals": 6,
+      "away_points": 15
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -3249,7 +3249,7 @@
       "time": "18:00",
       "home": "Ahane",
       "away": "Feohanagh",
-      "venue": "TBC",
+      "venue": "Ballybrown",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -3872,21 +3872,6 @@
       "away_points": null
     },
     {
-      "competition": "Junior A Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 5",
-      "date": "2026-09-20",
-      "time": "01:00",
-      "home": "Bruff",
-      "away": "Ahane",
-      "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
       "competition": "Junior B Hurling Championship",
       "group": "Group 2",
       "round": "Round 5",
@@ -3955,6 +3940,21 @@
       "home": "Glenroe",
       "away": "Patrickswell",
       "venue": "Kilteely",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior A Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 5",
+      "date": "2026-09-20",
+      "time": "13:00",
+      "home": "Bruff",
+      "away": "Ahane",
+      "venue": "Fedamore",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
