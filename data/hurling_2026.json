@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-09T18:54:13Z",
+  "updated": "2026-09-09T20:30:21Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3220,6 +3220,21 @@
       "home": "Glenroe",
       "away": "Bruff",
       "venue": "Knocklong",
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 10,
+      "away_goals": 2,
+      "away_points": 15
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 3",
+      "date": "2026-09-10",
+      "time": "18:30",
+      "home": "Dromin Athlacca",
+      "away": "Athea",
+      "venue": "Athlacca",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -3249,7 +3264,7 @@
       "time": "18:00",
       "home": "Ahane",
       "away": "Feohanagh",
-      "venue": "Ballybrown",
+      "venue": "Kildimo",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
