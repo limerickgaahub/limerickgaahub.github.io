@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-09T20:30:21Z",
+  "updated": "2026-09-10T22:00:57Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3235,11 +3235,11 @@
       "home": "Dromin Athlacca",
       "away": "Athea",
       "venue": "Athlacca",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 5,
+      "home_points": 18,
+      "away_goals": 0,
+      "away_points": 8
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3250,11 +3250,11 @@
       "home": "Granagh Ballingarry",
       "away": "Effin",
       "venue": "Mick Neville Park",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 23,
+      "away_goals": 3,
+      "away_points": 15
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -3502,21 +3502,6 @@
       "round": "Round 5",
       "date": "2026-09-17",
       "time": "12:00",
-      "home": "Patrickswell",
-      "away": "Na Piarsaigh",
-      "venue": "TBC",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 5",
-      "date": "2026-09-17",
-      "time": "12:00",
       "home": "St Kieran's",
       "away": "Crecora Manister",
       "venue": "TBC",
@@ -3617,21 +3602,6 @@
       "away_points": null
     },
     {
-      "competition": "Intermediate Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 5",
-      "date": "2026-09-17",
-      "time": "19:30",
-      "home": "St Kieran's",
-      "away": "South Liberties",
-      "venue": "St Patrick's GAA, Rhebogue",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
       "competition": "Senior Hurling Championship",
       "group": "Group 1",
       "round": "Round 5",
@@ -3670,6 +3640,21 @@
       "home": "Na Piarsaigh",
       "away": "Ballybrown",
       "venue": "Adare",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Intermediate Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 5",
+      "date": "2026-09-17",
+      "time": "20:15",
+      "home": "St Kieran's",
+      "away": "South Liberties",
+      "venue": "St Patrick's GAA, Rhebogue",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -4090,6 +4075,21 @@
       "home": "Kilteely Dromkeen",
       "away": "St Patrick's",
       "venue": "Caherconlish",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Premier Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 5",
+      "date": "2026-09-20",
+      "time": "17:00",
+      "home": "Patrickswell",
+      "away": "Na Piarsaigh",
+      "venue": "Patrickswell",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
