@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-16T21:33:08Z",
+  "updated": "2026-09-17T09:13:38Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3270,21 +3270,6 @@
       "home_points": 15,
       "away_goals": 4,
       "away_points": 16
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 2",
-      "date": "2026-09-16",
-      "time": "18:00",
-      "home": "Athea",
-      "away": "Kilteely Dromkeen",
-      "venue": "Athea",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
