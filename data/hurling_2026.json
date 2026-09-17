@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-17T17:55:45Z",
+  "updated": "2026-09-17T18:45:51Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3370,11 +3370,11 @@
       "home": "Granagh Ballingarry",
       "away": "Bruff",
       "venue": "KIlfinane",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 23
     },
     {
       "competition": "Senior Hurling Championship",
