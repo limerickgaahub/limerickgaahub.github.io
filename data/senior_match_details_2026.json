@@ -1343,6 +1343,61 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/late-drama-sees-adare-secure-crucial-limerick-shc-win-over-patrickswell-8962567"
     }
   ]
+},
+{
+  "date": "2026-09-17",
+  "home": "Patrickswell",
+  "away": "Kildimo Pallaskenry",
+  "published": true,
+  "referee": "Michael Sexton (Bruree)",
+  "home_scorers": "Jason Gillane 0-12 (3f); Aaron Gillane 2-3; Kevin O’Brien 1-2; Patrick Kirby 0-3; Andrew Carroll and Diarmaid Byrnes 0-2 each; Cian Lynch, Evan Fitzgerald and Hughie Maher 0-1 each.",
+  "away_scorers": "Shaun Barry 1-4 (3f); Robert O’Farrell 1-3 (1f); Seánie Hartigan 0-4; Seán Kavanagh, Ciaran McMahon and Jack O’Keeffe 0-1 each.",
+  "home_team": [
+    "Jack Kelleher",
+    "Eoin Harmon",
+    "Cian Fitzgerald",
+    "Billy Earls",
+    "John Murray",
+    "Diarmaid Byrnes",
+    "Hughie Maher",
+    "Cian Lynch",
+    "Evan Fitzgerald",
+    "Liam Fitzgerald",
+    "Patrick Kirby",
+    "Kevin O’Brien",
+    "Aaron Gillane",
+    "Jason Gillane",
+    "Andrew Carroll",
+    "John Kirby for Liam Fitzgerald (45 mins)",
+    "Rory Foley for Andrew Carroll (46 mins)"
+  ],
+  "away_team": [
+    "James Mason",
+    "Shane Carroll",
+    "Ciaran Barry",
+    "José Azzopardi",
+    "Seán Kavanagh",
+    "Kyle Hayes",
+    "Davy Fitzgerald",
+    "Tony McCarthy",
+    "Ciaran McMahon",
+    "Shaun Barry",
+    "Peter Nash",
+    "Conor Staff",
+    "Seánie Hartigan",
+    "Jack O’Keeffe",
+    "Conor McMahon",
+    "Robert O’Farrell for Conor McMahon (half-time)",
+    "Dylan Corrigan for Ciaran Barry (39 mins)",
+    "Dylan Moloney for Conor Staff (43 mins)",
+    "Luke Guinane for Peter Nash (50 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/patrickswell-prove-too-strong-for-kildimo-pallaskenry-in-limerick-shc-9054893"
+    }
+  ]
 }
 ]
 }
