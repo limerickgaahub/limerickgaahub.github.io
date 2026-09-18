@@ -1455,35 +1455,14 @@
   ]
 },
 {
-  "date": "2026-09-17",
-  "home": "Doon",
-  "away": "Ahane",
+  "date": "2026-09-18",
+  "home": "Ahane",
+  "away": "Doon",
   "published": true,
   "referee": "Kieran Guina (Feohanagh-Castlemahon)",
-  "home_scorers": "Adam English 0-14 (8f, 1 65); Dean Coleman and Gareth Thomas 1-2 each; Donal Coughlan, Eamonn Richardson and Sean McDonnell 0-2 each; Pat Ryan, Chris Thomas, Cian O’Donovan, Darragh O’Donovan and Darragh Coughlan 0-1 each.",
-  "away_scorers": "Ciaran Barry 1-1 (1f); Tom Morrissey 0-4 (2f); John O’Connor 0-3; Jack Cosgrove and Cathal O’Mara 0-2 each; Gavin Rowsome and Ronan Fox 0-1 each.",
+  "home_scorers": "Ciaran Barry 1-1 (1f); Tom Morrissey 0-4 (2f); John O’Connor 0-3; Jack Cosgrove and Cathal O’Mara 0-2 each; Gavin Rowsome and Ronan Fox 0-1 each.",
+  "away_scorers": "Adam English 0-14 (8f, 1 65); Dean Coleman and Gareth Thomas 1-2 each; Donal Coughlan, Eamonn Richardson and Sean McDonnell 0-2 each; Pat Ryan, Chris Thomas, Cian O’Donovan, Darragh O’Donovan and Darragh Coughlan 0-1 each.",
   "home_team": [
-    "Tomas Lynch",
-    "Eamonn Richardson",
-    "Tommy Hayes",
-    "Cian O’Donovan",
-    "Aidan O’Connell",
-    "Barry Murphy",
-    "Richie English",
-    "Darragh O’Donovan",
-    "Adam English",
-    "Jack Ryan",
-    "Chris Thomas",
-    "Eddie Stokes",
-    "Dean Coleman",
-    "Donal Coughlan",
-    "Pat Ryan",
-    "Gareth Thomas for Aidan O’Connell (half-time)",
-    "Kevin Maher for Eddie Stokes (47 mins)",
-    "Darragh Coughlan for Barry Murphy (51 mins)",
-    "Sean McDonnell for Dean Coleman (52 mins)"
-  ],
-  "away_team": [
     "Cathal Ryan",
     "Gavin Rowsome",
     "Padraig Harnett",
@@ -1504,6 +1483,27 @@
     "Ronan Fox for Mark Donnellan (51 mins)",
     "Peter O’Grady for Gavin Rowsome (57 mins)"
   ],
+  "away_team": [
+    "Tomas Lynch",
+    "Eamonn Richardson",
+    "Tommy Hayes",
+    "Cian O’Donovan",
+    "Aidan O’Connell",
+    "Barry Murphy",
+    "Richie English",
+    "Darragh O’Donovan",
+    "Adam English",
+    "Jack Ryan",
+    "Chris Thomas",
+    "Eddie Stokes",
+    "Dean Coleman",
+    "Donal Coughlan",
+    "Pat Ryan",
+    "Gareth Thomas for Aidan O’Connell (half-time)",
+    "Kevin Maher for Eddie Stokes (47 mins)",
+    "Darragh Coughlan for Barry Murphy (51 mins)",
+    "Sean McDonnell for Dean Coleman (52 mins)"
+  ],
   "reports": [
     {
       "label": "Limerick Leader",
@@ -1511,5 +1511,5 @@
     }
   ]
 }
-]
 }
+]
