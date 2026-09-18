@@ -1453,6 +1453,63 @@
       "url": "https://www.limerickleader.ie/sport/hurling/na-piarsaigh-earn-third-limerick-shc-win-that-ends-ballybrowns-season-9083951"
     }
   ]
+},
+{
+  "date": "2026-09-18",
+  "home": "Doon",
+  "away": "Ahane",
+  "published": true,
+  "referee": "Kieran Guina (Feohanagh-Castlemahon)",
+  "home_scorers": "Adam English 0-14 (8f, 1 65); Dean Coleman and Gareth Thomas 1-2 each; Donal Coughlan, Eamonn Richardson and Sean McDonnell 0-2 each; Pat Ryan, Chris Thomas, Cian O’Donovan, Darragh O’Donovan and Darragh Coughlan 0-1 each.",
+  "away_scorers": "Ciaran Barry 1-1 (1f); Tom Morrissey 0-4 (2f); John O’Connor 0-3; Jack Cosgrove and Cathal O’Mara 0-2 each; Gavin Rowsome and Ronan Fox 0-1 each.",
+  "home_team": [
+    "Tomas Lynch",
+    "Eamonn Richardson",
+    "Tommy Hayes",
+    "Cian O’Donovan",
+    "Aidan O’Connell",
+    "Barry Murphy",
+    "Richie English",
+    "Darragh O’Donovan",
+    "Adam English",
+    "Jack Ryan",
+    "Chris Thomas",
+    "Eddie Stokes",
+    "Dean Coleman",
+    "Donal Coughlan",
+    "Pat Ryan",
+    "Gareth Thomas for Aidan O’Connell (half-time)",
+    "Kevin Maher for Eddie Stokes (47 mins)",
+    "Darragh Coughlan for Barry Murphy (51 mins)",
+    "Sean McDonnell for Dean Coleman (52 mins)"
+  ],
+  "away_team": [
+    "Cathal Ryan",
+    "Gavin Rowsome",
+    "Padraig Harnett",
+    "Evan O’Leary",
+    "Dan Minihan",
+    "Dan Morrissey",
+    "Ciaran Barry",
+    "Conor Ryan",
+    "Conor Heffernan",
+    "Donal Dawson",
+    "John O’Connor",
+    "Mark Donnellan",
+    "Jack Cosgrove",
+    "Tom Morrissey",
+    "Cathal O’Mara",
+    "James Rennison for Donal Dawson (half-time)",
+    "Conor Bickford for Conor Ryan (46 mins)",
+    "Ronan Fox for Mark Donnellan (51 mins)",
+    "Peter O’Grady for Gavin Rowsome (57 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/doon-power-to-limerick-shc-quarter-final-with-big-win-over-ahane-9083875"
+    }
+  ]
 }
 ]
 }
