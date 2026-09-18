@@ -1398,6 +1398,61 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/patrickswell-prove-too-strong-for-kildimo-pallaskenry-in-limerick-shc-9054893"
     }
   ]
+},
+{
+  "date": "2026-09-18",
+  "home": "Na Piarsaigh",
+  "away": "Ballybrown",
+  "published": true,
+  "referee": "John O’Halloran (Bruree)",
+  "home_scorers": "David Dempsey and Peter Casey 1-3 each; Keith Dempsey 0-5 (3f, 1 65); Ronan Lynch 0-4 (4f); Tommy Grimes 0-3; Conor Boylan, Kevin Downes and Will Henn 0-1 each.",
+  "away_scorers": "Killian Gavin 0-10 (7f, 2 65s); Luke O’Connor 2-0; Mikey Gavin, Leigh Doolan and Andrew Cliffe 0-2 each; Ross Kenny 0-1; James Coughlan 0-1 (1 65).",
+  "home_team": [
+    "Shane Dowling",
+    "Jerome Boylan",
+    "Vince Harrington",
+    "Emmett McEvoy",
+    "Ronan Lynch",
+    "Mike Casey",
+    "James Finn",
+    "Tommy Grimes",
+    "JJ Carey",
+    "Keith Dempsey",
+    "Peter Casey",
+    "David Dempsey",
+    "Eoin Brosnan",
+    "Dylan Lynch",
+    "Conor Boylan",
+    "Will Henn for Dylan Lynch (34 mins)",
+    "Kevin Downes for JJ Carey (51 mins)",
+    "Adrian Breen for Eoin Brosnan (51 mins)"
+  ],
+  "away_team": [
+    "Josh O’Reilly",
+    "James Coughlan",
+    "David Hartnett",
+    "Keith Punch",
+    "Colin Coughlan",
+    "Josh Adams",
+    "Ross Griffin",
+    "Killian Gavin",
+    "Mikey Kiely",
+    "Ross Kenny",
+    "Leigh Doolan",
+    "Mikey Gavin",
+    "Luke O’Connor",
+    "Bryan Griffin",
+    "Barry Adams",
+    "Andrew Cliffe for Bryan Griffin (44 mins)",
+    "David Hall for Mikey Kiely (50 mins)",
+    "Bobby Smith for Mikey Gavin (59 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/hurling/na-piarsaigh-earn-third-limerick-shc-win-that-ends-ballybrowns-season-9083951"
+    }
+  ]
 }
 ]
 }
