@@ -635,11 +635,12 @@ def validate_scrape(
     baseline_path: Optional[str],
     guard_enabled: bool,
 ) -> None:
-    if not fixtures:
-        raise RuntimeError("No 2026 championship fixtures were parsed")
+    if not merged:
+        raise RuntimeError("No 2026 championship matches were parsed")
 
-    fixture_counts = competition_counts(fixtures)
-    missing = sorted(EXPECTED_COMPETITIONS - set(fixture_counts))
+    output_counts = competition_counts(merged)
+    missing = sorted(EXPECTED_COMPETITIONS - set(output_counts))
+  
     if missing:
         raise RuntimeError(
             "Expected championship grades were not found: " + ", ".join(missing)
