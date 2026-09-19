@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-18T20:05:37Z",
+  "updated": "2026-09-19T15:46:54Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -495,6 +495,21 @@
       "home_points": 21,
       "away_goals": 1,
       "away_points": 10
+    },
+    {
+      "competition": "Junior B Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 1",
+      "date": "2026-08-02",
+      "time": "12:00",
+      "home": "Feenagh Kilmeedy",
+      "away": "Knockainey",
+      "venue": "Bruree",
+      "status": "Walkover",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -3550,11 +3565,11 @@
       "home": "Feenagh Kilmeedy",
       "away": "Bruree",
       "venue": "Knocklong",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 13,
+      "away_goals": 1,
+      "away_points": 18
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -3565,7 +3580,7 @@
       "home": "Monaleen",
       "away": "South Liberties",
       "venue": "Monaleen",
-      "status": "Fixture",
+      "status": "Walkover",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
@@ -3580,11 +3595,11 @@
       "home": "Glenroe",
       "away": "Croagh Kilfinny",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 13,
+      "away_goals": 1,
+      "away_points": 14
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -3595,7 +3610,7 @@
       "home": "Monagea",
       "away": "Hospital Herbertstown",
       "venue": "Monagea",
-      "status": "Fixture",
+      "status": "Walkover",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
@@ -3610,11 +3625,11 @@
       "home": "Adare",
       "away": "Blackrock",
       "venue": "Bruree",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 12,
+      "away_goals": 2,
+      "away_points": 19
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -3625,11 +3640,11 @@
       "home": "Na Piarsaigh",
       "away": "Granagh Ballingarry",
       "venue": "Pairc de Paor, Rathbane",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 4,
+      "home_points": 17,
+      "away_goals": 3,
+      "away_points": 12
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -3760,7 +3775,7 @@
       "home": "Newcastle West",
       "away": "Croagh Kilfinny",
       "venue": "St Kierans, Ardagh",
-      "status": "Fixture",
+      "status": "Walkover",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
