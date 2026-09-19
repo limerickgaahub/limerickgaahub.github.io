@@ -1510,6 +1510,171 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/doon-power-to-limerick-shc-quarter-final-with-big-win-over-ahane-9083875"
     }
   ]
+},
+{
+  "date": "2026-09-17",
+  "home": "Monaleen",
+  "away": "Kilmallock",
+  "published": true,
+  "referee": "Johnny Murphy (Glenroe)",
+  "home_scorers": "Lorcan Lyons 0-5 (2f, 1 65); Andrew La Touche Cosgrave 1-1; Donnacha O’Dalaigh 0-4; Shane Hassett 0-2 (2f); Darragh Langan, Ronan Lyons, Joseph Fitzgerald, Lochlann McHale, Mark O’Dwyer and Dara Ferland 0-1 each.",
+  "away_scorers": "Pierce Connery 0-12 (8f); Conor Hanley Clarke 0-3 (3f); Robbie Hanley and Shane O’Brien 0-2 each; Graeme Mulcahy, Steven Quirke and Oisin O’Reilly 0-1 each.",
+  "home_team": [
+    "Jamie Power",
+    "Matthew Fitzgerald",
+    "Bryan Canny",
+    "Noel Clancy",
+    "Darragh Langan",
+    "Lorcan Lyons",
+    "Ronan Lyons",
+    "Joseph Fitzgerald",
+    "Lochlann McHale",
+    "Eoghan O’Driscoll",
+    "Shane Hassett",
+    "Mark O’Dwyer",
+    "Donnacha O’Dalaigh",
+    "Dara Ferland",
+    "Andrew La Touche Cosgrave",
+    "Luke Murphy for Lorcan Lyons (28 mins - h-t)",
+    "Luke Murphy for Mark O’Dwyer (46 mins)",
+    "Ben Hayes for Shane Hassett (55 mins)",
+    "Eoghan Maher for Bryan Canny (59 mins)"
+  ],
+  "away_team": [
+    "Conor Hanley Clarke",
+    "Aaron Costello",
+    "Robbie Egan",
+    "Jackie Dwane",
+    "Mark O’Loughlin",
+    "Ciaran O’Connor",
+    "Killian Hayes",
+    "Micheal Houlihan",
+    "Robbie Hanley",
+    "Steven Quirke",
+    "Shane O’Brien",
+    "Graeme Mulcahy",
+    "Pierce Connery",
+    "Gearoid Enright",
+    "Oisin O’Reilly",
+    "Conor Staunton for Micheal Houlihan (1 min)",
+    "Dylan O’Brien for Killian Hayes (13 mins)",
+    "Paudie O’Brien for Conor Staunton (40 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/kilmallock-extend-winning-run-while-monaleen-progress-to-quarter-final-9083235"
+    }
+  ]
+},
+{
+  "date": "2026-09-17",
+  "home": "Garryspillane",
+  "away": "Mungret St Pauls",
+  "published": true,
+  "referee": "Timmy McGrath (Oola)",
+  "home_scorers": "Hugh Flanagan 1-9 (6f, 1 65); Callum Sheehan 1-1; John English and Peter Morrissey 0-2 each; Bryan Heavey 0-1.",
+  "away_scorers": "Fintan Fitzgerald 1-3; Liam Lynch 0-5 (3f); Mark O’Brien 1-1; Barry Duff, Conor O’Halloran and Niall Mulcahy 0-3 each; Cian Moloney 0-2; Brian O’Meara, Shane Barry and Brian Barry 0-1 each.",
+  "home_team": [
+    "Adam Sheehan",
+    "James O’Sullivan",
+    "Declan Heavey",
+    "Ciaran Sheehan",
+    "Dylan O’Shea",
+    "Robert Sampson",
+    "Eoin O’Mahoney",
+    "Ryan Tobin",
+    "James Morrissey",
+    "Peter Morrissey",
+    "Bryan Heavey",
+    "Hugh Flanagan",
+    "Callum Sheehan",
+    "John English",
+    "Tiernan Ryan",
+    "Josh Dineen for Declan Heavey (15 mins)",
+    "Shane Ryan for James Morrissey (39 mins)"
+  ],
+  "away_team": [
+    "Conor O’Brien",
+    "Liam Harrington",
+    "Matt O’Sullivan",
+    "Eoin O’Doherty",
+    "Brian Barry",
+    "Brian O’Meara",
+    "Shane Barry",
+    "Cian Moloney",
+    "Rory Duff",
+    "Niall Mulcahy",
+    "Fintan Fitzgerald",
+    "Barry Duff",
+    "Conor O’Halloran",
+    "Liam Lynch",
+    "Mark O’Brien",
+    "Sean Duff for Matt O’Sullivan (42 mins)",
+    "Killian Begley for Cian Moloney (46 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/hurling/mungret-bounce-into-limerick-shc-quarter-finals-with-perfect-record-9084366"
+    }
+  ]
+},
+{
+  "date": "2026-09-17",
+  "home": "Newcastle West",
+  "away": "Adare",
+  "published": true,
+  "referee": "Donncha O’Callaghan (Feohanagh-Castlemahon)",
+  "home_scorers": "Ethan Hurley 0-9 (4f); Brian Foley 1-1; Cathal Hayes 0-4 (3f); Brian Nix 0-4; Con Hayes and Brian Hurley 0-2 each; Diarmuid Lyons 0-1.",
+  "away_scorers": "Willie Griffin 0-5 (4f); Patrick Kearney 0-4; John Fitzgibbon 0-2 (1 65); Mark Connelly and Ronan Connolly 0-2 each; Sean Connelly 0-1.",
+  "home_team": [
+    "Mike Quilligan",
+    "Jody Woulfe",
+    "Michael Cremin",
+    "Aaron Neville",
+    "Eoin Hurley",
+    "Diarmuid Lyons",
+    "Ruadhan O’Connor",
+    "Brian Hurley",
+    "Ethan Hurley",
+    "Con Hayes",
+    "Bryan Foley",
+    "Mike Dee",
+    "Bryan Nix",
+    "Mike McMahon",
+    "Cathal Hayes",
+    "Michael Blashkiv for Jody Woulfe (49 mins)",
+    "Darragh O’Keeffe for Con Hayes (55 mins)",
+    "William Hurley for Brian Hurley (57 mins)"
+  ],
+  "away_team": [
+    "Jordan O’Donoghue",
+    "James Gahan",
+    "Joe Sweeney",
+    "Conor Ryan",
+    "James Canty",
+    "Declan Hannon",
+    "Darragh Gleeson",
+    "Wayne McNamara",
+    "Ronan Connolly",
+    "David O’Mahony",
+    "Sam Hickey",
+    "John Fitzgibbon",
+    "Willie Griffin",
+    "Mark Connelly",
+    "Patrick Kearney",
+    "Charlie McCarthy for Willie Griffin (42 mins)",
+    "Sean Connelly for Sam Hickey (47 mins)",
+    "Jack Doran for Declan Hannon (50 mins)",
+    "Shane Gleeson for Willie Griffin (55 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/newcastle-west-see-off-the-challenge-of-adare-in-limerick-shc-9089502"
+    }
+  ]
 }
 ]
 }
