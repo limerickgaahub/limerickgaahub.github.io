@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-19T17:22:41Z",
+  "updated": "2026-09-19T19:58:07Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3655,11 +3655,11 @@
       "home": "Cappamore",
       "away": "Feohanagh",
       "venue": "Ballybrown",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 14,
+      "away_goals": 0,
+      "away_points": 13
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -3670,11 +3670,11 @@
       "home": "Pallasgreen",
       "away": "Feenagh Kilmeedy",
       "venue": "Croom",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 16,
+      "away_goals": 1,
+      "away_points": 21
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -3685,11 +3685,11 @@
       "home": "Ballybrown",
       "away": "Monagea",
       "venue": "Sean Finn Park, Rathkeale",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 10,
+      "away_goals": 0,
+      "away_points": 22
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -3700,11 +3700,11 @@
       "home": "Garryspillane",
       "away": "Killeedy",
       "venue": "Ballingarry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 13,
+      "away_goals": 1,
+      "away_points": 29
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -3715,11 +3715,11 @@
       "home": "Rathkeale",
       "away": "Claughaun",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 6,
+      "home_points": 10,
+      "away_goals": 3,
+      "away_points": 11
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -3730,11 +3730,11 @@
       "home": "Castletown Ballyagran",
       "away": "Monaleen",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 18,
+      "away_goals": 1,
+      "away_points": 15
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -3745,11 +3745,11 @@
       "home": "Croom",
       "away": "Kilmallock",
       "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 22,
+      "away_goals": 1,
+      "away_points": 17
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -3760,11 +3760,11 @@
       "home": "Tournafulla",
       "away": "Askeaton Ballysteen Kilcornan",
       "venue": "Knockaderry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 16,
+      "away_goals": 2,
+      "away_points": 15
     },
     {
       "competition": "Premier Junior B Hurling Championship",
