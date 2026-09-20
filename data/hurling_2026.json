@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-19T20:04:07Z",
+  "updated": "2026-09-20T13:18:40Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3790,11 +3790,11 @@
       "home": "Athea",
       "away": "Effin",
       "venue": "Athea",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 17,
+      "away_goals": 1,
+      "away_points": 7
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -3805,11 +3805,11 @@
       "home": "Knockainey",
       "away": "Hospital Herbertstown",
       "venue": "Knocklong",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 19,
+      "away_goals": 1,
+      "away_points": 22
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -3835,11 +3835,11 @@
       "home": "Cappamore",
       "away": "Murroe Boher",
       "venue": "Mackey Park, Ahane",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 17,
+      "away_goals": 0,
+      "away_points": 17
     },
     {
       "competition": "Premier Junior B Hurling Championship",
@@ -3955,7 +3955,7 @@
       "home": "Castletown Ballyagran",
       "away": "Croagh Kilfinny",
       "venue": "Castletown Ballyagran",
-      "status": "Fixture",
+      "status": "Walkover",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
