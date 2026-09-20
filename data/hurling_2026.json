@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-20T13:18:40Z",
+  "updated": "2026-09-20T14:14:29Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3332,21 +3332,6 @@
       "away_points": null
     },
     {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 6",
-      "date": "2026-09-17",
-      "time": "12:00",
-      "home": "Tournafulla",
-      "away": "Adare",
-      "venue": "TBC",
-      "status": "Walkover",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
       "competition": "Premier Junior B Hurling Championship",
       "group": "Group 2",
       "round": "Round 5",
@@ -3570,6 +3555,21 @@
       "home_points": 13,
       "away_goals": 1,
       "away_points": 18
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 6",
+      "date": "2026-09-19",
+      "time": "12:00",
+      "home": "Tournafulla",
+      "away": "Adare",
+      "venue": "TBC",
+      "status": "Walkover",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
     },
     {
       "competition": "Junior B Hurling Championship",
