@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-20T15:38:06Z",
+  "updated": "2026-09-20T16:38:43Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3865,11 +3865,11 @@
       "home": "Bruff",
       "away": "Ahane",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 23,
+      "away_goals": 1,
+      "away_points": 11
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -3925,11 +3925,11 @@
       "home": "Knockaderry",
       "away": "Ballybricken Bohermore",
       "venue": "Feenagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 10,
+      "away_goals": 0,
+      "away_points": 8
     },
     {
       "competition": "Junior B Hurling Championship",
