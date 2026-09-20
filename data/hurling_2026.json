@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-20T17:24:51Z",
+  "updated": "2026-09-20T18:25:07Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3317,51 +3317,6 @@
       "away_points": 9
     },
     {
-      "competition": "Junior B Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 5",
-      "date": "2026-09-17",
-      "time": "12:00",
-      "home": "Knockainey",
-      "away": "Doon",
-      "venue": "TBC",
-      "status": "Walkover",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Junior B Hurling Championship",
-      "group": "Group 2",
-      "round": "Round 5",
-      "date": "2026-09-17",
-      "time": "12:00",
-      "home": "Pallasgreen",
-      "away": "Doon",
-      "venue": "TBC",
-      "status": "Walkover",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 5",
-      "date": "2026-09-17",
-      "time": "12:00",
-      "home": "Bruff",
-      "away": "Dromcollogher Broadford",
-      "venue": "TBC",
-      "status": "Walkover",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
       "competition": "Premier Intermediate Hurling Championship",
       "group": null,
       "round": "Round 6",
@@ -3813,6 +3768,21 @@
     },
     {
       "competition": "Junior B Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 5",
+      "date": "2026-09-20",
+      "time": "12:00",
+      "home": "Knockainey",
+      "away": "Doon",
+      "venue": "TBC",
+      "status": "Walkover",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior B Hurling Championship",
       "group": "Group 2",
       "round": "Round 5",
       "date": "2026-09-20",
@@ -3850,6 +3820,36 @@
       "home": "Glenroe",
       "away": "Patrickswell",
       "venue": "Kilteely",
+      "status": "Walkover",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Premier Junior B Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 5",
+      "date": "2026-09-20",
+      "time": "12:00",
+      "home": "Pallasgreen",
+      "away": "Doon",
+      "venue": "TBC",
+      "status": "Walkover",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Premier Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 5",
+      "date": "2026-09-20",
+      "time": "12:00",
+      "home": "Bruff",
+      "away": "Dromcollogher Broadford",
+      "venue": "TBC",
       "status": "Walkover",
       "home_goals": null,
       "home_points": null,
@@ -3940,11 +3940,11 @@
       "home": "Mungret St Pauls",
       "away": "Feohanagh",
       "venue": "Sean Finn Park, Rathkeale",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 11,
+      "away_goals": 0,
+      "away_points": 17
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -3970,11 +3970,11 @@
       "home": "Staker Wallace",
       "away": "Killeedy",
       "venue": "Staker Wallace GAA, Kilbreedy",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 13,
+      "away_goals": 4,
+      "away_points": 14
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -4015,11 +4015,11 @@
       "home": "Dromcollogher Broadford",
       "away": "Caherline",
       "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 21,
+      "away_goals": 1,
+      "away_points": 15
     },
     {
       "competition": "Premier Junior A Hurling Championship",
@@ -4030,11 +4030,11 @@
       "home": "Kilteely Dromkeen",
       "away": "St Patrick's",
       "venue": "Caherconlish",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 14,
+      "away_goals": 1,
+      "away_points": 11
     },
     {
       "competition": "Premier Junior C Hurling Championship",
@@ -4060,11 +4060,11 @@
       "home": "Kildimo Pallaskenry",
       "away": "Croom",
       "venue": "Kildimo GAA Pitch",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 4,
+      "home_points": 16,
+      "away_goals": 0,
+      "away_points": 19
     },
     {
       "competition": "Junior C Hurling Championship",
