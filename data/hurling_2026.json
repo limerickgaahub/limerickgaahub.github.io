@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-20T14:14:29Z",
+  "updated": "2026-09-20T15:38:06Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3820,11 +3820,11 @@
       "home": "Ahane",
       "away": "Fedamore",
       "venue": "Caherconlish",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 14,
+      "away_goals": 1,
+      "away_points": 14
     },
     {
       "competition": "Junior B Hurling Championship",
@@ -3880,11 +3880,11 @@
       "home": "Kildimo Pallaskenry",
       "away": "Old Christians",
       "venue": "Ballybrown",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 16,
+      "away_goals": 0,
+      "away_points": 11
     },
     {
       "competition": "Junior A Hurling Championship",
@@ -3895,11 +3895,11 @@
       "home": "Templeglantine",
       "away": "Ballybricken Bohermore",
       "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 20,
+      "away_goals": 1,
+      "away_points": 15
     },
     {
       "competition": "Intermediate Hurling Championship",
@@ -3910,11 +3910,11 @@
       "home": "Knockaderry",
       "away": "Bruree",
       "venue": "Feenagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 20,
+      "away_goals": 2,
+      "away_points": 30
     },
     {
       "competition": "Premier Junior C Hurling Championship",
