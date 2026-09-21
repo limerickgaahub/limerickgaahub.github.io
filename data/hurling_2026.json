@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-20T18:25:07Z",
+  "updated": "2026-09-21T18:36:29Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3792,7 +3792,7 @@
       "venue": "Caherconlish",
       "status": "Result",
       "home_goals": 2,
-      "home_points": 14,
+      "home_points": 16,
       "away_goals": 1,
       "away_points": 14
     },
@@ -4037,21 +4037,6 @@
       "away_points": 11
     },
     {
-      "competition": "Premier Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 5",
-      "date": "2026-09-20",
-      "time": "17:00",
-      "home": "St Kieran's",
-      "away": "Crecora Manister",
-      "venue": "St Kierans, Ardagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
       "competition": "Junior C Hurling Championship",
       "group": "Group 2",
       "round": "Round 6",
@@ -4075,21 +4060,21 @@
       "home": "Murroe Boher",
       "away": "Caherline",
       "venue": "Boher",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 5,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 7
     },
     {
       "competition": "Premier Junior C Hurling Championship",
       "group": "Group 2",
       "round": "Round 5",
       "date": "2026-09-22",
-      "time": "18:45",
+      "time": "20:00",
       "home": "Garryspillane",
       "away": "St Patrick's",
-      "venue": "Knocklong",
+      "venue": "St Patrick's GAA, Rhebogue",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
@@ -4226,6 +4211,21 @@
       "away": "Tournafulla",
       "venue": "TBC",
       "status": "Walkover",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 2",
+      "round": "Round 4",
+      "date": "2026-09-24",
+      "time": "18:00",
+      "home": "Adare",
+      "away": "Croom",
+      "venue": "Croom",
+      "status": "Fixture",
       "home_goals": null,
       "home_points": null,
       "away_goals": null,
