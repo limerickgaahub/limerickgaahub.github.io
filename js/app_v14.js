@@ -118,7 +118,7 @@ const DEFAULT_SEASON = '2026';
 const SEASON_SOURCES = {
   '2026': {
     data: 'data/hurling_2026.json',
-    ko: null,
+    ko: 'datastatic/knockout_2026.json',
     league: 'data/league.json',
     divisional: 'data/divisional_championship.json',
     seniorDetails: 'data/senior_match_details_2026.json'
