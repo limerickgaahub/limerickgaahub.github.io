@@ -1392,6 +1392,8 @@ const j = window.__LGH_BOOTSTRAP__ || {};
         const mon3 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         return `w/c ${day3[d.getDay()]} ${pad2(d.getDate())} ${mon3[d.getMonth()]}`;
       })()
+    : isKO(r) && /^TBC/.test(r.home)
+    ? `w/e ${fmtDateShort(r.date).replace(/^[A-Za-z]{3}\s/, '')}`
     : fmtDateShort(r.date);
   
   const tShort = useWcDate
