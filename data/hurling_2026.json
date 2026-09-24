@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-23T21:02:35Z",
+  "updated": "2026-09-24T21:29:35Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -4120,11 +4120,11 @@
       "home": "Adare",
       "away": "Croom",
       "venue": "Croom",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 15,
+      "away_goals": 1,
+      "away_points": 20
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -4330,6 +4330,21 @@
       "home": "St Kieran's",
       "away": "Crecora Manister",
       "venue": "St Kierans, Ardagh",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 4",
+      "date": "2026-10-02",
+      "time": "18:00",
+      "home": "Castletown Ballyagran",
+      "away": "Kilteely Dromkeen",
+      "venue": "Ballyagran",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
