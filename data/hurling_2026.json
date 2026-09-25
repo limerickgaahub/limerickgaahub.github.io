@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24T21:29:35Z",
+  "updated": "2026-09-25T20:21:00Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -4127,21 +4127,6 @@
       "away_points": 20
     },
     {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 5",
-      "date": "2026-09-25",
-      "time": "17:30",
-      "home": "Croagh Kilfinny",
-      "away": "Staker Wallace",
-      "venue": "Croagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
       "competition": "Premier Intermediate Hurling Championship",
       "group": null,
       "round": "Round 7",
@@ -4330,6 +4315,21 @@
       "home": "St Kieran's",
       "away": "Crecora Manister",
       "venue": "St Kierans, Ardagh",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 5",
+      "date": "2026-09-30",
+      "time": "20:00",
+      "home": "Croagh Kilfinny",
+      "away": "Staker Wallace",
+      "venue": "Mick Neville Park",
       "status": "Fixture",
       "home_goals": null,
       "home_points": null,
