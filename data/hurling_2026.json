@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-25T20:21:00Z",
+  "updated": "2026-09-26T15:23:57Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -4135,11 +4135,11 @@
       "home": "Bruff",
       "away": "Croagh Kilfinny",
       "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 16,
+      "away_goals": 1,
+      "away_points": 19
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -4150,11 +4150,11 @@
       "home": "Dromin Athlacca",
       "away": "Murroe Boher",
       "venue": "Fedamore",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 19,
+      "away_goals": 2,
+      "away_points": 17
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -4165,11 +4165,11 @@
       "home": "Effin",
       "away": "Glenroe",
       "venue": "KIlfinane",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 19,
+      "away_goals": 1,
+      "away_points": 19
     },
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -4180,11 +4180,11 @@
       "home": "Granagh Ballingarry",
       "away": "Blackrock",
       "venue": "Bruff",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 0,
+      "home_points": 17,
+      "away_goals": 5,
+      "away_points": 17
     },
     {
       "competition": "Junior A Hurling Championship",
