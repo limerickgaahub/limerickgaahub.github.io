@@ -1675,6 +1675,118 @@
       "url": "https://www.limerickleader.ie/sport/gaa/hurling/newcastle-west-see-off-the-challenge-of-adare-in-limerick-shc-9089502"
     }
   ]
+},
+{
+  "date": "2026-09-27",
+  "home": "Doon",
+  "away": "Adare",
+  "published": true,
+  "referee": "Jonathan Hayes (St Senans)",
+  "home_scorers": "Adam English 0-11 (6f); Pat Ryan 1-4; Donal Coughlan 1-0; Dean Coleman 0-3; Cian O’Donovan and Chris Thomas 0-2 each; Eddie Stokes, Richie English, Barry Murphy, Jack Ryan and Sean McDonnell 0-1 each.",
+  "away_scorers": "John Fitzgibbon 1-2 (1-1f); Patrick Kearney 0-5 (3f); Ronan Connolly and Willie Griffin 0-2 each (Willie Griffin 1f); Darragh Gleeson, Conor Ryan and Jack Doran 0-1 each.",
+  "home_team": [
+    "Tomas Lynch",
+    "Eamonn Richardson",
+    "Tommy Hayes",
+    "Cian O’Donovan",
+    "Aidan O’Connell",
+    "Barry Murphy",
+    "Richie English",
+    "Darragh O’Donovan",
+    "Chris Thomas",
+    "Jack Ryan",
+    "Adam English",
+    "Eddie Stokes",
+    "Dean Coleman",
+    "Donal Coughlan",
+    "Pat Ryan",
+    "Gareth Thomas for Donal Coughlan (41 mins)",
+    "Kevin Maher for Dean Coleman (42 mins)",
+    "Sean McDonnell for Eddie Stokes (48 mins)",
+    "Darragh Coughlan for Tommy Hayes (51 mins)",
+    "Cormac Ryan for Chris Thomas (58 mins)"
+  ],
+  "away_team": [
+    "Bryan Curtin",
+    "John McSweeney",
+    "Joe Sweeney",
+    "Conor Ryan",
+    "James Canty",
+    "Declan Hannon",
+    "Darragh Gleeson",
+    "Sean Connolly",
+    "Ronan Connolly",
+    "David O’Mahony",
+    "Sam Hickey",
+    "Brendan O’Connor",
+    "Mike Keane",
+    "Mark Connolly",
+    "Patrick Kearney",
+    "John Fitzgibbon for John McSweeney (half-time)",
+    "Willie Griffin for Sam Hickey (half-time)",
+    "Charlie McCarthy for Sean Connolly (37 mins)",
+    "Wayne McNamara for Mark Connolly (37 mins)",
+    "Jack Doran for David O’Mahony (49 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/doon-ease-to-10th-limerick-shc-semi-final-in-a-row-with-adare-rout-9197011"
+    }
+  ]
+},
+{
+  "date": "2026-09-27",
+  "home": "Mungret St Pauls",
+  "away": "Monaleen",
+  "published": true,
+  "referee": "John O’Halloran (Bruree)",
+  "home_scorers": "Brian Barry 0-5; Killian Begley 1-1; Liam Lynch 0-2 (2f); Barry Duff and Fintan Fitzgerald 0-2 each; Mark O’Brien, Cian Moloney, Rory Duff, Brian O’Meara and Rory O’Callaghan 0-1 each.",
+  "away_scorers": "Shane Hassett 0-9 (7f); Donnacha O’Dalaigh 0-4; Andrew La Touche Cosgrave and Dara Ferland 0-2 each; Lochlann McHale, Ronan Lyons, Matthew Fitzgerald and Lorcan Lyons 0-1 each.",
+  "home_team": [
+    "Conor O’Brien",
+    "Sean Duff",
+    "Matt O’Sullivan",
+    "Eoin O’Doherty",
+    "Rory O’Callaghan",
+    "Brian O’Meara",
+    "Brian Barry",
+    "Cian Moloney",
+    "Rory Duff",
+    "Rory Gleeson",
+    "Fintan Fitzgerald",
+    "Barry Duff",
+    "Killian Begley",
+    "Liam Lynch",
+    "Mark O’Brien",
+    "Niall Mulcahy for Rory Gleeson (46 mins)",
+    "Paul O’Brien for Mark O’Brien (46 mins)"
+  ],
+  "away_team": [
+    "Jamie Power",
+    "Matthew Fitzgerald",
+    "Bryan Canny",
+    "Noel Clancy",
+    "Darragh Lyons",
+    "Lorcan Lyons",
+    "Ronan Lyons",
+    "Joseph Fitzgerald",
+    "Lochlann McHale",
+    "Eoghan O’Driscoll",
+    "Shane Hassett",
+    "Luke Murphy",
+    "Donnacha O’Dalaigh",
+    "Dara Ferland",
+    "Andrew La Touche Cosgrave",
+    "Ben Hayes for Lochlann McHale (38 mins)",
+    "Eoghan Maher for Luke Murphy (57 mins)"
+  ],
+  "reports": [
+    {
+      "label": "Limerick Leader",
+      "url": "https://www.limerickleader.ie/sport/gaa/hurling/lorcan-lyons-scores-last-gasp-winner-as-monaleen-score-historic-win-9196231"
+    }
+  ]
 }
 ]
 }
