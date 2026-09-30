@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-27T18:43:05Z",
+  "updated": "2026-09-30T21:23:45Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -4187,6 +4187,21 @@
       "away_points": 17
     },
     {
+      "competition": "Junior A Hurling Championship",
+      "group": "Group 1",
+      "round": "Relegation Final",
+      "date": "2026-09-26",
+      "time": "16:00",
+      "home": "Garryspillane",
+      "away": "Old Christians",
+      "venue": "Ballybricken Bohermore",
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 20,
+      "away_goals": 4,
+      "away_points": 15
+    },
+    {
       "competition": "Junior C Hurling Championship",
       "group": "Group 1",
       "round": "Round 7",
@@ -4207,21 +4222,6 @@
       "round": "Round 7",
       "date": "2026-09-27",
       "time": "17:00",
-      "home": "Athea",
-      "away": "Staker Wallace",
-      "venue": "Athea",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 7",
-      "date": "2026-09-27",
-      "time": "17:00",
       "home": "Croagh Kilfinny",
       "away": "Kilteely Dromkeen",
       "venue": "Croagh",
@@ -4230,21 +4230,6 @@
       "home_points": 14,
       "away_goals": 2,
       "away_points": 16
-    },
-    {
-      "competition": "Junior C Hurling Championship",
-      "group": "Group 1",
-      "round": "Round 7",
-      "date": "2026-09-27",
-      "time": "17:00",
-      "home": "Killeedy",
-      "away": "Castletown Ballyagran",
-      "venue": "Killeedy",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -4315,11 +4300,11 @@
       "home": "Croagh Kilfinny",
       "away": "Staker Wallace",
       "venue": "Mick Neville Park",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 3,
+      "home_points": 18,
+      "away_goals": 3,
+      "away_points": 12
     },
     {
       "competition": "Junior C Hurling Championship",
@@ -4329,6 +4314,21 @@
       "time": "18:00",
       "home": "Castletown Ballyagran",
       "away": "Kilteely Dromkeen",
+      "venue": "Ballyagran",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 7",
+      "date": "2026-10-05",
+      "time": "17:30",
+      "home": "Killeedy",
+      "away": "Castletown Ballyagran",
       "venue": "Ballyagran",
       "status": "Fixture",
       "home_goals": null,
