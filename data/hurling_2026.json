@@ -4300,11 +4300,11 @@
       "home": "Castletown Ballyagran",
       "away": "Kilteely Dromkeen",
       "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "status": "Result",
+      "home_goals": 1,
+      "home_points": 14,
+      "away_goals": 1,
+      "away_points": 12
     },
     {
       "competition": "Junior C Hurling Championship",
