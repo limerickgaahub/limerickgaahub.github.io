@@ -4311,15 +4311,15 @@
       "group": "Group 1",
       "round": "Round 7",
       "date": "2026-10-05",
-      "time": "17:30",
+      "time": "18:30",
       "home": "Killeedy",
       "away": "Castletown Ballyagran",
-      "venue": "Ballyagran",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
+      "venue": "Mick Neville Parl",
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 11,
+      "away_goals": 1,
+      "away_points": 14
     }
   ]
 }
