@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30T21:23:45Z",
+  "updated": "2026-10-05T19:29:09Z",
   "matches": [
     {
       "competition": "Premier Intermediate Hurling Championship",
@@ -3287,6 +3287,21 @@
       "away_points": 16
     },
     {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 2",
+      "date": "2026-09-16",
+      "time": "18:00",
+      "home": "Athea",
+      "away": "Kilteely Dromkeen",
+      "venue": "Athea",
+      "status": "Walkover",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
       "competition": "Premier Intermediate Hurling Championship",
       "group": null,
       "round": "Round 6",
@@ -4187,6 +4202,21 @@
       "away_points": 17
     },
     {
+      "competition": "Junior A Hurling Championship",
+      "group": "Group 1",
+      "round": "Relegation Final",
+      "date": "2026-09-26",
+      "time": "16:00",
+      "home": "Garryspillane",
+      "away": "Old Christians",
+      "venue": "Ballybricken Bohermore",
+      "status": "Result",
+      "home_goals": 2,
+      "home_points": 20,
+      "away_goals": 4,
+      "away_points": 15
+    },
+    {
       "competition": "Junior C Hurling Championship",
       "group": "Group 1",
       "round": "Round 7",
@@ -4314,12 +4344,102 @@
       "time": "18:30",
       "home": "Killeedy",
       "away": "Castletown Ballyagran",
-      "venue": "Mick Neville Parl",
+      "venue": "Mick Neville Park",
       "status": "Result",
       "home_goals": 2,
       "home_points": 11,
       "away_goals": 1,
       "away_points": 14
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 2",
+      "round": "Quarter Final",
+      "date": "2026-10-05",
+      "time": "20:00",
+      "home": "Dromin Athlacca",
+      "away": "Askeaton Ballysteen Kilcornan",
+      "venue": "Mick Neville Park",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior C Hurling Championship",
+      "group": "Group 1",
+      "round": "Round 7",
+      "date": "2026-10-07",
+      "time": "20:00",
+      "home": "Athea",
+      "away": "Staker Wallace",
+      "venue": "UL Grounds",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Premier Intermediate Hurling Championship",
+      "group": null,
+      "round": "Semi Final",
+      "date": "2026-10-10",
+      "time": "13:45",
+      "home": "Dromin Athlacca",
+      "away": "Murroe Boher",
+      "venue": "Killmallock",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior A Hurling Championship",
+      "group": "Group 1",
+      "round": "Semi Final",
+      "date": "2026-10-10",
+      "time": "14:00",
+      "home": "Monagea",
+      "away": "Ballybrown",
+      "venue": "Knockaderry",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Premier Intermediate Hurling Championship",
+      "group": null,
+      "round": "Semi Final",
+      "date": "2026-10-10",
+      "time": "15:30",
+      "home": "Blackrock",
+      "away": "Bruff",
+      "venue": "Killmallock",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
+    },
+    {
+      "competition": "Junior A Hurling Championship",
+      "group": "Group 1",
+      "round": "Semi Final",
+      "date": "2026-10-11",
+      "time": "13:00",
+      "home": "Ballybricken Bohermore",
+      "away": "Killeedy",
+      "venue": "Croagh",
+      "status": "Fixture",
+      "home_goals": null,
+      "home_points": null,
+      "away_goals": null,
+      "away_points": null
     }
   ]
 }
