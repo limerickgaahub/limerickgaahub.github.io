@@ -4380,66 +4380,6 @@
       "home_points": null,
       "away_goals": null,
       "away_points": null
-    },
-    {
-      "competition": "Premier Intermediate Hurling Championship",
-      "group": null,
-      "round": "Semi Final",
-      "date": "2026-10-10",
-      "time": "13:45",
-      "home": "Dromin Athlacca",
-      "away": "Murroe Boher",
-      "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior A Hurling Championship",
-      "group": "Group 1",
-      "round": "Semi Final",
-      "date": "2026-10-10",
-      "time": "14:00",
-      "home": "Monagea",
-      "away": "Ballybrown",
-      "venue": "Knockaderry",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Premier Intermediate Hurling Championship",
-      "group": null,
-      "round": "Semi Final",
-      "date": "2026-10-10",
-      "time": "15:30",
-      "home": "Blackrock",
-      "away": "Bruff",
-      "venue": "Killmallock",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
-    },
-    {
-      "competition": "Junior A Hurling Championship",
-      "group": "Group 1",
-      "round": "Semi Final",
-      "date": "2026-10-11",
-      "time": "13:00",
-      "home": "Ballybricken Bohermore",
-      "away": "Killeedy",
-      "venue": "Croagh",
-      "status": "Fixture",
-      "home_goals": null,
-      "home_points": null,
-      "away_goals": null,
-      "away_points": null
     }
   ]
 }
